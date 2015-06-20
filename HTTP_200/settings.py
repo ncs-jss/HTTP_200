@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import couchbase
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,6 +25,7 @@ SECRET_KEY = 'aq#*#1^qn$!_y04hrsg4!@ra5_!cn9v+39fzj=2rq^319s0^n6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
@@ -31,7 +33,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = (
-	'',
+	'feeds',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -102,18 +104,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+INTERNAL_IPS = ("127.0.0.1",)
+
+COUCHBASE_SERVER = {
+	"host": "127.0.0.1",
+	"port": 8091,
+	"admin:password": "root:123456",
+}
 
 
-USE_COUCHBASE = True
-if USE_COUCHBASE:
-	CACHES['default']['BACKEND']= 'django_couchbase.memcached.CouchbaseCache'
-	CACHES['default']['LOCATION'] = ['127.0.0.1:8091']
-	CACHES['default']['OPTIONS'] = {
-									'bucket': 'infodb',
-									'password': 'root',
-									'operation_timeout': 20.5,
-									'gevent_support': False,
-									'format': 'JSON',
-									'transcoder':myTranscoder,
-									'admin:pwd': 'root:123456'
-									}
+CACHES = {
+	"default": {
+		"BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+		"LOCATION": "127.0.0.1:11411",
+		"TIMEOUT": 3600 * 24 * 30 * 6,
+		"OPTIONS": {
+			"MAX_ENTRIES": 10000,
+		}
+	}
+}
+
