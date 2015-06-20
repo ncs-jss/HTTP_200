@@ -8,3 +8,6 @@ sudo apt-get update
 sudo apt-get install libcouchbase2-libevent libcouchbase-dev
 #http://stackoverflow.com/questions/27670497/ubuntu-trying-to-install-python-couchbase-lib-libcouchbase-couchbase-h-no
 pip install couchbase
+pip install djangorestframework
+pip install markdown       # Markdown support for the browsable API.
+pip install django-filter
