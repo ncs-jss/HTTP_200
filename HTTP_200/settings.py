@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = (
+	'rest_framework',
 	'feeds',
 	'django.contrib.admin',
 	'django.contrib.auth',
@@ -105,6 +106,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 INTERNAL_IPS = ("127.0.0.1",)
+
+ALLOWED_HOSTS = ("cbmonitor.sc.couchbase.com", "127.0.0.1")
+
+# INTERNAL_IPS = ("127.0.0.1",)
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "cbmonitor.db",
+        "OPTIONS": {
+            "timeout": 30,
+        },
+    }
+}
 
 COUCHBASE_SERVER = {
 	"host": "127.0.0.1",
