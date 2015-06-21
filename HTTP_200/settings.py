@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import couchbase
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -78,12 +77,12 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-# 	'default': {
-# 		'ENGINE': 'django.db.backends.sqlite3',
-# 		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-# 	}
-# }
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	}
+}
 
 
 # Internationalization
@@ -105,37 +104,38 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-INTERNAL_IPS = ("127.0.0.1",)
+# INTERNAL_IPS = ("127.0.0.1",)
 
-ALLOWED_HOSTS = ("cbmonitor.sc.couchbase.com", "127.0.0.1")
+# ALLOWED_HOSTS = ("cbmonitor.sc.couchbase.com", "127.0.0.1")
 
 # INTERNAL_IPS = ("127.0.0.1",)
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "cbmonitor.db",
-        "OPTIONS": {
-            "timeout": 30,
-        },
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": "cbmonitor.db",
+#         "OPTIONS": {
+#             "timeout": 30,
+#         },
+#     }
+# }
 
-COUCHBASE_SERVER = {
-	"host": "127.0.0.1",
-	"port": 8091,
-	"admin:password": "root:123456",
-}
+# COUCHBASE_SERVER = {
+# 	"host": "127.0.0.1",
+# 	"port": 8091,
+# 	"admin:password": "root:123456",
+# }
 
 
-CACHES = {
-	"default": {
-		"BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
-		"LOCATION": "127.0.0.1:11411",
-		"TIMEOUT": 3600 * 24 * 30 * 6,
-		"OPTIONS": {
-			"MAX_ENTRIES": 10000,
-		}
-	}
-}
+# CACHES = {
+# 	"default": {
+# 		"BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+# 		"LOCATION": "127.0.0.1:11411",
+# 		"TIMEOUT": 3600 * 24 * 30 * 6,
+# 		"OPTIONS": {
+# 			"MAX_ENTRIES": 10000,
+# 		}
+# 	}
+# }
 
+# LOGIN_REDIRECT_URL = '/'

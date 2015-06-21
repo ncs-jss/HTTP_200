@@ -14,7 +14,7 @@ class StudentSerializer(serializers.ModelSerializer):
 		"""
 		Create and return a new `Student` instance, given the validated data.
 		"""
-		return User.objects.create(**validated_data)
+		return Student.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
 		instance.name = validated_data.get('name',instance.name)
@@ -46,7 +46,7 @@ class FacultySerializer(serializers.ModelSerializer):
 		"""
 		Create and return a new `Faculty` instance, given the validated data.
 		"""
-		return User.objects.create(**validated_data)
+		return Faculty.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
 		instance.name = validated_data.get('name',instance.name)
@@ -70,40 +70,14 @@ class NoticeSerializer(serializers.ModelSerializer):
 	Serializer Class for Notices Model
 	'''
 	class Meta:
-		model = Notices
-		fields = ('title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
+		model = Notice
+		fields = ('scheduled_time','title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
 
 	def create(self, validated_data):
 		"""
 		Create and return a new `Notices` instance, given the validated data.
 		"""
-		return User.objects.create(**validated_data)
-
-	def update(self, instance, validated_data):
-		instance.title = validated_data.get('title',instance.title)
-		instance.faculty_id = validated_data.get('faculty_id',instance.faculty_id)
-		instance.description = validated_data.get('description',instance.description)
-		instance.details = validated_data.get('details',instance.details)
-		instance.file_attached = validated_data.get('file_attached',instance.file_attached)
-		instance.created_at = validated_data.get('created_at',instance.created_at)
-		instance.updated_at = validated_data.get('updated_at',instance.updated_at)
-		instance.category = validated_data.get('category',instance.category)
-		instance.save()
-		return instance
-
-class ScheduledNoticeSerializer(serializers.ModelSerializer):
-	'''
-	Serializer Class for Scheduled Notices Model
-	'''
-	class Meta:
-		model = ScheduledNotices
-		fields = ('scheduled_time','title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
-
-	def create(self, validated_data):
-		"""
-		Create and return a new `ScheduledNotices` instance, given the validated data.
-		"""
-		return User.objects.create(**validated_data)
+		return Notice.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
 		instance.scheduled_time = validated_data.get('scheduled_time',instance.scheduled_time)
@@ -118,3 +92,28 @@ class ScheduledNoticeSerializer(serializers.ModelSerializer):
 		instance.save()
 		return instance
 
+# class ScheduledNoticeSerializer(serializers.ModelSerializer):
+# 	'''
+# 	Serializer Class for Scheduled Notices Model
+# 	'''
+# 	class Meta:
+# 		model = ScheduledNotices
+# 		fields = ('scheduled_time','title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
+
+# 	def create(self, validated_data):
+# 		"""
+# 		Create and return a new `ScheduledNotices` instance, given the validated data.
+# 		"""
+# 		return User.objects.create(**validated_data)
+
+# 	def update(self, instance, validated_data):
+# 		instance.title = validated_data.get('title',instance.title)
+# 		instance.faculty_id = validated_data.get('faculty_id',instance.faculty_id)
+# 		instance.description = validated_data.get('description',instance.description)
+# 		instance.details = validated_data.get('details',instance.details)
+# 		instance.file_attached = validated_data.get('file_attached',instance.file_attached)
+# 		instance.created_at = validated_data.get('created_at',instance.created_at)
+# 		instance.updated_at = validated_data.get('updated_at',instance.updated_at)
+# 		instance.category = validated_data.get('category',instance.category)
+# 		instance.save()
+# 		return instance

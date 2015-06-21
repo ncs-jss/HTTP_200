@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import *
 from couchbase.bucket import Bucket
+from feeds.models import *
+from feeds.serializers import *
 
 cb = Bucket('couchbase:///infodb', password="123456")
 print cb
@@ -13,7 +15,7 @@ def home(request):
 # from django.contrib.auth.models import User
 from feeds.serializers import StudentSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
+# from rest_framework.permissions import IsAdminUser
 
 class StudentList(generics.ListCreateAPIView):
 	# """
@@ -21,7 +23,7 @@ class StudentList(generics.ListCreateAPIView):
 	# """
 	queryset = Student.objects.all()
 	serializer_class = StudentSerializer
-	permission_classes = (IsAdminUser,)
+	# permission_classes = (IsAdminUser,)
 	paginate_by = 100
 
 	def get_paginate_by(self):
@@ -46,7 +48,7 @@ class FacultyList(generics.ListCreateAPIView):
 	"""
 	queryset = Faculty.objects.all()
 	serializer_class = FacultySerializer
-	permission_classes = (IsAdminUser,)
+	# permission_classes = (IsAdminUser,)
 	paginate_by = 100
 
 	def get_paginate_by(self):
@@ -72,7 +74,7 @@ class NoticeList(generics.ListCreateAPIView):
 	"""
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
-	permission_classes = (IsAdminUser,)
+	# permission_classes = (IsAdminUser,)
 	paginate_by = 100
 
 	def get_paginate_by(self):
@@ -92,29 +94,29 @@ class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
 	model = Notice
 
 
-class ScheduledNoticeList(generics.ListCreateAPIView):
-	"""
-	List all the Notices or add Notices 
-	"""
-	queryset = ScheduledNotice.objects.all()
-	serializer_class = ScheduledNoticeSerializer
-	permission_classes = (IsAdminUser,)
-	paginate_by = 100
+# class ScheduledNoticeList(generics.ListCreateAPIView):
+# 	"""
+# 	List all the Notices or add Notices 
+# 	"""
+# 	queryset = ScheduledNotice.objects.all()
+# 	serializer_class = ScheduledNoticeSerializer
+# 	permission_classes = (IsAdminUser,)
+# 	paginate_by = 100
 
-	def get_paginate_by(self):
-		"""
-		Use smaller pagination for HTML representations.
-		"""
-		if self.request.accepted_renderer.format == 'html':
-			return 20
-		return 100
+# 	def get_paginate_by(self):
+# 		"""
+# 		Use smaller pagination for HTML representations.
+# 		"""
+# 		if self.request.accepted_renderer.format == 'html':
+# 			return 20
+# 		return 100
 
-class ScheduledNoticeDetail(generics.RetrieveUpdateDestroyAPIView):
-	"""
-	Retrieve, update or delete a Scheduled Notices instance.
-	"""
-	queryset = ScheduledNotices.objects.all()
-	serializer_class = ScheduledNoticeSerializer
-	model = ScheduledNotice
+# class ScheduledNoticeDetail(generics.RetrieveUpdateDestroyAPIView):
+# 	"""
+# 	Retrieve, update or delete a Scheduled Notices instance.
+# 	"""
+# 	queryset = ScheduledNotices.objects.all()
+# 	serializer_class = ScheduledNoticeSerializer
+# 	model = ScheduledNotice
 
 
