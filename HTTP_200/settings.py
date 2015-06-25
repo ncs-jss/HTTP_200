@@ -58,7 +58,7 @@ ROOT_URLCONF = 'HTTP_200.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [],
+		'DIRS': [BASE_DIR+"/HTTP_200/templates/"],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -139,3 +139,16 @@ STATIC_URL = '/static/'
 # }
 
 # LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'auth.User'
+
+# TEMPLATE_LOADERS = (
+#     'django.template.loaders.filesystem.Loader',
+#     'django.template.loaders.app_directories.Loader',
+# #     'django.template.loaders.eggs.Loader',
+# )
+
+# TEMPLATE_DIRS = (
+#     os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), \
+#         'HTTP_200/templates'),
+# )
