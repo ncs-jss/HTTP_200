@@ -21,14 +21,14 @@ class Student(models.Model):
 		(MBA,'MBA'),
 		(OTHERS,'Others'),
 		)
-	name = models.CharField(max_length = 200,default = True)
+	name = models.CharField(max_length = 200,default = None)
 	# user_id = models.CharField(max_length = 100)
 	univ_roll_no = models.PositiveIntegerField()
 	ph_no = models.PositiveIntegerField()
 	father_name = models.CharField(max_length = 200)
 	mother_name = models.CharField(max_length = 200)
 	address = models.CharField(max_length = 500)
-	# email_id = models.EmailField(max_length = 254, unique = True)
+	email_id = models.EmailField(max_length = 254, unique = True, default = None)
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
@@ -48,7 +48,7 @@ class Faculty(models.Model):
 	# date_joined = models.DateTimeField()
 	ph_no = models.PositiveIntegerField()
 	address = models.CharField(max_length = 500)
-	# email_id = models.EmailField(max_length = 254, unique = True, default=None)
+	email_id = models.EmailField(max_length = 254, unique = True, default=None)
 	alternate_email = models.EmailField(max_length = 254,default=None)
 	bookmarks = JSONField()
 	# date_joined = models.DateTimeField(default=datetime.now, blank=True)
@@ -70,14 +70,15 @@ class Notice(models.Model):
 		(EVENTS,'Events'),
 		(MISC,'Miscelleneous'),
 		)
+	faculty_id = models.ForeignKey('Faculty', related_name='notice_uploaded',default = None)
 	title = models.CharField(max_length = 500)
 	description = models.TextField()
-	faculty_id = models.ForeignKey(Faculty)
+	# faculty_id = models.ForeignKey(Faculty)
 	details = JSONField()
-	file_attached = JSONField()
-	created_at = models.DateTimeField()
-	updated_at = models.DateTimeField()
+	file_attached = models.FileField(upload_to = "attachments")
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now_add=True,editable = True)
 	category = models.CharField(max_length = 4,
 		choices = CATEGORY,
 		default = MISC)
-	scheduled_time = models.DateTimeField(default=datetime.now, blank=True)
+	scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)

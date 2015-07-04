@@ -8,7 +8,7 @@ class StudentSerializer(serializers.ModelSerializer):
 	'''
 	class Meta:
 		model = Student
-		fields = ('name','user_id','univ_roll_no','ph_no','father_name','mother_name','address', 'email_id','course','date_joined','bookmarks','last_login','password_reset')
+		fields = ('name','univ_roll_no','ph_no','father_name','mother_name','address', 'email_id','course','bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -18,7 +18,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
 	def update(self, instance, validated_data):
 		instance.name = validated_data.get('name',instance.name)
-		instance.user_id = validated_data.get('user_id',instance.user_id)
+		# instance.user_id = validated_data.get('user_id',instance.user_id)
 		instance.univ_roll_no = validated_data.get('univ_roll_no',instance.univ_roll_no)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.father_name = validated_data.get('father_name',instance.father_name)
@@ -26,10 +26,10 @@ class StudentSerializer(serializers.ModelSerializer):
 		instance.address = validated_data.get('address',instance.address)
 		instance.email_id = validated_data.get('email_id',instance.email_id)
 		instance.course = validated_data.get('course',instance.course)
-		instance.date_joined = validated_data.get('date_joined',instance.date_joined)
+		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
 		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
-		instance.last_login = validated_data.get('last_login',instance.last_login)
-		instance.password_reset = validated_data.get('password_reset',instance.password_reset)
+		# instance.last_login = validated_data.get('last_login',instance.last_login)
+		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
 		instance.save()
 		return instance
 
@@ -38,9 +38,10 @@ class FacultySerializer(serializers.ModelSerializer):
 	'''
 	Serializer Class for Faculty Model
 	'''
+	notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
 	class Meta:
 		model = Faculty
-		fields = ('name','user_id','designation','department','date_joined','ph_no','address', 'email_id','alternate_email','bookmarks','last_login','password_reset')
+		fields = ('notice_uploaded','name','designation','department','ph_no','address', 'email_id','alternate_email','bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -50,17 +51,17 @@ class FacultySerializer(serializers.ModelSerializer):
 
 	def update(self, instance, validated_data):
 		instance.name = validated_data.get('name',instance.name)
-		instance.user_id = validated_data.get('user_id',instance.user_id)
+		# instance.user_id = validated_data.get('user_id',instance.user_id)
 		instance.designation = validated_data.get('designation',instance.designation)
 		instance.department = validated_data.get('department',instance.department)
-		instance.date_joined = validated_data.get('date_joined',instance.date_joined)
+		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.address = validated_data.get('address',instance.address)
 		instance.email_id = validated_data.get('email_id',instance.email_id)
 		instance.alternate_email = validated_data.get('alternate_email',instance.alternate_email)
 		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
-		instance.last_login = validated_data.get('last_login',instance.last_login)
-		instance.password_reset = validated_data.get('password_reset',instance.password_reset)
+		# instance.last_login = validated_data.get('last_login',instance.last_login)
+		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
 		instance.save()
 		return instance
 
@@ -69,6 +70,7 @@ class NoticeSerializer(serializers.ModelSerializer):
 	'''
 	Serializer Class for Notices Model
 	'''
+	faculty_id = serializers.ReadOnlyField(source='owner.username')
 	class Meta:
 		model = Notice
 		fields = ('scheduled_time','title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
@@ -117,3 +119,11 @@ class NoticeSerializer(serializers.ModelSerializer):
 # 		instance.category = validated_data.get('category',instance.category)
 # 		instance.save()
 # 		return instance
+
+from django.contrib.auth.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+	notices = serializers.StringRelatedField(many=True,)
+	class Meta:
+		model = User
+		fields = ('id', 'username','notices')

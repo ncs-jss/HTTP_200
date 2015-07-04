@@ -5,3 +5,5 @@ from feeds.models import *
 # admin.site.unregister(User)
 admin.site.register(Student)
 admin.site.register(Faculty)
+admin.site.register(Notice)
+

@@ -4,28 +4,13 @@ from couchbase.bucket import Bucket
 from feeds.models import *
 from feeds.serializers import *
 from feeds.forms import *
-cb = Bucket('couchbase:///infodb', password="123456")
-print cb
+from rest_framework import permissions
+
+# cb = Bucket('couchbase:///infodb', password="123456")
+# print cb
 
 def home(request):
-	if request.method == 'POST':
-		# create a form instance and populate it with data from the request:
-		form = LoginForm(request.POST)
-		# check whether it's valid:
-		if form.is_valid():
-			# process the data in form.cleaned_data as required
-			# ...
-			# redirect to a new URL:
-			return HttpResponseRedirect('/')
-
-	# if a GET (or any other method) we'll create a blank form
-	else:
-		form = LoginForm()
-
-	return render(request,'index.html', {'form': form})
-	# return HttpResponse("<h1>Hi there. It is working very fine.</h1> {{ form.as_p }}")
-
-
+	return HttpResponse("<h1>Hi there. It is working very fine.</h1> {{ form.as_p }}")
 
 def login(request):
 	""" Login view """
@@ -98,6 +83,7 @@ class FacultyList(generics.ListCreateAPIView):
 	queryset = Faculty.objects.all()
 	serializer_class = FacultySerializer
 	# permission_classes = (IsAdminUser,)
+	# permission_classes = (IsAdminUser,)
 	paginate_by = 100
 
 	def get_paginate_by(self):
@@ -124,6 +110,7 @@ class NoticeList(generics.ListCreateAPIView):
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
 	# permission_classes = (IsAdminUser,)
+	# permission_classes = (permissions.IsAuthenticated,)
 	paginate_by = 100
 
 	def get_paginate_by(self):
@@ -134,6 +121,9 @@ class NoticeList(generics.ListCreateAPIView):
 			return 20
 		return 100
 
+	def perform_create(self, serializer):
+		serializer.save(faculty_id=self.request.user)
+
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
 	"""
 	Retrieve, update or delete a Notices instance.
@@ -141,7 +131,7 @@ class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
 	model = Notice
-
+	# permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 # class ScheduledNoticeList(generics.ListCreateAPIView):
 # 	"""
@@ -169,3 +159,16 @@ class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
 # 	model = ScheduledNotice
 
 
+from feeds.serializers import UserSerializer
+
+from django.contrib.auth.models import User
+
+
+class UserList(generics.ListAPIView):
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
