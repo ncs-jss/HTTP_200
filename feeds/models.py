@@ -21,38 +21,27 @@ class Student(models.Model):
 		(MBA,'MBA'),
 		(OTHERS,'Others'),
 		)
-	name = models.CharField(max_length = 200,default = None)
-	# user_id = models.CharField(max_length = 100)
 	univ_roll_no = models.PositiveIntegerField()
 	ph_no = models.PositiveIntegerField()
 	father_name = models.CharField(max_length = 200)
 	mother_name = models.CharField(max_length = 200)
 	address = models.CharField(max_length = 500)
-	email_id = models.EmailField(max_length = 254, unique = True, default = None)
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
-	# date_joined = models.DateTimeField(default=datetime.now, blank=True)
 	bookmarks = JSONField()
-	# last_login = models.DateTimeField(default=datetime.now, blank=True)
 
 class Faculty(models.Model):
 	'''
 	It stores the information about the faculties of college
 	'''
-	user = models.OneToOneField(User,default = True)
-	name = models.CharField(max_length = 200, blank = True)
-	# user_id = models.CharField(max_length = 100, blank = True)
+	user = models.OneToOneField(User)
 	designation = models.CharField(max_length = 100)
 	department = models.CharField(max_length = 100)
-	# date_joined = models.DateTimeField()
 	ph_no = models.PositiveIntegerField()
 	address = models.CharField(max_length = 500)
-	email_id = models.EmailField(max_length = 254, unique = True, default=None)
-	alternate_email = models.EmailField(max_length = 254,default=None)
+	alternate_email = models.EmailField(max_length = 254)
 	bookmarks = JSONField()
-	# date_joined = models.DateTimeField(default=datetime.now, blank=True)
-	# last_login = models.DateTimeField(default=datetime.now, blank=True)
 
 class Notice(models.Model):
 	'''
@@ -70,10 +59,9 @@ class Notice(models.Model):
 		(EVENTS,'Events'),
 		(MISC,'Miscelleneous'),
 		)
-	faculty_id = models.ForeignKey('Faculty', related_name='notice_uploaded',default = None)
+	owner = models.ForeignKey(User, related_name='notices', default = None)
 	title = models.CharField(max_length = 500)
 	description = models.TextField()
-	# faculty_id = models.ForeignKey(Faculty)
 	details = JSONField()
 	file_attached = models.FileField(upload_to = "attachments")
 	created_at = models.DateTimeField(auto_now_add=True)
