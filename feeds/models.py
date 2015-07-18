@@ -22,10 +22,10 @@ class Student(models.Model):
 		(OTHERS,'Others'),
 		)
 	univ_roll_no = models.PositiveIntegerField()
-	ph_no = models.PositiveIntegerField()
-	father_name = models.CharField(max_length = 200)
-	mother_name = models.CharField(max_length = 200)
-	address = models.CharField(max_length = 500)
+	ph_no = models.PositiveIntegerField(null = True)
+	father_name = models.CharField(max_length = 200, null = True)
+	mother_name = models.CharField(max_length = 200, null = True)
+	address = models.CharField(max_length = 500, null = True)
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
@@ -36,11 +36,11 @@ class Faculty(models.Model):
 	It stores the information about the faculties of college
 	'''
 	user = models.OneToOneField(User)
-	designation = models.CharField(max_length = 100)
-	department = models.CharField(max_length = 100)
-	ph_no = models.PositiveIntegerField()
-	address = models.CharField(max_length = 500)
-	alternate_email = models.EmailField(max_length = 254)
+	designation = models.CharField(max_length = 100, null = True)
+	department = models.CharField(max_length = 100, null = True)
+	ph_no = models.PositiveIntegerField(null = True)
+	address = models.CharField(max_length = 500, null = True)
+	alternate_email = models.EmailField(max_length = 254, null = True)
 	bookmarks = JSONField()
 
 class Notice(models.Model):
@@ -63,10 +63,15 @@ class Notice(models.Model):
 	title = models.CharField(max_length = 500)
 	description = models.TextField()
 	details = JSONField()
-	file_attached = models.FileField(upload_to = "attachments")
+	file_attached = models.FileField(upload_to = "attachments", null = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now_add=True,editable = True)
 	category = models.CharField(max_length = 4,
 		choices = CATEGORY,
 		default = MISC)
 	scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
+
+
+# class BookmarkedNotices(models.Model):
+# 	"""
+# 	"""
