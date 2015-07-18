@@ -1,8 +1,17 @@
 from django.forms import widgets
 from rest_framework import serializers
 from feeds.models import *
+from django.contrib.auth.models import User
 
-class StudentSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+
+	notices = serializers.HyperlinkedRelatedField(many=True, view_name='notice-detail', read_only=True)
+	class Meta:
+		model = User
+		fields = ('notices', 'id', 'username', 'email','first_name', 'last_name',)
+
+class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	Serializer Class for Student Model
 	'''
@@ -34,7 +43,7 @@ class StudentSerializer(serializers.ModelSerializer):
 		return instance
 
 
-class FacultySerializer(serializers.ModelSerializer):
+class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	Serializer Class for Faculty Model
 	'''
@@ -66,25 +75,24 @@ class FacultySerializer(serializers.ModelSerializer):
 		return instance
 
 
-class NoticeSerializer(serializers.ModelSerializer):
+class NoticeSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	Serializer Class for Notices Model
 	'''
-	faculty_id = serializers.ReadOnlyField(source='owner.username')
+	owner = serializers.ReadOnlyField(source='owner.username')
 	class Meta:
 		model = Notice
-		fields = ('scheduled_time','title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
+		fields = ('scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
 
-	def create(self, validated_data):
+	def create(self, validated_data, owner):
 		"""
 		Create and return a new `Notices` instance, given the validated data.
 		"""
-		return Notice.objects.create(**validated_data)
+		return Notice.objects.create(owner = owner, **validated_data)
 
 	def update(self, instance, validated_data):
 		instance.scheduled_time = validated_data.get('scheduled_time',instance.scheduled_time)
 		instance.title = validated_data.get('title',instance.title)
-		instance.faculty_id = validated_data.get('faculty_id',instance.faculty_id)
 		instance.description = validated_data.get('description',instance.description)
 		instance.details = validated_data.get('details',instance.details)
 		instance.file_attached = validated_data.get('file_attached',instance.file_attached)
@@ -93,37 +101,3 @@ class NoticeSerializer(serializers.ModelSerializer):
 		instance.category = validated_data.get('category',instance.category)
 		instance.save()
 		return instance
-
-# class ScheduledNoticeSerializer(serializers.ModelSerializer):
-# 	'''
-# 	Serializer Class for Scheduled Notices Model
-# 	'''
-# 	class Meta:
-# 		model = ScheduledNotices
-# 		fields = ('scheduled_time','title','faculty_id','description','details','file_attached','created_at','updated_at', 'category')
-
-# 	def create(self, validated_data):
-# 		"""
-# 		Create and return a new `ScheduledNotices` instance, given the validated data.
-# 		"""
-# 		return User.objects.create(**validated_data)
-
-# 	def update(self, instance, validated_data):
-# 		instance.title = validated_data.get('title',instance.title)
-# 		instance.faculty_id = validated_data.get('faculty_id',instance.faculty_id)
-# 		instance.description = validated_data.get('description',instance.description)
-# 		instance.details = validated_data.get('details',instance.details)
-# 		instance.file_attached = validated_data.get('file_attached',instance.file_attached)
-# 		instance.created_at = validated_data.get('created_at',instance.created_at)
-# 		instance.updated_at = validated_data.get('updated_at',instance.updated_at)
-# 		instance.category = validated_data.get('category',instance.category)
-# 		instance.save()
-# 		return instance
-
-from django.contrib.auth.models import User
-
-class UserSerializer(serializers.ModelSerializer):
-	notices = serializers.StringRelatedField(many=True,)
-	class Meta:
-		model = User
-		fields = ('id', 'username','notices')
