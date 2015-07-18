@@ -26,12 +26,6 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 		return Student.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
-		# instance.name = validated_data.get('name',instance.name)
-		# instance.user_id = validated_data.get('user_id',instance.user_id)
-		# instance.last_login = validated_data.get('last_login',instance.last_login)
-		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
-		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
-		# instance.email_id = validated_data.get('email_id',instance.email_id)
 		instance.univ_roll_no = validated_data.get('univ_roll_no',instance.univ_roll_no)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.father_name = validated_data.get('father_name',instance.father_name)
@@ -59,12 +53,6 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 		return Faculty.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
-		# instance.name = validated_data.get('name',instance.name)
-		# instance.user_id = validated_data.get('user_id',instance.user_id)
-		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
-		# instance.email_id = validated_data.get('email_id',instance.email_id)
-		# instance.last_login = validated_data.get('last_login',instance.last_login)
-		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
 		instance.designation = validated_data.get('designation',instance.designation)
 		instance.department = validated_data.get('department',instance.department)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
@@ -84,11 +72,11 @@ class NoticeSerializer(serializers.HyperlinkedModelSerializer):
 		model = Notice
 		fields = ('scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
 
-	def create(self, validated_data, owner):
+	def create(self, validated_data):
 		"""
 		Create and return a new `Notices` instance, given the validated data.
 		"""
-		return Notice.objects.create(owner = owner, **validated_data)
+		return Notice.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
 		instance.scheduled_time = validated_data.get('scheduled_time',instance.scheduled_time)
