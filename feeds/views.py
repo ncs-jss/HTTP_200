@@ -1,24 +1,26 @@
-from django.contrib.auth.models import User
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
- 
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, render_to_response
 from django.http import *
-from feeds.models import *
-from feeds.serializers import *
-from feeds.forms import *
+from django.contrib.auth.models import User
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import permissions
 from rest_framework import generics
-from feeds.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-# from HTTP_200.config import jwt_response_payload_handler
+from rest_framework import filters
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
+from feeds.models import *
+from feeds.serializers import *
+from feeds.forms import *
+from feeds.permissions import IsOwnerOrReadOnly, HasGroupPermission
+
+import django_filters
 
 def home(request):
 	return render_to_response("index.html")
@@ -40,8 +42,7 @@ class StudentViewSet(viewsets.ReadOnlyModelViewSet): # Here I've used the ReadOn
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsAuthenticated,
-		IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnly,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Student.objects.all()
 	serializer_class = StudentSerializer
@@ -53,8 +54,7 @@ class FacultyViewSet(viewsets.ReadOnlyModelViewSet): # Here I've used the ReadOn
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsAuthenticated,
-		IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnly,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Faculty.objects.all()
 	serializer_class = FacultySerializer
@@ -67,11 +67,15 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsAuthenticated,
-		IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnly, 
+		HasGroupPermission )
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
+	filter_backends = (filters.DjangoFilterBackend,)
+	required_groups = {
+		'POST': ['Faculties'],
+	}
 
 	def perform_create(self, serializer):
 		serializer.save(owner = self.request.user)
@@ -81,8 +85,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 	"""
 	This viewset automatically provides `list` and `detail` actions.
 	"""
-	permission_classes = (IsAuthenticated,
-		IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnly,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
