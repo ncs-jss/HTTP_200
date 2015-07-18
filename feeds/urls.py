@@ -1,14 +1,46 @@
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
-from feeds import views
+from rest_framework import renderers
+from feeds.views import *
+
+
+
+notice_list = NoticeViewSet.as_view({
+	'get': 'list',
+	'post': 'create'
+})
+notice_detail = NoticeViewSet.as_view({
+	'get': 'retrieve',
+	'put': 'update',
+	'patch': 'partial_update',
+	'delete': 'destroy'
+})
+
+user_list = UserViewSet.as_view({
+	'get': 'list'
+})
+user_detail = UserViewSet.as_view({
+	'get': 'retrieve'
+})
+
+student_list = StudentViewSet.as_view({
+	'get': 'list'
+})
+student_detail = StudentViewSet.as_view({
+	'get': 'retrieve'
+})
+faculty_list = FacultyViewSet.as_view({
+	'get': 'list'
+})
+faculty_detail = FacultyViewSet.as_view({
+	'get': 'retrieve'
+})
 
 urlpatterns = [
-	url(r'^$','feeds.views.home',name="home"),
-	url(r'^$','feeds.views.home',name="home"),
+	# url(r'^$','feeds.views.home',name="home"),
+	# url(r'^$','feeds.views.home',name="home"),
 	# url(r'^admin/', include(admin.site.urls)),
 ]
-
-
 
 '''
 the below module import is used for importing the foramt type in which we 
@@ -17,14 +49,16 @@ the data like json or xml
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns += patterns('feeds.serializers',
-	url(r'^api/student/$', views.StudentList.as_view()),
-	url(r'^api/student/(?P<pk>[0-9]+)/$', views.StudentDetail.as_view()),
-	url(r'^api/faculty/$', views.FacultyList.as_view()),
-	url(r'^api/faculty/(?P<pk>[0-9]+)/$', views.FacultyDetail.as_view()),
-	url(r'^api/notice/$', views.NoticeList.as_view()),
-	url(r'^api/notice/(?P<pk>[0-9]+)/$', views.NoticeDetail.as_view()),
-	url(r'^users/$', views.UserList.as_view()),
-	url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
+	url(r'^$', api_root),
+	url(r'^api/student/$', student_list, name = "student-list"),
+	url(r'^api/student/(?P<pk>[0-9]+)/$', student_detail, name = "student-detail"),
+	url(r'^api/faculty/$', faculty_list, name = "faculty-list"),
+	url(r'^api/faculty/(?P<pk>[0-9]+)/$', faculty_detail, name = "faculty-detail"),
+	url(r'^api/notice/$', notice_list, name = "notice-list"),
+	url(r'^api/notice/(?P<pk>[0-9]+)/$', notice_detail, name = "notice-detail"),
+	url(r'^users/$', user_list, name = "user-list"),
+	url(r'^users/(?P<pk>[0-9]+)/$', user_detail, name = "user-detail"),
+	# url(r'^check/$', views.check.as_view()),
 )
 
 urlpatterns += [

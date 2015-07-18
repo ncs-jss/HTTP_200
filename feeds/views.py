@@ -39,7 +39,7 @@ class StudentViewSet(viewsets.ReadOnlyModelViewSet): # Here I've used the ReadOn
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsAuthenticatedOrReadOnly,
+	permission_classes = (IsAuthenticated,
 		IsOwnerOrReadOnly,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Student.objects.all()
@@ -52,7 +52,7 @@ class FacultyViewSet(viewsets.ReadOnlyModelViewSet): # Here I've used the ReadOn
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsAuthenticatedOrReadOnly,
+	permission_classes = (IsAuthenticated,
 		IsOwnerOrReadOnly,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Faculty.objects.all()
@@ -66,20 +66,23 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsAuthenticatedOrReadOnly,
+	permission_classes = (IsAuthenticated,
 		IsOwnerOrReadOnly,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
 
 	def perform_create(self, serializer):
-		serializer.save(faculty_id=self.request.user)
+		serializer.save(owner = self.request.user)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
 	"""
 	This viewset automatically provides `list` and `detail` actions.
 	"""
+	permission_classes = (IsAuthenticated,
+		IsOwnerOrReadOnly,)
+	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 
