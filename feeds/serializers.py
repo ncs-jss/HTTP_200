@@ -17,7 +17,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	class Meta:
 		model = Student
-		fields = ('univ_roll_no','ph_no','father_name','mother_name','address', 'course','bookmarks')
+		fields = ('id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course','bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -44,7 +44,7 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
 	class Meta:
 		model = Faculty
-		fields = ('notice_uploaded','designation','department','ph_no','address', 'alternate_email', 'bookmarks')
+		fields = ('id', 'notice_uploaded','designation','department','ph_no','address', 'alternate_email', 'bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -70,7 +70,7 @@ class NoticeSerializer(serializers.HyperlinkedModelSerializer):
 	owner = serializers.ReadOnlyField(source='owner.username')
 	class Meta:
 		model = Notice
-		fields = ('scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
+		fields = ('id', 'scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
 
 	def create(self, validated_data):
 		"""
