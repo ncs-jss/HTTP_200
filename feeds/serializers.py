@@ -17,7 +17,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	class Meta:
 		model = Student
-		fields = ('name','univ_roll_no','ph_no','father_name','mother_name','address', 'email_id','course','bookmarks')
+		fields = ('univ_roll_no','ph_no','father_name','mother_name','address', 'course','bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -26,19 +26,19 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 		return Student.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
-		instance.name = validated_data.get('name',instance.name)
+		# instance.name = validated_data.get('name',instance.name)
 		# instance.user_id = validated_data.get('user_id',instance.user_id)
+		# instance.last_login = validated_data.get('last_login',instance.last_login)
+		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
+		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
+		# instance.email_id = validated_data.get('email_id',instance.email_id)
 		instance.univ_roll_no = validated_data.get('univ_roll_no',instance.univ_roll_no)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.father_name = validated_data.get('father_name',instance.father_name)
 		instance.mother_name = validated_data.get('mother_name',instance.mother_name)
 		instance.address = validated_data.get('address',instance.address)
-		instance.email_id = validated_data.get('email_id',instance.email_id)
 		instance.course = validated_data.get('course',instance.course)
-		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
 		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
-		# instance.last_login = validated_data.get('last_login',instance.last_login)
-		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
 		instance.save()
 		return instance
 
@@ -50,7 +50,7 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
 	class Meta:
 		model = Faculty
-		fields = ('notice_uploaded','name','designation','department','ph_no','address', 'email_id','alternate_email','bookmarks')
+		fields = ('notice_uploaded','designation','department','ph_no','address', 'alternate_email', 'bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -59,18 +59,18 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 		return Faculty.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
-		instance.name = validated_data.get('name',instance.name)
+		# instance.name = validated_data.get('name',instance.name)
 		# instance.user_id = validated_data.get('user_id',instance.user_id)
-		instance.designation = validated_data.get('designation',instance.designation)
-		instance.department = validated_data.get('department',instance.department)
 		# instance.date_joined = validated_data.get('date_joined',instance.date_joined)
-		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
-		instance.address = validated_data.get('address',instance.address)
-		instance.email_id = validated_data.get('email_id',instance.email_id)
-		instance.alternate_email = validated_data.get('alternate_email',instance.alternate_email)
-		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
+		# instance.email_id = validated_data.get('email_id',instance.email_id)
 		# instance.last_login = validated_data.get('last_login',instance.last_login)
 		# instance.password_reset = validated_data.get('password_reset',instance.password_reset)
+		instance.designation = validated_data.get('designation',instance.designation)
+		instance.department = validated_data.get('department',instance.department)
+		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
+		instance.address = validated_data.get('address',instance.address)
+		instance.alternate_email = validated_data.get('alternate_email',instance.alternate_email)
+		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
 		instance.save()
 		return instance
 
