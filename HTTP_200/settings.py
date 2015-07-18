@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'django.middleware.security.SecurityMiddleware',
+	# 'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'HTTP_200.urls'
