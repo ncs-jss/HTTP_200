@@ -69,7 +69,7 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	"""
 	permission_classes = (IsOwnerOrReadOnly, 
 		HasGroupPermission )
-	authentication_classes = (JSONWebTokenAuthentication, )
+	# authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
 	filter_backends = (filters.DjangoFilterBackend,)
@@ -89,6 +89,18 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
+
+class NoticeListViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class in order to get the complete set of default read and write operations
+	"""
+	This viewset automatically provides `list` action.
+
+	"""
+	permission_classes = (IsOwnerOrReadOnly, 
+		HasGroupPermission )
+	authentication_classes = (JSONWebTokenAuthentication, )
+	queryset = Notice.objects.all()
+	serializer_class = NoticeListSerializer
+	filter_backends = (filters.DjangoFilterBackend,)
 
 # class check(APIView):
 #     permission_classes = (IsAuthenticated, )
