@@ -59,13 +59,14 @@ class Notice(models.Model):
 		(EVENTS,'Events'),
 		(MISC,'Miscelleneous'),
 		)
-	owner = models.ForeignKey(User, related_name='notices', default = None)
+	owner = models.ForeignKey(Faculty, related_name='notices', default = None)
 	title = models.CharField(max_length = 500)
 	description = models.TextField()
 	details = JSONField()
-	file_attached = models.FileField(upload_to = "attachments", null = True)
+	file_attached = models.FileField(upload_to = "attachments", blank = True, null = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now_add=True,editable = True)
+	subject = models.CharField(max_length = 200)
 	category = models.CharField(max_length = 4,
 		choices = CATEGORY,
 		default = MISC)
