@@ -89,3 +89,32 @@ class NoticeSerializer(serializers.HyperlinkedModelSerializer):
 		instance.category = validated_data.get('category',instance.category)
 		instance.save()
 		return instance
+
+
+class NoticeListSerializer(serializers.HyperlinkedModelSerializer):
+	'''
+	Serializer Class for Listing the notices only(not the details) that are available in Model
+	'''
+	owner = serializers.ReadOnlyField(source='owner.username')
+	attachment_flag = serializers.SerializerMethodField('check_for_attachment')
+
+	def check_for_attachment(self, Notice):
+		return Notice.file_attached != '' 
+	
+	class Meta:
+		model = Notice
+		fields = ('id', 'title', 'owner', 'details', 'attachment_flag', 'created_at', 'category')
+
+	# def create(self, validated_data):
+	# 	"""
+	# 	Create and return a new `Notices` instance, given the validated data.
+	# 	"""
+	# 	return Notice.objects.create(**validated_data)
+
+	# def update(self, instance, validated_data):
+	# 	instance.title = validated_data.get('title',instance.title)
+	# 	instance.created_at = validated_data.get('created_at',instance.created_at)
+	# 	instance.updated_at = validated_data.get('updated_at',instance.updated_at)
+	# 	instance.category = validated_data.get('category',instance.category)
+	# 	instance.save()
+	# 	return instance	
