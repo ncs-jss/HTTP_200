@@ -4,11 +4,19 @@ from rest_framework import renderers
 from feeds.views import *
 
 
+'''
+	The below `notice_list_only` is for displaying the small part of all notices that us used to 
+	display the specific details on the dashboard.
+''' 
+notice_list_only = NoticeListViewSet.as_view({
+	'get': 'list'
+})
 
 notice_list = NoticeViewSet.as_view({
 	'get': 'list',
 	'post': 'create'
 })
+
 notice_detail = NoticeViewSet.as_view({
 	'get': 'retrieve',
 	'put': 'update',
@@ -56,6 +64,7 @@ urlpatterns += patterns('feeds.serializers',
 	url(r'^api/faculty/(?P<pk>[0-9]+)/$', faculty_detail, name = "faculty-detail"),
 	url(r'^api/notice/$', notice_list, name = "notice-list"),
 	url(r'^api/notice/(?P<pk>[0-9]+)/$', notice_detail, name = "notice-detail"),
+	url(r'^api/notice/list/$', notice_list_only, name = "notice-list-only"),
 	url(r'^users/$', user_list, name = "user-list"),
 	url(r'^users/(?P<pk>[0-9]+)/$', user_detail, name = "user-detail"),
 	# url(r'^check/$', views.check.as_view()),
