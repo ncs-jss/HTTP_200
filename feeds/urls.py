@@ -85,6 +85,7 @@ urlpatterns += patterns('feeds.serializers',
 )
 
 urlpatterns += [
+	url(r'^search/', include('haystack.urls')),
 	url(r'^api-auth/', include('rest_framework.urls',
 		namespace='rest_framework')),
 ]
