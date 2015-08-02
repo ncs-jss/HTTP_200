@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = (
 	'rest_framework',
-	'feeds',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -41,6 +40,8 @@ INSTALLED_APPS = (
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'corsheaders',
+	'haystack',
+	'feeds',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -166,7 +167,7 @@ REST_FRAMEWORK = {
 		'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 	),
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 15
+	'PAGE_SIZE': 15
 }
 
 
@@ -204,3 +205,10 @@ JWT_AUTH = {
 
 	'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+
+HAYSTACK_CONNECTIONS = {
+	'default': {
+		'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+	},
+}
+
