@@ -73,6 +73,9 @@ class Notice(models.Model):
 	scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 
 
-# class BookmarkedNotices(models.Model):
-# 	"""
-# 	"""
+class BookmarkedNotice(models.Model):
+	"""
+		Defines the databse table for storing the bookmarks as done by the user. 
+	"""
+	user = models.ForeignKey(User)
+	notice = models.ForeignKey(Notice)
