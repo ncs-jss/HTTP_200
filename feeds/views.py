@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, render_to_response
 from django.http import *
@@ -69,7 +70,7 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	"""
 	permission_classes = (IsOwnerOrReadOnly, 
 		HasGroupPermission )
-	# authentication_classes = (JSONWebTokenAuthentication, )
+	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
 	filter_backends = (filters.DjangoFilterBackend,)
@@ -101,6 +102,22 @@ class NoticeListViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet cl
 	queryset = Notice.objects.all()
 	serializer_class = NoticeListSerializer
 	filter_backends = (filters.DjangoFilterBackend,)
+
+class BookmarkViewSet(viewsets.ModelViewSet):
+	"""
+	This viewset automatically provides `list`, `create`, `retrieve`,
+	`update` and `destroy` actions.
+	"""
+	permission_classes = (IsOwnerOrReadOnly,)
+	authentication_classes = (JSONWebTokenAuthentication, )
+	queryset = BookmarkedNotice.objects.all()
+	serializer_class = BookmarkSerializer
+
+	def perform_create(self, serializer):
+		serializer.save(user = self.request.user)
+
+	def perform_update(self, serializer):
+		serializer.save(user = self.request.user)
 
 # class check(APIView):
 #     permission_classes = (IsAuthenticated, )
