@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import URLValidator
+from django.core import urlresolvers
 from jsonfield import JSONField
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -71,6 +72,9 @@ class Notice(models.Model):
 		choices = CATEGORY,
 		default = MISC)
 	scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
+
+	def get_absolute_url(self):
+		return urlresolvers.reverse('notice-detail', args=[self.pk])
 
 
 class BookmarkedNotice(models.Model):
