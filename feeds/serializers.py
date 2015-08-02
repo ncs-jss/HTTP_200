@@ -8,15 +8,23 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ( 'id', 'username', 'email','first_name', 'last_name',)
+		fields = ( 'id', 'username', 'email','first_name', 'last_name', 'last_login')
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	Serializer Class for Student Model
 	'''
+	user_fields = UserSerializer(source = 'user')
+	relevent_count = serializers.ReadOnlyField(source='relevent')
+	academics_count = serializers.ReadOnlyField(source='academics')
+	administration_count = serializers.ReadOnlyField(source='administration')
+	misc_count = serializers.ReadOnlyField(source='misc')
+	tnp_count = serializers.ReadOnlyField(source='tnp')
+	events_count = serializers.ReadOnlyField(source='events')
+
 	class Meta:
 		model = Student
-		fields = ('id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course','bookmarks')
+		fields = ( 'user_fields', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
 
 	def create(self, validated_data):
 		"""
@@ -31,7 +39,12 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 		instance.mother_name = validated_data.get('mother_name',instance.mother_name)
 		instance.address = validated_data.get('address',instance.address)
 		instance.course = validated_data.get('course',instance.course)
-		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
+		instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
+		instance.academics_count = validated_data.get('academics_count',instance.academics_count)
+		instance.administration_count = validated_data.get('administration_count',instance.administration_count)
+		instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
+		instance.events_count = validated_data.get('events_count',instance.events_count)
+		instance.misc_count = validated_data.get('misc_count',instance.misc_count)
 		instance.save()
 		return instance
 
@@ -40,11 +53,18 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	Serializer Class for Faculty Model
 	'''
-	notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
+	user_fields = UserSerializer(source = 'user')
+	relevent_count = serializers.ReadOnlyField(source='relevent')
+	academics_count = serializers.ReadOnlyField(source='academics')
+	administration_count = serializers.ReadOnlyField(source='administration')
+	misc_count = serializers.ReadOnlyField(source='misc')
+	tnp_count = serializers.ReadOnlyField(source='tnp')
+	events_count = serializers.ReadOnlyField(source='events')
+	# notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
 	notices = serializers.HyperlinkedRelatedField(many=True, view_name='notice-detail', read_only=True)
 	class Meta:
 		model = Faculty
-		fields = ('notices', 'id', 'notice_uploaded','designation','department','ph_no','address', 'alternate_email', 'bookmarks')
+		fields = ('user_fields', 'notices', 'id','designation','department','ph_no','address', 'alternate_email','relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
 
 	def create(self, validated_data):
 		"""
@@ -58,7 +78,12 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.address = validated_data.get('address',instance.address)
 		instance.alternate_email = validated_data.get('alternate_email',instance.alternate_email)
-		instance.bookmarks = validated_data.get('bookmarks',instance.bookmarks)
+		instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
+		instance.academics_count = validated_data.get('academics_count',instance.academics_count)
+		instance.administration_count = validated_data.get('administration_count',instance.administration_count)
+		instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
+		instance.events_count = validated_data.get('events_count',instance.events_count)
+		instance.misc_count = validated_data.get('misc_count',instance.misc_count)
 		instance.save()
 		return instance
 
@@ -68,6 +93,10 @@ class NoticeSerializer(serializers.HyperlinkedModelSerializer):
 	Serializer Class for Notices Model
 	'''
 	owner = serializers.ReadOnlyField(source='owner.username')
+	# currenet_user = serializers.SerializerMethodField(source = 'check_for_current_user')
+	# bookmark_flag = SerializerMethodField(source = 'check_for_bookmark')
+	# def check_for_bookmark(self, BookmarkedNotice):
+	# def check_for_current_user(self, )
 	class Meta:
 		model = Notice
 		fields = ('id', 'scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
