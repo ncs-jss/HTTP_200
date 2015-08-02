@@ -24,6 +24,18 @@ notice_detail = NoticeViewSet.as_view({
 	'delete': 'destroy'
 })
 
+bookmark_list = BookmarkViewSet.as_view({
+	'get': 'list',
+	'post': 'create'
+})
+
+bookmark_detail = BookmarkViewSet.as_view({
+	'get': 'retrieve',
+	'put': 'update',
+	'patch': 'partial_update',
+	'delete': 'destroy'
+})
+
 user_list = UserViewSet.as_view({
 	'get': 'list'
 })
@@ -59,14 +71,16 @@ from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns += patterns('feeds.serializers',
 	url(r'^$', api_root),
 	url(r'^api/student/$', student_list, name = "student-list"),
-	url(r'^api/student/(?P<pk>[0-9]+)/$', student_detail, name = "student-detail"),
 	url(r'^api/faculty/$', faculty_list, name = "faculty-list"),
-	url(r'^api/faculty/(?P<pk>[0-9]+)/$', faculty_detail, name = "faculty-detail"),
 	url(r'^api/notice/$', notice_list, name = "notice-list"),
-	url(r'^api/notice/(?P<pk>[0-9]+)/$', notice_detail, name = "notice-detail"),
+	url(r'^api/starred/$', bookmark_list, name = "bookmark-list"),
+	url(r'^api/users/$', user_list, name = "user-list"),
 	url(r'^api/notice/list/$', notice_list_only, name = "notice-list-only"),
-	url(r'^users/$', user_list, name = "user-list"),
-	url(r'^users/(?P<pk>[0-9]+)/$', user_detail, name = "user-detail"),
+	url(r'^api/notice/(?P<pk>[0-9]+)/$', notice_detail, name = "notice-detail"),
+	url(r'^api/starred/(?P<pk>[0-9]+)/$', bookmark_detail, name = "bookmark-detail"),
+	url(r'^api/student/(?P<pk>[0-9]+)/$', student_detail, name = "student-detail"),
+	url(r'^api/faculty/(?P<pk>[0-9]+)/$', faculty_detail, name = "faculty-detail"),
+	url(r'^api/users/(?P<pk>[0-9]+)/$', user_detail, name = "user-detail"),
 	# url(r'^check/$', views.check.as_view()),
 )
 
