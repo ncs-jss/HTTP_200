@@ -54,6 +54,7 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	# 'HTTP_200.middlewares.SetLastVisitMiddleware',
 	# 'django.middleware.security.SecurityMiddleware',
 )
 
@@ -167,7 +168,10 @@ REST_FRAMEWORK = {
 		'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 	),
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-	'PAGE_SIZE': 15
+	'PAGE_SIZE': 15,
+	'DEFAULT_FILTER_BACKENDS': (
+		'rest_framework.filters.DjangoFilterBackend',
+	),
 }
 
 
