@@ -14,7 +14,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	Serializer Class for Student Model
 	'''
-	user_fields = UserSerializer(source = 'user')
+	user_details = UserSerializer(source = 'user')
 	relevent_count = serializers.ReadOnlyField(source='relevent')
 	academics_count = serializers.ReadOnlyField(source='academics')
 	administration_count = serializers.ReadOnlyField(source='administration')
@@ -24,7 +24,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Student
-		fields = ( 'user_fields', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
+		fields = ( 'user_details', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
 
 	def create(self, validated_data):
 		"""
@@ -88,18 +88,31 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 		return instance
 
 
-class NoticeSerializer(serializers.HyperlinkedModelSerializer):
+class NoticeSerializer(serializers.ModelSerializer):
 	'''
 	Serializer Class for Notices Model
 	'''
 	owner = serializers.ReadOnlyField(source='owner.username')
+	# current_user = serializers.SerializerMethodField('_user')
+	# Use this method for the custom field
 	# currenet_user = serializers.SerializerMethodField(source = 'check_for_current_user')
 	# bookmark_flag = SerializerMethodField(source = 'check_for_bookmark')
 	# def check_for_bookmark(self, BookmarkedNotice):
 	# def check_for_current_user(self, )
+	# current_user = serializers.SerializerMethodField('_user')
+	# Use this method for the custom field
+	
+	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark')
+	def check_for_bookmark(self, Notice):
+		# _user = lambda self,obj: self.context['request'].user 
+		if BookmarkedNotice.objects.filter(notice__id = Notice.id, user__id = self.context['request'].user.id ).count()==1:
+			return True
+		else:
+			return False
+	
 	class Meta:
 		model = Notice
-		fields = ('id', 'scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
+		fields = ('bookmark_flag', 'id', 'scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
 
 	def create(self, validated_data):
 		"""
@@ -146,10 +159,11 @@ class BookmarkSerializer(serializers.ModelSerializer):
 	'''
 	Serializer class for Bookmarks Model
 	'''
-	user = serializers.ReadOnlyField(source='user.username')
+	user = serializers.PrimaryKeyRelatedField(queryset = User.objects.all())
+	notice_details = NoticeSerializer(source = 'notice')
 	class Meta:
 		model = BookmarkedNotice
-		fields = ('id','user', 'notice')
+		fields = ('id','user', 'notice_details')
 
 	def create(self, validated_data):
 		"""
@@ -160,6 +174,6 @@ class BookmarkSerializer(serializers.ModelSerializer):
 	def update(self, instance, validated_data):
 		instance.id = validated_data.get('id',instance.id)
 		instance.user = validated_data.get('user',instance.user)
-		instance.notice = validated_data.get('notice',instance.notice)
+		# instance.notice = validated_data.get('notice',instance.notice)
 		instance.save()
 		return instance	
