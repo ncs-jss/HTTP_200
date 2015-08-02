@@ -27,10 +27,47 @@ class Student(models.Model):
 	father_name = models.CharField(max_length = 200, null = True)
 	mother_name = models.CharField(max_length = 200, null = True)
 	address = models.CharField(max_length = 500, null = True)
+	relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
-	bookmarks = JSONField()
+
+	@property
+	def relevent(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'Relevent').count()
+		return count
+
+	@property
+	def administration(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ADMN').count()
+		return count
+
+	@property
+	def academics(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ACD').count()
+		return count
+
+	@property
+	def tnp(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'TNP').count()
+		return count
+
+	@property
+	def events(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'EVNT').count()
+		return count
+
+	@property
+	def misc(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'MISC').count()
+		return count
+
+
 
 class Faculty(models.Model):
 	'''
@@ -42,7 +79,41 @@ class Faculty(models.Model):
 	ph_no = models.PositiveIntegerField(null = True)
 	address = models.CharField(max_length = 500, null = True)
 	alternate_email = models.EmailField(max_length = 254, null = True)
-	bookmarks = JSONField()
+	relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	@property
+	def relevent(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'Relevent').count()
+		return count
+
+	@property
+	def administration(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ADMN').count()
+		return count
+
+	@property
+	def academics(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ACD').count()
+		return count
+
+	@property
+	def tnp(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'TNP').count()
+		return count
+
+	@property
+	def events(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'EVNT').count()
+		return count
+
+	@property
+	def misc(self):
+		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'MISC').count()
+		return count
 
 class Notice(models.Model):
 	'''
