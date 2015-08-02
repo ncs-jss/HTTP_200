@@ -1,0 +1,9 @@
+{{ object.text }}
+{{ object.user.description }}
+{{ object.details }}
+{{ object.created_at }}
+{{ object.updated_at }}
+{{ object.subject }}
+{{ object.owner }}
+
+
