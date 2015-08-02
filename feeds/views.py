@@ -73,10 +73,11 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Notice.objects.all()
 	serializer_class = NoticeSerializer
-	filter_backends = (filters.DjangoFilterBackend,)
 	required_groups = {
 		'POST': ['Faculties'],
 	}
+	filter_backends = (filters.SearchFilter,)
+	search_fields = ('category', 'description', 'title' )
 
 	def perform_create(self, serializer):
 		serializer.save(owner = self.request.user)
