@@ -2,14 +2,13 @@ from django.forms import widgets
 from rest_framework import serializers
 from feeds.models import *
 from django.contrib.auth.models import User
-
+from django.http import request
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 
-	notices = serializers.HyperlinkedRelatedField(many=True, view_name='notice-detail', read_only=True)
 	class Meta:
 		model = User
-		fields = ('notices', 'id', 'username', 'email','first_name', 'last_name',)
+		fields = ( 'id', 'username', 'email','first_name', 'last_name',)
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
@@ -42,9 +41,10 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	Serializer Class for Faculty Model
 	'''
 	notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
+	notices = serializers.HyperlinkedRelatedField(many=True, view_name='notice-detail', read_only=True)
 	class Meta:
 		model = Faculty
-		fields = ('id', 'notice_uploaded','designation','department','ph_no','address', 'alternate_email', 'bookmarks')
+		fields = ('notices', 'id', 'notice_uploaded','designation','department','ph_no','address', 'alternate_email', 'bookmarks')
 
 	def create(self, validated_data):
 		"""
@@ -97,24 +97,40 @@ class NoticeListSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	owner = serializers.ReadOnlyField(source='owner.username')
 	attachment_flag = serializers.SerializerMethodField('check_for_attachment')
+	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark')
+	
+	def check_for_bookmark(self, Notice):
+		if BookmarkedNotice.objects.filter(notice = Notice.id ).count()==1:
+			return True
+		else:
+			return False
 
 	def check_for_attachment(self, Notice):
 		return Notice.file_attached != '' 
 	
 	class Meta:
 		model = Notice
-		fields = ('id', 'title', 'owner', 'details', 'attachment_flag', 'created_at', 'category')
+		fields = ('bookmark_flag', 'id', 'title', 'owner', 'details', 'attachment_flag', 'created_at', 'category')
 
-	# def create(self, validated_data):
-	# 	"""
-	# 	Create and return a new `Notices` instance, given the validated data.
-	# 	"""
-	# 	return Notice.objects.create(**validated_data)
 
-	# def update(self, instance, validated_data):
-	# 	instance.title = validated_data.get('title',instance.title)
-	# 	instance.created_at = validated_data.get('created_at',instance.created_at)
-	# 	instance.updated_at = validated_data.get('updated_at',instance.updated_at)
-	# 	instance.category = validated_data.get('category',instance.category)
-	# 	instance.save()
-	# 	return instance	
+class BookmarkSerializer(serializers.ModelSerializer):
+	'''
+	Serializer class for Bookmarks Model
+	'''
+	user = serializers.ReadOnlyField(source='user.username')
+	class Meta:
+		model = BookmarkedNotice
+		fields = ('id','user', 'notice')
+
+	def create(self, validated_data):
+		"""
+		Create and return a new `BookmarkedNotice` instance, given the validated data.
+		"""
+		return BookmarkedNotice.objects.create( **validated_data)
+
+	def update(self, instance, validated_data):
+		instance.id = validated_data.get('id',instance.id)
+		instance.user = validated_data.get('user',instance.user)
+		instance.notice = validated_data.get('notice',instance.notice)
+		instance.save()
+		return instance	
