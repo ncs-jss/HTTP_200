@@ -9,13 +9,13 @@ from feeds.serializers import *
 # admin.site.register(Notice)
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('univ_roll_no','ph_no','father_name','mother_name','address', 'course','bookmarks')
+    list_display = ('univ_roll_no','ph_no','father_name','mother_name','address', 'course')
 
 admin.site.register(Student, StudentAdmin)
 
 
 class FacultyAdmin(admin.ModelAdmin):
-    list_display = ('designation','department','ph_no','address', 'alternate_email', 'bookmarks')
+    list_display = ('designation','department','ph_no','address', 'alternate_email')
 
 admin.site.register(Faculty, FacultyAdmin)
 
