@@ -24,3 +24,9 @@ class NoticeAdmin(admin.ModelAdmin):
     list_display = ('scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
 
 admin.site.register(Notice, NoticeAdmin)
+
+
+class BookmarkAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'notice')
+
+admin.site.register(BookmarkedNotice, BookmarkAdmin)
