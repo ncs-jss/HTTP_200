@@ -93,26 +93,24 @@ class NoticeSerializer(serializers.ModelSerializer):
 	Serializer Class for Notices Model
 	'''
 	owner = serializers.ReadOnlyField(source='owner.username')
-	# current_user = serializers.SerializerMethodField('_user')
-	# Use this method for the custom field
-	# currenet_user = serializers.SerializerMethodField(source = 'check_for_current_user')
-	# bookmark_flag = SerializerMethodField(source = 'check_for_bookmark')
-	# def check_for_bookmark(self, BookmarkedNotice):
-	# def check_for_current_user(self, )
-	# current_user = serializers.SerializerMethodField('_user')
-	# Use this method for the custom field
-	
-	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark')
-	def check_for_bookmark(self, Notice):
-		# _user = lambda self,obj: self.context['request'].user 
+	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark_flag')
+	bookmark_id = serializers.SerializerMethodField('check_for_bookmark_id')
+
+	def check_for_bookmark_flag(self, Notice):
 		if BookmarkedNotice.objects.filter(notice__id = Notice.id, user__id = self.context['request'].user.id ).count()==1:
 			return True
 		else:
 			return False
 	
+	def check_for_bookmark_id(self, Notice):
+		if BookmarkedNotice.objects.filter(notice = Notice.id ).count():
+			return BookmarkedNotice.objects.get(notice = Notice.id ).id
+		else:
+			return None
+	
 	class Meta:
 		model = Notice
-		fields = ('bookmark_flag', 'id', 'scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
+		fields = ('bookmark_flag', 'bookmark_id', 'id', 'scheduled_time','title','owner','description','details','file_attached','created_at','updated_at', 'category')
 
 	def create(self, validated_data):
 		"""
@@ -139,13 +137,14 @@ class NoticeListSerializer(serializers.HyperlinkedModelSerializer):
 	'''
 	owner = serializers.ReadOnlyField(source='owner.username')
 	attachment_flag = serializers.SerializerMethodField('check_for_attachment')
-	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark')
+	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark_flag')
 	
-	def check_for_bookmark(self, Notice):
+	def check_for_bookmark_flag(self, Notice):
 		if BookmarkedNotice.objects.filter(notice = Notice.id ).count()==1:
 			return True
 		else:
 			return False
+
 
 	def check_for_attachment(self, Notice):
 		return Notice.file_attached != '' 
@@ -159,11 +158,11 @@ class BookmarkSerializer(serializers.ModelSerializer):
 	'''
 	Serializer class for Bookmarks Model
 	'''
-	user = serializers.PrimaryKeyRelatedField(queryset = User.objects.all())
-	notice_details = NoticeSerializer(source = 'notice')
+	user = serializers.PrimaryKeyRelatedField(source='user.username', read_only = True)
+	notice_id = serializers.SlugRelatedField(source='notice', slug_field = 'pk', queryset = Notice.objects.all())
 	class Meta:
 		model = BookmarkedNotice
-		fields = ('id','user', 'notice_details')
+		fields = ('id','user', 'notice_id')
 
 	def create(self, validated_data):
 		"""
