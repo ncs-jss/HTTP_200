@@ -19,7 +19,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from feeds.models import *
 from feeds.serializers import *
 from feeds.forms import *
-from feeds.permissions import IsOwnerOrReadOnly, HasGroupPermission
+from feeds.permissions import IsOwnerOrReadOnly, IsOwnerOrReadOnlyUser, HasGroupPermission
 
 import django_filters
 
@@ -80,7 +80,9 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	search_fields = ('category', 'description', 'title' )
 
 	def perform_create(self, serializer):
-		serializer.save(owner = self.request.user)
+		user = self.request.user
+		faculty = Faculty.objects.get(user__username = user.username)
+		serializer.save(owner = faculty)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -109,7 +111,7 @@ class BookmarkViewSet(viewsets.ModelViewSet):
 	This viewset automatically provides `list`, `create`, `retrieve`,
 	`update` and `destroy` actions.
 	"""
-	permission_classes = (IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnlyUser,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = BookmarkedNotice.objects.all()
 	serializer_class = BookmarkSerializer
