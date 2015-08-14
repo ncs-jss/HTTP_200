@@ -15,6 +15,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import filters
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.renderers import JSONRenderer
 
 from feeds.models import *
 from feeds.serializers import *
@@ -78,6 +79,7 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	}
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('category', 'description', 'title' )
+	renderer_classes = (JSONRenderer, )
 
 	def perform_create(self, serializer):
 		user = self.request.user
