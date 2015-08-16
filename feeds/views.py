@@ -79,7 +79,6 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	}
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('category', 'description', 'title' )
-	renderer_classes = (JSONRenderer, )
 
 	def perform_create(self, serializer):
 		user = self.request.user
