@@ -60,7 +60,6 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	misc_count = serializers.ReadOnlyField(source='misc')
 	tnp_count = serializers.ReadOnlyField(source='tnp')
 	events_count = serializers.ReadOnlyField(source='events')
-	# notice_uploaded = serializers.PrimaryKeyRelatedField(many=True, queryset=Notice.objects.all())
 	notices = serializers.HyperlinkedRelatedField(many=True, view_name='notice-detail', read_only=True)
 	class Meta:
 		model = Faculty
