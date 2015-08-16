@@ -13,8 +13,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 		if request.method in permissions.SAFE_METHODS:
 			return True
 
-		# Write permissions are only allowed to the owner of the snippet.
-		return obj.owner == request.user
+		# Write permissions are only allowed to the owner of the notice.
+		return obj.owner.user == request.user
 
 
 def is_in_group(user, group_name):
@@ -51,3 +51,18 @@ class IsOwnerOrReadOnlyUser(permissions.BasePermission):
 
 		# Write permissions are only allowed to the owner of the snippet.
 		return obj.user == request.user
+
+class IsAuthenticatedUser(permissions.BasePermission):
+	"""
+	Custom permission for userserializer for an object to edit the details.
+	"""
+
+	def has_object_permission(self, request, view, obj):
+		# Read permissions are allowed to any request,
+		# so we'll always allow GET, HEAD or OPTIONS requests.
+		if request.method in permissions.SAFE_METHODS:
+			return True
+
+		# Write permissions are only allowed to the owner of the snippet.
+		return obj == request.user
+
