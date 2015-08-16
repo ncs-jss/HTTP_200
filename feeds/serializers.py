@@ -92,7 +92,7 @@ class NoticeSerializer(serializers.ModelSerializer):
 	'''
 	Serializer Class for Notices Model
 	'''
-	owner = serializers.ReadOnlyField(source='owner.username')
+	owner = serializers.ReadOnlyField(source='owner.user.username')
 	bookmark_flag = serializers.SerializerMethodField('check_for_bookmark_flag')
 	bookmark_id = serializers.SerializerMethodField('check_for_bookmark_id')
 
@@ -110,7 +110,7 @@ class NoticeSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = Notice
-		fields = ('bookmark_flag', 'bookmark_id', 'id', 'scheduled_time','title','owner','description','ce','cs','it','ee','ece','eee','me','mt','ic','first_year','second_year','third_year','fourth_year','btech','mtech','mba','mca','other_course','file_attached','created_at','updated_at', 'category')
+		fields = ('owner', 'bookmark_flag', 'bookmark_id', 'id', 'scheduled_time','title','description','ce','cs','it','ee','ece','eee','me','mt','ic','first_year','second_year','third_year','fourth_year','btech','mtech','mba','mca','other_course','file_attached','created_at','updated_at', 'category')
 
 	def create(self, validated_data):
 		"""
