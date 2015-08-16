@@ -39,32 +39,32 @@ class Student(models.Model):
 
 	@property
 	def relevent(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'Relevent').count()
+		count = Notice.objects.filter(created_at__gt = self.relevent_last_seen, category = 'Relevent').count()
 		return count
 
 	@property
 	def administration(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ADMN').count()
+		count = Notice.objects.filter(created_at__gt = self.administration_last_seen, category = 'ADMN').count()
 		return count
 
 	@property
 	def academics(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ACD').count()
+		count = Notice.objects.filter(created_at__gt = self.academics_last_seen, category = 'ACD').count()
 		return count
 
 	@property
 	def tnp(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'TNP').count()
+		count = Notice.objects.filter(created_at__gt = self.tnp_last_seen, category = 'TNP').count()
 		return count
 
 	@property
 	def events(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'EVNT').count()
+		count = Notice.objects.filter(created_at__gt = self.events_last_seen, category = 'EVNT').count()
 		return count
 
 	@property
 	def misc(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'MISC').count()
+		count = Notice.objects.filter(created_at__gt = self.misc_last_seen, category = 'MISC').count()
 		return count
 
 
@@ -87,32 +87,32 @@ class Faculty(models.Model):
 	events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	@property
 	def relevent(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'Relevent').count()
+		count = Notice.objects.filter(created_at__gt = self.relevent_last_seen, category = 'Relevent').count()
 		return count
 
 	@property
 	def administration(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ADMN').count()
+		count = Notice.objects.filter(created_at__gt = self.administration_last_seen, category = 'ADMN').count()
 		return count
 
 	@property
 	def academics(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'ACD').count()
+		count = Notice.objects.filter(created_at__gt = self.academics_last_seen, category = 'ACD').count()
 		return count
 
 	@property
 	def tnp(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'TNP').count()
+		count = Notice.objects.filter(created_at__gt = self.tnp_last_seen, category = 'TNP').count()
 		return count
 
 	@property
 	def events(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'EVNT').count()
+		count = Notice.objects.filter(created_at__gt = self.events_last_seen, category = 'EVNT').count()
 		return count
 
 	@property
 	def misc(self):
-		count = Notice.objects.filter(created_at__gt = self.last_login, category = 'MISC').count()
+		count = Notice.objects.filter(created_at__gt = self.misc_last_seen, category = 'MISC').count()
 		return count
 
 class Notice(models.Model):
