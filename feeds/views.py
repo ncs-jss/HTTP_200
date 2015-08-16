@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import viewsets
@@ -20,7 +20,7 @@ from rest_framework.renderers import JSONRenderer
 from feeds.models import *
 from feeds.serializers import *
 from feeds.forms import *
-from feeds.permissions import IsOwnerOrReadOnly, IsOwnerOrReadOnlyUser, HasGroupPermission
+from feeds.permissions import IsOwnerOrReadOnly, IsOwnerOrReadOnlyUser, HasGroupPermission, IsAuthenticatedUser
 
 import django_filters
 
@@ -34,33 +34,38 @@ def api_root(request, format=None):
 		'notices': reverse('notice-list', request=request, format=format),
 		'students': reverse('student-list', request=request, format=format),
 		'faculties': reverse('faculty-list', request=request, format=format),
-
 	})
 
 
-class StudentViewSet(viewsets.ReadOnlyModelViewSet): # Here I've used the ReadOnlyModelViewSet class to automatically provide the default 'read-only' operations
+class StudentViewSet(viewsets.ModelViewSet): # Here I've used the ReadOnlyModelViewSet class to automatically provide the default 'read-only' operations
 	"""
 	This viewset automatically provides `list`, `create`, `retrieve`,
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnlyUser, )
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Student.objects.all()
 	serializer_class = StudentSerializer
+	
+	def perform_update(self, serializer):
+		user = self.request.user.username
+		serializer.save(username = user)
 
-
-class FacultyViewSet(viewsets.ReadOnlyModelViewSet): # Here I've used the ReadOnlyModelViewSet class to automatically provide the default 'read-only' operations
+class FacultyViewSet(viewsets.ModelViewSet): # Here I've used the ReadOnlyModelViewSet class to automatically provide the default 'read-only' operations
 	"""
 	This viewset automatically provides `list`, `create`, `retrieve`,
 	`update` and `destroy` actions.
 
 	"""
-	permission_classes = (IsOwnerOrReadOnly,)
+	permission_classes = (IsOwnerOrReadOnlyUser,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = Faculty.objects.all()
 	serializer_class = FacultySerializer
-
+	
+	def perform_update(self, serializer):
+		user = self.request.user.username
+		serializer.save(username = user)
 
 
 class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class in order to get the complete set of default read and write operations
@@ -76,6 +81,8 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 	serializer_class = NoticeSerializer
 	required_groups = {
 		'POST': ['Faculties'],
+		'PUT': ['Faculties'],
+		'DELETE': ['Faculties'],
 	}
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('category', 'description', 'title' )
@@ -85,15 +92,20 @@ class NoticeViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class 
 		faculty = Faculty.objects.get(user__username = user.username)
 		serializer.save(owner = faculty)
 
+	def perform_update(self, serializer):
+		user = self.request.user
+		faculty = Faculty.objects.get(user__username = user.username)
+		serializer.save(owner = faculty)
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
 	"""
 	This viewset automatically provides `list` and `detail` actions.
 	"""
-	permission_classes = (IsOwnerOrReadOnly,)
+	permission_classes = (IsAuthenticatedUser,)
 	authentication_classes = (JSONWebTokenAuthentication, )
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
+
 
 class NoticeListViewSet(viewsets.ModelViewSet):  # I've used the ModelViewSet class in order to get the complete set of default read and write operations
 	"""
