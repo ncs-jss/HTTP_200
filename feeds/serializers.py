@@ -4,11 +4,33 @@ from feeds.models import *
 from django.contrib.auth.models import User
 from django.http import request
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+	username = serializers.ReadOnlyField()
+	password = serializers.CharField(style = {'input_type': 'password'}, default = 'password')
 
 	class Meta:
 		model = User
-		fields = ( 'id', 'username', 'email','first_name', 'last_name', 'last_login')
+		fields = ( 'id', 'username', 'email', 'password', 'first_name', 'last_name', 'last_login')
+	
+	def create(self, validated_data):
+		"""
+		Create and return a new `Student` instance, given the validated data.
+		"""
+		user = User(email=validated_data['email'], username=validated_data['username'], first_name = validated_data['first_name'], last_name = validated_data['last_name'])
+		user.set_password(validated_data['password'])
+		user.save()
+		return user
+
+	def update(self, instance, validated_data):
+		print validated_data
+		instance.username = validated_data.get('username',instance.username)
+		instance.first_name = validated_data.get('first_name',instance.first_name)
+		instance.last_name = validated_data.get('last_name',instance.last_name)
+		instance.email = validated_data.get('email',instance.email)
+		instance.last_login = validated_data.get('last_login',instance.last_login)
+		instance.set_password(validated_data.get('password',instance.password))
+		instance.save()
+		return instance
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
 	'''
@@ -24,7 +46,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Student
-		fields = ( 'user_details', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
+		fields = ('user_details', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
 
 	def create(self, validated_data):
 		"""
@@ -33,18 +55,24 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 		return Student.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
+		print validated_data
+		validated_user_data = validated_data['user'].items()
 		instance.univ_roll_no = validated_data.get('univ_roll_no',instance.univ_roll_no)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.father_name = validated_data.get('father_name',instance.father_name)
 		instance.mother_name = validated_data.get('mother_name',instance.mother_name)
 		instance.address = validated_data.get('address',instance.address)
 		instance.course = validated_data.get('course',instance.course)
-		instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
-		instance.academics_count = validated_data.get('academics_count',instance.academics_count)
-		instance.administration_count = validated_data.get('administration_count',instance.administration_count)
-		instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
-		instance.events_count = validated_data.get('events_count',instance.events_count)
-		instance.misc_count = validated_data.get('misc_count',instance.misc_count)
+		user = User.objects.filter(username = validated_data['username'])
+		user.update(email = validated_user_data[0][1], first_name = validated_user_data[2][1], last_name = validated_user_data[3][1])
+		user[0].set_password(validated_user_data[1][1])
+		# User.objects.filter(username = validated_user_data[0][1])
+		# instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
+		# instance.academics_count = validated_data.get('academics_count',instance.academics_count)
+		# instance.administration_count = validated_data.get('administration_count',instance.administration_count)
+		# instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
+		# instance.events_count = validated_data.get('events_count',instance.events_count)
+		# instance.misc_count = validated_data.get('misc_count',instance.misc_count)
 		instance.save()
 		return instance
 
@@ -72,17 +100,22 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 		return Faculty.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
+		print validated_data
+		validated_user_data = validated_data['user'].items()
 		instance.designation = validated_data.get('designation',instance.designation)
 		instance.department = validated_data.get('department',instance.department)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.address = validated_data.get('address',instance.address)
 		instance.alternate_email = validated_data.get('alternate_email',instance.alternate_email)
-		instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
-		instance.academics_count = validated_data.get('academics_count',instance.academics_count)
-		instance.administration_count = validated_data.get('administration_count',instance.administration_count)
-		instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
-		instance.events_count = validated_data.get('events_count',instance.events_count)
-		instance.misc_count = validated_data.get('misc_count',instance.misc_count)
+		user = User.objects.filter(username = validated_data['username'])
+		user.update(email = validated_user_data[0][1], first_name = validated_user_data[2][1], last_name = validated_user_data[3][1])
+		user[0].set_password(validated_user_data[1][1])
+		# instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
+		# instance.academics_count = validated_data.get('academics_count',instance.academics_count)
+		# instance.administration_count = validated_data.get('administration_count',instance.administration_count)
+		# instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
+		# instance.events_count = validated_data.get('events_count',instance.events_count)
+		# instance.misc_count = validated_data.get('misc_count',instance.misc_count)
 		instance.save()
 		return instance
 
@@ -109,7 +142,7 @@ class NoticeSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = Notice
-		fields = ('owner', 'bookmark_flag', 'bookmark_id', 'id', 'scheduled_time','title','description','ce','cs','it','ee','ece','eee','me','mt','ic','first_year','second_year','third_year','fourth_year','btech','mtech','mba','mca','other_course','file_attached','created_at','updated_at', 'category')
+		fields = ('owner', 'bookmark_flag', 'bookmark_id', 'id', 'scheduled_time','title','description','ce','cs','it','ee','ece','eee','me','mt','ic','first_year','second_year','third_year','fourth_year','btech','mtech','mba','mca','other_course','file_attached','created_at','updated_at', 'category', 'subject')
 
 	def create(self, validated_data):
 		"""
@@ -126,6 +159,7 @@ class NoticeSerializer(serializers.ModelSerializer):
 		instance.created_at = validated_data.get('created_at',instance.created_at)
 		instance.updated_at = validated_data.get('updated_at',instance.updated_at)
 		instance.category = validated_data.get('category',instance.category)
+		instance.subject = validated_data.get('subject',instance.subject)
 		instance.save()
 		return instance
 
