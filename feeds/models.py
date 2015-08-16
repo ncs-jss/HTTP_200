@@ -134,7 +134,6 @@ class Notice(models.Model):
 	owner = models.ForeignKey(Faculty, related_name='notices', default = None)
 	title = models.CharField(max_length = 500)
 	description = models.TextField()
-	details = JSONField()
 	file_attached = models.FileField(upload_to = "attachments", blank = True, null = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now_add=True,editable = True)
@@ -143,6 +142,27 @@ class Notice(models.Model):
 		choices = CATEGORY,
 		default = MISC)
 	scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
+	
+	cs = models.BooleanField(default = False)
+	ce = models.BooleanField(default = False)
+	it = models.BooleanField(default = False)
+	ic = models.BooleanField(default = False)
+	eee = models.BooleanField(default = False)
+	ee = models.BooleanField(default = False)
+	ece = models.BooleanField(default = False)
+	me = models.BooleanField(default = False)
+	mt = models.BooleanField(default = False)
+	
+	first_year = models.BooleanField(default = False)
+	second_year = models.BooleanField(default = False)
+	third_year = models.BooleanField(default = False)
+	fourth_year = models.BooleanField(default = False)
+	
+	btech = models.BooleanField(default = False)
+	mtech = models.BooleanField(default = False)
+	mba = models.BooleanField(default = False)
+	mca = models.BooleanField(default = False)
+	other_course = models.BooleanField(default = False)
 
 	def get_absolute_url(self):
 		return urlresolvers.reverse('notice-detail', args=[self.pk])
