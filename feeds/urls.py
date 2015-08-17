@@ -37,23 +37,33 @@ bookmark_detail = BookmarkViewSet.as_view({
 })
 
 user_list = UserViewSet.as_view({
-	'get': 'list'
+	'get': 'list',
+	'post': 'create'
 })
 user_detail = UserViewSet.as_view({
-	'get': 'retrieve'
+	'get': 'retrieve',
+	'put': 'update',
+	# 'patch': 'partial_update',
+	# 'delete': 'destroy'
 })
 
 student_list = StudentViewSet.as_view({
 	'get': 'list'
 })
 student_detail = StudentViewSet.as_view({
-	'get': 'retrieve'
+	'get': 'retrieve',
+	'put': 'update',
+	'patch': 'partial_update',
+	# 'delete': 'destroy'
 })
 faculty_list = FacultyViewSet.as_view({
 	'get': 'list'
 })
 faculty_detail = FacultyViewSet.as_view({
-	'get': 'retrieve'
+	'get': 'retrieve',
+	'put': 'update',
+	'patch': 'partial_update',
+	# 'delete': 'destroy'
 })
 
 urlpatterns = [
