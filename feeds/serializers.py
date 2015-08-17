@@ -46,7 +46,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Student
-		fields = ('user_details', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
+		fields = ('user_details', 'id', 'univ_roll_no','ph_no','father_name','mother_name','address', 'course', 'relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count', 'relevent_last_seen', 'administration_last_seen', 'academics_last_seen', 'misc_last_seen', 'tnp_last_seen', 'events_last_seen')
 
 	def create(self, validated_data):
 		"""
@@ -55,24 +55,22 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
 		return Student.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
-		print validated_data
 		validated_user_data = validated_data['user'].items()
+		user = User.objects.filter(username = validated_data['username'])
+		user.update(email = validated_user_data[0][1], first_name = validated_user_data[2][1], last_name = validated_user_data[3][1])
+		user[0].set_password(validated_user_data[1][1])
 		instance.univ_roll_no = validated_data.get('univ_roll_no',instance.univ_roll_no)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.father_name = validated_data.get('father_name',instance.father_name)
 		instance.mother_name = validated_data.get('mother_name',instance.mother_name)
 		instance.address = validated_data.get('address',instance.address)
 		instance.course = validated_data.get('course',instance.course)
-		user = User.objects.filter(username = validated_data['username'])
-		user.update(email = validated_user_data[0][1], first_name = validated_user_data[2][1], last_name = validated_user_data[3][1])
-		user[0].set_password(validated_user_data[1][1])
-		# User.objects.filter(username = validated_user_data[0][1])
-		# instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
-		# instance.academics_count = validated_data.get('academics_count',instance.academics_count)
-		# instance.administration_count = validated_data.get('administration_count',instance.administration_count)
-		# instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
-		# instance.events_count = validated_data.get('events_count',instance.events_count)
-		# instance.misc_count = validated_data.get('misc_count',instance.misc_count)
+		instance.relevent_last_seen = validated_data.get('relevent_last_seen',instance.relevent_last_seen)
+		instance.academics_last_seen = validated_data.get('academics_last_seen',instance.academics_last_seen)
+		instance.administration_last_seen = validated_data.get('administration_last_seen',instance.administration_last_seen)
+		instance.misc_last_seen = validated_data.get('misc_last_seen',instance.misc_last_seen)
+		instance.tnp_last_seen = validated_data.get('tnp_last_seen',instance.tnp_last_seen)
+		instance.events_last_seen = validated_data.get('events_last_seen',instance.events_last_seen)
 		instance.save()
 		return instance
 
@@ -91,7 +89,7 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 	notices = serializers.HyperlinkedRelatedField(many=True, view_name='notice-detail', read_only=True)
 	class Meta:
 		model = Faculty
-		fields = ('user_fields', 'notices', 'id','designation','department','ph_no','address', 'alternate_email','relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count')
+		fields = ('user_fields', 'notices', 'id','designation','department','ph_no','address', 'alternate_email','relevent_count', 'academics_count', 'administration_count', 'tnp_count', 'events_count', 'misc_count', 'relevent_last_seen', 'administration_last_seen', 'academics_last_seen', 'misc_last_seen', 'tnp_last_seen', 'events_last_seen')
 
 	def create(self, validated_data):
 		"""
@@ -100,22 +98,21 @@ class FacultySerializer(serializers.HyperlinkedModelSerializer):
 		return Faculty.objects.create(**validated_data)
 
 	def update(self, instance, validated_data):
-		print validated_data
 		validated_user_data = validated_data['user'].items()
+		user = User.objects.filter(username = validated_data['username'])
+		user.update(email = validated_user_data[0][1], first_name = validated_user_data[2][1], last_name = validated_user_data[3][1])
+		user[0].set_password(validated_user_data[1][1])
 		instance.designation = validated_data.get('designation',instance.designation)
 		instance.department = validated_data.get('department',instance.department)
 		instance.ph_no = validated_data.get('ph_no',instance.ph_no)
 		instance.address = validated_data.get('address',instance.address)
 		instance.alternate_email = validated_data.get('alternate_email',instance.alternate_email)
-		user = User.objects.filter(username = validated_data['username'])
-		user.update(email = validated_user_data[0][1], first_name = validated_user_data[2][1], last_name = validated_user_data[3][1])
-		user[0].set_password(validated_user_data[1][1])
-		# instance.relevent_count = validated_data.get('relevent_count',instance.relevent_count)
-		# instance.academics_count = validated_data.get('academics_count',instance.academics_count)
-		# instance.administration_count = validated_data.get('administration_count',instance.administration_count)
-		# instance.tnp_count = validated_data.get('tnp_count',instance.tnp_count)
-		# instance.events_count = validated_data.get('events_count',instance.events_count)
-		# instance.misc_count = validated_data.get('misc_count',instance.misc_count)
+		instance.relevent_last_seen = validated_data.get('relevent_last_seen',instance.relevent_last_seen)
+		instance.academics_last_seen = validated_data.get('academics_last_seen',instance.academics_last_seen)
+		instance.administration_last_seen = validated_data.get('administration_last_seen',instance.administration_last_seen)
+		instance.misc_last_seen = validated_data.get('misc_last_seen',instance.misc_last_seen)
+		instance.tnp_last_seen = validated_data.get('tnp_last_seen',instance.tnp_last_seen)
+		instance.events_last_seen = validated_data.get('events_last_seen',instance.events_last_seen)
 		instance.save()
 		return instance
 
