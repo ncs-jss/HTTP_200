@@ -27,12 +27,12 @@ class Student(models.Model):
 	father_name = models.CharField(max_length = 200, null = True)
 	mother_name = models.CharField(max_length = 200, null = True)
 	address = models.CharField(max_length = 500, null = True)
-	relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	relevent_last_seen = models.DateTimeField(default = None,editable = True)
+	academics_last_seen = models.DateTimeField(default = None,editable = True)
+	administration_last_seen = models.DateTimeField(default = None,editable = True)
+	misc_last_seen = models.DateTimeField(default = None,editable = True)
+	tnp_last_seen = models.DateTimeField(default = None,editable = True)
+	events_last_seen = models.DateTimeField(default = None,editable = True)
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
@@ -79,12 +79,12 @@ class Faculty(models.Model):
 	ph_no = models.PositiveIntegerField(null = True)
 	address = models.CharField(max_length = 500, null = True)
 	alternate_email = models.EmailField(max_length = 254, null = True)
-	relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-	events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	relevent_last_seen = models.DateTimeField(default = None,editable = True)
+	academics_last_seen = models.DateTimeField(editable = True, default  = None)
+	administration_last_seen = models.DateTimeField(default = None,editable = True)
+	misc_last_seen = models.DateTimeField(default = None,editable = True)
+	tnp_last_seen = models.DateTimeField(default = None,editable = True)
+	events_last_seen = models.DateTimeField(default = None,editable = True)
 	@property
 	def relevent(self):
 		count = Notice.objects.filter(created_at__gt = self.relevent_last_seen, category = 'Relevent').count()
@@ -137,7 +137,7 @@ class Notice(models.Model):
 	file_attached = models.FileField(upload_to = "attachments", blank = True, null = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now_add=True,editable = True)
-	subject = models.CharField(max_length = 200)
+	subject = models.CharField(max_length = 200, default = None)
 	category = models.CharField(max_length = 4,
 		choices = CATEGORY,
 		default = MISC)
