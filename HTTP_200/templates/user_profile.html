@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Users</h2>
+    <ul>
+            <li>{{ user_list.username }}</li>
+            <li>{{ user_list.first_name }}</li>
+            <li>{{ user_list.last_name}}</li>
+            <li>{{ user_list.email }}</li>
+            <li>{{ detail_list.univ_roll_no }}</li>
+            <li>{{ detail_list.contact_no }}</li>
+            <li>{{ detail_list.father_name }}</li>
+            <li>{{ detail_list.mother_name }}</li>
+            <li>{{ detail_list.address }}</li>
+            <li>{{ detail_list.course }}</li>
+    </ul>
+ <br>
+
+{% if user == user_list  %}
+<a href="/edit/{{ user.username }}"><button class="edit_profile"> Edit </button></a>
+{% endif %}
+
+
+{% endblock %}
