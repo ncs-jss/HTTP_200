@@ -9,4 +9,4 @@ djangorestframework-jwt==1.6.0
 django-haystack==2.4.0
 django-allauth==0.21.0
 django-filter==0.11.0
-PyJWT
+PyJWT==1.4.0

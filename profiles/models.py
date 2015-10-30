@@ -55,3 +55,4 @@ class FacultyDetail(models.Model):
 	# misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+	

@@ -17,8 +17,8 @@
  <br>
 
 {% if user == user_list  %}
-<a href=""><button class="edit_profile"> Edit </button></a>
+<a href="/edit/{{ user.username }}"><button class="edit_profile"> Edit </button></a>
 {% endif %}
 
 
-{% endblock %}	
+{% endblock %}

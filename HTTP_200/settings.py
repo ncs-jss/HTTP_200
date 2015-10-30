@@ -28,7 +28,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
-
+APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = (
@@ -42,7 +42,7 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'corsheaders',
 	'haystack',
-	'feeds',
+	# 'feeds',
 	'allauth',
 	'allauth.account',
 	'profiles',
