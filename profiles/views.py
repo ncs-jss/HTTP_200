@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from braces.views import LoginRequiredMixin
 from django.views.generic import View
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
 
 from .models import StudentDetail
 from .forms import StudentForm
+
 # Create your views here.
 class Home(View):
 	'''
@@ -14,7 +19,7 @@ class Home(View):
 		template_name = 'index.html'
 		return render(request, template_name)
 
-class UserProfile(View):
+class UserProfile(LoginRequiredMixin, View):
 	'''
 	'''
 	def get(self,request, user_id=None):
@@ -23,16 +28,22 @@ class UserProfile(View):
 		template_name = 'user_profile.html'
 		return render(request, template_name, {'user_list':user_list, 'detail_list':detail_list})
 
-class EditProfile(UpdateView):
+class EditProfile(LoginRequiredMixin, UpdateView):
 	'''
 	'''
 	model = StudentDetail
 	form_class = StudentForm
 	template_name = "edit_profile.html"
+	slug_field = 'user'
+	
+	def get_success_url(self):
+		return reverse("user-profile", kwargs={'user_id': self.request.user.username})
 
-	#to ensure that a user can not edit someone else's profile
-	# def get_object(self, queryset=None): 
-	# 	return User.objects.get_or_create(user=self.request.user)[0]
-
-	# def get_success_url(self):
-	# 	return reverse("profile", kwargs={'slug': self.request.user})
+	def get_object(self, *args, **kwargs):
+		'''
+		To verify that the user is permitted to visit the page for editing
+		'''
+		obj = super(EditProfile, self).get_object(*args, **kwargs)
+		if not obj.user == self.request.user:
+			raise PermissionDenied # maybe you'll need to write a middleware to catch 403's same way
+		return obj
