@@ -45,6 +45,8 @@ INSTALLED_APPS = (
 	'feeds',
 	'allauth',
 	'allauth.account',
+	'profiles',
+	'notices',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -194,3 +196,5 @@ STATIC_ROOT = os.path.join(APP_DIR, 'assets', 'collected-static')
 STATICFILES_DIRS = (
 	os.path.join(APP_DIR, 'static'),
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
