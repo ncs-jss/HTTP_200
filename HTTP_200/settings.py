@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+APP_DIR = os.path.join(BASE_DIR, 'HTTP_200')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -66,7 +66,7 @@ ROOT_URLCONF = 'HTTP_200.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [],
+		'DIRS': [os.path.join(APP_DIR, 'templates'),],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
