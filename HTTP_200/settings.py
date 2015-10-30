@@ -43,8 +43,8 @@ INSTALLED_APPS = (
 	'corsheaders',
 	'haystack',
 	'feeds',
-    'allauth',
-    'allauth.account',
+	'allauth',
+	'allauth.account',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -178,12 +178,19 @@ HAYSTACK_CONNECTIONS = {
 }
 
 AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
+	# Needed to login by username in Django admin, regardless of `allauth`
+	'django.contrib.auth.backends.ModelBackend',
 
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+	# `allauth` specific authentication methods, such as login by e-mail
+	'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(APP_DIR, 'assets', 'collected-static')
+
+STATICFILES_DIRS = (
+	os.path.join(APP_DIR, 'static'),
+)
