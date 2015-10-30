@@ -63,7 +63,7 @@ ROOT_URLCONF = 'HTTP_200.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [BASE_DIR+"/HTTP_200/templates/"],
+		'DIRS': [],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -109,54 +109,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# INTERNAL_IPS = ("127.0.0.1",)
-
-# ALLOWED_HOSTS = ("cbmonitor.sc.couchbase.com", "127.0.0.1")
-
-# INTERNAL_IPS = ("127.0.0.1",)
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": "cbmonitor.db",
-#         "OPTIONS": {
-#             "timeout": 30,
-#         },
-#     }
-# }
-
-# COUCHBASE_SERVER = {
-# 	"host": "127.0.0.1",
-# 	"port": 8091,
-# 	"admin:password": "root:123456",
-# }
-
-
-# CACHES = {
-# 	"default": {
-# 		"BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
-# 		"LOCATION": "127.0.0.1:11411",
-# 		"TIMEOUT": 3600 * 24 * 30 * 6,
-# 		"OPTIONS": {
-# 			"MAX_ENTRIES": 10000,
-# 		}
-# 	}
-# }
-
-# LOGIN_REDIRECT_URL = '/'
-
 AUTH_USER_MODEL = 'auth.User'
-
-# TEMPLATE_LOADERS = (
-#     'django.template.loaders.filesystem.Loader',
-#     'django.template.loaders.app_directories.Loader',
-# #     'django.template.loaders.eggs.Loader',
-# )
-
-# TEMPLATE_DIRS = (
-#     os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), \
-#         'HTTP_200/templates'),
-# )
 
 REST_FRAMEWORK = {
 	'DEFAULT_PERMISSION_CLASSES': (
