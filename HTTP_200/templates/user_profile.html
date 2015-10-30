@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Users</h2>
+    <ul>
+        {% if user_type == 'student' %}
+            <li><b>Username : </b>{{ user_list.username }}</li>
+            <li><b>First Name : </b>{{ user_list.first_name }}</li>
+            <li><b>Last Name : </b>{{ user_list.last_name}}</li>
+            <li><b>Course : </b>{{ detail_list.course }}</li>
+            {% if not detail_list.display_to_others == False or user == user_list %}
+                <li><b>Univ Roll No : </b>{{ detail_list.univ_roll_no }}</li>
+                <li><b>Email : </b>{{ user_list.email }}</li>
+                <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
+                <li><b>Address : </b>{{ detail_list.address }}</li>
+                <li><b>Father's Name : </b>{{ detail_list.father_name }}</li>
+                <li><b>Mother's Name : </b>{{ detail_list.mother_name }}</li>
+            {% endif %}
+
+        {% elif user_type == 'faculty' %}
+            <li><b>Username : </b>{{ user_list.username }}</li>
+            <li><b>First Name : </b>{{ user_list.first_name }}</li>
+            <li><b>Last Name : </b>{{ user_list.last_name}}</li>
+            <li><b>Email : </b>{{ user_list.email }}</li>
+            <li><b>Alterate Email : </b>{{ detail_list.alternate_email }}</li>
+            <li><b>Designation : </b>{{ detail_list.designation }}</li>
+            <li><b>Department : </b>{{ detail_list.department }}</li>
+            {% if not detail_list.display_to_others == False or user == user_list %}
+                <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
+                <li><b>Address : </b>{{ detail_list.address }}</li>
+            {% endif %}
+        {% endif %}
+    </ul>
+ <br>
+
+{% if user == user_list  %}
+<a href="/user/{{ detail_list.id }}/edit"><button class="edit_profile"> Edit </button></a>
+{% endif %}
+
+{% endblock %}

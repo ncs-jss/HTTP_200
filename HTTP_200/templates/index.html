@@ -1,1 +1,8 @@
-{{ form.as_p }}
+<h1> Hello World !! </h1>
+
+{% if user.is_authenticated %}
+<a href="/user/{{user}}">View Profile</a> <br>
+<a href="/accounts/logout">Logout</a>
+{% else %}
+<a href="/accounts/login">Login</a>
+{% endif %}
