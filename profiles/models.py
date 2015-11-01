@@ -1,9 +1,10 @@
+from django.contrib.auth.models import User, Group
 from django.db import models
+from django.db.models.signals import post_save
 from django.core.validators import URLValidator
 from django.core import urlresolvers
 from jsonfield import JSONField
 from datetime import datetime
-from django.contrib.auth.models import User
 # Create your models here.
 
 class StudentDetail(models.Model):
@@ -21,11 +22,11 @@ class StudentDetail(models.Model):
 		(MBA,'MBA'),
 		(OTHERS,'Others'),
 		)
-	univ_roll_no = models.PositiveIntegerField()
-	contact_no = models.PositiveIntegerField(null = True,editable = True)
-	father_name = models.CharField(max_length = 200, null = True)
-	mother_name = models.CharField(max_length = 200, null = True)
-	address = models.CharField(max_length = 500, null = True,editable = True)
+	univ_roll_no = models.PositiveIntegerField(blank=True, null = True,editable = True)
+	contact_no = models.PositiveIntegerField(blank=True, null = True,editable = True)
+	father_name = models.CharField(max_length = 200, blank=True, null = True,editable = True)
+	mother_name = models.CharField(max_length = 200, blank=True, null = True,editable = True)
+	address = models.CharField(max_length = 500, blank=True, null = True,editable = True)
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
@@ -38,12 +39,8 @@ class StudentDetail(models.Model):
 	# events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 
 	def __unicode__(self):
-		return self.user.username + " details"
+		return self.user.username + "'s details"
 
-	@property
-	def get_edit_url(self):
-		edit_url = "/user/"+self.user.username+"/edit"
-		return edit_url
 
 class FacultyDetail(models.Model):
 	'''
@@ -62,3 +59,13 @@ class FacultyDetail(models.Model):
 	# misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
+
+	def __unicode__(self):
+		return self.user.username + "'s details"
+
+# Signal (after saving a user)
+def create_profile(sender, instance, created, **kwargs):
+	if created :
+		profile, create = StudentDetail.objects.get_or_create(user = instance)
+		instance.groups.add(Group.objects.get(name='StudentGroup'))
+post_save.connect(create_profile, sender=User)

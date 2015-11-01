@@ -3,22 +3,36 @@
 {% block content %}
     <h2>Users</h2>
     <ul>
+        {% if user_type == 'student' %}
+            <li><b>Username : </b>{{ user_list.username }}</li>
+            <li><b>First Name : </b>{{ user_list.first_name }}</li>
+            <li><b>Last Name : </b>{{ user_list.last_name}}</li>
+            <li><b>Course : </b>{{ detail_list.course }}</li>
+            <li><b>Email : </b>{{ user_list.email }}</li>
+            <li><b>Univ Roll No : </b>{{ detail_list.univ_roll_no }}</li>
+            <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
+            <li><b>Address : </b>{{ detail_list.address }}</li>
+            <li><b>Father's Name : </b>{{ detail_list.father_name }}</li>
+            <li><b>Mother's Name : </b>{{ detail_list.mother_name }}</li>
+            <li><b>Display to others : </b>{{ detail_list.display_to_others }}</li>
+
+        {% elif user_type == 'faculty' %}
             <li><b>Username : </b>{{ user_list.username }}</li>
             <li><b>First Name : </b>{{ user_list.first_name }}</li>
             <li><b>Last Name : </b>{{ user_list.last_name}}</li>
             <li><b>Email : </b>{{ user_list.email }}</li>
-            <li><b>Univ Roll No : </b>{{ detail_list.univ_roll_no }}</li>
+            <li><b>Alterate Email : </b>{{ detail_list.alternate_email }}</li>
+            <li><b>Designation : </b>{{ detail_list.designation }}</li>
+            <li><b>Department : </b>{{ detail_list.department }}</li>
             <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
-            <li><b>Father's Name : </b>{{ detail_list.father_name }}</li>
-            <li><b>Mother's Name : </b>{{ detail_list.mother_name }}</li>
             <li><b>Address : </b>{{ detail_list.address }}</li>
-            <li><b>Course : </b>{{ detail_list.course }}</li>
             <li><b>Display to others : </b>{{ detail_list.display_to_others }}</li>
+        {% endif %}
     </ul>
  <br>
 
 {% if user == user_list  %}
-<a href="/user/{{ user.id }}/edit"><button class="edit_profile"> Edit </button></a>
+<a href="/user/{{ detail_list.id }}/edit"><button class="edit_profile"> Edit </button></a>
 {% endif %}
 
 {% endblock %}

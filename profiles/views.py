@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from braces.views import LoginRequiredMixin
 from django.views.generic import View
@@ -8,9 +8,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 
-from .models import StudentDetail
-from .forms import StudentForm
-
+from .models import StudentDetail, FacultyDetail
+from .forms import StudentForm, FacultyForm
+import permissions
 # Create your views here.
 class Home(View):
 	'''
@@ -23,27 +23,48 @@ class UserProfile(LoginRequiredMixin, View):
 	'''
 	'''
 	def get(self,request, user_id=None):
+		user_type = None
 		user_list = get_object_or_404(User, username=user_id)
 		detail_list = get_object_or_404(StudentDetail, user = user_list )
+		if permissions.is_in_group(request.user, 'StudentGroup'):
+			user_type = 'student'
+			user_list = get_object_or_404(User, username=user_id)
+			detail_list = get_object_or_404(StudentDetail, user = user_list )
+		elif permissions.is_in_group(request.user, 'FacultyGroup'):
+			user_type = 'faculty'
+			user_list = get_object_or_404(User, username=user_id)
+			detail_list = get_object_or_404(FacultyDetail, user = user_list )
 		template_name = 'user_profile.html'
-		return render(request, template_name, {'user_list':user_list, 'detail_list':detail_list})
+		return render(request, template_name, {'user_type':user_type, 'user_list':user_list, 'detail_list':detail_list})
 
-class EditProfile(LoginRequiredMixin, UpdateView):
+class EditProfile(LoginRequiredMixin, View):
 	'''
 	'''
-	model = StudentDetail
-	form_class = StudentForm
-	template_name = "edit_profile.html"
-	slug_field = 'user'
-	
-	def get_success_url(self):
-		return reverse("user-profile", kwargs={'user_id': self.request.user.username})
 
-	def get_object(self, *args, **kwargs):
-		'''
-		To verify that the user is permitted to visit the page for editing
-		'''
-		obj = super(EditProfile, self).get_object(*args, **kwargs)
-		if not obj.user == self.request.user:
-			raise PermissionDenied # maybe you'll need to write a middleware to catch 403's same way
-		return obj
+	def get(self, request, slug=None):
+		user = request.user 
+		detail =  get_object_or_404(StudentDetail, pk=slug)
+		form = StudentForm(instance=detail)
+		if permissions.is_in_group(user, 'StudentGroup'):
+			detail =  get_object_or_404(StudentDetail, pk=slug)
+			form = StudentForm(instance=detail)
+		elif permissions.is_in_group(user, 'FacultyGroup'):
+			detail =  get_object_or_404(FacultyDetail, pk=slug)
+			form = FacultyForm(instance=detail)
+		template_name = "edit_profile.html"
+		return render(request, template_name, {'form':form})
+
+	def post(self, request, slug=None):
+		user = request.user
+		detail =  get_object_or_404(StudentDetail, pk=slug)
+		form = StudentForm(	request.POST,instance=detail)
+		if permissions.is_in_group(user, 'StudentGroup'):
+			detail =  get_object_or_404(StudentDetail, pk=slug)
+			form = StudentForm(	request.POST,instance=detail)
+		elif permissions.is_in_group(user, 'FacultyGroup'):
+			detail =  get_object_or_404(FacultyDetail, pk=slug)
+			form = FacultyForm(request.POST,instance=detail)
+		template_name = 'user_profile.html'
+		if form.is_valid():
+			detail = form.save()	
+		return redirect("user-profile", user_id= user.username)
