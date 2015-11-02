@@ -12,6 +12,7 @@ from .models import StudentDetail, FacultyDetail
 from .forms import StudentForm, FacultyForm
 import permissions
 # Create your views here.
+
 class Home(View):
 	'''
 	'''
@@ -25,14 +26,12 @@ class UserProfile(LoginRequiredMixin, View):
 	def get(self,request, user_id=None):
 		user_type = None
 		user_list = get_object_or_404(User, username=user_id)
-		detail_list = get_object_or_404(StudentDetail, user = user_list )
-		if permissions.is_in_group(request.user, 'StudentGroup'):
+		detail_list = None
+		if permissions.is_in_group(user_list, 'StudentGroup'):
 			user_type = 'student'
-			user_list = get_object_or_404(User, username=user_id)
 			detail_list = get_object_or_404(StudentDetail, user = user_list )
-		elif permissions.is_in_group(request.user, 'FacultyGroup'):
+		elif permissions.is_in_group(user_list, 'FacultyGroup'):
 			user_type = 'faculty'
-			user_list = get_object_or_404(User, username=user_id)
 			detail_list = get_object_or_404(FacultyDetail, user = user_list )
 		template_name = 'user_profile.html'
 		return render(request, template_name, {'user_type':user_type, 'user_list':user_list, 'detail_list':detail_list})
@@ -43,10 +42,10 @@ class EditProfile(LoginRequiredMixin, View):
 
 	def get(self, request, slug=None):
 		user = request.user 
-		detail =  get_object_or_404(StudentDetail, pk=slug)
-		form = StudentForm(instance=detail)
+		detail =  None
+		form = None
 		if permissions.is_in_group(user, 'StudentGroup'):
-			detail =  get_object_or_404(StudentDetail, pk=slug)
+			detail_list =  get_object_or_404(StudentDetail, pk=slug)
 			form = StudentForm(instance=detail)
 		elif permissions.is_in_group(user, 'FacultyGroup'):
 			detail =  get_object_or_404(FacultyDetail, pk=slug)
@@ -56,8 +55,8 @@ class EditProfile(LoginRequiredMixin, View):
 
 	def post(self, request, slug=None):
 		user = request.user
-		detail =  get_object_or_404(StudentDetail, pk=slug)
-		form = StudentForm(	request.POST,instance=detail)
+		detail =  None
+		form = None
 		if permissions.is_in_group(user, 'StudentGroup'):
 			detail =  get_object_or_404(StudentDetail, pk=slug)
 			form = StudentForm(	request.POST,instance=detail)

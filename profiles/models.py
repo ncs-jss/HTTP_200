@@ -47,11 +47,11 @@ class FacultyDetail(models.Model):
 	It stores the information about the faculties of college
 	'''
 	user = models.OneToOneField(User)
-	designation = models.CharField(max_length = 100, null = True,editable = True)
-	department = models.CharField(max_length = 100, null = True,editable = True)
-	contact_no = models.PositiveIntegerField(null = True,editable = True)
-	address = models.CharField(max_length = 500, null = True,editable = True)
-	alternate_email = models.EmailField(max_length = 254, null = True,editable = True)
+	designation = models.CharField(max_length = 100,blank=True, null = True,editable = True)
+	department = models.CharField(max_length = 100,blank=True, null = True,editable = True)
+	contact_no = models.PositiveIntegerField(blank=True,null = True,editable = True)
+	address = models.CharField(max_length = 500,blank=True, null = True,editable = True)
+	alternate_email = models.EmailField(max_length = 254,blank=True, null = True,editable = True)
 	display_to_others = models.BooleanField(default=True)
 	# relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)

@@ -198,4 +198,4 @@ STATICFILES_DIRS = (
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ACCOUNT_ADAPTER = 'HTTP_200.adapter.AccountAdapter'
+LOGIN_REDIRECT_URL = '/'
