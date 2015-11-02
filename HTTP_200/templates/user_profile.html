@@ -8,7 +8,7 @@
             <li><b>First Name : </b>{{ user_list.first_name }}</li>
             <li><b>Last Name : </b>{{ user_list.last_name}}</li>
             <li><b>Course : </b>{{ detail_list.course }}</li>
-            {% if detail_list.display_to_others == True %}
+            {% if not detail_list.display_to_others == False or user == user_list %}
                 <li><b>Univ Roll No : </b>{{ detail_list.univ_roll_no }}</li>
                 <li><b>Email : </b>{{ user_list.email }}</li>
                 <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
@@ -25,7 +25,7 @@
             <li><b>Alterate Email : </b>{{ detail_list.alternate_email }}</li>
             <li><b>Designation : </b>{{ detail_list.designation }}</li>
             <li><b>Department : </b>{{ detail_list.department }}</li>
-            {% if detail_list.display_to_others == True %}
+            {% if not detail_list.display_to_others == False or user == user_list %}
                 <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
                 <li><b>Address : </b>{{ detail_list.address }}</li>
             {% endif %}

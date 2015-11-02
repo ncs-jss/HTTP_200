@@ -42,10 +42,10 @@ class EditProfile(LoginRequiredMixin, View):
 
 	def get(self, request, slug=None):
 		user = request.user 
-		detail =  None
+		detail = None
 		form = None
 		if permissions.is_in_group(user, 'StudentGroup'):
-			detail_list =  get_object_or_404(StudentDetail, pk=slug)
+			detail =  get_object_or_404(StudentDetail, pk=slug)
 			form = StudentForm(instance=detail)
 		elif permissions.is_in_group(user, 'FacultyGroup'):
 			detail =  get_object_or_404(FacultyDetail, pk=slug)
