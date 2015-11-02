@@ -5,6 +5,7 @@ from django.contrib import admin
 from profiles.views import UserProfile, Home, EditProfile
 
 urlpatterns = [
+    url(r'^notices/', include('notices.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/', include('feeds.urls')),
     url(r'^token/', 'rest_framework_jwt.views.obtain_jwt_token'),
