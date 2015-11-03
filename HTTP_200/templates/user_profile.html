@@ -34,7 +34,7 @@
  <br>
 
 {% if user == user_list  %}
-<a href="/user/{{ detail_list.id }}/edit"><button class="edit_profile"> Edit </button></a>
+<a href="{% url 'edit-profile' slug=detail_list.id  %}"><button class="edit_profile"> Edit </button></a>
 {% endif %}
 
 {% endblock %}

@@ -1,6 +1,8 @@
 from django.db import models
 from profiles.models import FacultyDetail
 from datetime import datetime
+from django.core.urlresolvers import reverse
+
 # Create your models here.
 class Notice(models.Model):
 	'''
@@ -30,9 +32,13 @@ class Notice(models.Model):
 		default = MISC)
 	# scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 	def get_absolute_url(self):
-		return urlresolvers.reverse('notice-detail', args=[self.pk])
+		return reverse('notice-list', args=[self.pk])
+
 
 class NoticeBranchYear(models.Model):
+	"""
+	It stores the information of branches and year related to the particular notice
+	"""
 	CSE = 'CSE'
 	IT = 'IT'
 	EE = 'EE'
@@ -68,3 +74,10 @@ class NoticeBranchYear(models.Model):
 		choices = BRANCH, 
 		default = ALL,
 		)
+
+# apply AuthorPermissionLogic to Notice Model
+# from permission import add_permission_logic
+# from permission.logics import AuthorPermissionLogic
+# add_permission_logic(Notice, AuthorPermissionLogic(
+# 	field_name='faculty',
+# ))
