@@ -24,7 +24,6 @@ class StudentDetail(models.Model):
 		(MTECH, 'Masters of Technology'),
 		(OTHERS,'Others'),
 		)
-<<<<<<< HEAD
 	# List of branches
 	CSE = 'CSE'
 	IT = 'IT'
@@ -62,7 +61,6 @@ class StudentDetail(models.Model):
 		default = None,
 		)
 
-=======
 	univ_roll_no = models.PositiveIntegerField(blank=True, null = True,editable = True)
 	contact_no = models.PositiveIntegerField(blank=True, null = True,editable = True)
 	father_name = models.CharField(max_length = 200, blank=True, null = True,editable = True)
@@ -72,7 +70,6 @@ class StudentDetail(models.Model):
 		choices = COURSE,
 		default = BTech)
 	display_to_others = models.BooleanField(default=False)
->>>>>>> ecacde7595227d3e4687dc9d854e5357b8b80ac6
 	# relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
