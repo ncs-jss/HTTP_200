@@ -32,7 +32,7 @@ class Notice(models.Model):
 		default = MISC)
 	# scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 	def get_absolute_url(self):
-		return reverse('notice-list', args=[self.pk])
+		return reverse('notice_detail', args=[self.pk])
 
 
 class NoticeBranchYear(models.Model):
@@ -67,17 +67,27 @@ class NoticeBranchYear(models.Model):
 		(MTECH, 'Masters of Technology'),
 		(ALL, 'All branches and Courses')
 		)
+
+	FIRST = 1
+	SECOND = 2
+	THIRD = 3
+	FOURTH = 4
+	YEAR = (
+		(FIRST, 'First Year'),
+		(SECOND, 'Second Year'),
+		(THIRD, 'Third Year'),
+		(FOURTH, 'Fourth Year'),
+		(ALL, 'For all')
+		)
 	notice = models.ForeignKey(Notice)
-	year = models.PositiveIntegerField(default = 1)
+	year = models.CharField(
+		max_length = 2,
+		choices = YEAR,
+		default = ALL
+		)
 	branch = models.CharField(
 		max_length = 5,
 		choices = BRANCH, 
 		default = ALL,
 		)
 
-# apply AuthorPermissionLogic to Notice Model
-# from permission import add_permission_logic
-# from permission.logics import AuthorPermissionLogic
-# add_permission_logic(Notice, AuthorPermissionLogic(
-# 	field_name='faculty',
-# ))

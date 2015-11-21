@@ -54,11 +54,12 @@ class StudentDetail(models.Model):
 	course = models.CharField(max_length = 3,
 		choices = COURSE,
 		default = BTech)
-	year = models.PositiveIntegerField(default = 1)
+	year = models.PositiveIntegerField(default = None, null = True)
 	branch = models.CharField(
 		max_length = 5,
 		choices = BRANCH, 
 		default = None,
+		null = True
 		)
 
 	univ_roll_no = models.PositiveIntegerField(blank=True, null = True,editable = True)
@@ -66,9 +67,10 @@ class StudentDetail(models.Model):
 	father_name = models.CharField(max_length = 200, blank=True, null = True,editable = True)
 	mother_name = models.CharField(max_length = 200, blank=True, null = True,editable = True)
 	address = models.CharField(max_length = 500, blank=True, null = True,editable = True)
-	course = models.CharField(max_length = 3,
+	course = models.CharField(max_length = 5,
 		choices = COURSE,
-		default = BTech)
+		default = None,
+		null = True)
 	display_to_others = models.BooleanField(default=False)
 	# relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 	# academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
@@ -78,7 +80,7 @@ class StudentDetail(models.Model):
 	# events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 
 	def __unicode__(self):
-		return self.user.username + "'s details"
+		return self.user.username
 
 
 class FacultyDetail(models.Model):
@@ -100,7 +102,8 @@ class FacultyDetail(models.Model):
 	# events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 
 	def __unicode__(self):
-		return self.user.username + "'s details"
+		return self.user.username
+
 
 # Signal (after saving a user)
 def create_profile(sender, instance, created, **kwargs):
