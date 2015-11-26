@@ -1,8 +1,168 @@
-<h1> Hello World !! </h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Literacy a Education Category Flat Bootstrap responsive Website Template | Home :: w3layouts</title>
+<link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<script src="/static/js/jquery.min.js"></script>
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Literacy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+<script src="/static/js/responsiveslides.min.js"></script>
+<script>
+	$(function () {
+	  $("#slider1").responsiveSlides({
+		 auto: true,
+		 nav: true,
+		 speed: 500,
+		 namespace: "callbacks",
+	  });
+	});
+  </script>
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600italic,400italic,600,300italic,300,700italic,800,800italic' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="/static/js/move-top.js"></script>
+<script type="text/javascript" src="/static/js/easing.js"></script>
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+				});
+			});
+</script>
+</head>
+<body>
+	<div class="header" id="movetop">
+		<div class="container">
+			<div class="header-top">
+				<p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>Phone: +919555344456</p>
+				<div class="logo">
+					<h1><a href="index.html">JSS Connect</a></h1>
+				</div>
+				<div class="social-icons">
+					<ul>
+						<li><a class="facebook" href="#"></a></li>
+						<li><a class="twitter" href="#"></a></li>
+						<li><a class="google-plus" href="#"></a></li>
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<!-- navigation -->
+			<div class="navigation">
+					<nav class="navbar navbar-default">
+					 
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+						  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						  </button>
+						</div>
 
-{% if user.is_authenticated %}
-<a href="{% url 'user-profile' user_id=user %}">View Profile</a> <br>
-<a href="{% url 'account_logout' %}">Logout</a>
-{% else %}
-<a href="{% url 'account_login' %}">Login</a>
-{% endif %}
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
+							  <ul class="nav navbar-nav">
+								<li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+								<li><a href="#">ABOUT</a></li>
+								<li><a href="#">Upcoming</a></li>
+								<li><a href="#">Team</a></li>
+								<li><a href="#">Contributors</a></li>
+								{% if user.is_authenticated %}
+								<li><a href="{% url 'user-profile' user_id=user %}">View Profile</a></li> <br>
+								<li><a href="{% url 'account_logout' %}">Logout</a></li>
+								{% else %}
+								<li><a href="{% url 'account_login' %}">Login</a></li>
+								{% endif %}
+							  </ul>
+						  <div class="clearfix"></div>
+						</div><!-- /.navbar-collapse -->
+					</nav>
+			</div>
+			<!-- //navigation -->
+		</div>
+	</div>
+	<!-- header-section-ends-here -->
+	<div class="slider">
+		<ul class="rslides" id="slider1">
+		  <li><img src="/static/images/2.jpg" alt=""></li>
+		  <li><img src="/static/images/1.jpg" alt=""></li>
+		</ul>
+	</div>
+
+	<div class="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="col-md-4 footer-grid">
+					<h5>NewsLetter</h5>
+					<p>Lorem ipsum dolor sit amet, tristique nec libero. Proin vitae convallis odio. Morbi nec enim nisi. Aliquam erat volutpat. </p>
+					<form>					 
+					  <input type="text" class="text" value="Enter Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Email';}">
+					 <input type="submit" value="Submit">
+					 <div class="clearfix"></div>
+				 </form>
+				</div>
+				<div class="col-md-4 footer-grid">
+					<h5>Twitter Feed</h5>
+					<p>Check out th best designs online in the world <br>at <a href="mail-to:nibble@jssaten.ac.in">http://example.com </a></p>
+					<span>1 day ago</span>
+					<p><a href="#">Twitter</a>, may be the more visual platform for education group.</p>
+					<span>4 day ago</span>
+				</div>
+				<div class="col-md-4 footer-grid">
+					<h5>Follow Us</h5>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in purus nibh. Donec ornare felis neque. Nullam tortor! </p>
+					
+			<div class="social-icons footer-social-icons">
+				<a class="facebook" href="#"></a>
+				<a class="twitter" href="#"></a>
+				<a class="google-plus" href="#"></a>
+			</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="copyrights text-center">
+					<p>© 2015 Literacy. All Rights Reserved | Design by   <a href="http://w3layouts.com">  Nibble Computer Society</a></p>					
+				</div>
+				<div class="footer-nav">
+					<ul>
+						<li><a class="scroll" href="#movetop">Home <span class="sr-only">(current)</span></a></li>
+						<li><a href="#">ABOUT</a></li>
+						<li><a href="#">Short codes</a></li>
+						<li><a href="#">GALLERY</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">Contact Us</a></li>
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!-- //footer-section -->
+	<!-- //footer-section-ends-here -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+				/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+				*/
+		$().UItoTop({ easingType: 'easeOutQuart' });
+});
+</script>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!----> 
+
+</body>
+</html>
