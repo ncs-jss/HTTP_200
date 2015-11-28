@@ -47,6 +47,7 @@ INSTALLED_APPS = (
 	'allauth.account',
 	'profiles',
 	'notices',
+	'autofixture',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -200,3 +201,28 @@ STATICFILES_DIRS = (
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = "/notices/relevent"
+SAMPLEDATAHELPER_SEED = 123456789
+
+
+SAMPLEDATAHELPER_MODELS = [
+    # Generate 5 instances completly random
+    { 'model': 'profiles.StudentDetail', 'number': 5, },
+
+    # Generate 5 instances selecting random method for some fields
+    {
+        'model': 'profiles.StudentDetail',
+        'number': 5,
+        'fields_overwrite': [
+            ('my_int_field', lambda _, sd: sd.int(5, 10)),
+        ]
+    },
+
+    # Generate 5 instances with fixed data in a field
+    {
+        'model': 'profiles.StudentDetail',
+        'number': 5,
+        'fields_overwrite': [
+            ('my_int_field', 5),
+        ]
+    }
+]

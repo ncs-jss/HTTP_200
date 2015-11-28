@@ -3,6 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
+from django.contrib.auth.models import Group
+
+def add_group(apps, schema_editor):
+    group, created = Group.objects.get_or_create(name='StudentGroup')   
+
+    group, created = Group.objects.get_or_create(name='FacultyGroup') 
 
 
 class Migration(migrations.Migration):
@@ -12,6 +18,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(add_group),
+
         migrations.CreateModel(
             name='Faculty1',
             fields=[
