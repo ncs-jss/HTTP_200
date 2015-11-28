@@ -92,9 +92,12 @@ class NoticeBranchYear(models.Model):
 		default = ALL,
 		)
 
+<<<<<<< HEAD
 # class BookmarkedNotice(models.Model):
 # 	"""
 # 		Defines the databse table for storing the bookmarks as done by the user. 
 # 	"""
 # 	user = models.ForeignKey(User)
 # 	notice = models.ForeignKey(Notice)
+=======
+>>>>>>> a6b520463d6b93a55c008d591b3d9d68aadd44a2
