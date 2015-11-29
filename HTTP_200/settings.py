@@ -226,3 +226,5 @@ SAMPLEDATAHELPER_MODELS = [
         ]
     }
 ]
+
+MEDIA_ROOT = os.path.join(APP_DIR, 'media')
