@@ -1,8 +1,12 @@
-{% extends "base.html" %}
+{% include "base.html" %}
 
 {% block content %}
-
-{{ context.title }}
-<p>{{ context.description }}</p>
+<p> <b>Title :</b> {{ notice.title }}</p>
+<p><b>Designation : </b>{{ notice.faculty.designation}}</p>
+<p><b>Description : </b>{{ notice.description }}</p>
+<p><b>File Attached : </b><a href="/media/{{ notice.file_attached.name }}" target="_blank">Download Attachment</a></p>
+<p><b>Created At : </b>{{ notice.created_at }}</p>
+<p><b>Subject : </b>{{ notice.subject }}</p>
+<p><b>Category : </b>{{ notice.category }}</p>
 
 {% endblock %}
