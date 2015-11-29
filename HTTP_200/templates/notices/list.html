@@ -1,8 +1,24 @@
-{% for notice in notices %}
+{% include "base.html" %}
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Faculty</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for notice in notices %}
     {# Each "notice" is a NoticeDetail model object. #}
-    <a href="{{ notice.get_absolute_url }}">Link to Notice</a>
-    {{ notice.title|upper }}  {{ notice.faculty }}    <br />
-{% endfor %}
+      <tr>
+        <td>{{ notice.title|upper }}</td>
+        <td>{{ notice.faculty }}</td>
+        <td><a href="{{ notice.get_absolute_url }}">Link to Notice</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
 <div class="pagination">
     <span class="step-links">
