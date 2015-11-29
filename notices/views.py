@@ -26,13 +26,14 @@ class NoticeList(LoginRequiredMixin, generic.View):
 
 		return render_to_response(template, {"notices": notices})
 
-class NoticeDetailView(LoginRequiredMixin, generic.View):
-	model = Notice
-	template_name = "notices/notice_detail.html"
-
-	def get_context_data(self, **kwargs):
-		context = super(NoticeDetailView, self).get_context_data(**kwargs)
-		return context
+class NoticeShow(LoginRequiredMixin, generic.View):
+	def get(self, request, pk=None):
+		template_name = "notices/notice_detail.html"
+		try:
+			notice = Notice.objects.select_related('faculty').get(id = pk)
+		except:
+			return Http404()
+		return render(request, template_name, {'notice': notice})
 
 class NoticeDetail(LoginRequiredMixin, generic.View):
 	def get(self, request, category = None):
@@ -64,7 +65,6 @@ class NoticeCreateView(CreateView):
 class NoticeUpdateView(LoginRequiredMixin,UpdateView):
 	model = Notice
 	success_url = reverse_lazy('server_list')
-	
 
 
 class NoticeDeleteView(LoginRequiredMixin,DeleteView):

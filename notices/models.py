@@ -3,6 +3,7 @@ from django.db import models
 from profiles.models import FacultyDetail
 from datetime import datetime
 from django.core.urlresolvers import reverse
+import os
 
 # Create your models here.
 class Notice(models.Model):
@@ -33,7 +34,10 @@ class Notice(models.Model):
 		default = MISC)
 	# scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 	def get_absolute_url(self):
-		return reverse('notice_detail', args=[self.pk])
+		return reverse('notice_show', args=[self.pk])
+
+	def filename(self):
+		return os.path.basename(self.file.name)
 
 
 class NoticeBranchYear(models.Model):
