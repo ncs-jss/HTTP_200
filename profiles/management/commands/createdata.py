@@ -26,7 +26,7 @@ class Command(BaseCommand):
 			field_values={ 'username':'admin',
 				'password':admin_md5,
 				'groups':['2'],
-				'is_superuser': True
+				'is_superuser': True,
 				})
 
 		adminDetail = autofixture.create_one('profiles.FacultyDetail',
@@ -47,7 +47,8 @@ class Command(BaseCommand):
 			field_values={
 				'username':'student',
 				'password':student_md5,
-				'groups':['1']
+				'groups':['1'],
+				'is_superuser': True,
 				})
 
 		studentDetail = autofixture.create_one('profiles.StudentDetail',
