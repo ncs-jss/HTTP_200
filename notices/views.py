@@ -13,7 +13,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
 	def get(self, request):
 		template = 'notices/list.html'
 		notice_list = Notice.objects.order_by('-updated_at')
-		paginator = Paginator(notice_list, 3)
+		paginator = Paginator(notice_list, 10)
 		page = request.GET.get('page')
 		try:
 			notices = paginator.page(page)
