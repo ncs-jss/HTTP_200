@@ -1,7 +1,7 @@
 {% include "base.html" %}
 
 {% block content %}
-    <h2>Users</h2>
+    <h2>User Profile Display</h2>
     <ul>
         {% if user_type == 'student' %}
             <li><b>Username : </b>{{ user_list.username }}</li>
@@ -15,6 +15,9 @@
                 <li><b>Address : </b>{{ detail_list.address }}</li>
                 <li><b>Father's Name : </b>{{ detail_list.father_name }}</li>
                 <li><b>Mother's Name : </b>{{ detail_list.mother_name }}</li>
+            {% else %}
+                <br>
+                <p>This user has made other details as private.</p>
             {% endif %}
 
         {% elif user_type == 'faculty' %}
@@ -28,7 +31,11 @@
             {% if not detail_list.display_to_others == False or user == user_list %}
                 <li><b>Contact No : </b>{{ detail_list.contact_no }}</li>
                 <li><b>Address : </b>{{ detail_list.address }}</li>
+            {% else %}
+                <br>
+                <p>This user has made other details as private.</p>
             {% endif %}
+
         {% endif %}
     </ul>
  <br>

@@ -5,7 +5,7 @@ from braces.views import LoginRequiredMixin
 from django.views.generic import View
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 
@@ -17,6 +17,7 @@ import permissions
 
 class Home(View):
 	'''
+		Home Display view
 	'''
 	def get(self,request):
 		template_name = 'index.html'
@@ -24,6 +25,7 @@ class Home(View):
 
 class UserProfile(LoginRequiredMixin, View):
 	'''
+		To display the profiles of the Users
 	'''
 	def get(self,request, user_id=None):
 		user_type = None
@@ -35,11 +37,14 @@ class UserProfile(LoginRequiredMixin, View):
 		elif permissions.is_in_group(user_list, 'FacultyGroup'):
 			user_type = 'faculty'
 			detail_list = get_object_or_404(FacultyDetail, user = user_list )
+		else:
+			return Http404()
 		template_name = 'user_profile.html'
 		return render(request, template_name, {'user_type':user_type, 'user_list':user_list, 'detail_list':detail_list})
 
 class EditProfile(LoginRequiredMixin, View):
 	'''
+	View for editing the profiles of the User
 	'''
 
 	def get(self, request, slug=None):
