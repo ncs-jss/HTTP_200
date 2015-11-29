@@ -69,7 +69,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
-                <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Upcoming</a></li>
                 <li><a href="#">Team</a></li>
                 <li><a href="#">Contributors</a></li>
@@ -78,6 +77,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                 {% else %}
                 <li><a href="{% url 'account_login' %}">Login</a></li>
+                <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
                 {% endif %}
                 </ul>
               <div class="clearfix"></div>

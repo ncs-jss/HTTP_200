@@ -105,9 +105,9 @@ class FacultyDetail(models.Model):
 		return self.user.username
 
 
-# Signal (after saving a user)
-def create_profile(sender, instance, created, **kwargs):
-	if created :
-		profile, create = StudentDetail.objects.get_or_create(user = instance)
-		instance.groups.add(Group.objects.get(name='StudentGroup'))
-post_save.connect(create_profile, sender=User)
+# # Signal (after saving a user)
+# def create_profile(sender, instance, created, **kwargs):
+# 	if created :
+# 		profile, create = StudentDetail.objects.get_or_create(user = instance)
+# 		instance.groups.add(Group.objects.get(name='StudentGroup'))
+# post_save.connect(create_profile, sender=User)
