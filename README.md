@@ -57,11 +57,20 @@ Note: Ubuntu 14.04 LTS is recommended to use for the development environment.
 
         python manage.py syncdb
 
-7. You are all set. Run the final command
+7. For creating random faculties, students and notices, run the following command 
+
+		python manage.py createdata
+
+	this will create:
+	1. faculty_admin: username = admin, password = admin
+	2. student_admin: username = student, password = student
+	3. 20 other faculties' and students' accounts with password = default
+
+8. You are all set. Run the final command
 
         python manage.py runserver
 
-9. Its time to rock. Visit [http://localhost:8000][localhost] in your browser and you should be all set.
+10. Its time to rock. Visit [http://localhost:8000][localhost] in your browser and you should be all set.
 
 
 [venv]: http://pypi.python.org/pypi/virtualenv
