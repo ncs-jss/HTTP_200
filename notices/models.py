@@ -3,6 +3,7 @@ from django.db import models
 from profiles.models import FacultyDetail
 from datetime import datetime
 from django.core.urlresolvers import reverse
+from ckeditor.fields import RichTextField
 import os
 
 # Create your models here.
@@ -24,7 +25,8 @@ class Notice(models.Model):
 		)
 	faculty = models.ForeignKey(FacultyDetail)
 	title = models.CharField(max_length = 500)
-	description = models.TextField()
+	description = RichTextField()
+	# description = models.TextField()
 	file_attached = models.FileField(upload_to = "attachments", blank = True, null = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now_add=True, editable = True)

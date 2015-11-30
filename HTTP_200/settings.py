@@ -48,6 +48,7 @@ INSTALLED_APPS = (
 	'profiles',
 	'notices',
 	'autofixture',
+	'ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
