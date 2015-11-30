@@ -1,3 +1,7 @@
+from rest_framework import permissions
+from django.contrib.auth.models import User, Group
+
+
 class IsNoticeOwner(permissions.BasePermission):
 	"""
 	Custom permission to only allow owners of an object to edit it.
@@ -11,3 +15,4 @@ class IsNoticeOwner(permissions.BasePermission):
 
 		# Write permissions are only allowed to the owner of the snippet.
 		return obj.user == request.user
+
