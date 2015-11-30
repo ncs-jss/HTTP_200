@@ -1,4 +1,5 @@
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import render, render_to_response, get_object_or_404, redirect
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views import generic
 from notices.models import Notice
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -7,6 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from .forms import NoticeCreateForm
 from profiles.models import FacultyDetail
+import permissions
 
 # Create your views here.
 class NoticeList(LoginRequiredMixin, generic.View):
@@ -56,12 +58,33 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 	success_url = '/notices'
 	template_name = "notices/notice_form.html"
 	raise_exception = True
+	# redirect_unauthenticated_users = True
 
 	def form_valid(self, form):
 		faculty = get_object_or_404(FacultyDetail, user__id = self.request.user.id )
 		form.instance.faculty = faculty
 		form.save()
 		return super(NoticeCreateView, self).form_valid(form)
+
+	# def get(self, request, *args, **kwargs):
+	# 	if not permissions.is_in_group(request.user, 'FacultyGroup'):
+	# 		raise PermissionDenied()
+	# 	else:
+	# 		notice_form = NoticeCreateForm()
+	# 		template_name = "notices/notice_form.html"
+	# 		return render(request, template_name, {'form':notice_form})
+
+	# def post(self, request):
+	# 	notice_form = NoticeCreateForm(request.POST)
+	# 	faculty = get_object_or_404(FacultyDetail, user__id = self.request.user.id )
+	# 	if notice_form.is_valid():
+	# 		print "hah"
+	# 		notice_obj = notice_form.save(commit=False)
+	# 		notice_obj.faculty = faculty
+	# 		notice_obj.save()
+	# 	else:
+	# 		return HttpResponse('Invalid Form')
+	# 	return redirect("notice_list")
 
 class NoticeUpdateView(LoginRequiredMixin,UpdateView):
 	model = Notice
@@ -73,3 +96,5 @@ class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	success_url = reverse_lazy('server_list')
 	pass
 
+def my_custom_permission_denied_view(self, request):
+	return render_to_response("kskks")
