@@ -2,13 +2,13 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.views import generic
 from notices.models import Notice
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from .forms import NoticeCreateForm
 from profiles.models import FacultyDetail
-# Create your views here.
 
+# Create your views here.
 class NoticeList(LoginRequiredMixin, generic.View):
 	def get(self, request):
 		template = 'notices/list.html'
@@ -23,7 +23,6 @@ class NoticeList(LoginRequiredMixin, generic.View):
 		except EmptyPage:
 			# If page is out of range (e.g. 9999), deliver last page of results.
 			notices = paginator.page(paginator.num_pages)
-
 		return render_to_response(template, {"notices": notices})
 
 class NoticeShow(LoginRequiredMixin, generic.View):
@@ -49,12 +48,14 @@ class NoticeDetail(LoginRequiredMixin, generic.View):
 
 		return 
 
-class NoticeCreateView(CreateView):
+class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 	# model = Notice
+	group_required = u'FacultyGroup'
 	form_class = NoticeCreateForm
 	exclude = ['faculty']
 	success_url = '/notices'
 	template_name = "notices/notice_form.html"
+	raise_exception = True
 
 	def form_valid(self, form):
 		faculty = get_object_or_404(FacultyDetail, user__id = self.request.user.id )
