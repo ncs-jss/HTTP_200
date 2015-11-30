@@ -1,5 +1,6 @@
 from notices.models import Notice
 from django import forms
+from ckeditor.widgets import CKEditorWidget
 
 class NoticeCreateForm(forms.ModelForm):
 	CSE = 'CSE'
@@ -46,3 +47,4 @@ class NoticeCreateForm(forms.ModelForm):
 	class Meta:
 		model = Notice
 		exclude = ('faculty',)
+		widgets = {'description': CKEditorWidget,}
