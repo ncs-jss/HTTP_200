@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from braces.views import LoginRequiredMixin
 from django.views.generic import View
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 
