@@ -5,6 +5,10 @@ from rest_framework import routers, serializers, viewsets
 from django.contrib import admin
 from profiles.views import UserProfile, Home, EditProfile
 import settings
+from django.conf.urls import handler404,handler500
+
+handler404 = 'profiles.views.bad_request_404'
+handler500 = 'profiles.views.bad_request_500'
 
 urlpatterns = [
 	url(r'^$', Home.as_view(), name="home"),
