@@ -23,7 +23,7 @@ APP_DIR = os.path.join(BASE_DIR, 'HTTP_200')
 SECRET_KEY = 'aq#*#1^qn$!_y04hrsg4!@ra5_!cn9v+39fzj=2rq^319s0^n6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
@@ -78,6 +78,7 @@ TEMPLATES = [
 				'django.template.context_processors.request',
 				'django.contrib.auth.context_processors.auth',
 				'django.contrib.messages.context_processors.messages',
+				'django.core.context_processors.static',
 			],
 		},
 	},
