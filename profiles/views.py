@@ -14,6 +14,16 @@ from .forms import StudentForm, FacultyForm, UserForm
 import permissions
 # Create your views here.
 
+def bad_request_404(request):
+	response = render(request,'404.html')
+	response.status_code = 404
+	return response
+
+def bad_request_500(request):
+	response = render(request,'500.html')
+	response.status_code = 500
+	return response
+
 class Home(View):
 	'''
 		Home Display view
