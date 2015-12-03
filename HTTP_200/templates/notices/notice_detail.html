@@ -9,4 +9,12 @@
 <p><b>Subject : </b>{{ notice.subject }}</p>
 <p><b>Category : </b>{{ notice.category }}</p>
 
+<br>
+{% if user == notice.faculty.user  %}
+<form method="POST" action="{% url 'notice_delete' pk=notice.id %}">
+	{% csrf_token %}
+	<a href="{% url 'notice_update' pk=notice.id %}"><button type="button" class="btn btn-primary">Edit</button></a>
+	<input type="submit" class="btn btn-danger" value="DELETE">
+</form>
+{% endif %}
 {% endblock %}
