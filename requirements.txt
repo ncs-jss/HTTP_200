@@ -11,3 +11,5 @@ django-filter==0.11.0
 PyJWT==1.4.0
 django-braces
 django-autofixture
+django-ckeditor==5.0.2
+django-spaghetti-and-meatballs==0.1.1
