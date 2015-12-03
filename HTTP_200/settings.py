@@ -49,6 +49,7 @@ INSTALLED_APPS = (
 	'notices',
 	'autofixture',
 	'ckeditor',
+	'django_spaghetti',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -230,3 +231,9 @@ SAMPLEDATAHELPER_MODELS = [
 ]
 
 MEDIA_ROOT = os.path.join(APP_DIR, 'media')
+
+SPAGHETTI_SAUCE = {
+  'apps':['auth','notices', 'profiles'],
+  'show_fields':True,
+  # 'exclude':{'auth':['user']}
+}
