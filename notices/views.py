@@ -96,13 +96,17 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 	# 	return redirect("notice_list")
 
 class NoticeUpdateView(LoginRequiredMixin,UpdateView):
-	"""
-	View for updating the notices
-	"""
 	model = Notice
-	fields = '__all__'
+	form_class = NoticeCreateForm
+	template_name = 'notices/notice_edit.html'
 	success_url = reverse_lazy('notice_list')
 
+	def get_queryset(self):
+		base_queryset = super(NoticeUpdateView, self).get_queryset()
+		faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
+		return base_queryset.filter(faculty=faculty)
+
+	
 class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	model = Notice
 	success_url = reverse_lazy('notice_list')
