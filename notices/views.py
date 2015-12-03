@@ -25,7 +25,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
 		except EmptyPage:
 			# If page is out of range (e.g. 9999), deliver last page of results.
 			notices = paginator.page(paginator.num_pages)
-		return render_to_response(template, {"notices": notices})
+		return render(request, template, {"notices": notices})
 
 class NoticeShow(LoginRequiredMixin, generic.View):
 	def get(self, request, pk=None):
@@ -36,28 +36,32 @@ class NoticeShow(LoginRequiredMixin, generic.View):
 			return Http404()
 		return render(request, template_name, {'notice': notice})
 
-class NoticeDetail(LoginRequiredMixin, generic.View):
-	def get(self, request, category = None):
-		if category == "relevent":
-			try:
-				# if the logged in user is a student
-				student = StudentDetail.objects.get(user__id = self.request.user.id)
-				notices = NoticeBranchYear.objects.filter(year = student.year, branch = student.branch).values_list('notice', flat = True).order_by('-created_at')
-				relevent_notices = Notice.objects.filter()
-			except:
-				# if the logged in user is a faculty
-				faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
-
-		return 
+# class NoticeDetail(LoginRequiredMixin, generic.View):
+# DEPRECATED CODE
+# 	def get(self, request, category = None):
+# 		if category == "relevent":
+# 			try:
+# 				# if the logged in user is a student
+# 				student = StudentDetail.objects.get(user__id = self.request.user.id)
+# 				notices = NoticeBranchYear.objects.filter(year = student.year, branch = student.branch).values_list('notice', flat = True).order_by('-created_at')
+# 				relevent_notices = Notice.objects.filter()
+# 			except:
+# 				# if the logged in user is a faculty
+# 				faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
+# 		return 
 
 class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
+	"""
+	View for creating the Notices
+	"""
 	# model = Notice
 	group_required = u'FacultyGroup'
 	form_class = NoticeCreateForm
 	exclude = ['faculty']
 	success_url = '/notices'
 	template_name = "notices/notice_form.html"
-	raise_exception = True
+	# FIX THE BUG
+	# raise_exception = True
 	# redirect_unauthenticated_users = True
 
 	def form_valid(self, form):
@@ -67,6 +71,9 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 		return super(NoticeCreateView, self).form_valid(form)
 
 	# def get(self, request, *args, **kwargs):
+	"""
+	View not in use
+	"""
 	# 	if not permissions.is_in_group(request.user, 'FacultyGroup'):
 	# 		raise PermissionDenied()
 	# 	else:
@@ -75,10 +82,12 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 	# 		return render(request, template_name, {'form':notice_form})
 
 	# def post(self, request):
+	"""
+	View not in use
+	"""
 	# 	notice_form = NoticeCreateForm(request.POST)
 	# 	faculty = get_object_or_404(FacultyDetail, user__id = self.request.user.id )
 	# 	if notice_form.is_valid():
-	# 		print "hah"
 	# 		notice_obj = notice_form.save(commit=False)
 	# 		notice_obj.faculty = faculty
 	# 		notice_obj.save()
@@ -87,14 +96,14 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 	# 	return redirect("notice_list")
 
 class NoticeUpdateView(LoginRequiredMixin,UpdateView):
+	"""
+	View for updating the notices
+	"""
 	model = Notice
-	success_url = reverse_lazy('server_list')
-
+	fields = '__all__'
+	success_url = reverse_lazy('notice_list')
 
 class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	model = Notice
-	success_url = reverse_lazy('server_list')
+	success_url = reverse_lazy('notice_list')
 	pass
-
-def my_custom_permission_denied_view(self, request):
-	return render_to_response("kskks")
