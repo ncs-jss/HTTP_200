@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views import generic
+from django.core.exceptions import PermissionDenied
 from notices.models import Notice
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
@@ -103,10 +104,13 @@ class NoticeUpdateView(LoginRequiredMixin,UpdateView):
 
 	def get_queryset(self):
 		base_queryset = super(NoticeUpdateView, self).get_queryset()
-		faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
-		return base_queryset.filter(faculty=faculty)
+		notice = Notice.objects.get(id = self.kwargs['pk'])
+		# faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
+		if self.request.user == notice.faculty.user :
+			return base_queryset
+		else:
+			raise PermissionDenied()
 
-	
 class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	model = Notice
 	success_url = reverse_lazy('notice_list')
