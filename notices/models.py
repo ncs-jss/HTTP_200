@@ -98,9 +98,9 @@ class NoticeBranchYear(models.Model):
 		default = ALL,
 		)
 
-# class BookmarkedNotice(models.Model):
-# 	"""
-# 		Defines the databse table for storing the bookmarks as done by the user. 
-# 	"""
-# 	user = models.ForeignKey(User)
-# 	notice = models.ForeignKey(Notice)
+class BookmarkedNotice(models.Model):
+ 	"""
+ 		Defines the databse table for storing the bookmarks as done by the user. 
+ 	"""
+ 	user = models.ForeignKey(User)
+ 	notice = models.ForeignKey(Notice)

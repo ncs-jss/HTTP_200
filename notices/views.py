@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404, redi
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views import generic
 from django.core.exceptions import PermissionDenied
-from notices.models import Notice
+from notices.models import Notice, BookmarkedNotice
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse_lazy
 from .forms import NoticeCreateForm
 from profiles.models import FacultyDetail
 import permissions
+from django.views.generic import View
 
 # Create your views here.
 class NoticeList(LoginRequiredMixin, generic.View):
@@ -114,4 +115,16 @@ class NoticeUpdateView(LoginRequiredMixin,UpdateView):
 class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	model = Notice
 	success_url = reverse_lazy('notice_list')
+	pass
+
+class BookmarkCreateView(LoginRequiredMixin,generic.View):
+	'''
+		Adding a Bookmark to a notice
+	'''
+	pass
+
+class BookmarkDeleteView(LoginRequiredMixin,DeleteView):
+	'''
+		Deleting a notice as Bookmark
+	'''
 	pass

@@ -4,6 +4,7 @@
 <table class="table table-striped">
     <thead>
       <tr>
+        <th></th>
         <th>Title</th>
         <th>Faculty</th>
         <th>Link</th>
@@ -13,6 +14,7 @@
     {% for notice in notices %}
     {# Each "notice" is a NoticeDetail model object. #}
       <tr>
+        <td><button type="button" class="btn btn-primary" onclick="Bookmarked({{notice.id}});">Bookmark</button></td>
         <td>{{ notice.title|upper }}</td>
         <td>{{ notice.faculty }}</td>
         <td><a href="{{ notice.get_absolute_url }}">Link to Notice</a></td>
@@ -37,3 +39,24 @@
     </span>
 </div>
 {% endblock %}
+
+<script type="text/javascript">
+
+function Bookmarked(notice_id)
+{
+    $.ajax({
+        url : "/"+notice_id+"/add_bookmark/",
+        type : "POST",
+        success : function(json)
+        {
+            
+            alert(json);
+        },
+        error : function(json)
+        {
+            alert("error");
+        }
+    });
+}
+
+</script>

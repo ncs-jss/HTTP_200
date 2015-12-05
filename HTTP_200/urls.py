@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required as auth
 # from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from django.contrib import admin
-from profiles.views import UserProfile, Home, EditProfile
+from profiles.views import UserProfile, Home, EditProfile, FaqDisplayView, BookmarkListView
 import settings
 from django.conf.urls import handler404,handler500
 
@@ -19,6 +19,8 @@ urlpatterns = [
 	url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^user/', include('profiles.urls')),
+	url(r'^faq/$',  FaqDisplayView.as_view(),name="faq"),
+	url(r'^bookmark/', BookmarkListView.as_view(), name='bookmark-list'),
 	# url(r'', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
