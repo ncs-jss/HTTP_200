@@ -1,0 +1,56 @@
+{% include "base.html" %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Bookmark</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for bookmark in bookmarks %}
+    <tr>
+        <td><button type="button" class="btn btn-primary" onclick="Unmark({{bookmark.notice.id}});">Unmark</button></td>
+        <td>{{ bookmark.notice.title }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if bookmarks.has_previous %}
+            <a href="?page={{ bookmarks.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ bookmarks.number }} of {{ bookmarks.paginator.num_pages }}.
+        </span>
+
+        {% if bookmarks.has_next %}
+            <a href="?page={{ bookmarks.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
+
+<script type="text/javascript">
+
+function Unmark(notice_id)
+{
+    $.ajax({
+        url : "/"+notice_id+"/del_bookmark/",
+        type : "POST",
+        success : function(json)
+        {
+            
+            alert(json);
+        },
+        error : function(json)
+        {
+            alert("error");
+        }
+    });
+}
+
+</script>

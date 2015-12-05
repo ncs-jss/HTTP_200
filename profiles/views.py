@@ -2,16 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from braces.views import LoginRequiredMixin
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-
-
 from .models import StudentDetail, FacultyDetail
 from .forms import StudentForm, FacultyForm, UserForm
 import permissions
+from django.views.generic import TemplateView
+from notices.models import BookmarkedNotice
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # Create your views here.
 
 def bad_request_404(request):
@@ -31,6 +33,12 @@ class Home(View):
 	def get(self,request):
 		template_name = 'index.html'
 		return render(request, template_name)
+
+class FaqDisplayView(TemplateView):
+	'''
+		FAQ Display Vieq
+	'''
+	template_name = 'faq.html'
 
 class UserProfile(LoginRequiredMixin, View):
 	'''
@@ -97,3 +105,21 @@ class EditProfile(LoginRequiredMixin, View):
 		if detail_form.is_valid():
 			detail = detail_form.save()	
 		return redirect("user-profile", user_id= user.username)
+
+class BookmarkListView(LoginRequiredMixin, ListView):
+	model = BookmarkedNotice
+	
+	def get(self, request):
+		template_name = "bookmark.html"
+		bookmark_list = BookmarkedNotice.objects.filter(user=request.user)
+		paginator = Paginator(bookmark_list, 10)
+		page = request.GET.get('page')
+		try:
+			bookmarks = paginator.page(page)
+		except PageNotAnInteger:
+			# If page is not an integer, deliver first page.
+			bookmarks = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			bookmarks = paginator.page(paginator.num_pages)
+		return render(request, template_name, {"bookmarks": bookmarks})
