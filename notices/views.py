@@ -121,10 +121,45 @@ class BookmarkCreateView(LoginRequiredMixin,generic.View):
 	'''
 		Adding a Bookmark to a notice
 	'''
-	pass
+	# def get(self, request, pk = None):
+	# 	return HttpResponse("Get request working")
+
+	def post(self, request, pk = None):
+		notice = Notice.objects.get(pk = pk)
+		obj, created = BookmarkedNotice.objects.get_or_create(user = self.request.user, notice = notice)
+		if created:
+			return HttpResponse("Successfully Bookmarked")
+		else:
+			return HttpResponse("You have already bookmarked this notice")
+			
+
+class BookmarkListView(LoginRequiredMixin, generic.ListView):
+	model = BookmarkedNotice
+	"""
+	View for listing the bookmarked notices
+	"""
+	def get(self, request):
+		template_name = "bookmark.html"
+		bookmark_list = BookmarkedNotice.objects.filter(user=request.user)
+		paginator = Paginator(bookmark_list, 10)
+		page = request.GET.get('page')
+		try:
+			bookmarks = paginator.page(page)
+		except PageNotAnInteger:
+			bookmarks = paginator.page(1)
+		except EmptyPage:
+			bookmarks = paginator.page(paginator.num_pages)
+		return render(request, template_name, {"bookmarks": bookmarks})
 
 class BookmarkDeleteView(LoginRequiredMixin,DeleteView):
 	'''
-		Deleting a notice as Bookmark
+		Deleting a notice from Bookmark Notices List
 	'''
-	pass
+	def post(self, request, pk = None):
+		try:
+			notice = get_object_or_404(Notice, pk = pk)
+			BookmarkedNotice.objects.filter(user = self.request.user, notice = notice)[0].delete()
+			return HttpResponse("Deleted the notice Successfully")
+		except:
+			return HttpResponse("Some error occured. Please try after sometime.")
+

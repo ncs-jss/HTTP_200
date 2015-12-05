@@ -106,20 +106,3 @@ class EditProfile(LoginRequiredMixin, View):
 			detail = detail_form.save()	
 		return redirect("user-profile", user_id= user.username)
 
-class BookmarkListView(LoginRequiredMixin, ListView):
-	model = BookmarkedNotice
-	
-	def get(self, request):
-		template_name = "bookmark.html"
-		bookmark_list = BookmarkedNotice.objects.filter(user=request.user)
-		paginator = Paginator(bookmark_list, 10)
-		page = request.GET.get('page')
-		try:
-			bookmarks = paginator.page(page)
-		except PageNotAnInteger:
-			# If page is not an integer, deliver first page.
-			bookmarks = paginator.page(1)
-		except EmptyPage:
-			# If page is out of range (e.g. 9999), deliver last page of results.
-			bookmarks = paginator.page(paginator.num_pages)
-		return render(request, template_name, {"bookmarks": bookmarks})
