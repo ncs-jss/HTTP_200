@@ -39,12 +39,14 @@
 function Unmark(notice_id)
 {
     $.ajax({
-        url : "/"+notice_id+"/del_bookmark/",
+        url : "/notices/"+notice_id+"/bookmark/delete/",
         type : "POST",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
         success : function(json)
         {
-            
-            alert(json);
+            location.reload();
         },
         error : function(json)
         {
