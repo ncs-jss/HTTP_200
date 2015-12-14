@@ -186,4 +186,3 @@ class PinCreateView(LoginRequiredMixin,generic.View):
 		
 		except:
 			return HttpResponse("Some error occured.Please try after sometime")
-		
