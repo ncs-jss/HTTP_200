@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404, redi
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views import generic
 from django.core.exceptions import PermissionDenied
-from notices.models import Notice, BookmarkedNotice
+from notices.models import Notice, BookmarkedNotice, NoticeBranchYear
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -16,6 +16,7 @@ from django.views.generic import View
 class NoticeList(LoginRequiredMixin, generic.View):
 	def get(self, request):
 		template = 'notices/list.html'
+		print type(request.user)
 		notice_list = Notice.objects.order_by('-updated_at')
 		paginator = Paginator(notice_list, 10)
 		page = request.GET.get('page')
@@ -70,6 +71,15 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 		faculty = get_object_or_404(FacultyDetail, user__id = self.request.user.id )
 		form.instance.faculty = faculty
 		form.save()
+		branch_list =  self.request.POST.getlist('branches')
+		year_list =  self.request.POST.getlist('years')
+		for branch in branch_list:
+			for year in year_list:
+				print branch, year
+				branchyear = NoticeBranchYear.objects.create(
+							notice = form.instance,
+							branch = branch,
+							year = year, ) 
 		return super(NoticeCreateView, self).form_valid(form)
 
 	# def get(self, request, *args, **kwargs):
@@ -116,6 +126,10 @@ class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	model = Notice
 	success_url = reverse_lazy('notice_list')
 	pass
+
+	def delete(self, *args, **kwargs):
+		NoticeBranchYear.objects.filter(notice = self.get_object()).delete()
+		return super(NoticeDeleteView, self).delete(self.get_object())
 
 class BookmarkCreateView(LoginRequiredMixin,generic.View):
 	'''

@@ -41,6 +41,8 @@ class Notice(models.Model):
 	def filename(self):
 		return os.path.basename(self.file.name)
 
+	def __unicode__(self):
+		return self.title
 
 class NoticeBranchYear(models.Model):
 	"""
@@ -89,12 +91,12 @@ class NoticeBranchYear(models.Model):
 	notice = models.ForeignKey(Notice)
 	year = models.CharField(
 		max_length = 2,
-		choices = YEAR,
+		# choices = YEAR,
 		default = ALL
 		)
 	branch = models.CharField(
 		max_length = 5,
-		choices = BRANCH, 
+		# choices = BRANCH, 
 		default = ALL,
 		)
 

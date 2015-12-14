@@ -44,6 +44,7 @@ class NoticeCreateForm(forms.ModelForm):
 		)
 	branches = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=BRANCH)
 	years = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=YEAR)
+	
 	class Meta:
 		model = Notice
 		exclude = ('faculty',)
