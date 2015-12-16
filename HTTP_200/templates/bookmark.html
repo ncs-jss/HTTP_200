@@ -9,10 +9,19 @@
     </thead>
     <tbody>
     {% for bookmark in bookmarks %}
-    <tr>
-        <td><button type="button" class="btn btn-primary" onclick="Unmark({{bookmark.notice.id}});">Unmark</button></td>
-        <td>{{ bookmark.notice.title }}</td>
-      </tr>
+    {% if bookmark.pinned %}
+        <tr>
+            <td><span class="glyphicon glyphicon-star" aria-hidden="true"></span></td>
+            <td>{{ bookmark.notice.title }}</td>
+            <td><button type="button" class="btn btn-primary" onclick="Unmark({{bookmark.notice.id}});">Unmark</button></td>
+        </tr>
+    {% else %}
+        <tr>
+            <td><a href="#" onclick="PinItem({{bookmark.id}})"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></td>
+            <td>{{ bookmark.notice.title }}</td>
+            <td><button type="button" class="btn btn-primary" onclick="Unmark({{bookmark.notice.id}});">Unmark</button></td>
+        </tr>
+    {% endif %}
     {% endfor %}
     </tbody>
   </table>
@@ -46,6 +55,27 @@ function Unmark(notice_id)
         },
         success : function(json)
         {
+            location.reload();
+        },
+        error : function(json)
+        {
+            alert("error");
+        }
+    });
+}
+
+
+function PinItem(bookmark_id)
+{
+    $.ajax({
+        url : "/notices/bookmark/"+ bookmark_id + "/pinned/",
+        type : "POST",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success : function(json)
+        {
+            alert(json);
             location.reload();
         },
         error : function(json)

@@ -13,6 +13,6 @@ class NoticeBranchYearAdmin(admin.ModelAdmin):
 admin.site.register(NoticeBranchYear,NoticeBranchYearAdmin)
 
 class BookmarkedNoticeAdmin(admin.ModelAdmin):
-	list_display = ('user','notice')
+	list_display = ('user','notice','pinned')
 
 admin.site.register(BookmarkedNotice,BookmarkedNoticeAdmin)

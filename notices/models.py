@@ -106,3 +106,4 @@ class BookmarkedNotice(models.Model):
  	"""
  	user = models.ForeignKey(User)
  	notice = models.ForeignKey(Notice)
+ 	pinned = models.BooleanField(default=False)

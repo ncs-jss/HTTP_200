@@ -172,7 +172,7 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
 	"""
 	def get(self, request):
 		template_name = "bookmark.html"
-		bookmark_list = BookmarkedNotice.objects.filter(user=request.user)
+		bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
 		paginator = Paginator(bookmark_list, 10)
 		page = request.GET.get('page')
 		try:
@@ -194,3 +194,27 @@ class BookmarkDeleteView(LoginRequiredMixin,DeleteView):
 			return HttpResponse("Deleted the notice Successfully")
 		except:
 			return HttpResponse("Some error occured. Please try after sometime.")
+
+class PinCreateView(LoginRequiredMixin,generic.View):
+	'''
+		Pinning Item to Top
+	'''
+	def post(self, request, pk=None):
+		try:
+			'''
+				only one pin is used for top so replacing the previous top pinned item to new one
+			'''
+			try:
+				previous = BookmarkedNotice.objects.get(user=request.user,pinned = True)
+				previous.pinned = False
+				previous.save()
+			except:
+				None
+
+			bookmark = BookmarkedNotice.objects.get(pk = pk)
+			bookmark.pinned = True
+			bookmark.save()
+			return HttpResponse("Pinned To Top")
+		
+		except:
+			return HttpResponse("Some error occured.Please try after sometime")
