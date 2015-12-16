@@ -1,12 +1,17 @@
 from django.core.management.base import BaseCommand, CommandError
 import autofixture
 import logging
+import hashlib
 logger = logging.getLogger(__name__)
 
 
-admin_md5 = '21232f297a57a5a743894a0e4a801fc3'
-student_md5 = 'cd73502828457d15655bbd7a63fb0bc8'
-default_md5 = 'c21f969b5f03d33d43e04f8f136e7682'
+# admin_md5 = '21232f297a57a5a743894a0e4a801fc3'
+# student_md5 = 'cd73502828457d15655bbd7a63fb0bc8'
+# default_md5 = 'c21f969b5f03d33d43e04f8f136e7682'
+
+admin_md5 = hashlib.md5('admin').hexdigest()
+student_md5 = hashlib.md5('student').hexdigest()
+default_md5 = hashlib.md5('default').hexdigest()
 
 class Command(BaseCommand):
 	help = 'Create random model instances for testing purposes.'
