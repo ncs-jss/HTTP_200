@@ -1,4 +1,4 @@
-from notices.models import Notice
+from notices.models import Notice, NoticeBranchYear
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 
@@ -49,3 +49,14 @@ class NoticeCreateForm(forms.ModelForm):
 		model = Notice
 		exclude = ('faculty',)
 		widgets = {'description': CKEditorWidget,}
+
+	def __init__(self, *args, **kwargs):
+		notice_instance = Notice.objects.filter(
+						title=kwargs['instance'])
+		branchyear_instance = NoticeBranchYear.objects.filter(
+						notice=notice_instance).values()
+		year = list(set((object['year'] for object in branchyear_instance)))
+		branch = list(set((object['branch'] for object in branchyear_instance)))
+		kwargs['initial'].update({'branches': branch})
+		kwargs['initial'].update({'years': year})
+		super(NoticeCreateForm, self).__init__(*args, **kwargs)
