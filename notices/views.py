@@ -122,13 +122,29 @@ class NoticeUpdateView(LoginRequiredMixin,UpdateView):
 		else:
 			raise PermissionDenied()
 
+	def form_valid(self, form):
+		NoticeBranchYear.objects.filter(
+			notice = form.instance).delete()
+		branch_list =  self.request.POST.getlist('branches')
+		year_list =  self.request.POST.getlist('years')
+		for branch in branch_list:
+			for year in year_list:
+				print branch, year
+				branchyear = NoticeBranchYear.objects.create(
+							notice = form.instance,
+							branch = branch,
+							year = year, )
+		return super(NoticeUpdateView, self).form_valid(form)
+
+
 class NoticeDeleteView(LoginRequiredMixin,DeleteView):
 	model = Notice
 	success_url = reverse_lazy('notice_list')
 	pass
 
 	def delete(self, *args, **kwargs):
-		NoticeBranchYear.objects.filter(notice = self.get_object()).delete()
+		NoticeBranchYear.objects.filter(
+			notice = self.get_object()).delete()
 		return super(NoticeDeleteView, self).delete(self.get_object())
 
 class BookmarkCreateView(LoginRequiredMixin,generic.View):
@@ -140,7 +156,9 @@ class BookmarkCreateView(LoginRequiredMixin,generic.View):
 
 	def post(self, request, pk = None):
 		notice = Notice.objects.get(pk = pk)
-		obj, created = BookmarkedNotice.objects.get_or_create(user = self.request.user, notice = notice)
+		obj, created = BookmarkedNotice.objects.get_or_create(
+			user = self.request.user, 
+			notice = notice)
 		if created:
 			return HttpResponse("Successfully Bookmarked")
 		else:
@@ -176,4 +194,3 @@ class BookmarkDeleteView(LoginRequiredMixin,DeleteView):
 			return HttpResponse("Deleted the notice Successfully")
 		except:
 			return HttpResponse("Some error occured. Please try after sometime.")
-
