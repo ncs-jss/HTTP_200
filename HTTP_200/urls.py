@@ -17,6 +17,7 @@ urlpatterns = [
 	# url(r'^api/', include('feeds.urls')),
 	url(r'^token/', 'rest_framework_jwt.views.obtain_jwt_token'),
 	url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
+	url(r'^admin_tools/', include('admin_tools.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^user/', include('profiles.urls')),
 	url(r'^faq/$',  FaqDisplayView.as_view(),name="faq"),

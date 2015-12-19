@@ -30,6 +30,10 @@ APPEND_SLASH = True
 
 INSTALLED_APPS = (
 	# 'rest_framework',
+	'admin_tools',
+	'admin_tools.theming',
+	'admin_tools.menu',
+	'admin_tools.dashboard',
 	'django.contrib.sites',
 	'django.contrib.admin',
 	'django.contrib.auth',
@@ -68,8 +72,12 @@ ROOT_URLCONF = 'HTTP_200.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [os.path.join(APP_DIR, 'templates'),],
-		'APP_DIRS': True,
+		'DIRS': [
+			os.path.join(APP_DIR, 'templates'),
+			# os.path.join(BASE_DIR, 'profiles/templates'),
+			# os.path.join(BASE_DIR, 'notices/templates'),
+		],
+		# 'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
 				'django.template.context_processors.debug',
@@ -77,7 +85,13 @@ TEMPLATES = [
 				'django.contrib.auth.context_processors.auth',
 				'django.contrib.messages.context_processors.messages',
 				'django.core.context_processors.static',
+				'django.core.context_processors.request',
 			],
+			'loaders': [
+				'admin_tools.template_loaders.Loader',
+				'django.template.loaders.filesystem.Loader',
+				'django.template.loaders.app_directories.Loader'
+			]
 		},
 	},
 ]
@@ -205,26 +219,26 @@ SAMPLEDATAHELPER_SEED = 123456789
 
 
 SAMPLEDATAHELPER_MODELS = [
-    # Generate 5 instances completly random
-    { 'model': 'profiles.StudentDetail', 'number': 5, },
+	# Generate 5 instances completly random
+	{ 'model': 'profiles.StudentDetail', 'number': 5, },
 
-    # Generate 5 instances selecting random method for some fields
-    {
-        'model': 'profiles.StudentDetail',
-        'number': 5,
-        'fields_overwrite': [
-            ('my_int_field', lambda _, sd: sd.int(5, 10)),
-        ]
-    },
+	# Generate 5 instances selecting random method for some fields
+	{
+		'model': 'profiles.StudentDetail',
+		'number': 5,
+		'fields_overwrite': [
+			('my_int_field', lambda _, sd: sd.int(5, 10)),
+		]
+	},
 
-    # Generate 5 instances with fixed data in a field
-    {
-        'model': 'profiles.StudentDetail',
-        'number': 5,
-        'fields_overwrite': [
-            ('my_int_field', 5),
-        ]
-    }
+	# Generate 5 instances with fixed data in a field
+	{
+		'model': 'profiles.StudentDetail',
+		'number': 5,
+		'fields_overwrite': [
+			('my_int_field', 5),
+		]
+	}
 ]
 
 MEDIA_ROOT = os.path.join(APP_DIR, 'media')
