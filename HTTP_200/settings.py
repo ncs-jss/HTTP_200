@@ -21,9 +21,12 @@ SECRET_KEY = 'aq#*#1^qn$!_y04hrsg4!@ra5_!cn9v+39fzj=2rq^319s0^n6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
+
+INTERNAL_IPS = '127.0.0.1'
 
 APPEND_SLASH = True
 # Application definition
@@ -51,6 +54,7 @@ INSTALLED_APPS = (
 	'autofixture',
 	'ckeditor',
 	'django_spaghetti',
+	'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,6 +67,7 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'debug_toolbar.middleware.DebugToolbarMiddleware',
 	# 'HTTP_200.middlewares.SetLastVisitMiddleware',
 	# 'django.middleware.security.SecurityMiddleware',
 )

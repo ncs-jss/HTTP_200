@@ -24,9 +24,13 @@ urlpatterns = [
 	# url(r'', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
+# For development environment
+
 if settings.DEBUG:
+	import debug_toolbar
 	urlpatterns += patterns('',
 		(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
 		'document_root': settings.MEDIA_ROOT}),
 		url(r'^plate/', include('django_spaghetti.urls')),
+		url(r'^__debug__/', include(debug_toolbar.urls)),
 		)
