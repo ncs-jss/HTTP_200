@@ -13,3 +13,4 @@ django-braces
 django-autofixture
 django-ckeditor==5.0.2
 django-spaghetti-and-meatballs==0.1.1
+django-admin-tools==0.7.1
