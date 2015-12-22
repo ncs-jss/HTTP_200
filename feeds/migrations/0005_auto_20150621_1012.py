@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='notice',
             name='course',
-            field=models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (b'ADMN', b'Adminsitration'), (b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')]),
+            field=models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (b'ADMN', b'Adminsitration'), (
+                b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')]),
         ),
     ]

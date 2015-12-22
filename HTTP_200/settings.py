@@ -32,73 +32,73 @@ APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = (
-	# 'rest_framework',
-	'admin_tools',
-	'admin_tools.theming',
-	'admin_tools.menu',
-	'admin_tools.dashboard',
-	'django.contrib.sites',
-	'django.contrib.admin',
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'corsheaders',
-	'haystack',
-	# 'feeds',
-	'allauth',
-	'allauth.account',
-	'profiles',
-	'notices',
-	'autofixture',
-	'ckeditor',
-	'django_spaghetti',
-	'debug_toolbar',
+    # 'rest_framework',
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'corsheaders',
+    'haystack',
+    # 'feeds',
+    'allauth',
+    'allauth.account',
+    'profiles',
+    'notices',
+    'autofixture',
+    'ckeditor',
+    'django_spaghetti',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
-	'corsheaders.middleware.CorsMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'debug_toolbar.middleware.DebugToolbarMiddleware',
-	# 'HTTP_200.middlewares.SetLastVisitMiddleware',
-	# 'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'HTTP_200.middlewares.SetLastVisitMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'HTTP_200.urls'
 
 TEMPLATES = [
-	{
-		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [
-			os.path.join(APP_DIR, 'templates'),
-			# os.path.join(BASE_DIR, 'profiles/templates'),
-			# os.path.join(BASE_DIR, 'notices/templates'),
-		],
-		# 'APP_DIRS': True,
-		'OPTIONS': {
-			'context_processors': [
-				'django.template.context_processors.debug',
-				'django.template.context_processors.request',
-				'django.contrib.auth.context_processors.auth',
-				'django.contrib.messages.context_processors.messages',
-				'django.core.context_processors.static',
-				'django.core.context_processors.request',
-			],
-			'loaders': [
-				'admin_tools.template_loaders.Loader',
-				'django.template.loaders.filesystem.Loader',
-				'django.template.loaders.app_directories.Loader'
-			]
-		},
-	},
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(APP_DIR, 'templates'),
+            # os.path.join(BASE_DIR, 'profiles/templates'),
+            # os.path.join(BASE_DIR, 'notices/templates'),
+        ],
+        # 'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.static',
+                'django.core.context_processors.request',
+            ],
+            'loaders': [
+                'admin_tools.template_loaders.Loader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader'
+            ]
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'HTTP_200.wsgi.application'
@@ -108,10 +108,10 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
@@ -138,23 +138,23 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'auth.User'
 
 REST_FRAMEWORK = {
-	'DEFAULT_PERMISSION_CLASSES': (
-		'rest_framework.permissions.IsAuthenticated',
-	),
-	'DEFAULT_AUTHENTICATION_CLASSES': (
-		'rest_framework.authentication.SessionAuthentication',
-		'rest_framework.authentication.BasicAuthentication',
-		'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-	),
-	'DEFAULT_FILTER_BACKENDS': (
-		'rest_framework.filters.DjangoFilterBackend',
-	),
-	'DEFAULT_RENDERER_CLASSES': (
-		'rest_framework.renderers.JSONRenderer',
-		'rest_framework.renderers.BrowsableAPIRenderer',
-	),
-	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-	'PAGE_SIZE': 15,
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.DjangoFilterBackend',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15,
 }
 
 
@@ -163,48 +163,48 @@ CORS_ORIGIN_ALLOW_ALL = True
 import datetime
 
 JWT_AUTH = {
-	'JWT_ENCODE_HANDLER':
-	'rest_framework_jwt.utils.jwt_encode_handler',
+    'JWT_ENCODE_HANDLER':
+        'rest_framework_jwt.utils.jwt_encode_handler',
 
-	'JWT_DECODE_HANDLER':
-	'rest_framework_jwt.utils.jwt_decode_handler',
+        'JWT_DECODE_HANDLER':
+        'rest_framework_jwt.utils.jwt_decode_handler',
 
-	'JWT_PAYLOAD_HANDLER':
-	'rest_framework_jwt.utils.jwt_payload_handler',
+        'JWT_PAYLOAD_HANDLER':
+        'rest_framework_jwt.utils.jwt_payload_handler',
 
-	'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-	'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+        'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+        'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
 
-	'JWT_RESPONSE_PAYLOAD_HANDLER':
-	'rest_framework_jwt.utils.jwt_response_payload_handler',
+        'JWT_RESPONSE_PAYLOAD_HANDLER':
+        'rest_framework_jwt.utils.jwt_response_payload_handler',
 
-	'JWT_SECRET_KEY': SECRET_KEY,
-	'JWT_ALGORITHM': 'HS256',
-	'JWT_VERIFY': True,
-	'JWT_VERIFY_EXPIRATION': True,
-	'JWT_LEEWAY': 0,
-	'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=360),
-	'JWT_AUDIENCE': None,
-	'JWT_ISSUER': None,
+        'JWT_SECRET_KEY': SECRET_KEY,
+        'JWT_ALGORITHM': 'HS256',
+        'JWT_VERIFY': True,
+        'JWT_VERIFY_EXPIRATION': True,
+        'JWT_LEEWAY': 0,
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=360),
+        'JWT_AUDIENCE': None,
+        'JWT_ISSUER': None,
 
-	'JWT_ALLOW_REFRESH': False,
-	'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+        'JWT_ALLOW_REFRESH': False,
+        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 
-	'JWT_AUTH_HEADER_PREFIX': 'JWT',
+        'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 
 HAYSTACK_CONNECTIONS = {
-	'default': {
-		'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-	},
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
 }
 
 AUTHENTICATION_BACKENDS = (
-	# Needed to login by username in Django admin, regardless of `allauth`
-	'django.contrib.auth.backends.ModelBackend',
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 
-	# `allauth` specific authentication methods, such as login by e-mail
-	'allauth.account.auth_backends.AuthenticationBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"
@@ -214,7 +214,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(APP_DIR, 'assets', 'collected-static')
 
 STATICFILES_DIRS = (
-	os.path.join(APP_DIR, 'static'),
+    os.path.join(APP_DIR, 'static'),
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -224,32 +224,32 @@ SAMPLEDATAHELPER_SEED = 123456789
 
 
 SAMPLEDATAHELPER_MODELS = [
-	# Generate 5 instances completly random
-	{ 'model': 'profiles.StudentDetail', 'number': 5, },
+    # Generate 5 instances completly random
+    {'model': 'profiles.StudentDetail', 'number': 5, },
 
-	# Generate 5 instances selecting random method for some fields
-	{
-		'model': 'profiles.StudentDetail',
-		'number': 5,
-		'fields_overwrite': [
-			('my_int_field', lambda _, sd: sd.int(5, 10)),
-		]
-	},
+    # Generate 5 instances selecting random method for some fields
+    {
+        'model': 'profiles.StudentDetail',
+        'number': 5,
+        'fields_overwrite': [
+            ('my_int_field', lambda _, sd: sd.int(5, 10)),
+        ]
+    },
 
-	# Generate 5 instances with fixed data in a field
-	{
-		'model': 'profiles.StudentDetail',
-		'number': 5,
-		'fields_overwrite': [
-			('my_int_field', 5),
-		]
-	}
+    # Generate 5 instances with fixed data in a field
+    {
+        'model': 'profiles.StudentDetail',
+        'number': 5,
+        'fields_overwrite': [
+            ('my_int_field', 5),
+        ]
+    }
 ]
 
 MEDIA_ROOT = os.path.join(APP_DIR, 'media')
 
 SPAGHETTI_SAUCE = {
-  'apps':['auth','notices', 'profiles'],
-  'show_fields':True,
-  # 'exclude':{'auth':['user']}
+    'apps': ['auth', 'notices', 'profiles'],
+    'show_fields': True,
+    # 'exclude':{'auth':['user']}
 }

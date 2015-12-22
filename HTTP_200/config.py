@@ -1,6 +1,6 @@
 # import settings
 def jwt_response_payload_handler(token, user=None, request=None):
-    # if 
+    # if
     print "###################"
     print token
     return {
