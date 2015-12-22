@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='studentdetail',
             name='branch',
-            field=models.CharField(default=None, max_length=5, choices=[(b'CSE', b'Computer Science and Engineering'), (b'IT', b'Information Technology'), (b'EE', b'Electrical Engineering'), (b'ECE', b'Electronics and Communication Engineering'), (b'EEE', b'Electrical and Electronics Engineering'), (b'CE', b'Civil Engineering'), (b'IC', b'Instrumentation and Control Engineering'), (b'ME', b'Mechanical Engineering'), (b'MT', b'Manufacturing Technology')]),
+            field=models.CharField(default=None, max_length=5, choices=[(b'CSE', b'Computer Science and Engineering'), (b'IT', b'Information Technology'), (b'EE', b'Electrical Engineering'), (b'ECE', b'Electronics and Communication Engineering'), (
+                b'EEE', b'Electrical and Electronics Engineering'), (b'CE', b'Civil Engineering'), (b'IC', b'Instrumentation and Control Engineering'), (b'ME', b'Mechanical Engineering'), (b'MT', b'Manufacturing Technology')]),
         ),
         migrations.AddField(
             model_name='studentdetail',
@@ -29,7 +30,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='studentdetail',
             name='course',
-            field=models.CharField(default=b'BT', max_length=3, choices=[(b'BT', b'B.Tech'), (b'MCA', b'MCA'), (b'MBA', b'MBA'), (b'MTECH', b'Masters of Technology'), (b'OT', b'Others')]),
+            field=models.CharField(default=b'BT', max_length=3, choices=[(
+                b'BT', b'B.Tech'), (b'MCA', b'MCA'), (b'MBA', b'MBA'), (b'MTECH', b'Masters of Technology'), (b'OT', b'Others')]),
         ),
         migrations.AlterField(
             model_name='studentdetail',

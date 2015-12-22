@@ -4,16 +4,21 @@ from django.contrib.auth.models import User
 
 
 class UserForm(forms.ModelForm):
-	class Meta:
-		model = User
-		fields = ['username', 'first_name', 'last_name', 'email']
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
 
 class StudentForm(forms.ModelForm):
-	class Meta:
-		model = StudentDetail
-		exclude = ['user',	]
+
+    class Meta:
+        model = StudentDetail
+        exclude = ['user',	]
+
 
 class FacultyForm(forms.ModelForm):
-	class Meta:
-		model = FacultyDetail
-		exclude = ['user',	]
+
+    class Meta:
+        model = FacultyDetail
+        exclude = ['user',	]

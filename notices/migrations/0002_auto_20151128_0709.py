@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='noticebranchyear',
             name='year',
-            field=models.CharField(default=b'ALL', max_length=2, choices=[(1, b'First Year'), (2, b'Second Year'), (3, b'Third Year'), (4, b'Fourth Year'), (b'ALL', b'For all')]),
+            field=models.CharField(default=b'ALL', max_length=2, choices=[(
+                1, b'First Year'), (2, b'Second Year'), (3, b'Third Year'), (4, b'Fourth Year'), (b'ALL', b'For all')]),
         ),
     ]

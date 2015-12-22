@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='studentdetail',
             name='course',
-            field=models.CharField(default=None, max_length=5, null=True, choices=[(b'BT', b'B.Tech'), (b'MCA', b'MCA'), (b'MBA', b'MBA'), (b'MTECH', b'Masters of Technology'), (b'OT', b'Others')]),
+            field=models.CharField(default=None, max_length=5, null=True, choices=[(
+                b'BT', b'B.Tech'), (b'MCA', b'MCA'), (b'MBA', b'MBA'), (b'MTECH', b'Masters of Technology'), (b'OT', b'Others')]),
         ),
     ]

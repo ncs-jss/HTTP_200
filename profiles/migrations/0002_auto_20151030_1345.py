@@ -34,7 +34,8 @@ class Migration(migrations.Migration):
                 ('father_name', models.CharField(max_length=200, null=True)),
                 ('mother_name', models.CharField(max_length=200, null=True)),
                 ('address', models.CharField(max_length=500, null=True)),
-                ('course', models.CharField(default=b'BT', max_length=3, choices=[(b'BT', b'B.Tech'), (b'MCA', b'MCA'), (b'MBA', b'MBA'), (b'OT', b'Others')])),
+                ('course', models.CharField(default=b'BT', max_length=3, choices=[
+                 (b'BT', b'B.Tech'), (b'MCA', b'MCA'), (b'MBA', b'MBA'), (b'OT', b'Others')])),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
