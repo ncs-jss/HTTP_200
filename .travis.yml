@@ -1,0 +1,16 @@
+language: python
+sudo: false
+python:
+  - "2.7"
+# command to install dependencies
+install:
+- pip install --upgrade pip
+- pip install -r requirements.txt
+- pip install python-coveralls
+
+script: coverage
+
+notifications:
+  email:
+    on_success: change  # [always|never|change]
+    on_failure: always  # [always|never|change]
