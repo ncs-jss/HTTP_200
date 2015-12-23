@@ -1,6 +1,10 @@
 HTTP_200
 =============
 
+
+[![Build Status](https://travis-ci.org/ncs-jss/HTTP_200.svg?branch=master)](https://travis-ci.org/ncs-jss/HTTP_200)
+
+
 A new Information Center for JSS Academy of Technical Education, Noida. 
 
 # Installation
