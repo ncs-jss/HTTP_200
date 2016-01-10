@@ -16,7 +16,6 @@ class NoticeAdmin(admin.ModelAdmin):
 		}),
 	)
 
-
 class NoticeBranchYearAdmin(admin.ModelAdmin):
 	list_display = ('year', 'branch', 'notice')
 	list_filter = ('faculty','category')
@@ -30,8 +29,7 @@ class NoticeBranchYearAdmin(admin.ModelAdmin):
 			'fields': (('year','branch'),'notice'),
 		}),
 	)
-
-
+	
 class BookmarkedNoticeAdmin(admin.ModelAdmin):
 	list_display = ('user', 'pinned', 'notice', )
 	#list_filter = ('notice',)
@@ -43,8 +41,7 @@ class BookmarkedNoticeAdmin(admin.ModelAdmin):
 			'fields': (('user','notice'),'pinned'),
 		}),
 	)
-
-
+	
 admin.site.register(Notice, NoticeAdmin)
 admin.site.register(NoticeBranchYear, NoticeBranchYearAdmin)
 admin.site.register(BookmarkedNotice, BookmarkedNoticeAdmin)
