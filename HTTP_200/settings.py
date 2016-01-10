@@ -209,6 +209,7 @@ AUTHENTICATION_BACKENDS = (
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_SIGNUP_FORM_CLASS = "profiles.forms.SignupForm"
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(APP_DIR, 'assets', 'collected-static')
