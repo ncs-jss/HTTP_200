@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'django_spaghetti',
     'debug_toolbar',
+    'import_export',
 )
 
 MIDDLEWARE_CLASSES = (
