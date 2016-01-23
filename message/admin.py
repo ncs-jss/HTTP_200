@@ -12,6 +12,6 @@ class MessageAdmin(admin.ModelAdmin):
 	list_display = ('sender', 'reciever', 'message','created_at', 'seen_yet')
 
 	def seen_yet(self,obj):
-		return obj.notification_set.get(mid=obj).seen
+		return obj.notification.get(mid=obj).seen
 
 admin.site.register(Message, MessageAdmin)
