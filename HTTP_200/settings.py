@@ -32,7 +32,7 @@ APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = (
-    # 'rest_framework',
+    'rest_framework',
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',
@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'django_spaghetti',
     'debug_toolbar',
+    'private_notices',
     'import_export',
 )
 
