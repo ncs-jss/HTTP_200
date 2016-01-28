@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'django_spaghetti',
     'debug_toolbar',
     'message',
+    'import_export',
 )
 
 MIDDLEWARE_CLASSES = (

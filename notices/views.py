@@ -12,8 +12,6 @@ from profiles.models import FacultyDetail
 import permissions
 from django.views.generic import View
 
-# Create your views here.
-
 
 class NoticeList(LoginRequiredMixin, generic.View):
 
@@ -44,20 +42,6 @@ class NoticeShow(LoginRequiredMixin, generic.View):
             return Http404()
         return render(request, template_name, {'notice': notice})
 
-# class NoticeDetail(LoginRequiredMixin, generic.View):
-# DEPRECATED CODE
-# 	def get(self, request, category = None):
-# 		if category == "relevent":
-# 			try:
-# 				# if the logged in user is a student
-# 				student = StudentDetail.objects.get(user__id = self.request.user.id)
-# 				notices = NoticeBranchYear.objects.filter(year = student.year, branch = student.branch).values_list('notice', flat = True).order_by('-created_at')
-# 				relevent_notices = Notice.objects.filter()
-# 			except:
-# 				# if the logged in user is a faculty
-# 				faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
-# 		return
-
 
 class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     """
@@ -87,31 +71,6 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
                     branch=branch,
                     year=year, )
         return super(NoticeCreateView, self).form_valid(form)
-
-    # def get(self, request, *args, **kwargs):
-    """
-	View not in use
-	"""
-    # 	if not permissions.is_in_group(request.user, 'FacultyGroup'):
-    # 		raise PermissionDenied()
-    # 	else:
-    # 		notice_form = NoticeCreateForm()
-    # 		template_name = "notices/notice_form.html"
-    # 		return render(request, template_name, {'form':notice_form})
-
-    # def post(self, request):
-    """
-	View not in use
-	"""
-    # 	notice_form = NoticeCreateForm(request.POST)
-    # 	faculty = get_object_or_404(FacultyDetail, user__id = self.request.user.id )
-    # 	if notice_form.is_valid():
-    # 		notice_obj = notice_form.save(commit=False)
-    # 		notice_obj.faculty = faculty
-    # 		notice_obj.save()
-    # 	else:
-    # 		return HttpResponse('Invalid Form')
-    # 	return redirect("notice_list")
 
 
 class NoticeUpdateView(LoginRequiredMixin, UpdateView):
@@ -159,9 +118,6 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
     '''
             Adding a Bookmark to a notice
     '''
-    # def get(self, request, pk = None):
-    # 	return HttpResponse("Get request working")
-
     def post(self, request, pk=None):
         notice = Notice.objects.get(pk=pk)
         obj, created = BookmarkedNotice.objects.get_or_create(
@@ -208,21 +164,17 @@ class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class PinCreateView(LoginRequiredMixin, generic.View):
-    '''
-            Pinning Item to Top
-    '''
-
     def post(self, request, pk=None):
         try:
             '''
-                    only one pin is used for top so replacing the previous top pinned item to new one
+            only one pin is used for top so replacing the previous top pinned item to new one
             '''
             try:
                 previous = BookmarkedNotice.objects.get(user=request.user, pinned=True)
                 previous.pinned = False
                 previous.save()
             except:
-                None
+                pass
 
             bookmark = BookmarkedNotice.objects.get(pk=pk)
             bookmark.pinned = True
