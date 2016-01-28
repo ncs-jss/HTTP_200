@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('profiles.urls')),
     url(r'^faq/$',  FaqDisplayView.as_view(), name="faq"),
-    url(r'^messages/', include('message.urls')),
+    url(r'^pnotices/', include('private_notices.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
 ]
 

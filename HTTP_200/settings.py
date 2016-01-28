@@ -55,7 +55,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'django_spaghetti',
     'debug_toolbar',
-    'message',
+    'private_notices',
     'import_export',
 )
 

@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from message.models import Message, Notification
+from private_notices.models import PrivateNotice, Notification
 
 class NotificationSerializer(serializers.Serializer):
 	seen = serializers.BooleanField()
 	sent = serializers.BooleanField()
 	seen_at = serializers.DateTimeField()
 
-class MessageViewSerializer(serializers.ModelSerializer):
+class PrivateNoticeViewSerializer(serializers.ModelSerializer):
 	notification = NotificationSerializer(many=True)
 	sender = serializers.SerializerMethodField('return_sender')
 	reciever = serializers.SerializerMethodField('return_reciever')
@@ -18,6 +18,6 @@ class MessageViewSerializer(serializers.ModelSerializer):
 		return obj.reciever.username
 
 	class Meta:
-		model = Message
+		model = PrivateNotice
 
 
