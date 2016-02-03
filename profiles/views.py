@@ -50,7 +50,6 @@ class UserProfile(LoginRequiredMixin, View):
     '''
             To display the profiles of the Users
     '''
-
     def get(self, request, user_id=None):
         user_type = None
         user_list = get_object_or_404(User, username=user_id)
@@ -62,6 +61,7 @@ class UserProfile(LoginRequiredMixin, View):
             user_type = 'faculty'
             detail_list = get_object_or_404(FacultyDetail, user=user_list)
         else:
+            print "gk"
             return Http404()
         template_name = 'user_profile.html'
         return render(request, template_name, {'user_type': user_type, 'user_list': user_list, 'detail_list': detail_list})
