@@ -50,7 +50,6 @@ class UserProfile(LoginRequiredMixin, View):
     '''
             To display the profiles of the Users
     '''
-
     def get(self, request, user_id=None):
         user_type = None
         user_list = get_object_or_404(User, username=user_id)
