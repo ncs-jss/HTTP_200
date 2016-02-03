@@ -64,5 +64,3 @@ class HomeTest(TestCase):
         response=self.c.get(url)
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'index.html')
-    
-    
