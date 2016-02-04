@@ -10,25 +10,25 @@ from .forms import UserForm,StudentForm,FacultyForm
 class StudentTest(TestCase):
     
     def setUp(self):
-        user=User.objects.create(username='Shivangi',password='1234')
-        StudentDetail.objects.create(year=3,branch='IT',univ_roll_no=1309113001,contact_no=9813728934 ,father_name='',mother_name='',address='',course='B.Tech',display_to_others='',user=user)
+        self.user=User.objects.create(username='Shivangi',password='1234')
+        StudentDetail.objects.create(year=3,branch='IT',univ_roll_no=1309113001,contact_no=9813728934 ,father_name='',mother_name='',address='',course='B.Tech',display_to_others='',user=self.user)
     
         
     def test_create_student(self):
-        po=User.objects.get(username='Shivangi')
-        details=StudentDetail.objects.get(user=po)
-        self.assertEquals(details.year,3)
+        user=User.objects.get(username='Shivangi')
+        student_details=StudentDetail.objects.get(user=user)
+        self.assertEquals(student_details.year,3)
         
 class FacultyTest(TestCase):
     
     def setUp(self):
-        user=User.objects.create(username='Ajay',password='5678')
-        FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=user)
+        self.user=User.objects.create(username='Ajay',password='5678')
+        FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=self.user)
         
     def test_create_faculty(self):
-        po=User.objects.get(username='Ajay')
-        details=FacultyDetail.objects.get(user=po)
-        self.assertEquals(details.department,'IT')
+        user=User.objects.get(username='Ajay')
+        faculty_details=FacultyDetail.objects.get(user=user)
+        self.assertEquals(faculty_details.department,'IT')
     
     
         
@@ -47,7 +47,6 @@ class form_test(TestCase):
     def test_faculty_form(self):
         form_data={'designation':"teacher",'department':"IT",'contact_no':9988213123,'address':"Indirapuram",'alternate_email':'abc@gmail.com','display_to_others':''}
         form=FacultyForm(data=form_data)
-        
         self.assertTrue(form.is_valid())
    
    

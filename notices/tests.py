@@ -8,43 +8,43 @@ from django.contrib.auth.models import User
 class NoticeTest(TestCase):
     
     def setUp(self):
-        user=User.objects.create(username='Ajay',password='5678')
-        faculty=FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=user)
-        Notice.objects.create(faculty=faculty,title='extra-class',description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow',file_attached='',subject='compiler design class',category='Academics')
+        self.user=User.objects.create(username='Ajay',password='5678')
+        self.faculty=FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=self.user)
+        Notice.objects.create(faculty=self.faculty,title='extra-class',description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow',file_attached='',subject='compiler design class',category='Academics')
         
     def test_create_notice(self):
-        p=User.objects.get(username='Ajay')
-        q=FacultyDetail.objects.get(user=p)
-        details=Notice.objects.get(faculty=q)
-        self.assertEquals(details.title,'extra-class')
-        self.assertEquals(details.faculty.designation,'teacher')
+        user=User.objects.get(username='Ajay')
+        faculty_detail=FacultyDetail.objects.get(user=user)
+        notice_details=Notice.objects.get(faculty=faculty_detail)
+        self.assertEquals(notice_details.title,'extra-class')
+        self.assertEquals(notice_details.faculty.designation,'teacher')
         
 class NoticeBranchYearTest(TestCase):
     
     def setUp(self):
-        user=User.objects.create(username='Ajay',password='5678')
-        faculty=FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=user)
-        notice=Notice.objects.create(faculty=faculty,title='extra-class',description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow',file_attached='',subject='compiler design class',category='Academics')
-        NoticeBranchYear.objects.create(notice=notice)
+        self.user=User.objects.create(username='Ajay',password='5678')
+        self.faculty_detail=FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=self.user)
+        self.notice=Notice.objects.create(faculty=self.faculty_detail,title='extra-class',description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow',file_attached='',subject='compiler design class',category='Academics')
+        NoticeBranchYear.objects.create(notice=self.notice)
         
     def test_create_noticebranchyear(self):
-        p=User.objects.get(username='Ajay')
-        q=FacultyDetail.objects.get(user=p)
-        r=Notice.objects.get(faculty=q)
-        details=NoticeBranchYear.objects.get(notice=r)
-        self.assertEquals(details.year,'ALL')
+        user=User.objects.get(username='Ajay')
+        faculty_detail=FacultyDetail.objects.get(user=user)
+        notice=Notice.objects.get(faculty=faculty_detail)
+        notice_branchyear_details=NoticeBranchYear.objects.get(notice=notice)
+        self.assertEquals(notice_branchyear_details.year,'ALL')
     
 class BookmarkedNoticeTest(TestCase):
     
     def setUp(self):
-        user=User.objects.create(username='Ajay',password='5678')
-        faculty=FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=user)
-        notice=Notice.objects.create(faculty=faculty,title='extra-class',description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow',file_attached='',subject='compiler design class',category='Academics')
-        bookmark=BookmarkedNotice.objects.create(user=user,notice=notice,pinned=True)
+        self.user=User.objects.create(username='Ajay',password='5678')
+        self.faculty_detail=FacultyDetail.objects.create(designation="teacher",department="IT",contact_no=9988213123,address="Indirapuram",alternate_email='abc@gmail.com',display_to_others='',user=self.user)
+        self.notice=Notice.objects.create(faculty=self.faculty_detail,title='extra-class',description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow',file_attached='',subject='compiler design class',category='Academics')
+        bookmark=BookmarkedNotice.objects.create(user=self.user,notice=self.notice,pinned=True)
         
     def test_create_bookmark(self):
-        p=User.objects.get(username='Ajay')
-        q=FacultyDetail.objects.get(user=p)
-        r=Notice.objects.get(faculty=q)
-        details=BookmarkedNotice.objects.get(user=p,notice=r)
-        self.assertEquals(details.pinned,True)
+        user=User.objects.get(username='Ajay')
+        faculty_detail=FacultyDetail.objects.get(user=user)
+        notice=Notice.objects.get(faculty=faculty_detail)
+        bookmarked_notice=BookmarkedNotice.objects.get(user=user,notice=notice)
+        self.assertEquals(bookmarked_notice.pinned,True)
