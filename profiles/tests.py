@@ -42,7 +42,6 @@ class form_test(TestCase):
     def test_student_form(self):
         form_data={'year':3,'branch':"IT",'univ_roll_no':1309113001,'contact_no':9813728934,'father_name':'','mother_name':'','address':'','course':"BT",'display_to_others':''}
         form=StudentForm(data=form_data)
-        print form
         self.assertTrue(form.is_valid())
         
     def test_faculty_form(self):
@@ -64,3 +63,4 @@ class HomeTest(TestCase):
         response=self.c.get(url)
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'index.html')
+        
