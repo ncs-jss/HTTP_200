@@ -17,7 +17,7 @@ class StudentTest(TestCase):
     def test_create_student(self):
         user=User.objects.get(username='Shivangi')
         student_details=StudentDetail.objects.get(user=user)
-        self.assertEquals(student_details.year,3)
+        self.assertEqual(student_details.year,3)
         
 class FacultyTest(TestCase):
     
@@ -28,7 +28,7 @@ class FacultyTest(TestCase):
     def test_create_faculty(self):
         user=User.objects.get(username='Ajay')
         faculty_details=FacultyDetail.objects.get(user=user)
-        self.assertEquals(faculty_details.department,'IT')
+        self.assertEqual(faculty_details.department,'IT')
     
     
         

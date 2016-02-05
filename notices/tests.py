@@ -16,8 +16,8 @@ class NoticeTest(TestCase):
         user=User.objects.get(username='Ajay')
         faculty_detail=FacultyDetail.objects.get(user=user)
         notice_details=Notice.objects.get(faculty=faculty_detail)
-        self.assertEquals(notice_details.title,'extra-class')
-        self.assertEquals(notice_details.faculty.designation,'teacher')
+        self.assertEqual(notice_details.title,'extra-class')
+        self.assertEqual(notice_details.faculty.designation,'teacher')
         
 class NoticeBranchYearTest(TestCase):
     
@@ -32,7 +32,7 @@ class NoticeBranchYearTest(TestCase):
         faculty_detail=FacultyDetail.objects.get(user=user)
         notice=Notice.objects.get(faculty=faculty_detail)
         notice_branchyear_details=NoticeBranchYear.objects.get(notice=notice)
-        self.assertEquals(notice_branchyear_details.year,'ALL')
+        self.assertEqual(notice_branchyear_details.year,'ALL')
     
 class BookmarkedNoticeTest(TestCase):
     
@@ -47,4 +47,4 @@ class BookmarkedNoticeTest(TestCase):
         faculty_detail=FacultyDetail.objects.get(user=user)
         notice=Notice.objects.get(faculty=faculty_detail)
         bookmarked_notice=BookmarkedNotice.objects.get(user=user,notice=notice)
-        self.assertEquals(bookmarked_notice.pinned,True)
+        self.assertEqual(bookmarked_notice.pinned,True)
