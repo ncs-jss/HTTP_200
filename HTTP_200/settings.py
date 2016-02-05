@@ -33,10 +33,6 @@ APPEND_SLASH = True
 
 INSTALLED_APPS = (
     'rest_framework',
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -95,7 +91,6 @@ TEMPLATES = [
                 'django.core.context_processors.request',
             ],
             'loaders': [
-                'admin_tools.template_loaders.Loader',
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader'
             ]
