@@ -29,8 +29,6 @@ class Notice(models.Model):
     title = models.CharField(max_length=500)
     description = RichTextField()
     file_attached = models.FileField(upload_to="attachments", blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True, editable=True)
     subject = models.CharField(max_length=200)
     category = models.CharField(max_length=4,
                                 choices=CATEGORY,
@@ -66,6 +64,7 @@ class BookmarkedNotice(models.Model):
 
 class TrendingInCollege(models.Model):
     title = models.CharField(max_length=200, blank=False)
+    small_description = models.CharField(max_length=200, blank=True, null=True)
     url = models.URLField()
     visibility = models.BooleanField(default=False)
 
