@@ -34,7 +34,7 @@ class Home(View):
             Home Display view
     '''
 
-    def get(self, request):
+    def get(self, request):            
         template_name = 'index.html'
         return render(request, template_name)
 

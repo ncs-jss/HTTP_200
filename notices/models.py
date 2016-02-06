@@ -38,6 +38,8 @@ class Notice(models.Model):
     courses = models.CharField(max_length=100, blank=False, null=True)
     branches = models.CharField(max_length=100, blank=False, null=True)
     semesters = models.CharField(max_length=100, blank=False, null=True)
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
     # scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 
     def get_absolute_url(self):
@@ -57,3 +59,14 @@ class BookmarkedNotice(models.Model):
     user = models.ForeignKey(User)
     notice = models.ForeignKey(Notice)
     pinned = models.BooleanField(default=False)
+
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+
+
+class TrendingInCollege(models.Model):
+    title = models.CharField(max_length = 200, blank=False)
+    url = models.URLField()
+
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)

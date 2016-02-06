@@ -64,6 +64,9 @@ class StudentDetail(models.Model):
                               default=None,
                               null=True)
     display_to_others = models.BooleanField(default=False)
+
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
     # relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
@@ -86,6 +89,9 @@ class FacultyDetail(models.Model):
     address = models.CharField(max_length=500, blank=True, null=True, editable=True)
     alternate_email = models.EmailField(max_length=254, blank=True, null=True, editable=True)
     display_to_others = models.BooleanField(default=False)
+
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
     # relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
