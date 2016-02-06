@@ -2,15 +2,17 @@ from django.shortcuts import render, render_to_response, get_object_or_404, redi
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views import generic
 from django.core.exceptions import PermissionDenied
-from notices.models import Notice, BookmarkedNotice, NoticeBranchYear
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from .forms import NoticeCreateForm
-from profiles.models import FacultyDetail
-import permissions
 from django.views.generic import View
+
+from profiles.models import FacultyDetail
+from .models import Notice, BookmarkedNotice
+from .forms import NoticeCreateForm
+
+from braces.views import LoginRequiredMixin, GroupRequiredMixin
+import permissions
 
 
 class NoticeList(LoginRequiredMixin, generic.View):
@@ -43,7 +45,7 @@ class NoticeShow(LoginRequiredMixin, generic.View):
         return render(request, template_name, {'notice': notice})
 
 
-class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
+class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     """
     View for creating the Notices
     """
@@ -59,18 +61,15 @@ class NoticeCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 
     def form_valid(self, form):
         faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-        form.instance.faculty = faculty
-        form.save()
         branch_list = self.request.POST.getlist('branches')
-        year_list = self.request.POST.getlist('years')
-        for branch in branch_list:
-            for year in year_list:
-                print branch, year
-                branchyear = NoticeBranchYear.objects.create(
-                    notice=form.instance,
-                    branch=branch,
-                    year=year, )
-        return super(NoticeCreateView, self).form_valid(form)
+        year_list = self.request.POST.getlist('semesters')
+        course_list = self.request.POST.getlist('courses')
+        form.instance.faculty = faculty
+        form.instance.branches = " ".join(branch_list)
+        form.instance.semesters = " ".join(year_list)
+        form.instance.courses = " ".join(course_list)
+        form.save()
+        return super(CreateView, self).form_valid(form)
 
 
 class NoticeUpdateView(LoginRequiredMixin, UpdateView):
@@ -82,24 +81,18 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         base_queryset = super(NoticeUpdateView, self).get_queryset()
         notice = Notice.objects.get(id=self.kwargs['pk'])
-        # faculty = FacultyDetail.objects.get(user__id = self.request.user.id)
         if self.request.user == notice.faculty.user:
             return base_queryset
         else:
             raise PermissionDenied()
 
     def form_valid(self, form):
-        NoticeBranchYear.objects.filter(
-            notice=form.instance).delete()
         branch_list = self.request.POST.getlist('branches')
-        year_list = self.request.POST.getlist('years')
-        for branch in branch_list:
-            for year in year_list:
-                print branch, year
-                branchyear = NoticeBranchYear.objects.create(
-                    notice=form.instance,
-                    branch=branch,
-                    year=year, )
+        semester_list = self.request.POST.getlist('semesters')
+        course_list = self.request.POST.getlist('courses')
+        form.instance.branches = " ".join(branch_list)
+        form.instance.semesters = " ".join(semester_list)
+        form.instance.courses = " ".join(course_list)
         return super(NoticeUpdateView, self).form_valid(form)
 
 
@@ -109,8 +102,6 @@ class NoticeDeleteView(LoginRequiredMixin, DeleteView):
     pass
 
     def delete(self, *args, **kwargs):
-        NoticeBranchYear.objects.filter(
-            notice=self.get_object()).delete()
         return super(NoticeDeleteView, self).delete(self.get_object())
 
 
