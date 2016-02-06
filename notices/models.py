@@ -65,8 +65,9 @@ class BookmarkedNotice(models.Model):
 
 
 class TrendingInCollege(models.Model):
-    title = models.CharField(max_length = 200, blank=False)
+    title = models.CharField(max_length=200, blank=False)
     url = models.URLField()
+    visibility = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
