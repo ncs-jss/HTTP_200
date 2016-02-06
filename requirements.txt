@@ -1,4 +1,4 @@
-django==1.9
+django==1.8.2
 Markdown==2.6.2       # Markdown support for the browsable API.
 jsonfield==1.0.3
 requests==2.2.1
