@@ -13,11 +13,11 @@ class StudentDetail(models.Model):
     It stores information about the Students of college.
     '''
     # List of courses
-    BTech = 'BT'
+    BTech = 'BTECH'
     MCA = 'MCA'
     MBA = 'MBA'
     MTECH = 'MTECH'
-    OTHERS = 'OT'
+    OTHERS = 'OTHER'
     COURSE = (
         (BTech, 'B.Tech'),
         (MCA, 'MCA'),
@@ -47,22 +47,14 @@ class StudentDetail(models.Model):
         (MT, 'Manufacturing Technology'),
     )
     user = models.OneToOneField(User)
-    year = models.PositiveIntegerField(default=None, null=True)
-    branch = models.CharField(
-        max_length=5,
-        choices=BRANCH,
-        default=None,
-        null=True
-    )
+    course = models.CharField(max_length=5, choices=COURSE, default=None, null=True)
+    branch = models.CharField(max_length=5, choices=BRANCH, default=None, null=True)
+    semester = models.PositiveIntegerField(default=None, null=True)
     univ_roll_no = models.PositiveIntegerField(blank=True, null=True, editable=True)
     contact_no = models.PositiveIntegerField(blank=True, null=True, editable=True)
     father_name = models.CharField(max_length=200, blank=True, null=True, editable=True)
     mother_name = models.CharField(max_length=200, blank=True, null=True, editable=True)
     address = models.CharField(max_length=500, blank=True, null=True, editable=True)
-    course = models.CharField(max_length=5,
-                              choices=COURSE,
-                              default=None,
-                              null=True)
     display_to_others = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)

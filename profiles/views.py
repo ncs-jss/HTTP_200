@@ -34,10 +34,10 @@ class Home(View):
             Home Display view
     '''
 
-    def get(self, request):            
+    def get(self, request):
         template_name = 'index.html'
-        trending = TrendingInCollege.objects.filter(visibility=True).order_by('-created')
-        notices = Notice.objects.all().order_by('-created')[:5]
+        trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
+        notices = Notice.objects.all().order_by('-modified')[:5]
         return render(request, template_name, {'notices': notices, 'trending': trending})
 
 
@@ -52,6 +52,7 @@ class UserProfile(LoginRequiredMixin, View):
     '''
             To display the profiles of the Users
     '''
+
     def get(self, request, user_id=None):
         user_type = None
         user_list = get_object_or_404(User, username=user_id)
