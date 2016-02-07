@@ -43,7 +43,7 @@ class NoticeCreateForm(forms.ModelForm):
     FOURTH = 4
     FIFTH = 5
     SIXTH = 6
-    SEVENTH  = 7
+    SEVENTH = 7
     EIGHTH = 8
     SEMESTERS = (
         (FIRST, '1'),

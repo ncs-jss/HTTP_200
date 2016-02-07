@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
 
-from profiles.models import FacultyDetail
+from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
 from .forms import NoticeCreateForm
 
@@ -20,7 +20,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
     def get(self, request):
         template = 'notices/list.html'
         print type(request.user)
-        notice_list = Notice.objects.order_by('-updated_at')
+        notice_list = Notice.objects.order_by('-modified')
         paginator = Paginator(notice_list, 10)
         page = request.GET.get('page')
         try:
@@ -109,6 +109,7 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
     '''
             Adding a Bookmark to a notice
     '''
+
     def post(self, request, pk=None):
         notice = Notice.objects.get(pk=pk)
         obj, created = BookmarkedNotice.objects.get_or_create(
@@ -155,6 +156,7 @@ class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class PinCreateView(LoginRequiredMixin, generic.View):
+
     def post(self, request, pk=None):
         try:
             '''
@@ -174,3 +176,17 @@ class PinCreateView(LoginRequiredMixin, generic.View):
 
         except:
             return HttpResponse("Some error occured.Please try after sometime")
+
+
+class ReleventNoticeListView(LoginRequiredMixin, generic.View):
+
+    def get(self, request):
+        user = request.user
+        template_name = "notices/list.html"
+        try:
+            faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
+            notices = Notice.objects.filter(branches__contains=faculty.department)
+        except:
+            student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
+            notices = Notice.objects.filter(courses__contains=student.course, semesters__contains=student.semester, branches__contains=student.branch)
+        return render(request, template_name, {'notices': notices})

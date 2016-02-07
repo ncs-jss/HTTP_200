@@ -44,6 +44,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='notice',
             name='category',
-            field=models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (b'ADMN', b'Administration'), (b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')]),
+            field=models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (b'ADMN', b'Administration'), (
+                b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')]),
         ),
     ]
