@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
+from django.db.models import Q
 
 from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
@@ -190,3 +191,29 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             notices = Notice.objects.filter(courses__contains=student.course, semesters__contains=student.semester, branches__contains=student.branch)
         return render(request, template_name, {'notices': notices})
+
+class SearchNotices(LoginRequiredMixin, generic.View):
+
+    def get(self, request):
+        template = "notices/search.html"
+        faculties = FacultyDetail.objects.all()
+
+        Notices = []
+
+        branches = request.GET.getlist('branches')
+        for branch in branches:
+            Notices.append(Notice.objects.filter(branches__contains=branch))
+        search_text = request.GET.get('search_text')
+
+        semesters = request.GET.getlist('semesters')
+        for semester in semesters:
+            Notices.append(Notice.objects.filter(semesters__contains=semester))
+
+        courses = request.GET.getlist('courses')
+        for courses in courses:
+            Notices.append(Notice.objects.filter(courses__contains=course))
+
+        uploaded_date = request.GET.get('uploaded_date')
+        faculty = request.GET.get('faculty')
+        Notices.append(Notice.objects.filter(Q(faculty__contains=faculty) | Q(created__date=datetime.strptime(uploaded_date, "%d-%m-%Y").date())))
+        return render(request, template, {'faculties': faculties, 'notices': Notices})
