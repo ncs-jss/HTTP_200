@@ -84,20 +84,9 @@ class FacultyDetail(models.Model):
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
-    # relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-    # academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-    # administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-    # misc_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-    # tnp_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
-    # events_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
 
     def __unicode__(self):
         return self.user.username
 
-
-# # Signal (after saving a user)
-# def create_profile(sender, instance, created, **kwargs):
-# 	if created :
-# 		profile, create = StudentDetail.objects.get_or_create(user = instance)
-# 		instance.groups.add(Group.objects.get(name='StudentGroup'))
-# post_save.connect(create_profile, sender=User)
+    def get_full_name(self):
+        return self.user.first_name + " " + self.user.last_name

@@ -12,6 +12,7 @@ from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
 from .forms import NoticeCreateForm
 
+from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 import permissions
 
@@ -192,28 +193,47 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             notices = Notice.objects.filter(courses__contains=student.course, semesters__contains=student.semester, branches__contains=student.branch)
         return render(request, template_name, {'notices': notices})
 
+
 class SearchNotices(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         template = "notices/search.html"
         faculties = FacultyDetail.objects.all()
+        Notices = Notice.objects.all()
 
-        Notices = []
-
-        branches = request.GET.getlist('branches')
+        branches = request.GET.getlist('branches', '')
         for branch in branches:
-            Notices.append(Notice.objects.filter(branches__contains=branch))
-        search_text = request.GET.get('search_text')
+            Notices = Notices.filter(branches__contains=branch)
 
-        semesters = request.GET.getlist('semesters')
+        semesters = request.GET.getlist('semesters', '')
         for semester in semesters:
-            Notices.append(Notice.objects.filter(semesters__contains=semester))
+            Notices = Notices.filter(semesters__contains=semester)
 
-        courses = request.GET.getlist('courses')
-        for courses in courses:
-            Notices.append(Notice.objects.filter(courses__contains=course))
+        courses = request.GET.getlist('courses', '')
+        for course in courses:
+            Notices = Notices.filter(courses__contains=course)
 
-        uploaded_date = request.GET.get('uploaded_date')
-        faculty = request.GET.get('faculty')
-        Notices.append(Notice.objects.filter(Q(faculty__contains=faculty) | Q(created__date=datetime.strptime(uploaded_date, "%d-%m-%Y").date())))
-        return render(request, template, {'faculties': faculties, 'notices': Notices})
+        search_text = request.GET.get('search_text', '')
+        uploaded_date = request.GET.get('uploaded_date', '')
+        faculty = request.GET.get('faculty', '')
+
+        try:
+            Notices = Notices.filter(Q(faculty__contains=faculty) | Q(created__date=datetime.strptime(uploaded_date, "%d-%m-%Y").date()) | Q(description__contains=search_text) | Q(title__contains=search_text))
+            Notices = Notices.order_by('-modified')
+        except:
+            pass
+
+        paginator = Paginator(Notices, 10)
+        page = request.GET.get('page')
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            notices = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            notices = paginator.page(paginator.num_pages)
+
+        return render(request, template, {'faculties': faculties, 'notices': notices })
+
+    
