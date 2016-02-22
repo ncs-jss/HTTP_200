@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = '127.0.0.1'
 
-APPEND_SLASH = True
+# APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = (
@@ -216,7 +216,7 @@ STATICFILES_DIRS = (
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL = "/notices/relevent"
+LOGIN_REDIRECT_URL = "/notices/relevent/"
 SAMPLEDATAHELPER_SEED = 123456789
 
 
