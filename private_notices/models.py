@@ -3,7 +3,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class PrivateNotice(models.Model):
     sender = models.ForeignKey(User, related_name='Sender')
     reciever = models.ForeignKey(User, related_name='Reciever')
@@ -16,7 +15,6 @@ class PrivateNotice(models.Model):
 
 # Autopopulation of seen field needed while creating PrivateNotices
 # to ensure the sent status
-
 
 class Notification(models.Model):
     '''
