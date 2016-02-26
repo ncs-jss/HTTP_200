@@ -11,7 +11,7 @@ from .models import StudentDetail, FacultyDetail
 from .forms import StudentForm, FacultyForm, UserForm
 import permissions
 from django.views.generic import TemplateView
-from notices.models import BookmarkedNotice
+from notices.models import Notice, BookmarkedNotice, TrendingInCollege
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -36,7 +36,9 @@ class Home(View):
 
     def get(self, request):
         template_name = 'index.html'
-        return render(request, template_name)
+        trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
+        notices = Notice.objects.all().order_by('-modified')[:5]
+        return render(request, template_name, {'notices': notices, 'trending': trending})
 
 
 class FaqDisplayView(TemplateView):

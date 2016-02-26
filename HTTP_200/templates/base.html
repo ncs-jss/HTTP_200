@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>JSS Connect</title>
+<title>JSS Nucleus</title>
 <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
 <script src="/static/js/jquery.min.js"></script>
 <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -43,7 +43,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <div class="header-top">
         <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>Phone: +919555344456</p>
         <div class="logo">
-          <h1><a href="{% url 'home' %}">JSS Connect</a></h1>
+          <h1><a href="{% url 'home' %}">JSS Nucleus</a></h1>
         </div>
         <div class="social-icons">
           <ul>
@@ -72,10 +72,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
-                <li><a href="/notices">Notices</a></li>
+                <li><a href="/notices/">Notices</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="/notices/pinned">Pinned</a></li>
-                <li><a href="/notices/bookmark">Bookmarks</a></li>
+                <li><a href="/notices/pinned/">Pinned</a></li>
+                <li><a href="/notices/bookmark/">Bookmarks</a></li>
                 <li><a href="{% url 'user-profile' user_id=user %}">View Profile</a></li> <br>
                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                 {% else %}

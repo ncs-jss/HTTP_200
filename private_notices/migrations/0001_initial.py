@@ -34,6 +34,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='notification',
             name='mid',
-            field=models.ForeignKey(related_name='notification', verbose_name=b'PrivateNotice Id', to='private_notices.PrivateNotice'),
+            field=models.ForeignKey(related_name='notification', verbose_name=b'PrivateNotice Id',
+                                    to='private_notices.PrivateNotice'),
         ),
     ]

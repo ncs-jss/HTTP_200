@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from private_notices.models import PrivateNotice, Notification
 
+
 class NotificationSerializer(serializers.Serializer):
-	seen = serializers.BooleanField()
-	sent = serializers.BooleanField()
-	seen_at = serializers.DateTimeField()
+    seen = serializers.BooleanField()
+    sent = serializers.BooleanField()
+    seen_at = serializers.DateTimeField()
+
 
 class PrivateNoticeViewSerializer(serializers.ModelSerializer):
 	pnotice = serializers.CharField(max_length=500)
@@ -15,13 +17,10 @@ class PrivateNoticeViewSerializer(serializers.ModelSerializer):
 	def return_sender(self, obj):
 		return obj.sender.username
 
-	def return_reciever(self, obj):
-		return obj.reciever.username
-
-	class Meta:
-		model = PrivateNotice
 
 class UserNotificationSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = PrivateNotice
 
+    def return_reciever(self, obj):
+        return obj.reciever.username

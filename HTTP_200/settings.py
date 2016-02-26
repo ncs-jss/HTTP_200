@@ -28,15 +28,11 @@ ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = '127.0.0.1'
 
-APPEND_SLASH = True
+# APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = (
     'rest_framework',
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -95,7 +91,6 @@ TEMPLATES = [
                 'django.core.context_processors.request',
             ],
             'loaders': [
-                'admin_tools.template_loaders.Loader',
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader'
             ]
@@ -221,7 +216,7 @@ STATICFILES_DIRS = (
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL = "/notices/relevent"
+LOGIN_REDIRECT_URL = "/notices/relevent/"
 SAMPLEDATAHELPER_SEED = 123456789
 
 

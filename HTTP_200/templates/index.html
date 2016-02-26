@@ -1,1 +1,21 @@
 {% extends "base.html" %}
+
+{% block content %}
+<center>
+    <div class="row">
+      <div class="col-sm-6" style="border:1px solid #000;" >
+        <h3>Latest Notices</h3> 
+        {% for notice in notices %}
+            <p><a href="{{ notice.url }}">{{ notice.title }}</a></p>
+        {% endfor %}
+      </div>
+      <div class="col-sm-6" style="border:1px solid #000;">
+        <h3>Trending in College</h3>
+        {% for trend in trending %}
+            <p><a href="{{ trend.url }}">{{ trend.title }}</a>  {{ trend.small_description }}</p>
+        {% endfor %}
+      </div>
+    </div>
+</center>
+
+{% endblock %}

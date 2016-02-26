@@ -7,9 +7,10 @@ from private_notices.serializers import PrivateNoticeViewSerializer, UserNotific
 from rest_framework.generics import ListAPIView
 from private_notices.forms import PostForm
 
+
 class PrivateNoticeView(ListAPIView):
-	queryset = PrivateNotice.objects.all()
-	serializer_class = PrivateNoticeViewSerializer
+    queryset = PrivateNotice.objects.all()
+    serializer_class = PrivateNoticeViewSerializer
 
 '''
 class CreatePrivateNoticeView(APIView):
