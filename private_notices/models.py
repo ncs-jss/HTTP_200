@@ -8,7 +8,7 @@ class PrivateNotice(models.Model):
     reciever = models.ForeignKey(User, related_name='Reciever')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='PrivateNotice Date')
     # can send PrivateNotices only not emails
-    pnotice = models.CharField(max_length=500, help_text="Please restrict the PrivateNotice length to 500.")
+    pnotice = models.CharField(max_length=500, help_text="Please restrict the PrivateNotice length to 500.", verbose_name='Private Notices')
 
     def __str__(self):
         return self.pnotice

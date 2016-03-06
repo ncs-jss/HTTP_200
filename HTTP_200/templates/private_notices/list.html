@@ -1,0 +1,38 @@
+{% include "base.html" %}
+
+{% block content %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Notice</th>
+        <th>Sender</th>
+        <th>Reciever</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for notice in private_notices %}
+    <tr>
+        <td>{{ notice.pnotice }}</td>
+        <td>{{ notice.sender.username }}</td>
+        <td>{{ notice.reciever.username }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if private_notices.has_previous %}
+            <a href="?page={{ private_notices.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ private_notices.number }} of {{ private_notices.paginator.num_pages }}.
+        </span>
+
+        {% if private_notices.has_next %}
+            <a href="?page={{ private_notices.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

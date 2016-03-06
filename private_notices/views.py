@@ -7,6 +7,11 @@ from private_notices.serializers import PrivateNoticeViewSerializer, UserNotific
 from rest_framework.generics import ListAPIView
 from private_notices.forms import PostForm
 from django.contrib.auth.models import User
+from django.views.generic import View
+from django.views import generic
+from django.shortcuts import render, render_to_response, get_object_or_404, redirect
+from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class PrivateNoticeView(ListAPIView):
@@ -15,27 +20,37 @@ class PrivateNoticeView(ListAPIView):
 
 '''
 class CreatePrivateNoticeView(APIView):
-	def get(self, request):
-		user = request.Get.get('userid')
-		form = PostForm()
-		return Response({'form':form})
-	
-	def post(self, request):
-		user = request.data.get('userid')
-		return "form"
+    def get(self, request):
+        user = request.Get.get('userid')
+        form = PostForm()
+        return Response({'form':form})
+    
+    def post(self, request):
+        user = request.data.get('userid')
+        return "form"
 '''
 
-class NotificationView(APIView):
-	permission_classes = (IsAuthenticated,IsPrivateNoticeOwner,)
+class NotificationView(generic.View):
+    permission_classes = (IsAuthenticated,)
 
-	def get(self, request, user_id):
-		try:
-			user = User.objects.get(id=user_id)
-			print user.username
-		except:
-			return Response("User does not exists")
+    def get(self, request, user_id):
+        template = 'private_notices/list.html'
+        try:
+            user = User.objects.get(id=user_id)
+        except:
+            return Response("User does not exists")
 
-		self.check_object_permissions(request, user)
-		private_notices = PrivateNotice.objects.filter(reciever=user_id, notification__seen=False, notification__sent=True).order_by('-created_at')
-		serializer = PrivateNoticeViewSerializer(private_notices, many=True)
-		return Response(serializer.data)
+        if self.request.user == user:
+            private_notices = PrivateNotice.objects.filter(reciever=user_id, notification__seen=False, notification__sent=True).order_by('-created_at')
+            paginator = Paginator(private_notices, 10)
+            page = request.GET.get('page')
+            try:
+                notices = paginator.page(page)
+            except PageNotAnInteger:
+                notices = paginator.page(1)
+            except EmptyPage:
+                notices = paginator.page(paginator.num_pages)       
+
+            return render(request, template, {"private_notices": notices})
+        else:
+            raise PermissionDenied()
