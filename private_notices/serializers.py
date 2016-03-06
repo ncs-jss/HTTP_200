@@ -9,10 +9,11 @@ class NotificationSerializer(serializers.Serializer):
 
 
 class PrivateNoticeViewSerializer(serializers.ModelSerializer):
-    notification = NotificationSerializer(many=True)
-    sender = serializers.SerializerMethodField('return_sender')
+    pnotice = serializers.CharField(max_length=500)
     reciever = serializers.SerializerMethodField('return_reciever')
-
+    sender = serializers.SerializerMethodField('return_sender')
+    notification = NotificationSerializer(many=True)
+            
     def return_sender(self, obj):
         return obj.sender.username
 
@@ -21,3 +22,7 @@ class PrivateNoticeViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PrivateNotice
+
+
+class UserNotificationSerializer(serializers.ModelSerializer):
+    pass
