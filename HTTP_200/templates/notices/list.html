@@ -1,64 +1,314 @@
-{% include "base.html" %}
+<html>
+<head>
+    <title>
+        JSS Nucleus
+    </title>
+    <link rel="stylesheet" href="/static/css/default.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    
+</head>
+<body>
 
-{% block content %}
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Faculty</th>
-        <th>Link</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for notice in notices %}
-    {# Each "notice" is a NoticeDetail model object. #}
-      <tr>
-        <td><button type="button" class="btn btn-primary" onclick="Bookmarked({{notice.id}});">Bookmark</button></td>
-        <td>{{ notice.title|upper }}</td>
-        <td>{{ notice.faculty }}</td>
-        <td><a href="{{ notice.get_absolute_url }}">Link to Notice</a></td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+    <div class="left-nav">
+        <div class="logo">
+            <img src="/static/images/logo.PNG">
+        </div>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if notices.has_previous %}
-            <a href="?page={{ notices.previous_page_number }}">previous</a>
-        {% endif %}
+        <div class="left-nav-inner">
+            <ul>
+                <li class="active">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;Relevant
+                    <!-- <span class="number active_number">5</span> -->
+                </li>
+                <li>
+                    <i class="fa fa-university"></i> &nbsp;Administration
+                    <!-- <span class="number">6</span> -->
+                </li>
+                <li>
+                    <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics
+                    <!-- <span class="number">2</span> -->
+                </li>
+                <li>
+                    <i class="fa fa-calendar"></i> &nbsp;Events
+                    <!-- <span class="number">2</span> -->
+                <li>
+                    <i class="fa fa-graduation-cap"></i> &nbsp;Placement
+                    <!-- <span class="number">1</span> -->
+                </li>
+                <li>
+                    <i class="fa fa-list-alt"></i> &nbsp;Misc.
+                    <!-- <span class="number">9+</span> -->
+                </li>
+                <li>
+                    <i class="fa fa-star"></i> &nbsp;Starred
+                </li>
+                
+                    <div class="line">
+                    </div>
+            
+                <li>
+                    <i class="fa fa-user"></i> &nbsp;My profile
+                </li>
+                <li>
+                    <i class="fa fa-globe"></i> &nbsp;My webspace
+                </li>
+                <li>
+                    <i class="fa fa-sign-in"></i> &nbsp;My SIM account
+                </li>
+                <li>
+                    <i class="fa fa-sign-out"></i> &nbsp;Logout
+                </li>
+                
 
-        <span class="current">
-            Page {{ notices.number }} of {{ notices.paginator.num_pages }}.
-        </span>
 
-        {% if notices.has_next %}
-            <a href="?page={{ notices.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
-{% endblock %}
+            </ul>
+        </div>
 
-<script type="text/javascript">
+    </div>
 
-function Bookmarked(notice_id)
-{
-    $.ajax({
-        url : "/notices/"+ notice_id +"/bookmark/",
-        type : "POST",
-        data: {
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success : function(json)
-        {
-            alert(json);
-        },
-        error : function(json)
-        {
-            alert("error");
-        }
-    });
-}
 
-</script>
+<!-- details==== -->
+
+    <div class="relevant-info">
+        <div class="info-header">
+            <h2>
+                Relevant
+            </h2>
+        
+    </div>
+
+    <b><div class="head-info" id="head-info">
+    </div></b>
+    <br>
+    <div class="content-info" id="content-info">
+
+    </div>
+
+    <div class="date-author-info">
+        Posted By <span id="notice-author"> </span> on <span id="notice-date"> </span>
+    </div>
+
+        <div class="cross">
+            <i class="fa fa-times"></i>
+
+        </div>
+
+    </div>
+
+    <!-- relevant==== -->
+    <div class="relevant-page">
+        <header>
+            <div class="row">
+                <div class="heading-small col col-4">
+                    <h3>Welcome <span> {{user|upper}} </span></h3>
+                </div>
+                <div class=" col col-8">
+                    <div class="head-links">
+                    <ul>
+                        <li>
+                            Home
+                        </li>
+                        <li>
+                            About
+                        </li>
+                        <li>
+                            Contact
+                        </li>
+                        <li>
+                            JSS Website
+                        </li>
+                    </ul>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <div class="sub-header">
+            <div class="row">
+                <div class="heading col col-4">
+                    <h1>Relevant</h1>
+                </div>
+            <div class="col col-8">
+                
+            <div class="row">
+                <!-- <div class="quick-link  col-2 push-right">
+                <i class="fa fa-ellipsis-v"></i>
+                </div> -->
+
+                <a href="/notices/add/">
+                <div class="button-create  col-4 push-right">
+                Create New
+                </div>
+                </a>
+            <div class="search  col-6 push-right">
+                <input type="text" name="search" placeholder="search"><i class="fa fa-search"></i>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+        <!-- relevant content==== -->
+
+        <div class="relevant-content-head">
+            <ul>
+                <li>
+                    <div class="row">
+                        <div class="imp col sm-col  sm-col-1">
+                            Starred
+                        </div>
+                        <div class="col sm-col sm-col-2">
+                            Posted By
+                        </div>
+                        <div class="col sm-col sm-col-6">
+                            Post
+                        </div>
+                        <div class="col sm-col sm-col-2">
+                            Date
+                        </div>
+                    </div>
+                </li>
+                <ul>
+                </div>
+
+
+                <div class=" relevant-content">
+                <ul id="notice_list">
+                {% for notice in notices %}
+                    <li id='{{ notice.id }}'>
+                        <div class="row">
+                            <div class="star imp col sm-col  sm-col-1">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <input type="hidden" id="author" value="{{ notice.id }}">
+                                    
+                            <div class="author col sm-col sm-col-2" >
+                                {{ notice.faculty }}
+                            </div>
+                            <div class="post_head col sm-col sm-col-6">
+                                {{ notice.title|upper }}
+                            </div>
+                            <div class="date col sm-col sm-col-2">
+                                {{ notice.modified }}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                <ul>
+        </div>
+
+        <div class="pagination">
+                Showing 1-15 of 1500&nbsp;&nbsp;<i class="fa fa-chevron-circle-left">
+                </i>&nbsp;&nbsp; <i class="fa fa-chevron-circle-right"></i>
+                </div>
+
+                <footer>
+                    <h4>Quick Links</h4>
+                        <div class="footer-line"></div>
+                        <div class="row">
+                            <div class="footer-links">
+                                <div class="col col-3">
+                                    <h4>View Result</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>My Inbox</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Register</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Forum</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="footer-links">
+                                <div class="col col-3">
+                                    <h4>JSS Library</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>JSS Mailbox</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>JSS STEP</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>UPTU Website</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="footer-links">
+                                <div class="col col-3">
+                                    <h4>Old Question Paper</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>JSS Mailbox</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Nibble Website</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Other Societies</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="footer-links">
+                                <div class="col col-3">
+                                    <h4>Computer Science & Engineering</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Electrical Engineering</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Electronics & Communication Engineering</h4>
+                                </div>
+                                <div class="col col-3">
+                                    <h4>Mechanical Engineering</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sub-footer ">
+                            <h4>JSS Academy Of Technical Education</h4>
+                        </div>
+                </footer>
+    </div>
+
+
+
+    
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script type="text/javascript">
+        $("#notice_list li").click(function() {
+            
+            $.ajax({
+            url : "/notices/relevent/", // the endpoint
+            type : "POST", // http method
+            data : {
+                'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                notice_id : this.id ,
+            }, // data sent with the post request
+
+            // handle a successful response
+            success : function(json) {
+                console.log(json)
+                document.getElementById("head-info").innerHTML = json.title;
+                document.getElementById("content-info").innerHTML = json.description;
+                document.getElementById("notice-author").innerHTML = json.faculty;
+                document.getElementById("notice-date").innerHTML = json.date;
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+
+        });
+    </script>
+</body>
+</html>

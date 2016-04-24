@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, redirect
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
 from django.views import generic
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -21,7 +21,6 @@ class NoticeList(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         template = 'notices/list.html'
-        print type(request.user)
         notice_list = Notice.objects.order_by('-modified')
         paginator = Paginator(notice_list, 10)
         page = request.GET.get('page')
@@ -66,10 +65,14 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         branch_list = self.request.POST.getlist('branches')
         year_list = self.request.POST.getlist('semesters')
         course_list = self.request.POST.getlist('courses')
+
+        course_branch_sem = ''
+        for branch in branch_list:
+            for course in course_list:
+                for year in year_list:
+                    course_branch_sem += course + "-" + branch + "-" + year + " "
         form.instance.faculty = faculty
-        form.instance.branches = " ".join(branch_list)
-        form.instance.semesters = " ".join(year_list)
-        form.instance.courses = " ".join(course_list)
+        form.instance.course_branch_sem = course_branch_sem
         form.save()
         return super(CreateView, self).form_valid(form)
 
@@ -187,11 +190,22 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         template_name = "notices/list.html"
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(branches__contains=faculty.department)
+            notices = Notice.objects.filter(course_branch_sem__contains=faculty.department)
         except:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(courses__contains=student.course, semesters__contains=student.semester, branches__contains=student.branch)
+            notices = Notice.objects.filter(course_branch_sem__contains=student.course+"-"+student.branch+"-"+student.semester)
         return render(request, template_name, {'notices': notices})
+
+    def post(self, request, *args, **kwargs):
+        notice = Notice.objects.filter(id=request.POST['notice_id'])[0]
+        context = {'faculty' : notice.faculty.user.username, 
+                'title' : notice.title, 
+                'description' : notice.description, 
+                # 'file' : notice.file_attached, 
+                'subject' : notice.subject, 
+                'date' : str(notice.modified).split(' ')[0] }
+        return JsonResponse(context)
+        return HttpResponse('/')
 
 
 class SearchNotices(LoginRequiredMixin, generic.View):

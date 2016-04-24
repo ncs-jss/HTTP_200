@@ -62,16 +62,32 @@ class NoticeCreateForm(forms.ModelForm):
 
     class Meta:
         model = Notice
-        exclude = ('faculty', 'courses', 'branches', 'semesters')
+        exclude = ('faculty', 'course_branch_sem')
         widgets = {'description': CKEditorWidget, }
 
     def __init__(self, *args, **kwargs):
-        # notice_instance = Notice.objects.filter(
-        #     title=kwargs['instance'])
-        # branchyear_instance = NoticeBranchYear.objects.filter(
-        #     notice=notice_instance).values()
-        # year = list(set((object['year'] for object in branchyear_instance)))
-        # branch = list(set((object['branch'] for object in branchyear_instance)))
-        # kwargs['initial'].update({'branches': branch})
-        # kwargs['initial'].update({'years': year})
+        try:
+            notice_instance = Notice.objects.filter(
+            title=kwargs['instance']).values()
+
+            course_set = set()
+            branch_set = set()
+            sem_set = set()
+
+            course_branch_sem = notice_instance[0]['course_branch_sem']
+            course_branch_sem_list =  course_branch_sem.strip().split()
+
+            for item in course_branch_sem_list:
+                item = item.split('-')
+                course, branch, sem = item[0], item[1], item[2]
+                course_set.add(course)
+                branch_set.add(branch)
+                sem_set.add(sem)
+            
+            kwargs['initial'].update({'courses': list(course_set)})
+            kwargs['initial'].update({'branches': list(branch_set)})
+            kwargs['initial'].update({'semesters': list(sem_set)})
+        
+        except:
+            pass
         super(NoticeCreateForm, self).__init__(*args, **kwargs)

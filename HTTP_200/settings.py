@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = '127.0.0.1'
 
-# APPEND_SLASH = True
+APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = (
@@ -117,7 +117,8 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE =  'Asia/Kolkata'
 
 USE_I18N = True
 
