@@ -50,7 +50,6 @@ class BookmarkedNoticeTest(TestCase):
             designation="teacher", department="IT", contact_no=9988213123, address="Indirapuram", alternate_email='abc@gmail.com', display_to_others='', user=self.user)
         self.notice = Notice.objects.create(faculty=self.faculty_detail, title='extra-class',
                                             description='extra-class for compiler design will be from 1:30 to 2:30 tomorrow', file_attached='', subject='compiler design class', category='Academics')
-        bookmark = BookmarkedNotice.objects.create(user=self.user, notice=self.notice, pinned=True)
 
     def test_create_bookmark(self):
         user = User.objects.get(username='Ajay')

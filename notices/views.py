@@ -1,11 +1,10 @@
-from django.shortcuts import render, render_to_response, get_object_or_404, redirect
-from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.views import generic
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import View
 from django.db.models import Q
 
 from profiles.models import FacultyDetail, StudentDetail
@@ -14,7 +13,6 @@ from .forms import NoticeCreateForm
 
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
-import permissions
 
 
 class NoticeList(LoginRequiredMixin, generic.View):
@@ -129,8 +127,8 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
 class BookmarkListView(LoginRequiredMixin, generic.ListView):
     model = BookmarkedNotice
     """
-	View for listing the bookmarked notices
-	"""
+   View for listing the bookmarked notices
+    """
 
     def get(self, request):
         template_name = "bookmark.html"
@@ -186,7 +184,6 @@ class PinCreateView(LoginRequiredMixin, generic.View):
 class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
     def get(self, request):
-        user = request.user
         template_name = "notices/list.html"
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
@@ -199,12 +196,14 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
     def post(self, request, *args, **kwargs):
         notice = Notice.objects.filter(id=request.POST['notice_id'])[0]
-        context = {'faculty': notice.faculty.user.username,
-                   'title': notice.title,
-                   'description': notice.description,
-                   # 'file' : notice.file_attached,
-                   'subject': notice.subject,
-                   'date': str(notice.modified).split(' ')[0]}
+        context = {
+            'faculty': notice.faculty.user.username,
+            'title': notice.title,
+            'description': notice.description,
+            # 'file' : notice.file_attached,
+            'subject': notice.subject,
+            'date': str(notice.modified).split(' ')[0]
+        }
         return JsonResponse(context)
         return HttpResponse('/')
 

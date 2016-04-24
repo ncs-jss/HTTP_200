@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from profiles.models import FacultyDetail
-from datetime import datetime
 from django.core.urlresolvers import reverse
 from ckeditor.fields import RichTextField
 import os
@@ -50,7 +49,7 @@ class Notice(models.Model):
 
 class BookmarkedNotice(models.Model):
     """
-            Defines the databse table for storing the bookmarks as done by the user. 
+            Defines the databse table for storing the bookmarks as done by the user.
     """
     user = models.ForeignKey(User)
     notice = models.ForeignKey(Notice)

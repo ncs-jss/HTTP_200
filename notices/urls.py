@@ -1,6 +1,10 @@
 from django.conf.urls import url
-from notices.views import (NoticeList, NoticeShow, CreateNotice, NoticeUpdateView, NoticeDeleteView,
-                           BookmarkCreateView,  BookmarkDeleteView, BookmarkListView, PinCreateView, ReleventNoticeListView, SearchNotices)
+from notices.views import (
+    NoticeList, NoticeShow, CreateNotice,
+    NoticeUpdateView, NoticeDeleteView, BookmarkCreateView,
+    BookmarkDeleteView, BookmarkListView, PinCreateView,
+    ReleventNoticeListView, SearchNotices,
+)
 
 urlpatterns = [
     url(r'(?P<pk>[0-9]+)/bookmark/$', BookmarkCreateView.as_view(), name='bookmark-add'),
