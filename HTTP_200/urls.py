@@ -1,14 +1,7 @@
 from django.conf.urls import url, include, patterns
-from django.contrib.auth.decorators import login_required as auth
-# from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
 from django.contrib import admin
-from profiles.views import UserProfile, Home, EditProfile, FaqDisplayView
+from profiles.views import Home, FaqDisplayView
 import settings
-from django.conf.urls import handler404, handler500
-
-handler404 = 'profiles.views.bad_request_404'
-handler500 = 'profiles.views.bad_request_500'
 
 urlpatterns = [
     url(r'^$', Home.as_view(), name="home"),
@@ -19,7 +12,7 @@ urlpatterns = [
     url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('profiles.urls')),
-    url(r'^faq/$',  FaqDisplayView.as_view(), name="faq"),
+    url(r'^faq/$', FaqDisplayView.as_view(), name="faq"),
     url(r'^pnotices/', include('private_notices.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
 ]

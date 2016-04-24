@@ -1,20 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from braces.views import LoginRequiredMixin
-from django.views.generic import View, ListView
-from django.views.generic.edit import UpdateView
+from django.views.generic import View
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
 from .models import StudentDetail, FacultyDetail
 from .forms import StudentForm, FacultyForm, UserForm
 import permissions
 from django.views.generic import TemplateView
-from notices.models import Notice, BookmarkedNotice, TrendingInCollege
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-# Create your views here.
+from notices.models import Notice, TrendingInCollege
 
 
 def bad_request_404(request):
@@ -77,7 +70,6 @@ class EditProfile(LoginRequiredMixin, View):
     def get(self, request, slug=None):
         username = request.user
         detail = None
-        form = None
         if permissions.is_in_group(username, 'StudentGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
@@ -96,7 +88,6 @@ class EditProfile(LoginRequiredMixin, View):
     def post(self, request, slug=None):
         username = request.user
         detail = None
-        form = None
         if permissions.is_in_group(username, 'StudentGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
@@ -109,7 +100,6 @@ class EditProfile(LoginRequiredMixin, View):
             detail_form = FacultyForm(request.POST, instance=detail)
         else:
             raise Http404("User Group not exist")
-        template_name = 'user_profile.html'
         if user_form.is_valid():
             user = user_form.save()
         if detail_form.is_valid():

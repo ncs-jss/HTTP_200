@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 
 
 class IsNoticeOwner(permissions.BasePermission):

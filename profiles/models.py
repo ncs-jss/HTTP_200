@@ -1,11 +1,5 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
-from django.core.validators import URLValidator
-from django.core import urlresolvers
-from jsonfield import JSONField
-from datetime import datetime
-# Create your models here.
 
 
 class StudentDetail(models.Model):

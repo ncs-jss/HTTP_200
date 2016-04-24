@@ -1,6 +1,5 @@
 from django.contrib import admin
 from notices.models import Notice, BookmarkedNotice, TrendingInCollege
-from profiles.models import FacultyDetail
 
 
 class NoticeAdmin(admin.ModelAdmin):
@@ -8,7 +7,7 @@ class NoticeAdmin(admin.ModelAdmin):
     list_display_links = ('title', 'faculty')
     list_filter = ('faculty', 'category')
     list_per_page = 15
-    #search_fields = ['title', 'faculty']
+    # search_fields = ['title', 'faculty']
 
     fieldsets = (
         (None, {
@@ -20,7 +19,7 @@ class NoticeAdmin(admin.ModelAdmin):
 
 class BookmarkedNoticeAdmin(admin.ModelAdmin):
     list_display = ('user', 'pinned', 'notice', )
-    #list_filter = ('notice',)
+    # list_filter = ('notice',)
     list_per_page = 25
 
     fieldsets = (
