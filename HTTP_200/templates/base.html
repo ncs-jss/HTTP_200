@@ -1,100 +1,449 @@
 {% load staticfiles %}
-<!DOCTYPE html>
 <html>
+
 <head>
-<title>JSS Nucleus</title>
-<link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
-<script src="/static/js/jquery.min.js"></script>
-<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
-<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Literacy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-  <script type="text/javascript" src="/static/js/bootstrap.js"></script>
-<script src="/static/js/responsiveslides.min.js"></script>
-<script>
-  $(function () {
-    $("#slider1").responsiveSlides({
-     auto: true,
-     nav: true,
-     speed: 500,
-     namespace: "callbacks",
-    });
-  });
-  </script>
-  <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600italic,400italic,600,300italic,300,700italic,800,800italic' rel='stylesheet' type='text/css'>
-  <script type="text/javascript" src="/static/js/move-top.js"></script>
-<script type="text/javascript" src="/static/js/easing.js"></script>
-<script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $(".scroll").click(function(event){   
-          event.preventDefault();
-          $('html,body').animate({scrollTop:$(this.hash).offset().top},900);
-        });
-      });
-</script>
+  <title>
+    JSS Nucleus
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static "css/default.css"%}">
+  <link rel="stylesheet" href="{% static "css/main.css"%}">
+  <link rel="stylesheet" href="{% static  "css/style.css"%}">
+  <link rel="stylesheet" href="{% static "css/font-awesome.css"%}">
 </head>
 <body>
-  <div class="header" id="movetop">
-    <div class="container">
-      <div class="header-top">
-        <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>Phone: +919555344456</p>
-        <div class="logo">
-          <h1><a href="{% url 'home' %}">JSS Nucleus</a></h1>
-        </div>
-        <div class="social-icons">
-          <ul>
-            <li><a class="facebook" href="#"></a></li>
-            <li><a class="twitter" href="#"></a></li>
-            <li><a class="google-plus" href="#"></a></li>
-          </ul>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-      <!-- navigation -->
-      <div class="navigation">
-          <nav class="navbar navbar-default">
-           
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              </button>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-                <li><a href="/notices/">Notices</a></li>
-                {% if user.is_authenticated %}
-                <li><a href="/notices/pinned/">Pinned</a></li>
-                <li><a href="/notices/bookmark/">Bookmarks</a></li>
-                <li><a href="{% url 'user-profile' user_id=user %}">View Profile</a></li> <br>
-                <li><a href="{% url 'account_logout' %}">Logout</a></li>
-                {% else %}
-                <li><a href="{% url 'account_login' %}">Login</a></li>
-                <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-                {% endif %}
-                </ul>
-              <div class="clearfix"></div>
-            </div><!-- /.navbar-collapse -->
-          </nav>
-      </div>
-      <!-- //navigation -->
-    </div>
+  <div class="overlay-dark">
+    <div class="cross-mobile"><i class="fa fa-times"></i></div>
   </div>
-<br>
-<br>
-<br>
-{% block content %}
+  <div class="left-nav left-index-bg">
+    <div class="index-overlay">
+    </div>
+    <div class="logo logo-index">
+      <img src="{% static "images/jss-logo.png"%}">
+        <h3> JSS Academy Of Technical Educatiom</h3>
+    </div>
 
-{% endblock %}
+    <div class="left-nav-inner left-nav-inner-index">
+      <ul>
+        <li class="active">
+          <a href="notices.html"><i class="fa fa-home"></i> &nbsp;Home</a>
+        </li>
+        <li>
+          <a href="notices.html"><i class="fa fa-thumb-tack"></i> &nbsp;All Notices</a>
+        </li>
+        <!-- <li>
+          <a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
+        </li> -->
+        <li><a href="notices.html">
+          <i class="fa fa-globe"></i> &nbsp;JSS Website</a>
+        </li>
+          <li>
+            <a href="notices.html">
+            <i class="fa fa-user"></i> &nbsp;About</a>
+          </li>
+          <li>
+            <a href="notices.html">
+            <i class="fa fa-phone"></i> &nbsp;Contact</a>
+          </li>
+          
+
+          <div class="line">
+          </div>
+
+          <li>
+            <a href="notices.html">
+            <i class="fa fa-user"></i> &nbsp;My profile</a>
+          </li>
+          <li>
+            <a href="notices.html">
+            <i class="fa fa-globe"></i> &nbsp;My webspace</a>
+          </li>
+          <li>
+            <a href="notices.html">
+            <i class="fa fa-inbox"></i> &nbsp;My SIM account</a>
+          </li>
+          <li>
+            <a href="login.html">
+            <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
+          </li>
+          
+
+
+      </ul>
+    </div>
+
+  </div>
+
+<!-- right-page container============ -->
+  <div class="relevant-page index-page">
+  
+    <div class="index-head">
+    <div class="index-logo">
+      <img src="{% static "images/logo-dark.png"%}">
+    </div>
+    <h3 class="tag-line">Be updated anywhere and anytime!</h3>
+    <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span><a href="profile.html">Welcome Akash</a></h3>
+    </div>
+    
+    <div class="new-notices-container">
+      <h2><i class="fa fa-thumb-tack"></i> &nbsp;New Notices</h2>
+
+      <div class="new-notices-list">
+        <ul>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li><li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+        </ul>
+        
+      </div>
+
+    </div>
+
+    <div class="new-notices-container new-college-container">
+      <h2><i class="fa fa-university"> &nbsp;</i>New in College</h2>
+
+      <div class="new-notices-list">
+        <ul>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+          <li class="pad-list">
+            <a href="">
+            <div class="col col-7">
+              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            </div>
+            <div class="date-index col col-5">
+              <div class="row">
+                <div class="auth-index col sm-col-5">
+                  <i class="fa fa-user"></i> &nbsp;Registrar
+                </div>
+                <div class="date-index col sm-col-7">
+                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                </div>
+              </div>
+            </div>
+          </a>
+          </li>
+        </ul>
+        
+      </div>
+
+    </div>
+
+    <footer>
+      <h4>Quick Links</h4>
+      <div class="footer-line"></div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>View Result</h4>
+          </div>
+          <div class="col col-3">
+            <h4>My Inbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Register</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Forum</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>JSS Library</h4>
+          </div>
+          <div class="col col-3">
+            <h4>JSS Mailbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>JSS STEP</h4>
+          </div>
+          <div class="col col-3">
+            <h4>UPTU Website</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>Old Question Paper</h4>
+          </div>
+          <div class="col col-3">
+            <h4>JSS Mailbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Nibble Website</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Other Societies</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>Computer Science & Engineering</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Electrical Engineering</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Electronics & Communication Engineering</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Mechanical Engineering</h4>
+          </div>
+        </div>
+      </div>
+      <div class="sub-footer ">
+        <h4>JSS Academy Of Technical Education</h4>
+      </div>
+    </footer>
+  </div>
+
+
+<div class="search-container">
+
+  <div class="cross">
+    <i class="fa fa-times">
+    </i>
+  </div>
+  <div class="login-overlay ">
+  </div>
+  <div class="login search-main">
+    
+      <div class="login-head search-head">
+        <h3>Search for Uploaded Notices.</h3>
+      </div>
+      
+    
+    <div class="login-form">
+      <form>
+        <input class="input-style" type="text" placeholder="Subject" required>
+        <input class="input-style" type="text" placeholder="Message" required>
+        <input class="input-style" type="text" placeholder="Posted By" required>
+        <div class="side-text">Posting Date Between </div>
+
+        <select class="input-style select-style" id="date-id" required >
+        <option value="" disabled selected hiddened>Date</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <select class="input-style select-style" id="month-id" required >
+        <option value="" disabled selected hiddened>Month</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      
+        <select class="input-style select-style" id="year" required >
+        <option value="" disabled selected hiddened>Year</option>
+        </select>
+
+        <h5>to</h5>
+        <select class="input-style select-style" id="date-id2" required >
+        <option value="" disabled selected hiddened>Date</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <select class="input-style select-style" id="month-id2" required >
+        <option value="" disabled selected hiddened>Month</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      
+        <select class="input-style select-style" id="year2" required >
+        <option value="" disabled selected hiddened>Year</option>
+        </select>
+
+
+        <div class="side-text">Posting for </div>
+
+        <select class="input-style select-style" id="batch-id" required >
+        <option value="" disabled selected hiddened>Batch</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <select class="input-style select-style" id="branch-id" required >
+        <option value="" disabled selected hiddened>Branch</option>
+        <option>BTECH CSE</option>
+        <option>BTECH ME</option>
+        <option>BTECH ECE</option>
+        <option>BTECH EEE</option>
+        <option>BTECH CSE</option>
+        <option>BTECH CSE</option>
+        <option>BTECH CSE</option>
+        <option>BTECH CSE</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      
+        <select class="input-style select-style" id="section" required >
+        <option value="" disabled selected hiddened>Section</option>
+        <option>CS-1</option>
+        <option>CS-2</option>
+        </select>
+
+
+
+        <button type="reset" value="reset"  class="reset">Reset</button>
+        <button type="submit" value="submit" class="right">Search</button>
+        <div class="clear">
+        </div>
+        
+      </form>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<script src="{% static "js/jquery.js"%}"></script>
+<script src="{% static "js/main.js"%}"></script>
+
+
+
 </body>
+
 </html>
