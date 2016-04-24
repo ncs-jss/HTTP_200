@@ -14,11 +14,11 @@ class StudentForm(forms.ModelForm):
 
     class Meta:
         model = StudentDetail
-        exclude = ['user',	]
+        exclude = ['user', ]
 
 
 class FacultyForm(forms.ModelForm):
 
     class Meta:
         model = FacultyDetail
-        exclude = ['user',	]
+        exclude = ['user', ]

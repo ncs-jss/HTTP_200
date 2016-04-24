@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 import autofixture
 import logging
 import hashlib
@@ -56,10 +56,7 @@ class Command(BaseCommand):
                                              'is_superuser': True,
                                          })
 
-        studentDetail = autofixture.create_one('profiles.StudentDetail',
-                                               field_values={
-                                                   'user': student
-                                               })
+        autofixture.create_one('profiles.StudentDetail', field_values={'user': student})
 
         logger.debug("Creating 10 random Faculty Accounts")
         for _ in xrange(0, 10):
@@ -68,10 +65,7 @@ class Command(BaseCommand):
                                                       'password': default_md5,
                                                       'groups': ['2']
                                                   })
-            test_faculty_detail = autofixture.create_one('profiles.FacultyDetail',
-                                                         field_values={
-                                                             'user': test_faculty
-                                                         })
+            autofixture.create_one('profiles.FacultyDetail', field_values={'user': test_faculty})
 
         logger.debug("Creating 10 random Notices")
         autofixture.create('notices.Notice', count=10, follow_fk=True)
@@ -83,7 +77,4 @@ class Command(BaseCommand):
                                                       'password': default_md5,
                                                       'groups': ['1']
                                                   })
-            test_student_detail = autofixture.create_one('profiles.StudentDetail',
-                                                         field_values={
-                                                             'user': test_student
-                                                         })
+            autofixture.create_one('profiles.StudentDetail', field_values={'user': test_student})

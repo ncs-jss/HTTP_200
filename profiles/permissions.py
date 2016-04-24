@@ -1,5 +1,4 @@
-from rest_framework import permissions
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 
 
 def is_in_group(user, group_name):

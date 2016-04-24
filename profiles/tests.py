@@ -55,7 +55,7 @@ class form_test(TestCase):
         form = FacultyForm(data=form_data)
         self.assertTrue(form.is_valid())
 
- # views test
+# views test
 
 
 class HomeTest(TestCase):

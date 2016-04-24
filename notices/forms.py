@@ -68,14 +68,14 @@ class NoticeCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         try:
             notice_instance = Notice.objects.filter(
-            title=kwargs['instance']).values()
+                title=kwargs['instance']).values()
 
             course_set = set()
             branch_set = set()
             sem_set = set()
 
             course_branch_sem = notice_instance[0]['course_branch_sem']
-            course_branch_sem_list =  course_branch_sem.strip().split()
+            course_branch_sem_list = course_branch_sem.strip().split()
 
             for item in course_branch_sem_list:
                 item = item.split('-')
@@ -83,11 +83,11 @@ class NoticeCreateForm(forms.ModelForm):
                 course_set.add(course)
                 branch_set.add(branch)
                 sem_set.add(sem)
-            
+
             kwargs['initial'].update({'courses': list(course_set)})
             kwargs['initial'].update({'branches': list(branch_set)})
             kwargs['initial'].update({'semesters': list(sem_set)})
-        
+
         except:
             pass
         super(NoticeCreateForm, self).__init__(*args, **kwargs)

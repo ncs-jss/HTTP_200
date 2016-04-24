@@ -193,17 +193,18 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             notices = Notice.objects.filter(course_branch_sem__contains=faculty.department)
         except:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(course_branch_sem__contains=student.course+"-"+student.branch+"-"+student.semester)
+            notices = Notice.objects.filter(course_branch_sem__contains=student.course +
+                                            "-" + student.branch + "-" + student.semester)
         return render(request, template_name, {'notices': notices})
 
     def post(self, request, *args, **kwargs):
         notice = Notice.objects.filter(id=request.POST['notice_id'])[0]
-        context = {'faculty' : notice.faculty.user.username, 
-                'title' : notice.title, 
-                'description' : notice.description, 
-                # 'file' : notice.file_attached, 
-                'subject' : notice.subject, 
-                'date' : str(notice.modified).split(' ')[0] }
+        context = {'faculty': notice.faculty.user.username,
+                   'title': notice.title,
+                   'description': notice.description,
+                   # 'file' : notice.file_attached,
+                   'subject': notice.subject,
+                   'date': str(notice.modified).split(' ')[0]}
         return JsonResponse(context)
         return HttpResponse('/')
 
@@ -232,7 +233,8 @@ class SearchNotices(LoginRequiredMixin, generic.View):
         faculty = request.GET.get('faculty', '')
 
         try:
-            Notices = Notices.filter(Q(faculty__contains=faculty) | Q(created__date=datetime.strptime(uploaded_date, "%d-%m-%Y").date()) | Q(description__contains=search_text) | Q(title__contains=search_text))
+            Notices = Notices.filter(Q(faculty__contains=faculty) | Q(created__date=datetime.strptime(
+                uploaded_date, "%d-%m-%Y").date()) | Q(description__contains=search_text) | Q(title__contains=search_text))
             Notices = Notices.order_by('-modified')
         except:
             pass
@@ -248,6 +250,4 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
 
-        return render(request, template, {'faculties': faculties, 'notices': notices })
-
-    
+        return render(request, template, {'faculties': faculties, 'notices': notices})
