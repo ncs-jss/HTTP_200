@@ -1,0 +1,411 @@
+       @font-face {
+       	font-family: 'Roboto Light';
+       	src: url('../fonts/Roboto-Light.ttf');
+       }
+       
+       @font-face {
+       	font-family: 'Roboto';
+       	src: url('../fonts/Roboto-Regular.ttf');
+       }
+       
+       @font-face {
+       	font-family: 'Roboto Bold';
+       	src: url('../fonts/Roboto-Bold.ttf');
+       }
+       
+       @font-face {
+       	font-family: 'Roboto Medium';
+       	src: url('../fonts/Roboto-Medium.ttf');
+       }
+       @import url(https://fonts.googleapis.com/css?family=Courgette);
+       html,
+       body,
+       div,
+       span,
+       applet,
+       object,
+       iframe,
+       h1,
+       h2,
+       h3,
+       h4,
+       h5,
+       h6,
+       p,
+       blockquote,
+       pre,
+       a,
+       abbr,
+       acronym,
+       address,
+       big,
+       cite,
+       code,
+       del,
+       dfn,
+       em,
+       img,
+       ins,
+       kbd,
+       q,
+       s,
+       samp,
+       small,
+       strike,
+       strong,
+       sub,
+       sup,
+       tt,
+       var,
+       b,
+       u,
+       i,
+       center,
+       dl,
+       dt,
+       dd,
+       ol,
+       ul,
+       li,
+       fieldset,
+       form,
+       label,
+       legend,
+       table,
+       caption,
+       tbody,
+       tfoot,
+       thead,
+       tr,
+       th,
+       td,
+       article,
+       aside,
+       canvas,
+       details,
+       embed,
+       figure,
+       figcaption,
+       footer,
+       header,
+       hgroup,
+       menu,
+       nav,
+       output,
+       ruby,
+       section,
+       summary,
+       time,
+       mark,
+       audio,
+       video {
+       	margin: 0;
+       	padding: 0;
+       	border: 0;
+       	font-size: 100%;
+       	font: inherit;
+       	vertical-align: baseline;
+       	box-sizing: border-box;
+       }
+       /* HTML5 display-role reset for older browsers */
+       
+       article,
+       aside,
+       details,
+       figcaption,
+       figure,
+       footer,
+       header,
+       hgroup,
+       menu,
+       nav,
+       section {
+       	display: block;
+       }
+       
+       body {
+       	line-height: 1;
+       }
+       
+       ol,
+       ul {
+       	list-style: none;
+       }
+       
+       blockquote,
+       q {
+       	quotes: none;
+       }
+       
+       blockquote:before,
+       blockquote:after,
+       q:before,
+       q:after {
+       	content: '';
+       	content: none;
+       }
+       
+       table {
+       	border-collapse: collapse;
+       	border-spacing: 0;
+       }
+       
+       .clr:after {
+       	content: "";
+       	display: table;
+       	clear: both;
+       }
+       
+       h1 {
+       	font-size: 1.875em;
+       	line-height: 1em;
+       }
+       
+       h2 {
+       	font-size: 1.5em;
+       	line-height: 1em;
+       }
+       
+       h3 {
+       	font-size: 1.125em;
+       	line-height: 1.125em;
+       }
+       
+       h4 {
+       	font-size: 0.875em;
+       	line-height: 0.875em;
+       }
+       
+      
+       small {
+       	font-size: 0.625em;
+       	line-height: 1em;
+       }
+       
+       h1,
+       h2,
+       h3,
+       h4,
+       small,
+       {
+       	text-transform: uppercase;
+       	color: #263b4a;
+       }
+       
+       a,
+       p,
+       h1,
+       h2,
+       h3,
+       h4,
+       small {
+       	font-family: 'Roboto Light' sans-serif;
+       }
+       
+       a {
+       	display: inline-block;
+       	text-decoration: none;
+       	cursor: pointer;
+                  color: inherit;
+    font-size: inherit;
+       }
+       
+       *:focus {
+       	outline: none;
+       }
+       /****************** SCROLLBAR *******************/
+       
+       ::-webkit-scrollbar {
+       	width: 5px;
+       }
+       
+       ::-webkit-scrollbar-track {
+       	border-radius: 20px;
+       	background-color: rgba(0, 0, 0, 0);
+       }
+       
+       ::-webkit-scrollbar-thumb {
+       	border-radius: 20px;
+       	background-color: rgba(96, 85, 132, 1);
+       }
+       /*serach===*/
+       
+       input {
+       	background-color: #fff;
+       	outline: none;
+       }
+       /*float==*/
+       /*********** GRID SYSTEM  ***********/
+       
+       .col-12,
+       .col-11,
+       .col-10,
+       .col-9,
+       .col-8,
+       .col-7,
+       .col-6,
+       .col-5,
+       .col-4,
+       .col-3,
+       .col-2,
+       .col-1 {
+       	width: 100%;
+       	float: none;
+       }
+       
+       .col + .col {
+       	margin-left: 0;
+       }
+       
+       .row,
+       .col {
+       	box-sizing: border-box;
+       }
+       
+       .col {
+       	position: relative;
+       	float: left;
+       }
+       
+       .row:before,
+       .row:after {
+       	content: " ";
+       	display: table;
+       }
+       
+       .row:after {
+       	clear: both;
+       }
+       
+       a.nav {
+       	display: inline-block;
+       	padding: 20px 40px;
+       	text-align: center;
+       }
+       
+       .visible-desktop {
+       	display: none;
+       }
+       
+       .visible-mobile {
+       	display: block;
+       }
+       
+       @media (min-width: 780px) {
+       	.visible-desktop {
+       		display: block;
+       	}
+       	.visible-mobile {
+       		display: none;
+       	}
+       	.f-border {
+       		background-image: linear-gradient(to right, #91a8bb 25%, rgba(0, 0, 0, 0) 0%);
+       		background-size: 6px 1px;
+       		background-repeat: repeat-x;
+       		background-position: bottom;
+       		float: left;
+       	}
+       	.col-12 {
+       		width: 100%;
+       	}
+       	.col-11 {
+       		width: 91.5333333333%;
+       	}
+       	.col-10 {
+       		width: 83.0666666667%;
+       	}
+       	.col-9 {
+       		width: 74.6%;
+       	}
+       	.col-8 {
+       		width: 66.1333333333%;
+       	}
+       	.col-7 {
+       		width: 57.6666666667%;
+       	}
+       	.col-6 {
+       		width: 49.2%;
+       	}
+       	.col-5 {
+       		width: 40.7333333333%;
+       	}
+       	.col-4 {
+       		width: 32.2666666667%;
+       	}
+       	.col-3 {
+       		width: 23.8%;
+       	}
+       	.col-2 {
+       		width: 15.3333333333%;
+       	}
+       	.col-1 {
+       		width: 6.86666666667%;
+       	}
+       	.col + .col {
+       		margin-left: 1.6%;
+       	}
+       }
+       
+       .sm-col-12 {
+       	width: 100%;
+       }
+       
+       .sm-col-11 {
+       	width: 91.5333333333%;
+       }
+       
+       .sm-col-10 {
+       	width: 83.0666666667%;
+       }
+       
+       .sm-col-9 {
+       	width: 74.6%;
+       }
+       
+       .sm-col-8 {
+       	width: 66.1333333333%;
+       }
+       
+       .sm-col-7 {
+       	width: 57.6666666667%;
+       }
+       
+       .sm-col-6 {
+       	width: 49.2%;
+       }
+       
+       .sm-col-5 {
+       	width: 40.7333333333%;
+       }
+       
+       .sm-col-4 {
+       	width: 32.2666666667%;
+       }
+       
+       .sm-col-3 {
+       	width: 23.8%;
+       }
+       
+       .sm-col-2 {
+       	width: 15.3333333333%;
+       }
+       
+       .sm-col-1 {
+       	width: 6.86666666667%;
+       }
+       
+       .sm-col + .sm-col {
+       	margin-left: 1.6%;
+       }
+       
+       .push-right {
+       	float: right;
+       }
+       
+       .push-left {
+       	float: left;
+       }
+       
+       ul li {
+       	word-wrap: break-word;
+       }

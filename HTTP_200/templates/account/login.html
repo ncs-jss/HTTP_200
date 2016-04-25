@@ -1,19 +1,69 @@
-{% include 'account/base.html'%}
 {% load i18n %}
 {% load account %}
-{% block content %}
-	<div class="container">	
-		<div class="col-md-4">
-		<form class="login" method="POST" action="{% url 'account_login' %}">
-		  {% csrf_token %}
-		  {{ form.as_p }}
-		  {% if redirect_field_value %}
-		  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-		  {% endif %}
-		  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-		  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-			<div class="clearfix"></div>
-		</form>
+{% load staticfiles %}
+
+<html>
+
+<head>
+	<title>
+		Login
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{% static "/static/css/default.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/style.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/font-awesome.css" %}">
+</head>
+
+<body>
+	<div class="login-container">
+
+	<div class="login-overlay">
+	
+	<div class="login">
+		<div class="login-img">
+			<div class="login-head">
+				<div class="login-logo"><a href="index.html">
+				<img src="{% static "images/logo.PNG" %}"></a>
+			</div>
+				<h3>Type in your username and password<br> to access personalized services.</h3>
+			</div>
+			<img src="{% static "images/ab-1.JPG" %}">
 		</div>
+		<div class="login-form">
+			<form  method="POST" action="{% url 'account_login' %}">
+			{% csrf_token %}
+				<input class="input-style" type="text" placeholder="Username" name="login" required>
+				<input class="input-style" type="password" placeholder="Password" name="password" required>
+
+				<span class="check">
+				<input type="checkbox" name="remember" class=""><label class="remember">Remember me</label>
+			</span>
+				<button type="submit" value="submit" class="right">Submit</button>
+				<button type="reset" value="reset"  class="reset">Reset</button>
+
+				<br>
+				{% for error in form.non_field_errors %}
+				<div id="warn-msg">
+					<i class="fa fa-warning"></i> {{error}}
+				</div>
+				{% endfor %}
+
+				<div class="clear">
+				</div>
+				
+			</form>
+			<h4><a href="/"><i class="fa fa-chevron-left"></i> &nbsp;Back to home</a></h4>
+		</div>
+
 	</div>
-{% endblock %}
+	</div>
+
+
+</div>
+
+
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/main.js" %}"></script>
+
+</body>
+</html>

@@ -205,8 +205,10 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(APP_DIR, 'assets', 'collected-static')
