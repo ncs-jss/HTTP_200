@@ -63,6 +63,9 @@ $(document).ready(function () {
 			})
 		}
 
+<<<<<<< HEAD
+		
+=======
 		// if ($(window).scrollTop() > 20){
 		// 	$(".dot-menu-links").css({
 		// 		'position':'fixed',
@@ -75,6 +78,7 @@ $(document).ready(function () {
 		// 		'margin-top':'20px'
 		// 	})
 		// }
+>>>>>>> upstream/master
 	})
 
 
@@ -215,6 +219,8 @@ $(".overlay-dark,.overlay-dark-mob").hide();
 }
 	
 
+<<<<<<< HEAD
+=======
 
 
 
@@ -224,11 +230,16 @@ $(".overlay-dark,.overlay-dark-mob").hide();
 		
 	// })
 
+>>>>>>> upstream/master
 	// responsive list in mobile
 	var win_width=$(window).width();
 
 	if(win_width<=640){
+<<<<<<< HEAD
+		$(".head-links-resize").removeClass("sm-col-8").addClass("sm-col-4");
+=======
 		$(".head-links-resize").removeClass("sm-col-8").addClass("sm-col-2");
+>>>>>>> upstream/master
 		$(".heading-small").removeClass("sm-col-4").addClass("sm-col-8");
 	$(".relevant-content ul li .post_head").removeClass("sm-col-8").addClass("sm-col-12");
 }
@@ -414,6 +425,12 @@ setInterval(function(){
  	 
 })
 
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> upstream/master
 // usingescapen butto  to minimize the notice page===
 
 
@@ -422,11 +439,93 @@ $(document).keyup(function(e) {
  
   if (e.keyCode === 27){
   	
+<<<<<<< HEAD
+		$(".relevant-info, .search-container").fadeOut("fast");
+=======
 		$(".relevant-info").fadeOut("fast");
+>>>>>>> upstream/master
 		$("body").css({
 			'overflow-y': 'scroll'
 		})
 	
+<<<<<<< HEAD
+  }   
+});
+
+
+
+// add search validation data here==========
+
+$("#branch-id").change(function(){
+	var val=$(this).val();
+
+// change data here================
+	
+	switch(val){
+		case "BTECH CSE":
+			$("#section").html("<option>CS-1</option><option>CS-2</option>");
+			break;
+		case "BTECH ECE":
+			$("#section").html("<option>ECE-1</option><option>ECE-2</option>");
+			break;
+		case "BTECH EEE":
+			$("#section").html("<option>EEE-1</option><option>EEE-2</option>");
+			break;
+		case "BTECH ME":
+			$("#section").html("<option>ME-1</option><option>ME-2</option>");
+			break;
+		case "BTECH CE":
+			$("#section").html("<option>CE-1</option><option>CE-2</option>");
+			break;
+
+		}
+
+})
+
+
+	$(".reset").click(function(){
+		$("#section").html("<option value='' disabled selected hiddened>Section</option>");
+	})
+
+
+// edit to save button=========================================
+
+$(".edit-save,.edit-save-2,.show-icon,i.mob-save").hide();
+
+$(".edit-save,.edit-save-2,i.mob-save").click(function(){
+	$(".profile-form input").prop('disabled',true);
+
+	$(".profile-form form").submit();
+	$(".show-icon").fadeOut();
+
+
+})
+$(".edit-click,i.mob-edit").click(function(){
+
+	if($(window).width()<780){
+		$(".edit-save-2").hide();
+	}
+	else{
+		$(".edit-save-2").fadeIn();
+	}
+
+	$(".edit-click,i.mob-edit").hide();
+	$(".edit-save, i.mob-save").fadeIn("fast");
+
+	$(".profile-form input").prop('disabled',false);
+	$(".profile-form input").css({
+		'border-bottom':'1px solid #e6c115',
+		'color':'#9d9d9d'
+	})
+	$(".profile-form h2").css({
+		'color':'#4d4d4d'
+	})
+	$(".show-icon").fadeIn();
+
+
+})
+});
+=======
   }   // esc
 });
 
@@ -455,3 +554,4 @@ switch(val_branch){
 },0);
 
 });
+>>>>>>> upstream/master

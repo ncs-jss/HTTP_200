@@ -65,10 +65,13 @@
 	font-family: 'Roboto'
 
 }
+.search-form{
+	padding:0px 40px 30px 40px;
+}
 .login-head h3 {
 	font-size: 1em;
 }
-.login-form form .input-style{
+.input-style{
 	width: 100%;
 	border: 0px;
 	border-bottom: 1px solid #848484;
@@ -79,7 +82,7 @@
 	transition:all 0.4s ease-in-out;
 
 }
-.login-form form .input-style:focus{
+ .input-style:focus{
 	
 	border-bottom: 1px solid #e6c115;
 	
@@ -109,29 +112,44 @@
 
 }
 .login-form form .reset{
+	float: right;
 	background: transparent;
 	color: #4d4d4d;
 	padding: 10px 18px;
 	border: 2px solid #9d9d9d;
 	box-sizing:border-box;
-	/*margin-left: 10px;*/
+	margin-right: 20px;
 	/*float: right;*/
 }
 .login-form form .reset:hover{
 	color: #fff;
 	border: 2px solid #180f36;
 }
+.login-form form .reset-search{
+	float: left;
+}
+
 .right{
 	float: right;
+
+}
+.left{
+	float: left;
+}
+.login-form form .reset-search{
+	float: left;
 }
 .login-overlay{
 	position: absolute;
 	z-index: -1;
-	background: rgba(255,255,255,0);
+	background: rgba(255,255,255,0.8);
 	width: 100vw;
 	height: 100vh;
-	overflow-y:hidden;
+	overflow-y:scroll;
 	overflow-x:hidden;
+}
+.search-overlay{
+	background: transparent;
 }
 .cross{
 	position: fixed;
@@ -157,6 +175,21 @@
 }
 .clear{
 	clear: both;
+}
+.check{
+	margin-top: 10px;
+	display: inline-block;
+}
+input[type="checkbox"]{
+	
+	vertical-align: middle;
+	width: 15px;
+	height: 15px;
+}
+.remember{
+	color: #4d4d4d;
+	/*margin-top: -10px;*/
+	font-size: 0.9em;
 }
 
 /*search page===========================*/
@@ -246,8 +279,23 @@ color: #9d9d9d;
 	color:#E6C115 ;
 	}
 
+
+@media(max-width: 780px){
+	.login-form{
+	padding: 30px 20px;
+
+}
+
+}
 	@media(max-width: 460px){
 		.login{
 			width: 95%;
+		}
+		.check{
+			display: block;
+			margin-bottom: 15px;
+		}
+		.login-form form .reset{
+			float: left;
 		}
 	}
