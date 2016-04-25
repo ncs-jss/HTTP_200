@@ -79,7 +79,7 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
     model = Notice
     form_class = NoticeCreateForm
     template_name = 'notices/notice_edit.html'
-    success_url = reverse_lazy('notice_list')
+    success_url = reverse_lazy('notice-list')
 
     def get_queryset(self):
         base_queryset = super(NoticeUpdateView, self).get_queryset()
@@ -101,7 +101,7 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
 
 class NoticeDeleteView(LoginRequiredMixin, DeleteView):
     model = Notice
-    success_url = reverse_lazy('notice_list')
+    success_url = reverse_lazy('notice-list')
     pass
 
     def delete(self, *args, **kwargs):
@@ -205,7 +205,6 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             'date': str(notice.modified).split(' ')[0]
         }
         return JsonResponse(context)
-        return HttpResponse('/')
 
 
 class SearchNotices(LoginRequiredMixin, generic.View):

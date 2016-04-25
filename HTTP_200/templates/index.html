@@ -1,9 +1,8 @@
 {% load staticfiles %}
 <html>
-
 <head>
   <title>
-    JSS Nucleus
+    JSS Connect
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static "css/default.css"%}">
@@ -26,46 +25,48 @@
     <div class="left-nav-inner left-nav-inner-index">
       <ul>
         <li class="active">
-          <a href="notices.html"><i class="fa fa-home"></i> &nbsp;Home</a>
+          <a href="{% url "home" %}"><i class="fa fa-home"></i> &nbsp;Home</a>
         </li>
         <li>
-          <a href="notices.html"><i class="fa fa-thumb-tack"></i> &nbsp;All Notices</a>
+          <a href="{% url "notice-list" %}"><i class="fa fa-thumb-tack"></i> &nbsp;All Notices</a>
         </li>
         <!-- <li>
           <a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
         </li> -->
-        <li><a href="notices.html">
+        <li><a href="http://jssaten.ac.in">
           <i class="fa fa-globe"></i> &nbsp;JSS Website</a>
         </li>
           <li>
-            <a href="notices.html">
+            <a href="{% url "about" %}">
             <i class="fa fa-user"></i> &nbsp;About</a>
           </li>
           <li>
-            <a href="notices.html">
+            <a href="{% url "contact" %}">
             <i class="fa fa-phone"></i> &nbsp;Contact</a>
           </li>
           
 
           <div class="line">
           </div>
-
+          {% if request.user.is_authenticated %}
           <li>
-            <a href="notices.html">
+            <a href="{% url "user-profile" user_id=request.user.username %}">
             <i class="fa fa-user"></i> &nbsp;My profile</a>
           </li>
           <li>
-            <a href="notices.html">
-            <i class="fa fa-globe"></i> &nbsp;My webspace</a>
+            <a href="{% url "relevent-notice-list" %}">
+            <i class="fa fa-globe"></i> &nbsp;Relevent Notices</a>
           </li>
           <li>
-            <a href="notices.html">
-            <i class="fa fa-inbox"></i> &nbsp;My SIM account</a>
+            <a href="{% url "account_logout" %}">
+            <i class="fa fa-inbox"></i> &nbsp;Logout</a>
           </li>
+          {% else %}
           <li>
-            <a href="login.html">
+            <a href="{% url "account_login" %}">
             <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
           </li>
+          {% endif %}
           
 
 
@@ -73,6 +74,9 @@
     </div>
 
   </div>
+
+
+    
 
 <!-- right-page container============ -->
   <div class="relevant-page index-page">
@@ -82,7 +86,11 @@
       <img src="{% static "images/logo-dark.png"%}">
     </div>
     <h3 class="tag-line">Be updated anywhere and anytime!</h3>
-    <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span><a href="profile.html">Welcome Akash</a></h3>
+    {% if request.user.is_authenticated %}
+    <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span><a href="{% url "user-profile" user_id=request.user.username %}">Welcome {{ request.user.first_name }} {{ request.user.last_name }}</a></h3>
+    {% else %}
+    <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span><a href="#">Welcome User</a></h3>
+    {% endif %}
     </div>
     
     <div class="new-notices-container">
@@ -90,94 +98,27 @@
 
       <div class="new-notices-list">
         <ul>
+        {% for notice in notices %}
           <li class="pad-list">
-            <a href="">
+            <a href="{% url "notice-show" pk=notice.pk %}">
             <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+              {{ notice.title }}
             </div>
             <div class="date-index col col-5">
               <div class="row">
                 <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
+                  <i class="fa fa-user"></i> &nbsp;{{ notice.faculty }}
                 </div>
                 <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li><li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
+                  <i class="fa fa-calendar"></i> &nbsp;{{ notice.modified }}
                 </div>
               </div>
             </div>
           </a>
           </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
+        {% endfor %}
         </ul>
-        
       </div>
-
     </div>
 
     <div class="new-notices-container new-college-container">
@@ -185,91 +126,18 @@
 
       <div class="new-notices-list">
         <ul>
+        {% for trend in trending %}
           <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
+            <a href="{{ trend.url }}">
+            <div class="col col-9">
+            <b>{{ trend.title }}</b> - {{ trend.small_description}}
             </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
+            <div class="date-index col col-3">
+              <i class="fa fa-calendar"></i> &nbsp;{{ trend.modified }}
             </div>
           </a>
           </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
-          <li class="pad-list">
-            <a href="">
-            <div class="col col-7">
-              Here we go with an awesome Infocenter. This time JSS will rock as we made this. So let's go and watch it while check it.
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-5">
-                  <i class="fa fa-user"></i> &nbsp;Registrar
-                </div>
-                <div class="date-index col sm-col-7">
-                  <i class="fa fa-calendar"></i> &nbsp;12-July-1993
-                </div>
-              </div>
-            </div>
-          </a>
-          </li>
+          {% endfor %}
         </ul>
         
       </div>
@@ -348,92 +216,6 @@
       </div>
     </footer>
   </div>
-
-
-<div class="search-container">
-
-  <div class="cross">
-    <i class="fa fa-times">
-    </i>
-  </div>
-  <div class="login-overlay ">
-  </div>
-  <div class="login search-main">
-    
-      <div class="login-head search-head">
-        <h3>Search for Uploaded Notices.</h3>
-      </div>
-      
-    
-    <div class="login-form">
-      <form>
-        <input class="input-style" type="text" placeholder="Subject" required>
-        <input class="input-style" type="text" placeholder="Message" required>
-        <input class="input-style" type="text" placeholder="Posted By" required>
-        <div class="side-text">Posting Date Between </div>
-
-        <select class="input-style select-style" id="date-id" required >
-        <option value="" disabled selected hiddened>Date</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
-        <select class="input-style select-style" id="month-id" required >
-        <option value="" disabled selected hiddened>Month</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-        <select class="input-style select-style" id="year" required >
-        <option value="" disabled selected hiddened>Year</option>
-        </select>
-
-        <h5>to</h5>
-        <select class="input-style select-style" id="date-id2" required >
-        <option value="" disabled selected hiddened>Date</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
-        <select class="input-style select-style" id="month-id2" required >
-        <option value="" disabled selected hiddened>Month</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-        <select class="input-style select-style" id="year2" required >
-        <option value="" disabled selected hiddened>Year</option>
-        </select>
-
-
-        <div class="side-text">Posting for </div>
-
-        <select class="input-style select-style" id="batch-id" required >
-        <option value="" disabled selected hiddened>Batch</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
-        <select class="input-style select-style" id="branch-id" required >
-        <option value="" disabled selected hiddened>Branch</option>
-        <option>BTECH CSE</option>
-        <option>BTECH ME</option>
-        <option>BTECH ECE</option>
-        <option>BTECH EEE</option>
-        <option>BTECH CSE</option>
-        <option>BTECH CSE</option>
-        <option>BTECH CSE</option>
-        <option>BTECH CSE</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-        <select class="input-style select-style" id="section" required >
-        <option value="" disabled selected hiddened>Section</option>
-        <option>CS-1</option>
-        <option>CS-2</option>
-        </select>
-
-
-
-        <button type="reset" value="reset"  class="reset">Reset</button>
-        <button type="submit" value="submit" class="right">Search</button>
-        <div class="clear">
-        </div>
-        
-      </form>
-    </div>
-
-  </div>
-</div>
 <script src="{% static "js/jquery.js"%}"></script>
 <script src="{% static "js/main.js"%}"></script>
 </body>

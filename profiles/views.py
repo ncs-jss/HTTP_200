@@ -105,3 +105,11 @@ class EditProfile(LoginRequiredMixin, View):
         if detail_form.is_valid():
             detail = detail_form.save()
         return redirect("user-profile", user_id=user.username)
+
+
+def about(request, template_name='about.html'):
+    return render(request, template_name,)
+
+
+def contact(request, template_name='contact.html'):
+    return render(request, template_name,)
