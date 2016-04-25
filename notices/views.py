@@ -10,6 +10,7 @@ from django.db.models import Q
 from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
 from .forms import NoticeCreateForm
+import utils.constants as constants
 
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
@@ -18,9 +19,13 @@ from braces.views import LoginRequiredMixin, GroupRequiredMixin
 class NoticeList(LoginRequiredMixin, generic.View):
 
     def get(self, request):
+        category = request.GET.get('category', None)
         template = 'notices/list.html'
-        notice_list = Notice.objects.order_by('-modified')
-        paginator = Paginator(notice_list, 10)
+        if category is None:
+            notice_list = Notice.objects.order_by('-modified')
+        else:
+            notice_list = Notice.objects.filter(category=category).order_by('-modified')
+        paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
             notices = paginator.page(page)

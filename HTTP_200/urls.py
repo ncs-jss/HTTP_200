@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^faq/$', FaqDisplayView.as_view(), name="faq"),
     url(r'^pnotices/', include('private_notices.urls')),
     url(r'^about/$', about, name='about'),
-    url(r'^add/$', contact, name='contact'),
+    url(r'^contact/$', contact, name='contact'),
     # url(r'^api/', include('feeds.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
 ]
