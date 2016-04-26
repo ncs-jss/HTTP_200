@@ -868,6 +868,40 @@ i.mob-edit,i.mob-save{
 	margin-right: 50px;
 	float: right;
 }
+
+/*create notice header=====*/
+
+.create-header{
+	height: 50px;
+}
+h3.create-head {
+	margin-top:0px;
+}
+
+/*create notice page =================*/
+
+.create-container{
+	padding: 40px 20px 50px 20px;
+}
+.create-container h2{
+	font-family: 'Roboto Medium';
+	color: #4d4d4d;
+	font-size: 1em;
+	margin-top: 10px;
+}
+.create-container input{
+	font-size: 1em;
+	font-family: 'Roboto';
+	color: #4d4d4d;
+}
+.margin-create{
+	margin-top: 15px;
+}
+input[type="file"].input-upload{
+	border-bottom: 0px;
+	padding: 10px 0px ;
+
+}
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px

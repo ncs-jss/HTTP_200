@@ -191,7 +191,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         except:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             notices = Notice.objects.filter(course_branch_sem__contains=student.course +
-                                            "-" + student.branch + "-" + student.semester)
+                                            "-" + student.branch + "-" + str(student.semester))
         return render(request, template_name, {'notices': notices})
 
     def post(self, request, *args, **kwargs):

@@ -1,0 +1,389 @@
+{% load staticfiles %}
+
+<html>
+<head>
+	<title>
+		Profile
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="{% static "/static/css/default.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/main.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/style.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/font-awesome.css" %}">
+
+	
+	
+ 
+</head>
+
+<body>
+	<div class="overlay-dark-mob">
+		<div class="cross-mobile"><i class="fa fa-times"></i></div>
+	</div>
+	<div class="dot-menu-links">
+		
+		<ul>				
+			<li>
+				Home
+			</li>
+			<li>
+				About
+			</li>
+			<li>
+				Contact
+			</li>
+			<li>
+				JSS Website
+			</li>
+			
+		</ul>
+	</div>
+	
+		<div class="overlay-dark">
+		<div class="cross-mobile"><i class="fa fa-times"></i></div>
+	</div>
+
+	<div class="left-nav">
+		<div class="logo">
+			<img src="{% static "images/logo.PNG" %}">
+		</div>
+
+		<div class="left-nav-inner">
+			<ul>
+				<li class=" move-in">
+					<a href="{% url "relevent-notice-list" %}">
+					<i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
+				</li>
+				<li class=" move-in">
+					<a href="#">
+					<i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
+				</li>
+				<li class=" move-in">
+					<a href="#">
+					<i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
+				</li>
+				<li class=" move-in">
+					<a href="#">
+					<i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
+				</a>
+					<li class=" move-in">
+						<a href="#">
+						<i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
+					</li>
+					<!-- <li class="">
+						<a class="search2">
+						<i class="fa fa-filter"></i> &nbsp;Filter Notices<! <span class="number">1</span> --><!-- </a>
+					</li> --> 
+					<li class=" move-in">
+						<a href="#">
+						<i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+					</li>
+					<li class=" move-in">
+						<a href="#">
+						<i class="fa fa-star"></i> &nbsp;Starred</a>
+					</li>
+
+					<div class="line">
+					</div>
+
+					{% if request.user.is_authenticated %}
+
+					<li class=" active move-in">
+						<a href="{% url "user-profile" user_id=request.user.username %}">
+						<i class="fa fa-user"></i> &nbsp;My profile</a>
+					</li>
+					<li class=" move-in">
+						<a href="#">
+						<i class="fa fa-globe"></i> &nbsp;My webspace</a>
+					</li>
+					<li class=" move-in">
+						<a href="#">
+						<i class="fa fa-sign-in"></i> &nbsp;My SIM account</a>
+					</li>
+					<li class=" move-in">
+						<a href="{% url "account_logout" %}">
+						<i class="fa fa-sign-out"></i> &nbsp;Logout</a>
+					</li>
+					{% else %}
+			        <li>
+			          <a href="{% url "account_login" %}">
+			          <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
+			        </li>
+			        {% endif %}
+					
+
+
+
+			</ul>
+		</div>
+
+	</div>
+
+
+
+<div class="relevant-page">
+		<header class="profile-header">
+			<div class="row">
+				<div class="heading-small col sm-col-4">
+					<h3 class="profile-head"><span class="mobile-menu"><i class="fa fa-bars"></i></span>My Profile</h3>
+				</div>
+				<div class="head-links-resize col sm-col-8">
+					<div class="head-links">
+						<ul>
+							<li>
+								<a href="index.html">Home</a>
+							</li>
+							
+							<li>
+								<a href="#">About</a>
+							</li>
+							<li>
+								<a href="#">Contact</a>
+							</li>
+							
+							<li>
+								<a href="#">JSS Website</a>
+							</li>
+							
+						</ul>
+
+					</div>
+					<br>
+					<span class="edit-profile-text edit-click"><i class="fa fa-pencil"></i> Edit Profile</span>
+					<span id="demo-save" class="edit-profile-text edit-save-2"><i class="fa fa-save"></i> Save Details</span>
+					
+
+						<i class="mob-edit fa fa-pencil"></i> 
+						<i class="mob-save fa fa-save"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="mob-side-link">
+						<span class="dot-mob">
+						</span>
+						<span class="dot-mob">
+						</span>
+						<span class="dot-mob">
+						</span>
+					</div>
+
+				</div>
+			</div>
+		</header>
+			<div class="profile-form" >
+				
+				<form id="userprofile-form" action="{% url 'user-profile' user_id=request.user.username %}" method="POST">
+
+				{% csrf_token %}
+
+				<input type="hidden" value"{{user_type}}" name="user_type">
+
+				
+				<div class=" row">
+					<div class="top-range col col-4">
+						<h2><i class="fa fa-user-secret"></i>	&nbsp;Username <i class="show-icon fa fa-pencil"></i></h2>
+						<input type="text" class="input-style" placeholder="Username" value="{{user_list.username}}" name="username" disabled>
+					</div>
+					<div class="top-range col col-4">
+						<h2><i class="fa fa-user"></i>	&nbsp;First Name <i class="show-icon fa fa-pencil"></i></h2>
+						<input type="text" class="input-style" placeholder="First Name" value="{{ user_list.first_name }}" name="first_name" disabled>
+					</div>
+					<div class="top-range col col-4">
+						<h2><i class="fa fa-user"></i>	&nbsp;Last Name <i class="show-icon fa fa-pencil"></i></h2>
+						<input type="text" class="input-style" placeholder="Last Name" value="{{ user_list.last_name }}" name="last_name" disabled>
+					</div>
+				</div>
+				
+				{% if user_type == 'student' %}
+
+					<div class=" row">
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Course" value="{{ detail_list.course }}" name="course" disabled>
+						</div>
+
+						{% if not detail_list.display_to_others == False or user == user_list %}
+
+						<div class="top-range col col-4 ">
+							<h2><i class="fa fa-info"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
+						</div>
+
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;University Roll No. <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="University Roll No." value="{{ detail_list.univ_roll_no }}" name="univ_roll_no" disabled>
+						</div>
+
+					</div>
+					
+					<div class=" row">
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-building"></i>	&nbsp;Contact No. <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Contact No." value="{{ detail_list.contact_no }}" name="contact_no" disabled>
+						</div>
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-home"></i>	&nbsp;Address <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Address" value="{{ detail_list.address }}" name="address" disabled>
+						</div>
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-building"></i>	&nbsp;Father's Name <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Father's Name" value="{{ detail_list.father_name }}"  name="father_name" disabled>
+						</div>
+					</div>
+
+					<div class=" row">
+						
+						
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-building"></i>	&nbsp;Mother's Name <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Mother's Name" value="{{ detail_list.mother_name }}" name="mother_name" disabled>
+						</div>
+
+					</div>
+						{% else %}
+			                </div>
+			                <p>This user has made other details as private.</p>
+		            	{% endif %}
+
+
+				{% elif user_type == 'faculty' %}
+
+					<div class=" row">
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
+						</div>
+
+						<div class="top-range col col-4 ">
+							<h2><i class="fa fa-info"></i>	&nbsp;Alternate Email <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Alternate Email" value="{{ detail_list.alternate_email }}" name="alternate_email" disabled>
+						</div>
+
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Designation <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="University Roll No." value="{{ detail_list.designation }}" name="designation" disabled>
+						</div>
+
+					</div>
+					
+					<div class=" row">
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-building"></i>	&nbsp;Department <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Department" value="{{ detail_list.department }}" name="department" disabled>
+						</div>
+
+						{% if not detail_list.display_to_others == False or user == user_list %}
+							<div class="top-range col col-4">
+								<h2><i class="fa fa-phone"></i>	&nbsp;Contact Number <i class="show-icon fa fa-pencil"></i></h2>
+								<input type="text" class="input-style" placeholder="Contact Number" value="{{ detail_list.contact_no }}" name="contact_no" disabled>
+							</div>
+							<div class="top-range col col-4">
+								<h2><i class="fa fa-home"></i>	&nbsp;Address <i class="show-icon fa fa-pencil"></i></h2>
+								<input type="text" class="input-style" placeholder="Address" value="{{ detail_list.address }}"name="address" disabled>
+							</div>
+					</div>
+						{% else %}
+			                </div>
+			                <p>This user has made other details as private.</p>
+		            	{% endif %}
+		            
+
+
+				{% endif %}
+			<br>
+			
+			</form>
+			
+			<div class="edit-profile edit-click">
+				 Edit Profile
+			</div>
+			
+			<div class="edit-profile edit-save">
+				 Save Details
+			</div>
+		
+
+</div>
+
+<footer>
+			<h4>Quick Links</h4>
+			<div class="footer-line"></div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>View Result</h4>
+					</div>
+					<div class="col col-3">
+						<h4>My Inbox</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Register</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Forum</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>JSS Library</h4>
+					</div>
+					<div class="col col-3">
+						<h4>JSS Mailbox</h4>
+					</div>
+					<div class="col col-3">
+						<h4>JSS STEP</h4>
+					</div>
+					<div class="col col-3">
+						<h4>UPTU Website</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>Old Question Paper</h4>
+					</div>
+					<div class="col col-3">
+						<h4>JSS Mailbox</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Nibble Website</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Other Societies</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>Computer Science & Engineering</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Electrical Engineering</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Electronics & Communication Engineering</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Mechanical Engineering</h4>
+					</div>
+				</div>
+			</div>
+			<div class="sub-footer ">
+				<h4>JSS Academy Of Technical Education</h4>
+			</div>
+		</footer>
+
+	</div>
+
+
+<!-- scripts============ -->
+
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="{% static "js/jquery.daterange.js" %}"></script>
+<script src="{% static "js/main.js"  %}"></script>
+</body>
+</html>

@@ -58,8 +58,49 @@ class UserProfile(LoginRequiredMixin, View):
             detail_list = get_object_or_404(FacultyDetail, user=user_list)
         else:
             return Http404()
-        template_name = 'user_profile.html'
+        
+        template_name = 'profiles/profile.html'
         return render(request, template_name, {'user_type': user_type, 'user_list': user_list, 'detail_list': detail_list})
+
+    def post(self, request, user_id=None):
+        # user_type = request.POST['user_type']
+        # username = request.POST['username']
+        # first_name = request.POST['firstname']
+        # lastname = request.POST['lastname']
+        # address = request.POST['address']
+        # email = request.POST['email']
+        # contact = request.POST['contact']
+
+        # if user_type == 'student':
+        #     course = request.POST['course']
+        #     roll = request.POST['rollno']
+        #     father = request.POST['fathersname']
+        #     mother = request.POST['mothersname']
+
+        # elif user_type == 'faculty':
+        #     alterate_email = request.POST['alt_email']
+        #     designation = request.POST['designation']
+        #     department = request.POST['department']
+        username = request.user
+        detail = None
+        if permissions.is_in_group(username, 'StudentGroup'):
+            user = get_object_or_404(User, pk=username.id)
+            user_form = UserForm(request.POST, instance=user)
+            detail = get_object_or_404(StudentDetail, user=user)
+            detail_form = StudentForm(request.POST, instance=detail)
+        elif permissions.is_in_group(username, 'FacultyGroup'):
+            user = get_object_or_404(User, pk=username.id)
+            user_form = UserForm(request.POST, instance=user)
+            detail = get_object_or_404(FacultyDetail, user=user)
+            detail_form = FacultyForm(request.POST, instance=detail)
+        else:
+            raise Http404("User Group not exist")
+        if user_form.is_valid():
+            user = user_form.save()
+        if detail_form.is_valid():
+            detail = detail_form.save()
+        
+        return redirect("user-profile", user_id=request.user.username)
 
 
 class EditProfile(LoginRequiredMixin, View):
@@ -105,3 +146,4 @@ class EditProfile(LoginRequiredMixin, View):
         if detail_form.is_valid():
             detail = detail_form.save()
         return redirect("user-profile", user_id=user.username)
+

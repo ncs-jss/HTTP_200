@@ -63,22 +63,7 @@ $(document).ready(function () {
 			})
 		}
 
-<<<<<<< HEAD
 		
-=======
-		// if ($(window).scrollTop() > 20){
-		// 	$(".dot-menu-links").css({
-		// 		'position':'fixed',
-		// 		'margin-top':'0px'
-		// 	})
-		// }
-		// else{
-		// 	$(".dot-menu-links").css({
-		// 		'position':'absolute',
-		// 		'margin-top':'20px'
-		// 	})
-		// }
->>>>>>> upstream/master
 	})
 
 
@@ -219,27 +204,11 @@ $(".overlay-dark,.overlay-dark-mob").hide();
 }
 	
 
-<<<<<<< HEAD
-=======
-
-
-
-
-	// $(".dot-menu-links").click(function(){
-	// 	$(this).fadeOut();
-		
-	// })
-
->>>>>>> upstream/master
 	// responsive list in mobile
 	var win_width=$(window).width();
 
 	if(win_width<=640){
-<<<<<<< HEAD
 		$(".head-links-resize").removeClass("sm-col-8").addClass("sm-col-4");
-=======
-		$(".head-links-resize").removeClass("sm-col-8").addClass("sm-col-2");
->>>>>>> upstream/master
 		$(".heading-small").removeClass("sm-col-4").addClass("sm-col-8");
 	$(".relevant-content ul li .post_head").removeClass("sm-col-8").addClass("sm-col-12");
 }
@@ -425,12 +394,9 @@ setInterval(function(){
  	 
 })
 
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> upstream/master
 // usingescapen butto  to minimize the notice page===
 
 
@@ -439,16 +405,11 @@ $(document).keyup(function(e) {
  
   if (e.keyCode === 27){
   	
-<<<<<<< HEAD
 		$(".relevant-info, .search-container").fadeOut("fast");
-=======
-		$(".relevant-info").fadeOut("fast");
->>>>>>> upstream/master
 		$("body").css({
 			'overflow-y': 'scroll'
 		})
 	
-<<<<<<< HEAD
   }   
 });
 
@@ -493,9 +454,8 @@ $("#branch-id").change(function(){
 $(".edit-save,.edit-save-2,.show-icon,i.mob-save").hide();
 
 $(".edit-save,.edit-save-2,i.mob-save").click(function(){
-	$(".profile-form input").prop('disabled',true);
-
 	$(".profile-form form").submit();
+	$(".profile-form input").prop('disabled',true);
 	$(".show-icon").fadeOut();
 
 
@@ -504,13 +464,15 @@ $(".edit-click,i.mob-edit").click(function(){
 
 	if($(window).width()<780){
 		$(".edit-save-2").hide();
+		$("i.mob-save").fadeIn("fast");
 	}
 	else{
 		$(".edit-save-2").fadeIn();
+		$("i.mob-save").hide();
 	}
 
 	$(".edit-click,i.mob-edit").hide();
-	$(".edit-save, i.mob-save").fadeIn("fast");
+	$(".edit-save").fadeIn("fast");
 
 	$(".profile-form input").prop('disabled',false);
 	$(".profile-form input").css({
@@ -525,33 +487,3 @@ $(".edit-click,i.mob-edit").click(function(){
 
 })
 });
-=======
-  }   // esc
-});
-
-// validation for search box===========
-
-var val_branch=$("#branch-id option:selected").text();
-
-
-setInterval(function(){
-	val_branch= $("#branch-id option:selected").text();
-},0);
-
-
-
-setInterval(function(){
-
-	
-switch(val_branch){
-	case "BTECH CSE":
-		$("#section").html("<option val='' disabled selected hiddened>Section</option><option>CS-1</option><option>CS-2</option>");
-		break;
-	
-}
-
-
-},0);
-
-});
->>>>>>> upstream/master
