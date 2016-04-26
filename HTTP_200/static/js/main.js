@@ -454,9 +454,9 @@ $("#branch-id").change(function(){
 $(".edit-save,.edit-save-2,.show-icon,i.mob-save").hide();
 
 $(".edit-save,.edit-save-2,i.mob-save").click(function(){
+	$(".profile-form form").submit();
 	$(".profile-form input").prop('disabled',true);
 
-	$(".profile-form form").submit();
 	$(".show-icon").fadeOut();
 
 
