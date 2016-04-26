@@ -10,6 +10,7 @@ from django.db.models import Q
 from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
 from .forms import NoticeCreateForm
+import utils.constants as constants
 
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
@@ -18,9 +19,13 @@ from braces.views import LoginRequiredMixin, GroupRequiredMixin
 class NoticeList(LoginRequiredMixin, generic.View):
 
     def get(self, request):
+        category = request.GET.get('category', None)
         template = 'notices/list.html'
-        notice_list = Notice.objects.order_by('-modified')
-        paginator = Paginator(notice_list, 10)
+        if category is None:
+            notice_list = Notice.objects.order_by('-modified')
+        else:
+            notice_list = Notice.objects.filter(category=category).order_by('-modified')
+        paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
             notices = paginator.page(page)
@@ -79,7 +84,7 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
     model = Notice
     form_class = NoticeCreateForm
     template_name = 'notices/notice_edit.html'
-    success_url = reverse_lazy('notice_list')
+    success_url = reverse_lazy('notice-list')
 
     def get_queryset(self):
         base_queryset = super(NoticeUpdateView, self).get_queryset()
@@ -101,7 +106,7 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
 
 class NoticeDeleteView(LoginRequiredMixin, DeleteView):
     model = Notice
-    success_url = reverse_lazy('notice_list')
+    success_url = reverse_lazy('notice-list')
     pass
 
     def delete(self, *args, **kwargs):
@@ -205,7 +210,6 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             'date': str(notice.modified).split(' ')[0]
         }
         return JsonResponse(context)
-        return HttpResponse('/')
 
 
 class SearchNotices(LoginRequiredMixin, generic.View):
