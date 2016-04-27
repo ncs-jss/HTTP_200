@@ -63,40 +63,27 @@ class UserProfile(LoginRequiredMixin, View):
         return render(request, template_name, {'user_type': user_type, 'user_list': user_list, 'detail_list': detail_list})
 
     def post(self, request, user_id=None):
-        # user_type = request.POST['user_type']
-        # username = request.POST['username']
-        # first_name = request.POST['firstname']
-        # lastname = request.POST['lastname']
-        # address = request.POST['address']
-        # email = request.POST['email']
-        # contact = request.POST['contact']
-
-        # if user_type == 'student':
-        #     course = request.POST['course']
-        #     roll = request.POST['rollno']
-        #     father = request.POST['fathersname']
-        #     mother = request.POST['mothersname']
-
-        # elif user_type == 'faculty':
-        #     alterate_email = request.POST['alt_email']
-        #     designation = request.POST['designation']
-        #     department = request.POST['department']
         username = request.user
         detail = None
+
         if permissions.is_in_group(username, 'StudentGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(StudentDetail, user=user)
             detail_form = StudentForm(request.POST, instance=detail)
+
         elif permissions.is_in_group(username, 'FacultyGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(FacultyDetail, user=user)
             detail_form = FacultyForm(request.POST, instance=detail)
+
         else:
             raise Http404("User Group not exist")
+
         if user_form.is_valid():
             user = user_form.save()
+
         if detail_form.is_valid():
             detail = detail_form.save()
 
@@ -111,40 +98,50 @@ class EditProfile(LoginRequiredMixin, View):
     def get(self, request, slug=None):
         username = request.user
         detail = None
+
         if permissions.is_in_group(username, 'StudentGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(instance=detail)
+
         elif permissions.is_in_group(username, 'FacultyGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)
             detail_form = FacultyForm(instance=detail)
+
         else:
             raise Http404("User Group not exist")
+
         template_name = "edit_profile.html"
         return render(request, template_name, {'userform': user_form, 'detailform': detail_form})
 
     def post(self, request, slug=None):
         username = request.user
         detail = None
+
         if permissions.is_in_group(username, 'StudentGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(request.POST, instance=detail)
+
         elif permissions.is_in_group(username, 'FacultyGroup'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)
             detail_form = FacultyForm(request.POST, instance=detail)
+
         else:
             raise Http404("User Group not exist")
+
         if user_form.is_valid():
             user = user_form.save()
+
         if detail_form.is_valid():
             detail = detail_form.save()
+
         return redirect("user-profile", user_id=user.username)
 
 
