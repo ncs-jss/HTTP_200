@@ -98,9 +98,17 @@ $(document).ready(function () {
 	$(".relevant-info").hide();
 
 	$(".sec").click(function () {
-		var index = $(".relevant-content ul li").index(this);
-
 		$(".relevant-info ").hide().fadeIn();
+		var index = $(".relevant-content ul li").index(this);
+		var id = $(this).attr('id');
+		var description = $("#notice_description_"+id).text();
+		var title = $("#notice_title_"+id).text();
+		var modified = $("#notice_modified_"+id).text();
+		var faculty = $("#notice_faculty_"+id).text();
+		$("#notice_description").html(description);
+		$("#notice_title").html(title);
+		$("#notice_posted_by").html("Posted By "+faculty);
+		$("#notice_modified").html(modified);
 
 		$("body").css({
 			'overflow': 'hidden'
