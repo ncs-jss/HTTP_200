@@ -56,9 +56,6 @@ class NoticeCreateForm(forms.ModelForm):
         (EIGHTH, '8'),
         (ALL, 'ALL')
     )
-    branches = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=BRANCHES)
-    semesters = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=SEMESTERS)
-    courses = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=COURSES)
 
     class Meta:
         model = Notice
