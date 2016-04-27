@@ -53,31 +53,27 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     """
     View for creating the Notices
     """
-    # model = Notice
     group_required = u'FacultyGroup'
     form_class = NoticeCreateForm
     exclude = ['faculty']
-    success_url = '/notices'
-    template_name = "notices/notice_form.html"
-    # FIX THE BUG
-    # raise_exception = True
-    # redirect_unauthenticated_users = True
+    success_url = reverse_lazy('notice-list')
+    template_name = "notices/notice_create.html"
 
     def form_valid(self, form):
         faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-        branch_list = self.request.POST.getlist('branches')
-        year_list = self.request.POST.getlist('semesters')
-        course_list = self.request.POST.getlist('courses')
-
-        course_branch_sem = ''
-        for branch in branch_list:
-            for course in course_list:
-                for year in year_list:
-                    course_branch_sem += course + "-" + branch + "-" + year + " "
+        notice_for = self.request.POST.getlist('notice_for')
+        course_branch_sem = " ".join(notice_for)
         form.instance.faculty = faculty
         form.instance.course_branch_sem = course_branch_sem
         form.save()
         return super(CreateView, self).form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            FacultyDetail.objects.get(user__id=self.request.user.id)
+        except:
+            raise PermissionDenied
+        return super(CreateNotice, self).dispatch(request, *args, **kwargs)
 
 
 class NoticeUpdateView(LoginRequiredMixin, UpdateView):
@@ -196,7 +192,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         except:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             notices = Notice.objects.filter(course_branch_sem__contains=student.course +
-                                            "-" + student.branch + "-" + student.semester)
+                                            "-" + student.branch + "-" + str(student.semester))
         return render(request, template_name, {'notices': notices})
 
     def post(self, request, *args, **kwargs):
