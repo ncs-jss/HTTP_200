@@ -58,26 +58,27 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     form_class = NoticeCreateForm
     exclude = ['faculty']
     success_url = '/notices'
-    template_name = "notices/notice_form.html"
+    template_name = "notices/notice_create.html"
     # FIX THE BUG
     # raise_exception = True
     # redirect_unauthenticated_users = True
 
     def form_valid(self, form):
+        print "sss"
         faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-        branch_list = self.request.POST.getlist('branches')
-        year_list = self.request.POST.getlist('semesters')
-        course_list = self.request.POST.getlist('courses')
-
-        course_branch_sem = ''
-        for branch in branch_list:
-            for course in course_list:
-                for year in year_list:
-                    course_branch_sem += course + "-" + branch + "-" + year + " "
+        print "--------"
+        notice_for = self.request.POST.getlist('notice_for')
+        course_branch_sem = "".join(notice_for)
+        print course_branch_sem
         form.instance.faculty = faculty
         form.instance.course_branch_sem = course_branch_sem
+        print "--------"
         form.save()
         return super(CreateView, self).form_valid(form)
+
+    # def post(self, request, *args, **kwargs):
+    #     print request.POST
+    #     return redirect('/')
 
 
 class NoticeUpdateView(LoginRequiredMixin, UpdateView):

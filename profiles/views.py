@@ -58,7 +58,7 @@ class UserProfile(LoginRequiredMixin, View):
             detail_list = get_object_or_404(FacultyDetail, user=user_list)
         else:
             return Http404()
-        
+
         template_name = 'profiles/profile.html'
         return render(request, template_name, {'user_type': user_type, 'user_list': user_list, 'detail_list': detail_list})
 
@@ -99,7 +99,7 @@ class UserProfile(LoginRequiredMixin, View):
             user = user_form.save()
         if detail_form.is_valid():
             detail = detail_form.save()
-        
+
         return redirect("user-profile", user_id=request.user.username)
 
 
@@ -146,6 +146,7 @@ class EditProfile(LoginRequiredMixin, View):
         if detail_form.is_valid():
             detail = detail_form.save()
         return redirect("user-profile", user_id=user.username)
+
 
 def about(request, template_name='about.html'):
     return render(request, template_name,)

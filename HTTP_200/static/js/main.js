@@ -487,4 +487,158 @@ $(".edit-click,i.mob-edit").click(function(){
 
 
 })
+
+
+// create notice validation script===================
+
+var tag_value,c="";
+
+var course_val=$("#create-course option:selected").text(),
+	branch_val=$("#create-branch option:selected").text(),
+	year_val=$("#create-year option:selected").text(),
+	section_val=$("#create-section option:selected").text();
+
+
+
+
+
+tag_value=course_val + '-' + branch_val + '-' + year_val +'-' + section_val;
+
+$("#create-course").change(function  () {
+	course_val=$(this).val()
+
+	switch(course_val){
+		case "All Courses":
+			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option><option>ECE</option><option>EE</option><option>EEE</option><option>CE</option><option>ICE</option><option>MT</option><option>ME</option>")
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option>CS1</option><option>CS2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>ICE1</option><option>ICE2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
+			break;
+		case "BTech":
+			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option><option>ECE</option><option>EE</option><option>EEE</option><option>CE</option><option>ICE</option><option>MT</option><option>ME</option>")
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option>CS1</option><option>CS2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>ICE1</option><option>ICE2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
+			break;
+		case "MTech":
+			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option>")
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option>")
+			$("#create-section").html("<option selected>All Sections</option>");
+			break;
+		case "MCA":
+			$("#create-branch").html("<option selected>All Branches</option>");
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option>")
+			$("#create-section").html("<option selected>All Sections</option>");
+			break;
+		case "MBA":
+			$("#create-branch").html("<option selected>All Branches</option>");
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option>")
+			$("#create-section").html("<option selected>All Sections</option>");
+			break;
+	}
+	
+
+})
+$("#create-year").change(function  () {
+	year_val=$(this).val();
+
+
+})
+
+$("#create-branch").change(function  () {
+	branch_val=$(this).val();
+	switch(branch_val){
+		case "All Branches":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option>CSE1</option><option>CSE2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>ICE1</option><option>ICE2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
+			break;
+		case "CSE":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >CSE1</option><option>CSE2</option>");
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option><option >MTech</option>");
+			break;
+		case "IT":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >IT1</option><option>IT2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option><option >MTech</option>");
+			break;
+		case "ECE":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >ECE1</option><option>ECE2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
+			break;
+		case "EE":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >EE1</option><option>EE2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
+			break;
+		case "CE":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >CE1</option><option>CE2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
+			break;
+		case "ICE":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >ICE1</option><option>ICE2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
+			break;
+		case "MT":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >MT1</option><option>MT2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
+			break;
+		case "ME":
+			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >ME1</option><option>ME2</option>")
+			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
+			break;
+	}
+	
+
+})
+$("#create-section").change(function  () {
+	section_val=$(this).val()
+	
+
+})
+
+
+$(".create-warn-msg").hide();
+
+$(".add").click(function () {
+	if(course_val!="Course" && year_val!="Year" && branch_val!="Branch" && section_val!="Section"){
+
+
+		course_val=$("#create-course option:selected").text(),
+		branch_val=$("#create-branch option:selected").text(),
+		year_val=$("#create-year option:selected").text(),
+		section_val=$("#create-section option:selected").text();
+
+		tag_value=course_val + '-' + branch_val + '-' + year_val +'-' + section_val;
+
+		var tag_value_remove=tag_value.split(' ').join('');
+
+// 	$("#tag-input-val").val(function(){
+// 	return c=c+tag_value+', ';
+// });
+
+$("#tag-input").append("<li>"+tag_value+"&nbsp;&nbsp;&nbsp;<i class='fa fa-times'></i><input type='hidden' name='notice_for' value="+tag_value_remove+"></li>");
+$("#tag-input li i").click(function(){
+	console.log("ebr")
+	$(this).parent().remove();
+})
+$(".create-warn-msg").hide();
+}
+else{
+	$(".create-warn-msg").hide().fadeIn("fast");
+}
+})
+
+
+
+// $(".create-notice-button").click(function() {
+	
+// 		$("#create-notice-form").submit();
+// })
+
+
+
 });

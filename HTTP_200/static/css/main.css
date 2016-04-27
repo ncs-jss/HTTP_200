@@ -902,6 +902,69 @@ input[type="file"].input-upload{
 	padding: 10px 0px ;
 
 }
+.add{
+	display: inline-block;
+	width: 45px;
+	height: 45px;
+	background: #5d5473;
+	color: #fff;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 17px;
+	cursor: pointer;
+	transition:all 0.2s ease-in-out;
+	box-shadow: 0px 0px 0px #9d9d9d;
+	margin-top: 0px;
+	margin-right: 10px;
+}
+.add:hover{
+	background: #403469;
+	box-shadow: 1px 1px 4px #9d9d9d;
+	color: #e6c115;
+}
+.tag input{
+	display: inline-block;
+}
+#tag-input li{
+	display: inline-block;
+	margin-right: 10px;
+	background: #2D2251;
+	color: #fff;
+	padding: 12px 15px;
+	border-radius:  20px;
+	margin-top: 10px;
+	font-size: 0.9em;
+	font-family: 'Roboto'
+}
+#tag-input li i{
+	color: #e6c115;
+	cursor: pointer;
+	transition:all 0.2s ease-in-out;
+}
+#tag-input li i:hover{
+	color: #fff;
+}
+.create-warn-msg{
+	color: #e6c115;
+	font-family: 'Roboto Medium';
+	font-size: 1em;
+	margin-top: 10px;
+}
+.create-notice-button{
+	display: inline-block;
+	padding: 12px 20px;
+	background: #5d5473;
+	border-radius: 20px;
+	color: #fff;
+	margin-top: 20px;
+	cursor: pointer;
+	outline: none;
+	border: 0px;
+	transition:all 0.2s ease-in-out;
+}
+.create-notice-button:hover{
+	background: #403469;
+}
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px
@@ -1033,6 +1096,9 @@ h3.profile-head{
 	}
 	i.mob-edit{
 	display: inline-block;
+}
+h3.create-head{
+	font-size: 22px;
 }
 
 }
