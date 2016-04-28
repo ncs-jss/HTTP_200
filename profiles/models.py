@@ -7,16 +7,16 @@ class StudentDetail(models.Model):
     It stores information about the Students of college.
     '''
     # List of courses
-    BTech = 'BTECH'
+    BTECH = 'BTech'
     MCA = 'MCA'
     MBA = 'MBA'
-    MTECH = 'MTECH'
+    MTECH = 'MTech'
     OTHERS = 'OTHER'
     COURSE = (
-        (BTech, 'B.Tech'),
+        (BTECH, 'BTech'),
         (MCA, 'MCA'),
         (MBA, 'MBA'),
-        (MTECH, 'Masters of Technology'),
+        (MTECH, 'MTech'),
         (OTHERS, 'Others'),
     )
     # List of branches
@@ -29,7 +29,9 @@ class StudentDetail(models.Model):
     IC = 'IC'
     ME = 'ME'
     MT = 'MT'
+
     BRANCH = (
+        ('AllBranches', 'None'),
         (CSE, 'Computer Science and Engineering'),
         (IT, 'Information Technology'),
         (EE, 'Electrical Engineering'),
@@ -40,16 +42,46 @@ class StudentDetail(models.Model):
         (ME, 'Mechanical Engineering'),
         (MT, 'Manufacturing Technology'),
     )
+
+    YEAR = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+    )
+
+
+    SECTION = (
+        ('AllSections', 'None'),
+        ('CSE1','CSE1'),
+        ('CSE2','CSE2'),
+        ('IT1','IT1'),
+        ('IT2','IT2'),
+        ('ECE1','ECE1'),
+        ('ECE2','ECE2'),
+        ('EE1','EE1'),
+        ('EE2','EE2'),
+        ('CE1','CE1'),
+        ('CE2','CE2'),
+        ('ICE1','ICE1'),
+        ('ICE2','ICE2'),
+        ('MT1','MT1'),
+        ('MT2','MT2'),
+        ('ME1','ME1'),
+        ('ME2','ME2'),
+    )
+
     user = models.OneToOneField(User)
     course = models.CharField(max_length=5, choices=COURSE, default=None, null=True)
     branch = models.CharField(max_length=5, choices=BRANCH, default=None, null=True)
-    semester = models.PositiveIntegerField(default=None, null=True)
+    year = models.PositiveIntegerField(default=None, choices=YEAR, null=True)
+    section = models.CharField(default=None, choices=SECTION, max_length=10, null=True)
     univ_roll_no = models.PositiveIntegerField(blank=True, null=True, editable=True)
     contact_no = models.PositiveIntegerField(blank=True, null=True, editable=True)
     father_name = models.CharField(max_length=200, blank=True, null=True, editable=True)
     mother_name = models.CharField(max_length=200, blank=True, null=True, editable=True)
     address = models.CharField(max_length=500, blank=True, null=True, editable=True)
-    display_to_others = models.BooleanField(default=False)
+    display_to_others = models.BooleanField(default=True)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)

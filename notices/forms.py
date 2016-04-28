@@ -59,7 +59,7 @@ class NoticeCreateForm(forms.ModelForm):
 
     class Meta:
         model = Notice
-        exclude = ('faculty', 'course_branch_sem')
+        exclude = ('faculty', 'course_branch_year')
         widgets = {'description': CKEditorWidget, }
 
     def __init__(self, *args, **kwargs):
@@ -71,10 +71,10 @@ class NoticeCreateForm(forms.ModelForm):
             branch_set = set()
             sem_set = set()
 
-            course_branch_sem = notice_instance[0]['course_branch_sem']
-            course_branch_sem_list = course_branch_sem.strip().split()
+            course_branch_year = notice_instance[0]['course_branch_year']
+            course_branch_year_list = course_branch_year.strip().split()
 
-            for item in course_branch_sem_list:
+            for item in course_branch_year_list:
                 item = item.split('-')
                 course, branch, sem = item[0], item[1], item[2]
                 course_set.add(course)
