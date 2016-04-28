@@ -124,7 +124,6 @@
             <i class="fa fa-download"></i></a>
         </div>
         <div class="date-author-info" id="notice_posted_by"></div>
-
         <div class="cross">
             <i class="fa fa-times"></i>
         </div>
@@ -183,10 +182,11 @@
                         <!-- <div class="quick-link  col-2 push-right">
                 <i class="fa fa-ellipsis-v"></i>
                 </div> -->
-
+                        {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %} 
                         <div class="button-create  col-4 push-right">
                             <a href="{% url "notice-add" %}">Create New</a>
                         </div>
+                        {% endifequal %}
 
                         <div class="search  col-6 push-right">
                             <input type="text" name="search" placeholder="search"><i class="fa fa-search"></i>
@@ -224,12 +224,20 @@
                 </li>
                 <li class="mobile">
                     <div class="row">
-                        
-                        
-                        <div class="pagination col sm-col sm-col-12">
-            Showing 1-15 of {{ notices.count }}&nbsp;&nbsp;<i class="fa fa-chevron-circle-left">
-                </i>&nbsp;&nbsp; <i class="fa fa-chevron-circle-right"></i>
-                </div>
+                    <div class="pagination col sm-col sm-col-12">
+                    Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+                    {% if notices.has_previous %}
+                        <a href="?page={{ notices.previous_page_number }}">
+                            <i class="fa fa-chevron-circle-left"></i>
+                        </a>
+                    {% endif %}
+                    &nbsp;&nbsp;
+                    {% if notices.has_next %}
+                        <a href="?page={{ notices.next_page_number }}">
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                    {% endif %}
+                    </div>
                     </div>
                 </li>
                 <ul>
@@ -240,41 +248,65 @@
             <ul>
                 {% for notice in notices %}
                 <li>
-                    <div class="row" id="notice_{{ notice.id }}">
-                        <div class="star imp col sm-col   sm-col-1">
-                            <i class="fa fa-star"></i>
-                        </div>
+                    <div class="row" >
+                        {% if notice.is_bookmarked_by_user %}
+                        <form>
+                            <div class="star imp col sm-col sm-col-1 active_star">
+                                    <i class="fa fa-star " id="bookmark_{{ notice.id }}"></i>
+                            </div>
+                        </form>
+                        {% else %}
+                        <form>
+                            <div class="star imp col sm-col sm-col-1">
+                                    <i class="fa fa-star " id="bookmark_{{ notice.id }}"></i>
+                            </div>
+                        </form>
+                            {% endif %}
                         <div class="sec col sm-col sm-col-10" id="{{ notice.id }}">
                             <div class="row">  
                                 <div class="author col sm-col sm-col-2" id="notice_faculty_{{ notice.id }}">
-                                    {{ notice.faculty }}
+                                    {{ notice.faculty.user.get_full_name }}
                                 </div>
-                                <div class="post_head col sm-col sm-col-8" id="notice_title_{{ notice.id }}">
-                                {{ notice.title }}
+                                <div class="post_head col sm-col sm-col-8" >
+                                <p id="notice_title_{{ notice.id }}">
+                                    {{ notice.title }}
+                                </p>
                                 <br>
                                      <div class="row mobile sub-detail">
-                                     <span class=" left col sm-col-8">Posted by  </span>
-                                     <span class="date-mob  right col sm-col sm-col-4" id="notice_modified_{{ notice.id }}">{{ notice.modified }}</span>
+                                         <span class=" left col sm-col-8">Posted by  </span>
+                                         <span class="date-mob  right col sm-col sm-col-4" id="notice_modified_{{ notice.id }}">{{ notice.modified }}</span>
                                     </div>
                                 </div>
                                 <div class="date col  sm-col sm-col-2" id="notice_modified_{{ notice.id }}">
                                     {{ notice.modified }}
                                 </div>
                                 <div id="notice_description_{{ notice.id }}" style="display:None;">{{ notice.description }}</div>
+                                {% if notice.file_attached %}
                                 <div id="notice_file_attached_{{ notice.id }}" style="display:None;">{{ notice.file_attached }}</div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </li>
+                {% empty %}
+                No notices to display.
                 {% endfor %}
                 <ul>
         </div>
-
         <div class="pagination">
-            Showing 1-15 of {{ notices|length }}&nbsp;&nbsp;<i class="fa fa-chevron-circle-left">
-                </i>&nbsp;&nbsp; <i class="fa fa-chevron-circle-right"></i>
+            Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+            {% if notices.has_previous %}
+                <a href="?page={{ notices.previous_page_number }}">
+                    <i class="fa fa-chevron-circle-left"></i>
+                </a>
+            {% endif %}
+            &nbsp;&nbsp;
+            {% if notices.has_next %}
+                <a href="?page={{ notices.next_page_number }}">
+                    <i class="fa fa-chevron-circle-right"></i>
+                </a>
+            {% endif %}
         </div>
-
         <footer>
             <h4>Quick Links</h4>
             <div class="footer-line"></div>
@@ -477,6 +509,45 @@ var n = 2000;
         batch.options[batch.options.length] = new Option(i, i);
      }
    })();
+</script>
+<script type="text/javascript">
+    function addBookmark(notice_id)
+{
+    $.ajax({
+        url : "/notices/"+ notice_id +"/bookmark/",
+        type : "POST",
+        data: {
+            csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success : function(json)
+        {
+            console.log(json);
+        },
+        error : function()
+        {
+            alert("An error occured.");
+        }
+    });
+}
+
+function removeBookmark(notice_id)
+{
+    $.ajax({
+        url : "/notices/"+notice_id+"/bookmark/delete/",
+        type : "POST",
+        data: {
+            csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success : function(json)
+        {
+            location.reload();
+        },
+        error : function(json)
+        {
+            alert("An error occured.");
+        }
+    });
+}
 </script>
 </body>
 

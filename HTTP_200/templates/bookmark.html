@@ -1,57 +1,534 @@
-{% include "base.html" %}
-{% block content %}
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Bookmark</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for bookmark in bookmarks %}
-    {% if bookmark.pinned %}
-        <tr>
-            <td><span class="glyphicon glyphicon-star" aria-hidden="true"></span></td>
-            <td>{{ bookmark.notice.title }}</td>
-            <td><button type="button" class="btn btn-primary" onclick="Unmark({{bookmark.notice.id}});">Unmark</button></td>
-        </tr>
-    {% else %}
-        <tr>
-            <td><a href="#" onclick="PinItem({{bookmark.id}})"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></td>
-            <td>{{ bookmark.notice.title }}</td>
-            <td><button type="button" class="btn btn-primary" onclick="Unmark({{bookmark.notice.id}});">Unmark</button></td>
-        </tr>
-    {% endif %}
-    {% endfor %}
-    </tbody>
-  </table>
+{% load staticfiles %}
+<html>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if bookmarks.has_previous %}
-            <a href="?page={{ bookmarks.previous_page_number }}">previous</a>
-        {% endif %}
+<head>
+    <title>
+        JSS Nucleus
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <span class="current">
-            Page {{ bookmarks.number }} of {{ bookmarks.paginator.num_pages }}.
-        </span>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{% static "css/default.css"%}">
+    <link rel="stylesheet" href="{% static "css/main.css"%}">
 
-        {% if bookmarks.has_next %}
-            <a href="?page={{ bookmarks.next_page_number }}">next</a>
-        {% endif %}
-    </span>
+    <link rel="stylesheet" href="{% static "css/style.css"%}">
+    <link rel="stylesheet" href="{% static "css/font-awesome.css"%}">
+
+    
+    
+ 
+</head>
+
+<body>
+    <div class="overlay-dark-mob">
+        <div class="cross-mobile"><i class="fa fa-times"></i></div>
+    </div>
+    <div class="dot-menu-links">
+        
+        <ul>                
+            <li>
+                Home
+            </li>
+            <li>
+                About
+            </li>
+            <li>
+                Contact
+            </li>
+            <li>
+                JSS Website
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div class="overlay-dark">
+        <div class="cross-mobile"><i class="fa fa-times"></i></div>
+    </div>
+
+    <div class="left-nav">
+        <div class="logo">
+            <img src="{% static "images/logo.PNG"%}">
+        </div>
+
+        <div class="left-nav-inner">
+            <ul>
+                <li class="move-in">
+                    <a href="{% url "relevent-notice-list" %}">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Administration">
+                    <i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Academics">
+                    <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Events">
+                    <i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
+                </a>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=Placement">
+                        <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
+                    </li>
+                    <li class="">
+                        <a class="search2">
+                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=Miscellaneous">
+                        <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+                    </li>
+                    <li class="active move-in">
+                        <a href="{% url "bookmark-list" %}">
+                        <i class="fa fa-star"></i> &nbsp;Starred</a>
+                    </li>
+
+                    <div class="line">
+                    </div>
+
+                    <li class=" move-in">
+                        <a href="{% url "user-profile" user_id=request.user.username %}">
+                        <i class="fa fa-user"></i> &nbsp;My profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url "account_logout" %}">
+                        <i class="fa fa-inbox"></i> &nbsp;Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    <!-- details==== -->
+
+    <div class="relevant-info">
+        <div class="info-header">
+
+            <h2>
+                Relevant
+            </h2>
+
+        </div>
+        <div class="head-info">
+            <h3>Title</h3>
+            <div id="notice_title"></div>
+        </div>
+        <div class="content-info">
+            <h3>Details</h3>
+            <div id="notice_description"></div>
+        </div>
+        <div class="head-info download" id="notice_download_attachment">
+            <a href="#" download><h3>Download Attachment</h3>&nbsp;
+            <i class="fa fa-download"></i></a>
+        </div>
+        <div class="date-author-info" id="notice_posted_by"></div>
+        <div class="cross">
+            <i class="fa fa-times"></i>
+        </div>
+
+    </div>
+
+    <!-- relevant==== -->
+    <div class="relevant-page">
+        <header>
+            <div class="row">
+                <div class="heading-small col sm-col-4">
+                    <h3>Welcome <span>{{ request.user.first_name}}</span></h3>
+                </div>
+                <div class="head-links-resize col sm-col-8">
+                    <div class="head-links">
+                        <ul>
+                            <li>
+                                <a href="{% url "home" %}">Home</a>
+                            </li>
+                            
+                            <li>
+                                <a href="{% url "about" %}">About</a>
+                            </li>
+                            <li>
+                                <a href="{% url "contact" %}">Contact</a>
+                            </li>
+                            
+                            <li>
+                                <a href="http://jssaten.ac.in">JSS Website</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="mob-side-link">
+                        <span class="dot-mob">
+                        </span>
+                        <span class="dot-mob">
+                        </span>
+                        <span class="dot-mob">
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <div class="sub-header">
+            <div class="row">
+                <div class="heading col sm-col-6">
+
+                    <h1><span class="mobile-menu"><i class="fa fa-bars"></i></span>Relevant</h1>
+                </div>
+                <div class="col sm-col-6">
+
+                    <div class="row">
+                        <!-- <div class="quick-link  col-2 push-right">
+                <i class="fa fa-ellipsis-v"></i>
+                </div> -->
+                        {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %} 
+                        <div class="button-create  col-4 push-right">
+                            <a href="{% url "notice-add" %}">Create New</a>
+                        </div>
+                        {% endifequal %}
+
+                        <div class="search  col-6 push-right">
+                            <input type="text" name="search" placeholder="search"><i class="fa fa-search"></i>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- relevant content==== -->
+
+        <div class="relevant-content-head">
+            <ul>
+                <li class="desktop">
+                    <div class="row">
+                        <div class="imp col sm-col  sm-col-1">
+                            Starred
+                        </div>
+                        <div class="col sm-col sm-col-10">
+                        <div class="row"> 
+                        <div class="col sm-col sm-col-2">
+                            Posted By
+                        </div>
+                        <div class="col sm-col sm-col-8">
+                            Post
+                        </div>
+                        <div class="col sm-col sm-col-2">
+                            Date
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </li>
+                <li class="mobile">
+                    <div class="row">
+                    <div class="pagination col sm-col sm-col-12">
+                    Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+                    {% if notices.has_previous %}
+                        <a href="?page={{ notices.previous_page_number }}">
+                            <i class="fa fa-chevron-circle-left"></i>
+                        </a>
+                    {% endif %}
+                    &nbsp;&nbsp;
+                    {% if notices.has_next %}
+                        <a href="?page={{ notices.next_page_number }}">
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                    {% endif %}
+                    </div>
+                    </div>
+                </li>
+                <ul>
+        </div>
+
+
+        <div class=" relevant-content">
+            <ul>
+                {% for bookmark_notice in notices %}
+                <li>
+                    <div class="row" >
+                        <form>
+                            <div class="star imp col sm-col sm-col-1 active_star">
+                                    <i class="fa fa-star " id="bookmark_{{ bookmark_notice.notice.id }}"></i>
+                            </div>
+                        </form>
+                        <div class="sec col sm-col sm-col-10" id="{{ bookmark_notice.notice.id }}">
+                            <div class="row">  
+                                <div class="author col sm-col sm-col-2" id="notice_faculty_{{ bookmark_notice.notice.id }}">
+                                    {{ bookmark_notice.notice.faculty.user.get_full_name }}
+                                </div>
+                                <div class="post_head col sm-col sm-col-8" >
+                                <p id="notice_title_{{ bookmark_notice.notice.id }}">
+                                    {{ bookmark_notice.notice.title }}
+                                </p>
+                                <br>
+                                     <div class="row mobile sub-detail">
+                                         <span class=" left col sm-col-8">Posted by  </span>
+                                         <span class="date-mob  right col sm-col sm-col-4" id="notice_modified_{{ bookmark_notice.notice.id }}">{{ bookmark_notice.notice.modified }}</span>
+                                    </div>
+                                </div>
+                                <div class="date col  sm-col sm-col-2" id="notice_modified_{{ bookmark_notice.notice.id }}">
+                                    {{ bookmark_notice.notice.modified }}
+                                </div>
+                                <div id="notice_description_{{ bookmark_notice.notice.id }}" style="display:None;">{{ bookmark_notice.notice.description }}</div>
+                                {% if notice.file_attached %}
+                                <div id="notice_file_attached_{{ bookmark_notice.notice.id }}" style="display:None;">{{ bookmark_notice.notice.file_attached }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% empty %}
+                No notices to display.
+                {% endfor %}
+                <ul>
+        </div>
+        <div class="pagination">
+            Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+            {% if notices.has_previous %}
+                <a href="?page={{ notices.previous_page_number }}">
+                    <i class="fa fa-chevron-circle-left"></i>
+                </a>
+            {% endif %}
+            &nbsp;&nbsp;
+            {% if notices.has_next %}
+                <a href="?page={{ notices.next_page_number }}">
+                    <i class="fa fa-chevron-circle-right"></i>
+                </a>
+            {% endif %}
+        </div>
+        <footer>
+            <h4>Quick Links</h4>
+            <div class="footer-line"></div>
+            <div class="row">
+                <div class="footer-links">
+                    <div class="col col-3">
+                        <h4>View Result</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>My Inbox</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Register</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Forum</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="footer-links">
+                    <div class="col col-3">
+                        <h4>JSS Library</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>JSS Mailbox</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>JSS STEP</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>UPTU Website</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="footer-links">
+                    <div class="col col-3">
+                        <h4>Old Question Paper</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>JSS Mailbox</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Nibble Website</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Other Societies</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="footer-links">
+                    <div class="col col-3">
+                        <h4>Computer Science & Engineering</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Electrical Engineering</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Electronics & Communication Engineering</h4>
+                    </div>
+                    <div class="col col-3">
+                        <h4>Mechanical Engineering</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-footer ">
+                <h4>JSS Academy Of Technical Education</h4>
+            </div>
+        </footer>
+    </div>
+
+
+
+<div class="search-container">
+
+    <div class="cross">
+        <i class="fa fa-times">
+        </i>
+    </div>
+    <div class="login-overlay search-overlay"></div>
+
+    <div class="login search-main">
+        
+            <div class="login-head search-head">
+                <h3>Search for Uploaded Notices.</h3>
+            </div>
+            
+        
+        <div class="login-form search-form">
+            <form>
+                <input class="input-style" type="text" placeholder="Subject" required>
+                <input class="input-style" type="text" placeholder="Message" required>
+                <input class="input-style" type="text" placeholder="Posted By" required>
+
+
+
+                <div class="side-text">Posting Date Between </div>
+                <div class="row">
+                    <div id="desktop-date"> 
+                        <div class="col sm-col-12">
+                            <input type="text" id="daterangepicker" class="input-style input-calendar" placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+                    <div id="mobile-date">  
+                        <div class="col sm-col-12">
+                            <input type="text" id="mobile-datepicker-1" class="input-style input-calendar" placeholder="dd/mm/yyyy">
+                        </div>
+                        <div class="col sm-col-12">
+                            <input type="text" id="mobile-datepicker-2" class="input-style input-calendar" placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="side-text">Posting for </div>
+                <div class="row">
+                    <div class="col col-4">
+                <select class="input-style select-style" id="batch-id" required >
+                <option value="" disabled selected hiddened>Batch</option>
+                </select></div>
+                
+
+                <div class="col col-4">
+                <select class="input-style select-style" id="branch-id" required >
+                <option value="" disabled selected hiddened>Branch</option>
+                <option>BTECH CSE</option>
+                <option>BTECH ME</option>
+                <option>BTECH ECE</option>
+                <option>BTECH EEE</option>
+                <option>BTECH ME</option>
+                <option>BTECH CE</option>
+                
+                </select>
+            </div>
+            
+
+
+                <div class="col col-4">
+                <select class="input-style select-style" id="section" required >
+                <option value="" disabled selected hiddened>Section</option>
+
+                
+                </select>
+            </div>
+
+
+                <button type="reset" value="reset"  class="reset reset-search">Reset</button>
+                <button type="submit" value="submit" class="right">Search</button>
+                <div class="clear">
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    
 </div>
-{% endblock %}
 
+
+    <script src="{% static "js/jquery.js"%}"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="{% static "js/jquery.daterange.js"%}"></script>
+    <script src="{% static "js/main.js"%}"></script>
+
+        <script>
+            var width = $(document).width();
+            if(width>640)
+            {
+                $("#mobile-date").hide();
+                $(function () {
+                    $("#daterangepicker").daterange({
+                       dateFormat: "dd/mm/yy", //date format
+                    rangeSeparator: "-" // the string between first and last date
+                    });
+                });
+            }
+            else{
+                $("#desktop-date").hide();
+                $(function() {
+                    $("#mobile-datepicker-1, #mobile-datepicker-2").datepicker();
+                });
+            }
+            
+
+            $(".search-container").on("scroll", function(){
+            var cale = $(this).find("input.hasDatepicker");
+            $("#ui-datepicker-div").css("top", cale.offset().top +cale.outerHeight());
+ 
+        })
+
+var d = new Date();
+var y = d.getFullYear();
+var n = 2000;
+
+(function selectOne() {
+    
+      var batch = document.getElementById('batch-id');
+     for (var i=y; i>=n; i--) {
+        batch.options[batch.options.length] = new Option(i, i);
+     }
+   })();
+</script>
 <script type="text/javascript">
+    function addBookmark(notice_id)
+{
+    $.ajax({
+        url : "/notices/"+ notice_id +"/bookmark/",
+        type : "POST",
+        data: {
+            csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success : function(json)
+        {
+            console.log(json);
+        },
+        error : function()
+        {
+            alert("An error occured.");
+        }
+    });
+}
 
-function Unmark(notice_id)
+function removeBookmark(notice_id)
 {
     $.ajax({
         url : "/notices/"+notice_id+"/bookmark/delete/",
         type : "POST",
         data: {
-            csrfmiddlewaretoken: '{{ csrf_token }}'
+            csrfmiddlewaretoken: "{{ csrf_token }}"
         },
         success : function(json)
         {
@@ -59,30 +536,11 @@ function Unmark(notice_id)
         },
         error : function(json)
         {
-            alert("error");
+            alert("An error occured.");
         }
     });
 }
-
-
-function PinItem(bookmark_id)
-{
-    $.ajax({
-        url : "/notices/bookmark/"+ bookmark_id + "/pinned/",
-        type : "POST",
-        data: {
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success : function(json)
-        {
-            alert(json);
-            location.reload();
-        },
-        error : function(json)
-        {
-            alert("error");
-        }
-    });
-}
-
 </script>
+</body>
+
+</html>
