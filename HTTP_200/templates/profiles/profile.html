@@ -19,6 +19,13 @@
 </head>
 
 <body>
+
+	{% for message in messages %}    
+        <div class="notice-msg">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 	<div class="overlay-dark-mob">
 		<div class="cross-mobile"><i class="fa fa-times"></i></div>
 	</div>

@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
+from django.contrib import messages
 
 from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
@@ -14,7 +15,6 @@ import utils.constants as constants
 
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
-
 
 class NoticeList(LoginRequiredMixin, generic.View):
 
@@ -25,6 +25,18 @@ class NoticeList(LoginRequiredMixin, generic.View):
             notice_list = Notice.objects.order_by('-modified')
         else:
             notice_list = Notice.objects.filter(category=category).order_by('-modified')
+
+        bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
+
+        # To check if the notices are bookmarked by user or not 
+        for notice in notice_list:
+            for bookmark_id in bookmark_id_list:
+                if bookmark_id == notice.pk:
+                    notice.is_bookmarked_by_user = True
+                    break
+                else:
+                    notice.is_bookmarked_by_user = False
+
         paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
@@ -58,6 +70,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     exclude = ['faculty']
     success_url = reverse_lazy('notice-list')
     template_name = "notices/notice_create.html"
+    # success_message = "Notice have been created successfully."
 
     def form_valid(self, form):
         faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
@@ -66,6 +79,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         form.instance.faculty = faculty
         form.instance.course_branch_year = course_branch_year
         form.save()
+        messages.success(self.request, 'Notice created successfully.')
         return super(CreateView, self).form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
@@ -103,9 +117,9 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
 class NoticeDeleteView(LoginRequiredMixin, DeleteView):
     model = Notice
     success_url = reverse_lazy('notice-list')
-    pass
 
     def delete(self, *args, **kwargs):
+        messages.success(self.request, 'Notice deleted successfully.')
         return super(NoticeDeleteView, self).delete(self.get_object())
 
 
@@ -119,8 +133,10 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
             user=self.request.user,
             notice=notice)
         if created:
+            messages.success(self.request, 'Successfully Bookmarked.')
             return HttpResponse("Successfully Bookmarked")
         else:
+            messages.success(self.request, 'Already bookmarked this notice.')
             return HttpResponse("You have already bookmarked this notice")
 
 
@@ -153,8 +169,10 @@ class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
         try:
             notice = get_object_or_404(Notice, pk=pk)
             BookmarkedNotice.objects.filter(user=self.request.user, notice=notice)[0].delete()
+            messages.success(self.request, 'Bookmark removed.')
             return HttpResponse("Deleted the notice Successfully")
         except:
+            messages.success(self.request, 'Some error occured.')
             return HttpResponse("Some error occured. Please try after sometime.")
 
 
@@ -187,7 +205,9 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         template_name = "notices/list.html"
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(course_branch_year__contains=faculty.department)
+            notices = Notice.objects.filter(
+                Q(course_branch_year__contains=faculty.department) | Q(course_branch_year__contains='-AllBranches-') | Q(course_branch_year__contains='-AllBranches-')
+            )
         except:
             notices = Notice.objects.all()
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
@@ -221,6 +241,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         }
         return JsonResponse(context)
 
+
 class SearchNotices(LoginRequiredMixin, generic.View):
 
     def post(self, request, *args, **kwargs):
@@ -243,9 +264,7 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             # Get date range from mobile version
             date_m_end = request.POST.get('date_m_end', "")
             date_m_start = request.POST.get('date_m_start', "")
-            print date_m_end, date_m_start
 
-        faculties = FacultyDetail.objects.all()
         Notices = Notice.objects.all()
 
         if title != "":
@@ -266,12 +285,10 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             Notices = Notices.filter(course_branch_year__contains="-"+branch+"-")
 
         if year != "" :
-            print year
-            Notices = Notices.filter(course_branch_year__contains="-"+year+"-")
+            Notices = Notices.filter(course_branch_sem__contains="-"+year+"-")
 
         if section != "" :
-            print section
-            Notices = Notices.filter(course_branch_year__contains="-"+section)
+            Notices = Notices.filter(course_branch_sem__contains="-"+section)
 
         if date_desktop != "":
             start_date_list = date_desktop.split('-')[0]
@@ -288,9 +305,8 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             Notices = Notices.filter(modified__range=(start_date, end_date))
 
         Notices = Notices.order_by('-modified')
-        print Notices
 
-        paginator = Paginator(Notices, 10)
+        paginator = Paginator(Notices, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
             notices = paginator.page(page)
@@ -301,4 +317,34 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
 
+        return render(request, template, {'notices': notices})
+
+
+class MyUploadedNotices(LoginRequiredMixin, generic.View):
+
+    def get(self, request):
+        faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
+        template = 'notices/my_uploaded_notices.html'
+        notice_list = Notice.objects.filter(faculty__user=faculty.user).order_by('-modified')
+        bookmark_id_list = BookmarkedNotice.objects.filter(user=faculty.user).values_list('notice__pk', flat=True)
+
+        # To check if the notices are bookmarked by user or not 
+        for notice in notice_list:
+            for bookmark_id in bookmark_id_list:
+                if bookmark_id == notice.pk:
+                    notice.is_bookmarked_by_user = True
+                    break
+                else:
+                    notice.is_bookmarked_by_user = False
+
+        paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
+        page = request.GET.get('page')
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            notices = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            notices = paginator.page(paginator.num_pages)
         return render(request, template, {"notices": notices})

@@ -58,3 +58,6 @@ target/
 
 #Test Database
 db.sqlite3
+
+# django media files
+HTTP_200/media

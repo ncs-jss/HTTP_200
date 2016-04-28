@@ -85,12 +85,14 @@ $(document).ready(function () {
 	$(".imp i").click(function () {
 		if ($(this).parent().hasClass("active_star")) {
 			var id = $(this).attr('id');
-			removeBookmark(id[id.length-1]);
+			console.log(id.slice(9));
+			removeBookmark(id.slice(9));
 			$(this).parent().removeClass("active_star");
 
 		} else {
 			var id = $(this).attr('id');
-			addBookmark(id[id.length-1]);
+			addBookmark(id.slice(9));
+			console.log(id.slice(9));
 			$(this).parent().addClass("active_star");
 
 		}
@@ -101,18 +103,22 @@ $(document).ready(function () {
 
 	$(".relevant-info").hide();
 
-	$(".sec").click(function () {
+	$(".sec, .preview").click(function () {
 		$(".relevant-info").hide().fadeIn();
 		var index = $(".relevant-content ul li").index(this);
 		var id = $(this).attr('id');
+		console.log('the id is '+id);
 		var description = $("#notice_description_"+id).text();
 		var title = $("#notice_title_"+id).text();
 		var modified = $("#notice_modified_"+id).text();
 		var faculty = $("#notice_faculty_"+id).text();
-		var file_attached = $("#notice_file_attached_"+id).text();
+		var file_attached = $("#notice_file_attached_"+id).val();
 		console.log("'"+file_attached+"'");
-		if (file_attached=="") {
+		if (typeof file_attached == "undefined") {
 			$("#notice_download_attachment").hide();
+		}
+		else {
+			$("a#download_attachment").prop("href", file_attached);
 		}
 		$("#notice_description").html(description);
 		$("#notice_title").html(title);
@@ -122,6 +128,18 @@ $(document).ready(function () {
 			'overflow': 'hidden'
 		})
 	})
+
+
+
+	$(".sec, .preview").click(function () {	
+		location.hash = "details";
+		var index = $(".relevant-content ul li").index(this);
+		$(".relevant-info ").hide().fadeIn();
+		$("body").css({
+			'overflow': 'hidden'
+		})
+	})			
+
 
 	$(".relevant-info .cross").click(function () {
 		$(".relevant-info").fadeOut("fast");
@@ -649,70 +667,49 @@ else{
 })
 
 
+// remove loader on click back button
 
-// $(".create-notice-button").click(function() {
-	
-// 		$("#create-notice-form").submit();
-// })
+  $(window).bind('hashchange', function () {
+    
+      if (location.hash == null || location.hash == "") {
+          $(".relevant-info").hide();
+      }
+    
+  });
+
+  // notice messages======
+
+  $(".notice-msg").animate({
+  	'top':'20px',
+  	'opacity':'1'
+  },700);
+
+var back_notice=function(){
+	$(".notice-msg").animate({
+  	'top':'-20px',
+  	'opacity':'0'
+  },700);
+}
+
+setTimeout(function(){
+	back_notice();
+
+},2000)
+
+$(".notice-msg-cross").click(function(){
+	back_notice();
+})
+
+$(".my-prompt-container").hide();
+
+$(".trash-notice").click(function() {
+	$(".my-prompt-container").fadeIn();
+})
+
+$(".no-delete").click(function() {
+	$(".my-prompt-container").fadeOut();
+})
 
 
 
 });
-
-function addBookmark(notice_id)
-{
-    $.ajax({
-        url : "/notices/"+ notice_id +"/bookmark/",
-        type : "POST",
-        data: {
-            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
-        },
-        success : function(json)
-        {
-            console.log(json);
-        },
-        error : function(json)
-        {
-            alert("An error occured.");
-        }
-    });
-}
-
-function removeBookmark(notice_id)
-{
-    $.ajax({
-        url : "/notices/"+notice_id+"/bookmark/delete/",
-        type : "POST",
-        data: {
-            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
-        },
-        success : function(json)
-        {
-            location.reload();
-        },
-        error : function(json)
-        {
-            alert("An error occured.");
-        }
-    });
-}
-
-// function PinItem(bookmark_id)
-// {
-//     $.ajax({
-//         url : "/notices/bookmark/"+ bookmark_id + "/pinned/",
-//         type : "POST",
-//         data: {
-//             csrfmiddlewaretoken: '{{ csrf_token }}'
-//         },
-//         success : function(json)
-//         {
-//             alert(json);
-//             location.reload();
-//         },
-//         error : function(json)
-//         {
-//             alert("error");
-//         }
-//     });
-// }
