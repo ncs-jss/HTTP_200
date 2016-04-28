@@ -195,6 +195,18 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
             notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
 
+        paginator = Paginator(notices, 10)
+        
+        page = request.GET.get('page')
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            notices = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            notices = paginator.page(paginator.num_pages)
+
         return render(request, template_name, {'notices': notices})
 
     def post(self, request, *args, **kwargs):
