@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from braces.views import LoginRequiredMixin
 from django.views.generic import View
-from django.contrib.auth.models import User
 from .models import StudentDetail, FacultyDetail
 from .forms import StudentForm, FacultyForm, UserForm
 import permissions
@@ -66,29 +67,37 @@ class UserProfile(LoginRequiredMixin, View):
         username = request.user
         detail = None
 
-        if permissions.is_in_group(username, 'StudentGroup'):
-            user = get_object_or_404(User, pk=username.id)
-            user_form = UserForm(request.POST, instance=user)
-            detail = get_object_or_404(StudentDetail, user=user)
-            detail_form = StudentForm(request.POST, instance=detail)
+        if username == request.user:
+            request.POST = request.POST.copy()
 
-        elif permissions.is_in_group(username, 'FacultyGroup'):
-            user = get_object_or_404(User, pk=username.id)
-            user_form = UserForm(request.POST, instance=user)
-            detail = get_object_or_404(FacultyDetail, user=user)
-            detail_form = FacultyForm(request.POST, instance=detail)
+            # A simple hack to stop someone from editing username 
+            request.POST['username'] = username
+
+            if permissions.is_in_group(username, 'StudentGroup'):
+                user = get_object_or_404(User, pk=username.id)
+                user_form = UserForm(request.POST, instance=user)
+                detail = get_object_or_404(StudentDetail, user=user)
+                detail_form = StudentForm(request.POST, instance=detail)
+
+            elif permissions.is_in_group(username, 'FacultyGroup'):
+                user = get_object_or_404(User, pk=username.id)
+                user_form = UserForm(request.POST, instance=user)
+                detail = get_object_or_404(FacultyDetail, user=user)
+                detail_form = FacultyForm(request.POST, instance=detail)
+
+            else:
+                raise Http404("User Group not exist")
+
+            if user_form.is_valid():
+                user = user_form.save()
+
+            if detail_form.is_valid():
+                detail = detail_form.save()
+
+            return redirect("user-profile", user_id=request.user.username)
 
         else:
-            raise Http404("User Group not exist")
-
-        if user_form.is_valid():
-            user = user_form.save()
-
-        if detail_form.is_valid():
-            detail = detail_form.save()
-
-        return redirect("user-profile", user_id=request.user.username)
-
+            raise PermissionDenied
 
 class EditProfile(LoginRequiredMixin, View):
     '''

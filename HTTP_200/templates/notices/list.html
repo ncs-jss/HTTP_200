@@ -370,10 +370,11 @@
             
         
         <div class="login-form search-form">
-            <form>
-                <input class="input-style" type="text" placeholder="Subject" required>
-                <input class="input-style" type="text" placeholder="Message" required>
-                <input class="input-style" type="text" placeholder="Posted By" required>
+            <form action="{% url 'notice-search' %}" method="POST">
+            {% csrf_token %}
+                <input class="input-style" type="text" placeholder="Title" name="title">
+                <input class="input-style" type="text" placeholder="Description" name="description">
+                <input class="input-style" type="text" placeholder="Posted By" name="faculty">
 
 
 
@@ -381,15 +382,15 @@
                 <div class="row">
                     <div id="desktop-date"> 
                         <div class="col sm-col-12">
-                            <input type="text" id="daterangepicker" class="input-style input-calendar" placeholder="dd/mm/yyyy">
+                            <input type="text" id="daterangepicker" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_desktop">
                         </div>
                     </div>
                     <div id="mobile-date">  
                         <div class="col sm-col-12">
-                            <input type="text" id="mobile-datepicker-1" class="input-style input-calendar" placeholder="dd/mm/yyyy">
+                            <input type="text" id="mobile-datepicker-1" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_start">
                         </div>
                         <div class="col sm-col-12">
-                            <input type="text" id="mobile-datepicker-2" class="input-style input-calendar" placeholder="dd/mm/yyyy">
+                            <input type="text" id="mobile-datepicker-2" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_end">
                         </div>
                     </div>
                 </div>
@@ -397,34 +398,70 @@
 
                 <div class="side-text">Posting for </div>
                 <div class="row">
-                    <div class="col col-4">
-                <select class="input-style select-style" id="batch-id" required >
-                <option value="" disabled selected hiddened>Batch</option>
-                </select></div>
                 
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="course" class="input-style" id="create-course1">
+                        
+                        <option value="">All Courses</option>
+                        <option value="BTech">BTech</option>
+                        <option value="MTech">MTech</option>
+                        <option value="MCA">MCA</option>
+                        <option value="MBA">MBA</option>
 
-                <div class="col col-4">
-                <select class="input-style select-style" id="branch-id" required >
-                <option value="" disabled selected hiddened>Branch</option>
-                <option>BTECH CSE</option>
-                <option>BTECH ME</option>
-                <option>BTECH ECE</option>
-                <option>BTECH EEE</option>
-                <option>BTECH ME</option>
-                <option>BTECH CE</option>
-                
-                </select>
-            </div>
-            
+                    </select>
+                </div>
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="branch" class="input-style" id="create-branch1">
+                        <option value="">All Branches</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EE">EE</option>
+                        <option value="CE">CE</option>
+                        <option value="ICE">ICE</option>
+                        <option value="MT">MT</option>
+                        <option value="ME">ME</ssoption>
 
+                        
+                    </select>
+                </div>
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="year" class="input-style" id="create-year1">
+                        <option value="" selected>All Years</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
 
-                <div class="col col-4">
-                <select class="input-style select-style" id="section" required >
-                <option value="" disabled selected hiddened>Section</option>
-
-                
-                </select>
-            </div>
+                        
+                    </select>
+                </div>
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="section" class="input-style" id="create-section1">
+                        <option value="" selected>All Sections</option>
+                        <option value="CSE1">CSE1</option>
+                        <option value="CSE2">CSE2</option>
+                        <option value="IT1">IT1</option>
+                        <option value="IT2">IT2</option>
+                        <option value="ECE1">ECE1</option>
+                        <option value="ECE2">ECE2</option>
+                        <option value="EE1">EE1</option>
+                        <option value="EE2">EE2</option>
+                        <option value="CE1">CE1</option>
+                        <option value="CE2">CE2</option>
+                        <option value="ICE1">ICE1</option>
+                        <option value="ICE2">ICE2</option>
+                        <option value="MT1">MT1</option>
+                        <option value="MT2">MT2</option>
+                        <option value="ME1">ME1</option>
+                        <option value="ME2">ME2</option>
+                        
+                    </select>
+                </div>
 
 
                 <button type="reset" value="reset"  class="reset reset-search">Reset</button>
