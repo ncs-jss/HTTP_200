@@ -965,6 +965,124 @@ input[type="file"].input-upload{
 .create-notice-button:hover{
 	background: #403469;
 }
+
+/*notice msg================*/
+
+
+.notice-msg{
+	opacity: 0;
+	/*display: inline-block;*/
+	position: fixed;
+	z-index: 100;
+	background: #191232;
+	border-radius: 4px;
+	box-shadow: 0px 0px 2px #4d4d4d;
+	padding: 15px 20px;	
+	margin-right: auto;
+	margin-left: auto;
+	left: 0px;
+	right: 0px;
+	color: #fff;
+	width: 280px;
+	height: 45px;
+	text-align: center;
+	top: 0px;
+	font-size: 1em;
+
+	font-family: 'Roboto Light'
+}
+
+/*upload notices==================*/
+
+ul li.my-notice-list{
+
+	cursor: default;
+}
+ul li.my-notice-list i{
+	color: #7d7d7d;
+	cursor: pointer;
+	font-size: 1.1em;
+	transition:all 0.2s ease-in-out;
+}
+ul li.my-notice-list i:hover{
+	color:#2d2251;
+}
+ul li.my-notice-list  .my-notice-pad{
+	padding: 15px 0px 15px 0px;
+}
+ul li.my-notice-list .preview{
+	cursor: pointer;
+}
+.my-mobile{
+	display: none ;
+	}
+.my-prompt-container{
+	display: none;
+	width: 100%;
+	height: 100vh;
+	overflow-y:scroll;
+	background:rgba(255,255,255,0.8);
+	position: fixed;
+	z-index: 120;
+
+}
+.my-prompt{
+	display: block;
+	position: absolute;
+	padding:20px 20px;
+	background:#fff;
+	box-shadow: 0px 0px 4px #9d9d9d;
+	border-radius: 2px;
+	margin-right: auto;
+	margin-left: auto;
+	left: 0px;
+	right: 0px;
+		width: 350px;
+		margin-top: 150px;
+		text-align: center;
+}
+.my-prompt h2{
+	color: #4d4d4d;
+	font-size: 1.4em;
+}
+.my-prompt button{
+	display: inline;
+	padding: 10px 20px;
+	border-radius: 20px;
+	background-color: #000;
+	box-shadow: 0px;
+	float: left;
+	outline: none;
+	border:0px;
+	background:#403469;
+	margin: 10px 20px 0px 20px;
+	cursor: pointer;
+	color: #fff;
+	transition:all 0.2s ease-in-out;
+}
+
+.my-prompt button:hover{
+	background: #2d2251;
+}
+button.no-delete{
+	float: right;
+	color: #4d4d4d;
+	background:rgba(255,255,255,0);
+	border: 2px solid #9d9d9d;
+	
+}
+button.no-delete:hover{
+	color: #fff;
+	background: #403469;
+	border: 2px solid #403469;
+}
+
+.empty-notices {
+	text-align: center;
+	font-family: 'Roboto Medium';
+	color: #4D4D4D;
+}
+
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px
@@ -990,7 +1108,7 @@ input[type="file"].input-upload{
 		display: inline-block;
 	}
 	.heading h1 {
-    font-size: 26px;
+    font-size: 21px;
     margin-top: 6px;
 	}
 	.left-nav{
@@ -1067,7 +1185,25 @@ h3.profile-head{
 .profile-header{
 	height: 89px;
 }
-
+.my-icons{
+	text-align: right;
+}
+ul li.my-notice-list {
+		padding: 0px 20px 20px 20px;
+}
+ul li.my-notice-list  .my-notice-pad{
+	padding:20px 20px 0px 0px;
+}
+.my-mobile{
+	display: block !important;
+	}
+.my-mobile .pagination{
+		display: inline-block;
+		padding:0px;
+	}
+	.my-desktop{
+		display: none;
+	}
 }
 
 
@@ -1105,6 +1241,13 @@ h3.create-head{
 @media(max-width: 480px){
 	.jss-logo{
 		margin-top: -13px;
+	}
+	.my-prompt{
+		width: 300px;
+
+	}
+	.my-prompt h2{
+		font-size: 1.2em;
 	}
 }
 

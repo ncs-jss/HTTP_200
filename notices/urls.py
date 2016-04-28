@@ -3,7 +3,7 @@ from notices.views import (
     NoticeList, NoticeShow, CreateNotice,
     NoticeUpdateView, NoticeDeleteView, BookmarkCreateView,
     BookmarkDeleteView, BookmarkListView, PinCreateView,
-    ReleventNoticeListView, SearchNotices,
+    ReleventNoticeListView, SearchNotices, MyUploadedNotices,
 )
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^search/$', SearchNotices.as_view(), name="notice-search"),
     url(r'^add/$', CreateNotice.as_view(), name='notice-add'),
     url(r'^$', NoticeList.as_view(), name="notice-list"),
+    url(r'^uploaded/$', MyUploadedNotices.as_view(), name="my-uploaded-notices"),
 ]

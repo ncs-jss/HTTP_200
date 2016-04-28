@@ -25,6 +25,18 @@ class NoticeList(LoginRequiredMixin, generic.View):
             notice_list = Notice.objects.order_by('-modified')
         else:
             notice_list = Notice.objects.filter(category=category).order_by('-modified')
+
+        bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
+
+        # To check if the notices are bookmarked by user or not 
+        for notice in notice_list:
+            for bookmark_id in bookmark_id_list:
+                if bookmark_id == notice.pk:
+                    notice.is_bookmarked_by_user = True
+                    break
+                else:
+                    notice.is_bookmarked_by_user = False
+
         paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
@@ -249,3 +261,33 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             notices = paginator.page(paginator.num_pages)
 
         return render(request, template, {'faculties': faculties, 'notices': notices})
+
+
+class MyUploadedNotices(LoginRequiredMixin, generic.View):
+
+    def get(self, request):
+        faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
+        template = 'notices/my_uploaded_notices.html'
+        notice_list = Notice.objects.filter(faculty__user=faculty.user).order_by('-modified')
+        bookmark_id_list = BookmarkedNotice.objects.filter(user=faculty.user).values_list('notice__pk', flat=True)
+
+        # To check if the notices are bookmarked by user or not 
+        for notice in notice_list:
+            for bookmark_id in bookmark_id_list:
+                if bookmark_id == notice.pk:
+                    notice.is_bookmarked_by_user = True
+                    break
+                else:
+                    notice.is_bookmarked_by_user = False
+
+        paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
+        page = request.GET.get('page')
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            notices = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            notices = paginator.page(paginator.num_pages)
+        return render(request, template, {"notices": notices})

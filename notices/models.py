@@ -43,6 +43,14 @@ class Notice(models.Model):
     def filename(self):
         return os.path.basename(self.file.name)
 
+    def is_bookmarked_by_user(self, request):
+        # try:
+        print request
+        BookmarkedNotice.objets.get(notice__id=self.id, user=request.user)
+        return "asdasdasdasd"
+        # except:
+        #     return False
+
     def __unicode__(self):
         return self.title
 

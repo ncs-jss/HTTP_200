@@ -20,6 +20,10 @@
 </head>
 
 <body>
+    <div class="notice-msg">
+        Your notice has been uploaded.
+    </div>
+
     <div class="overlay-dark-mob">
         <div class="cross-mobile"><i class="fa fa-times"></i></div>
     </div>
@@ -120,7 +124,7 @@
             <div id="notice_description"></div>
         </div>
         <div class="head-info download" id="notice_download_attachment">
-            <a href="#" download><h3>Download Attachment</h3>&nbsp;
+            <a href="#" id="download_attachment" download><h3>Download Attachment</h3>&nbsp;
             <i class="fa fa-download"></i></a>
         </div>
         <div class="date-author-info" id="notice_posted_by"></div>
@@ -261,7 +265,7 @@
                                     <i class="fa fa-star " id="bookmark_{{ notice.id }}"></i>
                             </div>
                         </form>
-                            {% endif %}
+                        {% endif %}
                         <div class="sec col sm-col sm-col-10" id="{{ notice.id }}">
                             <div class="row">  
                                 <div class="author col sm-col sm-col-2" id="notice_faculty_{{ notice.id }}">
@@ -282,14 +286,14 @@
                                 </div>
                                 <div id="notice_description_{{ notice.id }}" style="display:None;">{{ notice.description }}</div>
                                 {% if notice.file_attached %}
-                                <div id="notice_file_attached_{{ notice.id }}" style="display:None;">{{ notice.file_attached }}</div>
+                                <input id="notice_file_attached_{{ notice.id }}" type="hidden" value="/media/{{ notice.file_attached }}">
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                 </li>
                 {% empty %}
-                No notices to display.
+                <h3 class="empty-notice">No notices to display.</h3>
                 {% endfor %}
                 <ul>
         </div>

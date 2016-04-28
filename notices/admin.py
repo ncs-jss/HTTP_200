@@ -12,7 +12,7 @@ class NoticeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'classes': ('wide', 'extrapretty'),
-            'fields': ('faculty', ('subject', 'category'), 'title', 'description', 'course_branch_sem', ),
+            'fields': ('faculty', ('subject', 'category'), 'title', 'description', 'file_attached', 'course_branch_sem', ),
         }),
     )
 
