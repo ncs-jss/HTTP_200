@@ -221,35 +221,69 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
 class SearchNotices(LoginRequiredMixin, generic.View):
 
-    def get(self, request):
-        template = "notices/search.html"
-        faculties = FacultyDetail.objects.all()
+    def post(self, request, *args, **kwargs):
+
+        template = 'notices/list.html'
+
+        title = request.POST.get('title', "")
+        description = request.POST.get('description', "")
+        faculty = request.POST.get('faculty', "")
+        course = request.POST.get('course', "")
+        branch = request.POST.get('branch', "")
+        year = request.POST.get('year', "")
+        section = request.POST.get('section', "")
+        # Get date range from desktop version
+        date_desktop = request.POST.get('date_desktop', "")
+        date_m_end = ""
+        date_m_start = ""
+
+        if date_desktop == "":
+            # Get date range from mobile version
+            date_m_end = request.POST.get('date_m_end', "")
+            date_m_start = request.POST.get('date_m_start', "")
+
         Notices = Notice.objects.all()
 
-        branches = request.GET.getlist('branches', '')
-        for branch in branches:
-            Notices = Notices.filter(branches__contains=branch)
+        if title != "":
+            Notices = Notices.filter(title__contains=title)
 
-        semesters = request.GET.getlist('semesters', '')
-        for semester in semesters:
-            Notices = Notices.filter(semesters__contains=semester)
+        if description != "":
+            Notices = Notices.filter(description__contains=description)
 
-        courses = request.GET.getlist('courses', '')
-        for course in courses:
-            Notices = Notices.filter(courses__contains=course)
+        if faculty != "":
+            Notices = Notices.filter(Q(faculty__user__username__contains=faculty) | 
+                                Q(faculty__user__first_name__contains=faculty) |
+                                Q(faculty__user__last_name__contains=faculty) )
 
-        search_text = request.GET.get('search_text', '')
-        uploaded_date = request.GET.get('uploaded_date', '')
-        faculty = request.GET.get('faculty', '')
+        if course != "" :
+            Notices = Notices.filter(course_branch_sem__contains=course+"-")
 
-        try:
-            Notices = Notices.filter(Q(faculty__contains=faculty) | Q(created__date=datetime.strptime(
-                uploaded_date, "%d-%m-%Y").date()) | Q(description__contains=search_text) | Q(title__contains=search_text))
-            Notices = Notices.order_by('-modified')
-        except:
-            pass
+        if branch != "" :
+            Notices = Notices.filter(course_branch_sem__contains="-"+branch+"-")
 
-        paginator = Paginator(Notices, 10)
+        if year != "" :
+            Notices = Notices.filter(course_branch_sem__contains="-"+year+"-")
+
+        if section != "" :
+            Notices = Notices.filter(course_branch_sem__contains="-"+section)
+
+        if date_desktop != "":
+            start_date_list = date_desktop.split('-')[0]
+            start_date = datetime.strptime(start_date_list, "%d/%m/%Y")
+            end_date_list = date_desktop.split('-')[1]
+            end_date = datetime.strptime(end_date_list, "%d/%m/%Y")
+
+            Notices = Notices.filter(modified__range=(start_date, end_date))
+
+        elif date_m_start != "" or date_m_end != "":
+            # To be done
+            start_date = datetime.strptime(date_m_start, "%m/%d/%Y")
+            end_date = datetime.strptime(date_m_end, "%m/%d/%Y")
+            Notices = Notices.filter(modified__range=(start_date, end_date))
+
+        Notices = Notices.order_by('-modified')
+
+        paginator = Paginator(Notices, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
             notices = paginator.page(page)
@@ -260,7 +294,7 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
 
-        return render(request, template, {'faculties': faculties, 'notices': notices})
+        return render(request, template, {'notices': notices})
 
 
 class MyUploadedNotices(LoginRequiredMixin, generic.View):
