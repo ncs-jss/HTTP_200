@@ -74,9 +74,9 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     def form_valid(self, form):
         faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
         notice_for = self.request.POST.getlist('notice_for')
-        course_branch_sem = " ".join(notice_for)
+        course_branch_year = " ".join(notice_for)
         form.instance.faculty = faculty
-        form.instance.course_branch_sem = course_branch_sem
+        form.instance.course_branch_year = course_branch_year
         form.save()
         return super(CreateView, self).form_valid(form)
 
@@ -199,11 +199,14 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         template_name = "notices/list.html"
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(course_branch_sem__contains=faculty.department)
+            notices = Notice.objects.filter(course_branch_year__contains=faculty.department)
         except:
+            notices = Notice.objects.all()
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(course_branch_sem__contains=student.course +
-                                            "-" + student.branch + "-" + str(student.semester))
+            notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
+            notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
+            notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
+
         return render(request, template_name, {'notices': notices})
 
     def post(self, request, *args, **kwargs):
@@ -256,10 +259,10 @@ class SearchNotices(LoginRequiredMixin, generic.View):
                                 Q(faculty__user__last_name__contains=faculty) )
 
         if course != "" :
-            Notices = Notices.filter(course_branch_sem__contains=course+"-")
+            Notices = Notices.filter(course_branch_year__contains=course+"-")
 
         if branch != "" :
-            Notices = Notices.filter(course_branch_sem__contains="-"+branch+"-")
+            Notices = Notices.filter(course_branch_year__contains="-"+branch+"-")
 
         if year != "" :
             Notices = Notices.filter(course_branch_sem__contains="-"+year+"-")

@@ -32,7 +32,7 @@ class Notice(models.Model):
     category = models.CharField(max_length=4,
                                 choices=CATEGORY,
                                 default=MISC)
-    course_branch_sem = models.CharField(max_length=200, blank=False, null=True)
+    course_branch_year = models.CharField(max_length=200, blank=False, null=True)
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
     # scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)

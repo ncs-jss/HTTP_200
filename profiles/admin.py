@@ -12,7 +12,7 @@ class StudentResource(resources.ModelResource):
 
 
 class StudentAdmin(ImportExportModelAdmin):
-    list_display = ('__unicode__', 'univ_roll_no', 'branch', 'semester')
+    list_display = ('__unicode__', 'univ_roll_no', 'branch', 'year', 'section')
     resource_class = StudentResource
     pass
 

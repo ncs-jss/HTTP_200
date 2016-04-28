@@ -194,6 +194,24 @@
 							<input type="text" class="input-style" placeholder="Course" value="{{ detail_list.course }}" name="course" disabled>
 						</div>
 
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Branch" value="{{ detail_list.branch }}" name="branch" disabled>
+						</div>
+
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Year <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Year" value="{{ detail_list.year }}" name="year" disabled>
+						</div>
+					
+					</div>
+					<div class="row">
+
+						<div class="top-range col col-4">
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Section <i class="show-icon fa fa-pencil"></i></h2>
+							<input type="text" class="input-style" placeholder="Section" value="{{ detail_list.section }}" name="section" disabled>
+						</div>
+
 						{% if not detail_list.display_to_others == False or user == user_list %}
 
 						<div class="top-range col col-4 ">
