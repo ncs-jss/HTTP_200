@@ -84,9 +84,13 @@ $(document).ready(function () {
 	})
 	$(".imp i").click(function () {
 		if ($(this).parent().hasClass("active_star")) {
+			var id = $(this).attr('id');
+			removeBookmark(id[id.length-1]);
 			$(this).parent().removeClass("active_star");
 
 		} else {
+			var id = $(this).attr('id');
+			addBookmark(id[id.length-1]);
 			$(this).parent().addClass("active_star");
 
 		}
@@ -98,9 +102,21 @@ $(document).ready(function () {
 	$(".relevant-info").hide();
 
 	$(".sec").click(function () {
+		$(".relevant-info").hide().fadeIn();
 		var index = $(".relevant-content ul li").index(this);
-
-		$(".relevant-info ").hide().fadeIn();
+		var id = $(this).attr('id');
+		var description = $("#notice_description_"+id).text();
+		var title = $("#notice_title_"+id).text();
+		var modified = $("#notice_modified_"+id).text();
+		var faculty = $("#notice_faculty_"+id).text();
+		var file_attached = $("#notice_file_attached_"+id).text();
+		console.log("'"+file_attached+"'");
+		if (file_attached=="") {
+			$("#notice_download_attachment").hide();
+		}
+		$("#notice_description").html(description);
+		$("#notice_title").html(title);
+		$("#notice_posted_by").html("Posted By "+faculty+" "+modified);
 
 		$("body").css({
 			'overflow': 'hidden'
@@ -642,3 +658,61 @@ else{
 
 
 });
+
+function addBookmark(notice_id)
+{
+    $.ajax({
+        url : "/notices/"+ notice_id +"/bookmark/",
+        type : "POST",
+        data: {
+            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success : function(json)
+        {
+            console.log(json);
+        },
+        error : function(json)
+        {
+            alert("An error occured.");
+        }
+    });
+}
+
+function removeBookmark(notice_id)
+{
+    $.ajax({
+        url : "/notices/"+notice_id+"/bookmark/delete/",
+        type : "POST",
+        data: {
+            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success : function(json)
+        {
+            location.reload();
+        },
+        error : function(json)
+        {
+            alert("An error occured.");
+        }
+    });
+}
+
+// function PinItem(bookmark_id)
+// {
+//     $.ajax({
+//         url : "/notices/bookmark/"+ bookmark_id + "/pinned/",
+//         type : "POST",
+//         data: {
+//             csrfmiddlewaretoken: '{{ csrf_token }}'
+//         },
+//         success : function(json)
+//         {
+//             alert(json);
+//             location.reload();
+//         },
+//         error : function(json)
+//         {
+//             alert("error");
+//         }
+//     });
+// }

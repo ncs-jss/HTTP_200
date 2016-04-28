@@ -113,7 +113,6 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
     '''
             Adding a Bookmark to a notice
     '''
-
     def post(self, request, pk=None):
         notice = Notice.objects.get(pk=pk)
         obj, created = BookmarkedNotice.objects.get_or_create(
@@ -134,7 +133,7 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
     def get(self, request):
         template_name = "bookmark.html"
         bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
-        paginator = Paginator(bookmark_list, 10)
+        paginator = Paginator(bookmark_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
         page = request.GET.get('page')
         try:
             bookmarks = paginator.page(page)
@@ -142,7 +141,7 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
             bookmarks = paginator.page(1)
         except EmptyPage:
             bookmarks = paginator.page(paginator.num_pages)
-        return render(request, template_name, {"bookmarks": bookmarks})
+        return render(request, template_name, {"notices": bookmarks})
 
 
 class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
