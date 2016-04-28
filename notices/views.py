@@ -212,22 +212,22 @@ class SearchNotices(LoginRequiredMixin, generic.View):
 
         template = 'notices/list.html'
 
-        title = request.POST['title']
-        description = request.POST['description']
-        faculty = request.POST['faculty']
-        course = request.POST['course']
-        branch = request.POST['branch']
-        year = request.POST['year']
-        section = request.POST['section']
+        title = request.POST.get('title', "")
+        description = request.POST.get('description', "")
+        faculty = request.POST.get('faculty', "")
+        course = request.POST.get('course', "")
+        branch = request.POST.get('branch', "")
+        year = request.POST.get('year', "")
+        section = request.POST.get('section', "")
         # Get date range from desktop version
-        date_desktop = request.POST['date_desktop']
+        date_desktop = request.POST.get('date_desktop', "")
         date_m_end = ""
         date_m_start = ""
 
         if date_desktop == "":
             # Get date range from mobile version
-            date_m_end = request.POST['date_m_end']
-            date_m_start = request.POST['date_m_start']
+            date_m_end = request.POST.get('date_m_end', "")
+            date_m_start = request.POST.get('date_m_start', "")
             print date_m_end, date_m_start
 
         faculties = FacultyDetail.objects.all()

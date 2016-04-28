@@ -68,11 +68,6 @@ class UserProfile(LoginRequiredMixin, View):
         detail = None
 
         if username == request.user:
-            request.POST = request.POST.copy()
-
-            # A simple hack to stop someone from editing username 
-            request.POST['username'] = username
-
             if permissions.is_in_group(username, 'StudentGroup'):
                 user = get_object_or_404(User, pk=username.id)
                 user_form = UserForm(request.POST, instance=user)
