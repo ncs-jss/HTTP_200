@@ -7,8 +7,8 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
-
+        fields = ['first_name', 'last_name', 'email']
+        exclude = ['username',]
 
 class StudentForm(forms.ModelForm):
 

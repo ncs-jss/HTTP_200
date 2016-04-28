@@ -143,9 +143,10 @@
 
 					</div>
 					<br>
+					{% if user == user_list %}
 					<span class="edit-profile-text edit-click"><i class="fa fa-pencil"></i> Edit Profile</span>
 					<span id="demo-save" class="edit-profile-text edit-save-2"><i class="fa fa-save"></i> Save Details</span>
-					
+					{% endif %}
 
 						<i class="mob-edit fa fa-pencil"></i> 
 						<i class="mob-save fa fa-save"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -285,6 +286,7 @@
 			
 			</form>
 			
+			{% if user == user_list %}
 			<div class="edit-profile edit-click">
 				 Edit Profile
 			</div>
@@ -292,6 +294,7 @@
 			<div class="edit-profile edit-save">
 				 Save Details
 			</div>
+			{% endif %}
 		
 
 </div>
