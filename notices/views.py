@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
+from django.contrib import messages
 
 from profiles.models import FacultyDetail, StudentDetail
 from .models import Notice, BookmarkedNotice
@@ -14,7 +15,6 @@ import utils.constants as constants
 
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
-
 
 class NoticeList(LoginRequiredMixin, generic.View):
 
@@ -70,6 +70,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     exclude = ['faculty']
     success_url = reverse_lazy('notice-list')
     template_name = "notices/notice_create.html"
+    # success_message = "Notice have been created successfully."
 
     def form_valid(self, form):
         faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
@@ -78,6 +79,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         form.instance.faculty = faculty
         form.instance.course_branch_year = course_branch_year
         form.save()
+        messages.success(self.request, 'Notice created successfully.')
         return super(CreateView, self).form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
@@ -115,9 +117,9 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
 class NoticeDeleteView(LoginRequiredMixin, DeleteView):
     model = Notice
     success_url = reverse_lazy('notice-list')
-    pass
 
     def delete(self, *args, **kwargs):
+        messages.success(self.request, 'Notice deleted successfully.')
         return super(NoticeDeleteView, self).delete(self.get_object())
 
 
@@ -131,8 +133,10 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
             user=self.request.user,
             notice=notice)
         if created:
+            messages.success(self.request, 'Successfully Bookmarked.')
             return HttpResponse("Successfully Bookmarked")
         else:
+            messages.success(self.request, 'Already bookmarked this notice.')
             return HttpResponse("You have already bookmarked this notice")
 
 
@@ -165,8 +169,10 @@ class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
         try:
             notice = get_object_or_404(Notice, pk=pk)
             BookmarkedNotice.objects.filter(user=self.request.user, notice=notice)[0].delete()
+            messages.success(self.request, 'Bookmark removed.')
             return HttpResponse("Deleted the notice Successfully")
         except:
+            messages.success(self.request, 'Some error occured.')
             return HttpResponse("Some error occured. Please try after sometime.")
 
 
@@ -199,7 +205,9 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         template_name = "notices/list.html"
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-            notices = Notice.objects.filter(course_branch_year__contains=faculty.department)
+            notices = Notice.objects.filter(
+                Q(course_branch_year__contains=faculty.department) | Q(course_branch_year__contains='-AllBranches-') | Q(course_branch_year__contains='-AllBranches-')
+            )
         except:
             notices = Notice.objects.all()
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)

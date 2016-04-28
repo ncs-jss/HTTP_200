@@ -20,6 +20,12 @@
 </head>
 
 <body>
+    {% for message in messages %}    
+        <div class="notice-msg" id="bookmark-notification">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <div class="overlay-dark-mob">
         <div class="cross-mobile"><i class="fa fa-times"></i></div>
     </div>

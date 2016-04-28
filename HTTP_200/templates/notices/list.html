@@ -20,9 +20,12 @@
 </head>
 
 <body>
-    <div class="notice-msg">
-        Your notice has been uploaded.
-    </div>
+
+    {% for message in messages %}    
+        <div class="notice-msg">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <div class="overlay-dark-mob">
         <div class="cross-mobile"><i class="fa fa-times"></i></div>
@@ -277,7 +280,7 @@
                                 </p>
                                 <br>
                                      <div class="row mobile sub-detail">
-                                         <span class=" left col sm-col-8">Posted by  </span>
+                                         <span class=" left col sm-col-8">Posted by {{ notice.faculty.user.get_full_name }}</span>
                                          <span class="date-mob  right col sm-col sm-col-4" id="notice_modified_{{ notice.id }}">{{ notice.modified }}</span>
                                     </div>
                                 </div>
@@ -539,17 +542,17 @@
  
         })
 
-var d = new Date();
-var y = d.getFullYear();
-var n = 2000;
+// var d = new Date();
+// var y = d.getFullYear();
+// var n = 2000;
 
-(function selectOne() {
+// (function selectOne() {
     
-      var batch = document.getElementById('batch-id');
-     for (var i=y; i>=n; i--) {
-        batch.options[batch.options.length] = new Option(i, i);
-     }
-   })();
+//       var batch = document.getElementById('batch-id');
+//      for (var i=y; i>=n; i--) {
+//         batch.options[batch.options.length] = new Option(i, i);
+//      }
+//    })();
 </script>
 <script type="text/javascript">
     function addBookmark(notice_id)

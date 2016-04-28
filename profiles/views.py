@@ -2,13 +2,17 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
-from braces.views import LoginRequiredMixin
 from django.views.generic import View
+from django.views.generic import TemplateView
+from django.contrib import messages
+
 from .models import StudentDetail, FacultyDetail
 from .forms import StudentForm, FacultyForm, UserForm
-import permissions
-from django.views.generic import TemplateView
 from notices.models import Notice, TrendingInCollege
+
+from braces.views import LoginRequiredMixin
+
+import permissions
 
 
 def bad_request_404(request):
@@ -89,6 +93,7 @@ class UserProfile(LoginRequiredMixin, View):
             if detail_form.is_valid():
                 detail = detail_form.save()
 
+            messages.success(self.request, 'Profile updated successfully.')
             return redirect("user-profile", user_id=request.user.username)
 
         else:
