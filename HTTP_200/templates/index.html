@@ -12,6 +12,11 @@
 </head>
 <body>
 
+{% for message in messages %}    
+        <div class="notice-msg">
+            {{ message }}
+        </div>
+{% endfor %}
 
 <div class="loader-container">
     <div class="loader">
