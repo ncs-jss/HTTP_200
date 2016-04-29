@@ -160,26 +160,15 @@ class EditProfile(LoginRequiredMixin, View):
 
         return redirect("user-profile", user_id=user.username)
 
-class Contact(View): 
-    def get(self, request):
-        template_name='contact.html'
-        return render(request, template_name)
-
-    # def post(self, request, *args, **kwargs):
-        
-    #     return redirect
-
 class Contact(View):
     def get(self, request):
         template_name='contact.html'
         return render(request, template_name)
 
     def post(self, request, *args, **kwargs):
-        print "Heyeyey"
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        print name, email, message
 
         contactus = ContactUsMessage(
             name=name,
