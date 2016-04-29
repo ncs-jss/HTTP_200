@@ -28,13 +28,12 @@ class Notice(models.Model):
     title = models.CharField(max_length=500)
     description = RichTextField()
     file_attached = models.FileField(upload_to="attachments", blank=True, null=True)
-    subject = models.CharField(max_length=200)
     category = models.CharField(max_length=4,
                                 choices=CATEGORY,
                                 default=MISC)
-    course_branch_year = models.CharField(max_length=200, blank=False, null=True)
-    created = models.DateTimeField("Created", auto_now_add=True, null=True)
-    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+    course_branch_year = models.CharField(max_length=200, blank=False, null=True, default="AllCourses-AllBranches-AllYears-AllSections")
+    created = models.DateTimeField("Created", null=True)
+    modified = models.DateTimeField("Last Modified", null=True)
     # scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 
     def get_absolute_url(self):
