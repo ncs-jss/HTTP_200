@@ -121,6 +121,15 @@ $(".loader-container").fadeIn();
 
 
 	$(".sec,.preview,.pad-list").click(function () {
+		var login_status = $('#login_status').val();
+		console.log(login_status);
+
+		if(login_status=='0'){
+			location.href = "/notices/"
+		}
+
+		else {
+
 		location.hash = "details";
 
 		$(".relevant-info").hide().fadeIn();
@@ -128,6 +137,7 @@ $(".loader-container").fadeIn();
 		var id = $(this).attr('id');
 		console.log('the id is '+id);
 		var description = $("#notice_description_"+id).text();
+		console.log("This:"+description);
 		var title = $("#notice_title_"+id).text();
 		var modified = $("#notice_modified_"+id).text();
 		var faculty = $("#notice_faculty_"+id).text();
@@ -146,6 +156,7 @@ $(".loader-container").fadeIn();
 		$("body").css({
 			'overflow': 'hidden'
 		})
+	}
 	})
 
 
