@@ -1,5 +1,21 @@
 $(document).ready(function () {
 
+	$("body").css({
+	'overflow-y':'hidden'
+})
+$(".loader-container").fadeIn();
+	$(window).load(function  () {
+		$(".loader-container").delay(1000).fadeOut();
+		setTimeout(function(){
+			$("body").css({
+				'overflow-y':'scroll'
+			})
+		},1000)
+		
+	})
+
+
+
 	$(".left-nav-inner ul li").click(function () {
 		$(this).addClass("active").siblings().removeClass("active");
 		$(this).find("span").addClass("active_number");
@@ -103,7 +119,7 @@ $(document).ready(function () {
 
 	$(".relevant-info").hide();
 
-	$(".sec, .preview").click(function () {
+	$(".sec, .preview,.pad-list").click(function () {
 		$(".relevant-info").hide().fadeIn();
 		var index = $(".relevant-content ul li").index(this);
 		var id = $(this).attr('id');
