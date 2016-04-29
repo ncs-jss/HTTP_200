@@ -2,38 +2,62 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
+import ckeditor.fields
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0003_auto_20151030_1430'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('profiles', '0001_initial'),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='BookmarkedNotice',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('pinned', models.BooleanField(default=False)),
+                ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
+                ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
+            ],
+        ),
         migrations.CreateModel(
             name='Notice',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=500)),
-                ('description', models.TextField()),
+                ('description', ckeditor.fields.RichTextField()),
                 ('file_attached', models.FileField(null=True, upload_to=b'attachments', blank=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now_add=True)),
                 ('subject', models.CharField(max_length=200)),
-                ('category', models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (
-                    b'ADMN', b'Adminsitration'), (b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')])),
+                ('category', models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (b'ADMN', b'Administration'), (b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')])),
+                ('course_branch_year', models.CharField(max_length=200, null=True)),
+                ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
+                ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
                 ('faculty', models.ForeignKey(to='profiles.FacultyDetail')),
             ],
         ),
         migrations.CreateModel(
-            name='NoticeBranchYear',
+            name='TrendingInCollege',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('year', models.PositiveIntegerField(default=1)),
-                ('branch', models.CharField(default=b'ALL', max_length=5, choices=[(b'CSE', b'Computer Science and Engineering'), (b'IT', b'Information Technology'), (b'EE', b'Electrical Engineering'), (b'ECE', b'Electronics and Communication Engineering'), (b'EEE', b'Electrical and Electronics Engineering'), (b'CE', b'Civil Engineering'), (
-                    b'IC', b'Instrumentation and Control Engineering'), (b'ME', b'Mechanical Engineering'), (b'MT', b'Manufacturing Technology'), (b'MCA', b'Masters of Computer Applications'), (b'MBA', b'Master of Business Adminsitration  '), (b'MTECH', b'Masters of Technology'), (b'ALL', b'All branches and Courses')])),
-                ('notice', models.ForeignKey(to='notices.Notice')),
+                ('title', models.CharField(max_length=200)),
+                ('small_description', models.CharField(max_length=200, null=True, blank=True)),
+                ('url', models.URLField()),
+                ('visibility', models.BooleanField(default=False)),
+                ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
+                ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
             ],
+        ),
+        migrations.AddField(
+            model_name='bookmarkednotice',
+            name='notice',
+            field=models.ForeignKey(to='notices.Notice'),
+        ),
+        migrations.AddField(
+            model_name='bookmarkednotice',
+            name='user',
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]

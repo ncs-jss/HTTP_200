@@ -1,0 +1,5 @@
+MYSQL_USERNAME = "root"
+
+MYSQL_PASSWORD = "NPTEL@V193"
+
+DATABASE_NAME = "jss_connect"

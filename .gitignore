@@ -61,3 +61,6 @@ db.sqlite3
 
 # django media files
 HTTP_200/media
+
+# django migrations
+*/migrations/*
