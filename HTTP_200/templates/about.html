@@ -1,9 +1,200 @@
-<!DOCTYPE html>
+{% load staticfiles %}
+
 <html>
+
 <head>
-	<title>About</title>
+	<title>
+		JSS Nucleus
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{% static "/static/css/default.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/main.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/style.css" %}">
+	<link rel="stylesheet" href="{% static "/static/css/font-awesome.css" %}">
+
 </head>
+
 <body>
-<h1>Coming soon</h1>
+
+	<div class="overlay-dark">
+		<div class="cross-mobile"><i class="fa fa-times"></i></div>
+	</div>
+
+
+	<div class="left-nav left-index-bg">
+		<div class="index-overlay">
+		</div>
+		<div class="logo logo-index">
+			<img src="{% static "images/jss-logo.png" %}">
+				<h3> JSS Academy Of Technical Educatiom</h3>
+		</div>
+
+		<div class="left-nav-inner left-nav-inner-index">
+			<ul>
+				<li >
+					<a href="notices.html"><i class="fa fa-home"></i> &nbsp;Home</a>
+				</li>
+				<li>
+					<a href="notices.html"><i class="fa fa-thumb-tack"></i> &nbsp;All Notices</a>
+				</li>
+				<!-- <li>
+					<a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
+				</li> -->
+				<li><a href="notices.html">
+					<i class="fa fa-globe"></i> &nbsp;JSS Website</a>
+				</li>
+					<li class="active">
+						<a href="#">
+						<i class="fa fa-user"></i> &nbsp;About</a>
+					</li>
+					<li>
+						<a href="notices.html">
+						<i class="fa fa-phone"></i> &nbsp;Contact</a>
+					</li>
+					
+
+					<div class="line">
+					</div>
+
+					<li>
+						<a href="notices.html">
+						<i class="fa fa-user"></i> &nbsp;My profile</a>
+					</li>
+					<li>
+						<a href="notices.html">
+						<i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
+					</li>
+					<li>
+						<a href="notices.html">
+						<i class="fa fa-globe"></i> &nbsp;My webspace</a>
+					</li>
+					<li>
+						<a href="notices.html">
+						<i class="fa fa-inbox"></i> &nbsp;My SIM account</a>
+					</li>
+					<li>
+						<a href="login.html">
+						<i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
+					</li>
+					
+
+
+			</ul>
+		</div>
+
+	</div>
+
+
+		
+
+<!-- right-page container============ -->
+	<div class="relevant-page index-page">
+	
+		<div class="index-head">
+		<div class="index-logo">
+			<img src="{% static "images/logo-dark.png" %}">
+		</div>
+		<h3 class="tag-line">Be updated anywhere and anytime!</h3>
+		<h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span>About Us</h3>
+		</div>
+		
+		<div class="about-container">
+			<p>
+				JSSATE Info-centre has been designed as a web based interface between the students and the faculty, facilitating interactions not limited to the classroom. The JSSATE Info-centre aims to provide a live platform for fast exchange of information within college management, faculty and students to carry the overall functioning at various levels to a higher degree of quality and competence. <br><br>
+
+The web-site can be accessed from within the college campus using- http://info-centre and from across the world using- http://www.jssaten.org.in. <br><br>
+
+The info-centre provides a wide variety of utilities to its users. It can be spoken of as one place where the faculty and students alike can maintain their personal and academic records. The site provides individual user-accounts for faculty members and students with personal space and interface on "Info-centre" website. The user can upload and edit personal information through this facility. <br><br>
+
+Personal and public messaging by management and faculty is possible using the Info-centre notice board. This facility aims at increasing the interaction between faculty and students while carrying the student-teacher relationship to a newer level of co-ordination and understanding. Not only that, there is provision for uploading of assignments and tutorials by faculty for various target batches and personal messaging about the uploading to the students will also be accomplished. <br><br>
+
+The info-centre also proposes to bring easier access to the UPTU end-semester results and their analysis. Comprehensive comparative reports of the result analysis will be available for all batches and branches with emphasis on relative performances and improvement in results over previous years. <br><br>
+
+The JSSATE-Info-centre has been developed by the members of the Nibble Computer Society. The NCS members have undertaken the task for providing further support to the site. Opinions and ideas about the site are welcomed by the webmaster.<br><br>
+			</p>
+
+			
+
+		</div>
+
+		<footer>
+			<h4>Quick Links</h4>
+			<div class="footer-line"></div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>View Result</h4>
+					</div>
+					<div class="col col-3">
+						<h4>My Inbox</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Register</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Forum</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>JSS Library</h4>
+					</div>
+					<div class="col col-3">
+						<h4>JSS Mailbox</h4>
+					</div>
+					<div class="col col-3">
+						<h4>JSS STEP</h4>
+					</div>
+					<div class="col col-3">
+						<h4>UPTU Website</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>Old Question Paper</h4>
+					</div>
+					<div class="col col-3">
+						<h4>JSS Mailbox</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Nibble Website</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Other Societies</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="footer-links">
+					<div class="col col-3">
+						<h4>Computer Science & Engineering</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Electrical Engineering</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Electronics & Communication Engineering</h4>
+					</div>
+					<div class="col col-3">
+						<h4>Mechanical Engineering</h4>
+					</div>
+				</div>
+			</div>
+			<div class="sub-footer ">
+				<h4>JSS Academy Of Technical Education</h4>
+			</div>
+		</footer>
+	</div>
+
+
+
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/main.js"  %}"></script>
+
 </body>
+
 </html>

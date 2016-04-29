@@ -161,7 +161,7 @@
 			<div class=" row">
 				<div class="col col-12">
 					<h2>Title</h2>
-					<input type="text" placeholder="eg Recruitment drive of Reve Systems on 8-April-2016 at AB-1" class="input-style" name="title" required>
+					<input type="text" placeholder="Title" value="{{ notice.title }}" class="input-style" name="title" required>
 				</div>
 			</div>
 			<div class=" row">
@@ -169,7 +169,7 @@
 					<h2>Description</h2>
 
 					<!-- put CK editor here=================== -->
-					<textarea cols="40" id="id_description" name="description" rows="10" data-processed="0" data-config='{"filebrowserWindowWidth": 940, "toolbar_Basic": [["Source", "-", "Bold", "Italic"]], "language": "en-us", "toolbar_Full": [["Styles", "Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker", "Undo", "Redo"], ["Link", "Unlink", "Anchor"], ["Image", "Flash", "Table", "HorizontalRule"], ["TextColor", "BGColor"], ["Smiley", "SpecialChar"], ["Source"]], "height": 291, "width": 835, "skin": "moono", "filebrowserWindowHeight": 725, "toolbar": "Full"}' data-external-plugin-resources='[]' data-id="id_description" data-type="ckeditortype"></textarea>
+					<textarea cols="40" id="id_description" name="description" rows="10" data-processed="0" data-config='{"filebrowserWindowWidth": 940, "toolbar_Basic": [["Source", "-", "Bold", "Italic"]], "language": "en-us", "toolbar_Full": [["Styles", "Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker", "Undo", "Redo"], ["Link", "Unlink", "Anchor"], ["Image", "Flash", "Table", "HorizontalRule"], ["TextColor", "BGColor"], ["Smiley", "SpecialChar"], ["Source"]], "height": 291, "width": 835, "skin": "moono", "filebrowserWindowHeight": 725, "toolbar": "Full"}' data-external-plugin-resources='[]' data-id="id_description" data-type="ckeditortype">{{ notice.description }} </textarea>
 					
 				</div>
 			</div>
@@ -177,21 +177,21 @@
 				
 				<div class="col col-4">
 					<h2>Subject</h2>
-					<input type="text" placeholder="eg Recruitment drive of Reve Systems on 8-April-2016 at AB-1" class="input-style" name="subject" required>
+					<input type="text" placeholder="Subject" class="input-style" name="subject" value="{{ notice.subject }}" required>
 				</div>
 				<div class="col col-4">
 					<h2>Category</h2>
 					<select  placeholder="" class="input-style"  name="category" required>
-						<option value="ACD" selected="selected">Academics</option>
-						<option value="ADMN">Administration</option>
-						<option value="TNP">Training and Placement</option>
-						<option value="EVNT">Events</option>
-						<option value="MISC">Miscelleneous</option>
+						<option value="ACD" {%ifequal notice.category 'ACD' %}selected="selected"{% endifequal %}>Academics</option>
+						<option value="ADMN" {%ifequal notice.category 'ADMN' %}selected="selected"{% endifequal %}>Administration</option>
+						<option value="TNP" {%ifequal notice.category 'TNP' %}selected="selected"{% endifequal %}>Training and Placement</option>
+						<option value="EVNT" {%ifequal notice.category 'EVNT' %}selected="selected"{% endifequal %}>Events</option>
+						<option value="MISC" {%ifequal notice.category 'MISC' %}selected="selected"{% endifequal %}>Miscelleneous</option>
 					</select>
 				</div>
 				<div class="col col-4">
 					<h2>File Attached</h2>
-					<input type="file" placeholder="" class="input-style input-upload" name="file_attached" >
+					<input type="file" placeholder="" class="input-style input-upload" name="file_attached" value="{{ notice.file_attached}}">
 				</div>
 			</div>
 
@@ -202,13 +202,11 @@
 				<div class="col col-3">
 					<h2>Course</h2>
 					<select  placeholder="" class="input-style" id="create-course" required>
-						
 						<option>All Courses</option>
 						<option>BTech</option>
 						<option>MTech</option>
 						<option>MCA</option>
 						<option>MBA</option>
-
 					</select>
 				</div>
 				<div class="col col-3">
@@ -223,8 +221,6 @@
 						<option>ICE</option>
 						<option>MT</option>
 						<option>ME</ssoption>
-
-						
 					</select>
 				</div>
 				<div class="col col-3">
@@ -235,8 +231,6 @@
 						<option>2</option>
 						<option>3</option>
 						<option>4</option>
-
-						
 					</select>
 				</div>
 				<div class="col col-3">
@@ -258,10 +252,7 @@
 						<option>MT1</option>
 						<option>MT2</option>
 						<option>ME1</option>
-						<option>ME2</option>
-						
-
-						
+						<option>ME2</option>						
 					</select>
 				</div>
 				
@@ -275,8 +266,9 @@
 				</span>Click to add Course, Branch, Year, Section.</h2>
 				
 					<!-- <input type="text" value="" class="input-style" disabled id="tag-input-val"> -->
-				
 					<ul id="tag-input">
+					
+
 					</ul>
 					<div class="create-warn-msg">Please select Course, Branch, Year and Section 
 					</div>
@@ -304,6 +296,23 @@
 	<script src="{% static "js/main.js"%}"></script>
 	<script src="{% static "ckeditor/ckeditor-init.js"%}"></script>
 	<script src="{% static "ckeditor/ckeditor/ckeditor.js"%}"></script>
+	<script type="text/javascript">
+		var string = "{{notice.course_branch_year}}";
+		if(string != ""){
+		    string = string.trim().split(/\s+/);
+		    
+		    for (i in string){
+		    	value = string[i];
+		    	string[i] = string[i].replace(/All/g, "All ")+"&nbsp;&nbsp;&nbsp;"
+		    	$("#tag-input").append("<li>"+ string[i] +
+		    			"<i class=\"fa fa-times\"></i>"+
+						"<input type=\"hidden\" name=\"notice_for\" value=\""+ value +"\">"+
+						"</li>")
+		    }
+			
+		}
+
+	</script>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
-from profiles.views import Home, FaqDisplayView, about, contact
+from profiles.views import Home, FaqDisplayView, about, Contact
 import settings
 
 urlpatterns = [
@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^faq/$', FaqDisplayView.as_view(), name="faq"),
     url(r'^pnotices/', include('private_notices.urls')),
     url(r'^about/$', about, name='about'),
-    url(r'^contact/$', contact, name='contact'),
+    url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
 ]

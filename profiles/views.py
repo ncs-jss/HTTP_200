@@ -99,6 +99,7 @@ class UserProfile(LoginRequiredMixin, View):
         else:
             raise PermissionDenied
 
+
 class EditProfile(LoginRequiredMixin, View):
     '''
     View for editing the profiles of the User
@@ -153,10 +154,15 @@ class EditProfile(LoginRequiredMixin, View):
 
         return redirect("user-profile", user_id=user.username)
 
+class Contact(View): 
+    def get(self, request):
+        template_name='contact.html'
+        return render(request, template_name)
+
+    # def post(self, request, *args, **kwargs):
+        
+    #     return redirect
 
 def about(request, template_name='about.html'):
     return render(request, template_name,)
 
-
-def contact(request, template_name='contact.html'):
-    return render(request, template_name,)

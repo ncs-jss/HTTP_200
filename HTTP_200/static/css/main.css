@@ -1171,12 +1171,14 @@ button.no-delete:hover{
 }
 /*loader==============*/
 
+
 .loader-container{
 	z-index: 200;
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	background: #fff;
+
 
 }
 .loader{
@@ -1254,6 +1256,7 @@ button.no-delete:hover{
 	height: 100vh;
 	/*background: #2d2251;*/
 	
+
 	}
 	.relevant-page{
 		padding-left: 0px;
@@ -1338,12 +1341,14 @@ button.no-delete:hover{
 		display: none;
 	}
 	.about-container{
-		padding: 20px;
-	}
-	.loader{
-		
-		margin-top: 190px;
-	}
+	padding: 20px;
+	
+}
+.loader{
+	
+	margin-top: 190px;
+}
+
 }
 
 

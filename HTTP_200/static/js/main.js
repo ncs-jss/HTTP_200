@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
-	$("body").css({
+
+$("body").css({
 	'overflow-y':'hidden'
 })
 $(".loader-container").fadeIn();
@@ -13,7 +14,6 @@ $(".loader-container").fadeIn();
 		},1000)
 		
 	})
-
 
 
 	$(".left-nav-inner ul li").click(function () {
@@ -119,7 +119,10 @@ $(".loader-container").fadeIn();
 
 	$(".relevant-info").hide();
 
-	$(".sec, .preview,.pad-list").click(function () {
+
+	$(".sec,.preview,.pad-list").click(function () {
+		location.hash = "details";
+
 		$(".relevant-info").hide().fadeIn();
 		var index = $(".relevant-content ul li").index(this);
 		var id = $(this).attr('id');
@@ -147,14 +150,7 @@ $(".loader-container").fadeIn();
 
 
 
-	$(".sec, .preview").click(function () {	
-		location.hash = "details";
-		var index = $(".relevant-content ul li").index(this);
-		$(".relevant-info ").hide().fadeIn();
-		$("body").css({
-			'overflow': 'hidden'
-		})
-	})			
+	
 
 
 	$(".relevant-info .cross").click(function () {
@@ -726,6 +722,27 @@ $(".no-delete").click(function() {
 	$(".my-prompt-container").fadeOut();
 })
 
+
+// making footer down fixed
+
+var id=5;
+
+(function sticky_footer (argument) {
+
+	if($(window).width()>=780 && id<=3){
+		$("footer").css({
+			'position':'fixed',
+			'bottom':'0px',
+			'width':'calc(100vw - 220px)'
+		})
+	}
+	else{
+		$("footer").css({
+			'position':'relative',
+			'width':'auto'
+		})
+	}
+})();
 
 
 });
