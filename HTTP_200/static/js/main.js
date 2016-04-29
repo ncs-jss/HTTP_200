@@ -1,5 +1,20 @@
 $(document).ready(function () {
 
+$("body").css({
+	'overflow-y':'hidden'
+})
+$(".loader-container").fadeIn();
+	$(window).load(function  () {
+		$(".loader-container").delay(1000).fadeOut();
+		setTimeout(function(){
+			$("body").css({
+				'overflow-y':'scroll'
+			})
+		},1000)
+		
+	})
+
+
 	$(".left-nav-inner ul li").click(function () {
 		$(this).addClass("active").siblings().removeClass("active");
 		$(this).find("span").addClass("active_number");
@@ -103,7 +118,8 @@ $(document).ready(function () {
 
 	$(".relevant-info").hide();
 
-	$(".sec, .preview").click(function () {
+	$(".sec,.preview,.pad-list").click(function () {
+		location.hash = "details";
 		$(".relevant-info").hide().fadeIn();
 		var index = $(".relevant-content ul li").index(this);
 		var id = $(this).attr('id');
@@ -131,14 +147,7 @@ $(document).ready(function () {
 
 
 
-	$(".sec, .preview").click(function () {	
-		location.hash = "details";
-		var index = $(".relevant-content ul li").index(this);
-		$(".relevant-info ").hide().fadeIn();
-		$("body").css({
-			'overflow': 'hidden'
-		})
-	})			
+	
 
 
 	$(".relevant-info .cross").click(function () {
@@ -655,7 +664,10 @@ $(".add").click(function () {
 // });
 
 $("#tag-input").append("<li>"+tag_value+"&nbsp;&nbsp;&nbsp;<i class='fa fa-times'></i><input type='hidden' name='notice_for' value="+tag_value_remove+"></li>");
-
+$("#tag-input li i").click(function(){
+	console.log("ebr")
+	$(this).parent().remove();
+})
 $(".create-warn-msg").hide();
 }
 else{
@@ -663,12 +675,6 @@ else{
 }
 })
 
-
-setInterval(function(){
-	$("#tag-input li i").click(function(){
-	$(this).parent().remove();
-})
-})
 
 // remove loader on click back button
 
@@ -713,6 +719,27 @@ $(".no-delete").click(function() {
 	$(".my-prompt-container").fadeOut();
 })
 
+
+// making footer down fixed
+
+var id=5;
+
+(function sticky_footer (argument) {
+
+	if($(window).width()>=780 && id<=3){
+		$("footer").css({
+			'position':'fixed',
+			'bottom':'0px',
+			'width':'calc(100vw - 220px)'
+		})
+	}
+	else{
+		$("footer").css({
+			'position':'relative',
+			'width':'auto'
+		})
+	}
+})();
 
 
 });
