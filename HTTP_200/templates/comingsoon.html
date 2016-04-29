@@ -1,5 +1,4 @@
 {% load staticfiles %}
-
 <html>
 
 <head>
@@ -15,6 +14,12 @@
 </head>
 
 <body>
+
+
+
+
+
+
 
 	<div class="overlay-dark">
 		<div class="cross-mobile"><i class="fa fa-times"></i></div>
@@ -43,7 +48,7 @@
 				<li><a href="notices.html">
 					<i class="fa fa-globe"></i> &nbsp;JSS Website</a>
 				</li>
-					<li class="active">
+					<li >
 						<a href="#">
 						<i class="fa fa-user"></i> &nbsp;About</a>
 					</li>
@@ -64,7 +69,7 @@
 						<a href="notices.html">
 						<i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
 					</li>
-					<li>
+					<li class="active">
 						<a href="notices.html">
 						<i class="fa fa-globe"></i> &nbsp;My webspace</a>
 					</li>
@@ -85,6 +90,8 @@
 	</div>
 
 
+		
+
 <!-- right-page container============ -->
 	<div class="relevant-page index-page">
 	
@@ -93,31 +100,14 @@
 			<img src="{% static "images/logo-dark.png" %}">
 		</div>
 		<h3 class="tag-line">Be updated anywhere and anytime!</h3>
-		<h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span>Contact Us</h3>
+		<h3 class="index-welcome">
 		</div>
 		
-		<div class="about-container contact-container">
+		<div class="coming-soon ">
 			
-			<h3>You can communicate to us your opinion about the present structure of Info-centre or come up with a new suggestion or report a bug.<br> You can even post your queries using the form below.
-			</h3>
-
-			<form name="{% url 'contact' %}" method="POST" id="main_form">
-				
-				<input type="text" id="name" class="input-style" placeholder="Name" required>
-				<he>
-				<input type="email" id="email" class="input-style" placeholder="Email" required>
-				<textarea class="input-style" id="message" placeholder="message" required></textarea>
-				<button type="reset" class="reset-contact">Reset
-				</button>
-				<button type="submit" class="submit-contact" id="submit-contact_id">Submit
-				</button>
-				<div class="clear">
-				</div>
-			</form>
-			<div class="contact-msg-send">
-
+			<h2>Coming Soon!</h2>
+			<h3>We are working on it.</h3> 
 			
-			</div>			
 
 		</div>
 
@@ -195,53 +185,12 @@
 	</div>
 
 
+
+
+
 <script src="{% static "js/jquery.js" %}"></script>
 <script src="{% static "js/main.js"  %}"></script>
 
-<script type="text/javascript">
-
-    $('#main_form').on('submit', function(event){
-    event.preventDefault();
-    $('#submit-contact_id').prop('disabled', true);
-    console.log("form submitted!"); 
-    create_post();
-    });
-
-    $(".contact-msg-send").hide();
-
-    function create_post() {
-    console.log("create post is working!")
-    $.ajax({
-        url : "{% url 'contact' %}", // the endpoint
-        type : "POST", // http method
-        data : { 
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            name : $('#name').val() ,
-            email : $('#email').val() ,
-            message : $('#message').val() ,
-        }, // data sent with the post request
-
-        // handle a successful response
-        success : function(json) {
-
-            $("#main_form").html("<br><br>Thank You for contacting us.<br> Will get back to you soon");
-            console.log("success"); // another sanity check
-            $('#submit-contact_id').prop('disabled', false);
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#submit-contact_id').prop('disabled', false);
-            $('#main_form').append('<div class="alert alert-danger"><strong>Sorry!</strong> Failed.</div>');
-            console.log("failed"); // another sanity check
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            $(".contact-container form").hide();
-        }
-    });
-};
-
-
-</script>
 
 </body>
 
