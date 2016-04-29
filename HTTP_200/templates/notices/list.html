@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        JSS Nucleus
+        JSS Connect
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,6 +20,17 @@
 </head>
 
 <body>
+
+
+    <div class="loader-container">
+    <div class="loader">
+      <img src="{% static "images/connect.gif"%}">
+    </div>
+    
+  </div>
+
+
+
 
     {% for message in messages %}    
         <div class="notice-msg">
@@ -61,6 +72,10 @@
         <div class="left-nav-inner">
             <ul>
                 <li class="active move-in">
+                    <a href="{% url "notice-list" %}">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;All Notices<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
                     <a href="{% url "relevent-notice-list" %}">
                     <i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
                 </li>
@@ -80,13 +95,14 @@
                         <a href="{% url "notice-list" %}?category=Placement">
                         <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
                     </li>
-                    <li class="">
-                        <a class="search2">
-                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
-                    </li>
+                 
                     <li class=" move-in">
                         <a href="{% url "notice-list" %}?category=Miscellaneous">
                         <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+                    </li>
+                       <li class="">
+                        <a class="search2">
+                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
                     </li>
                     <li class=" move-in">
                         <a href="{% url "bookmark-list" %}">
@@ -99,6 +115,10 @@
                     <li class=" move-in">
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "user-profile" user_id=request.user.username %}">
+                        <i class="fa fa-user"></i> &nbsp;My uploaded notices</a>
                     </li>
                     <li>
                         <a href="{% url "account_logout" %}">
@@ -142,7 +162,7 @@
         <header>
             <div class="row">
                 <div class="heading-small col sm-col-4">
-                    <h3>Welcome <span>{{ request.user.first_name}}</span></h3>
+                    <h3>Welcome <span><a href="{% url "user-profile" user_id=request.user %}">{{ request.user.first_name}}</span></a></h3>
                 </div>
                 <div class="head-links-resize col sm-col-8">
                     <div class="head-links">
@@ -257,17 +277,17 @@
                 <li>
                     <div class="row" >
                         {% if notice.is_bookmarked_by_user %}
-                        <form>
+                        <form class="star-margin">
                             <div class="star imp col sm-col sm-col-1 active_star">
                                     <i class="fa fa-star " id="bookmark_{{ notice.id }}"></i>
                             </div>
                         </form>
                         {% else %}
-                        <form>
+                        <form class="star-margin">
                             <div class="star imp col sm-col sm-col-1">
                                     <i class="fa fa-star " id="bookmark_{{ notice.id }}"></i>
                             </div>
-                        </form>
+                        </form >
                         {% endif %}
                         <div class="sec col sm-col sm-col-10" id="{{ notice.id }}">
                             <div class="row">  
@@ -296,7 +316,9 @@
                     </div>
                 </li>
                 {% empty %}
+                
                 <h3 class="empty-notice">No notices to display.</h3>
+        
                 {% endfor %}
                 <ul>
         </div>
@@ -510,6 +532,10 @@
     
 </div>
 
+<div class="form-hid">
+    <input type="hidden" value="{{notices|length}}">
+    </div>
+
 
     <script src="{% static "js/jquery.js"%}"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -592,7 +618,37 @@ function removeBookmark(notice_id)
         }
     });
 }
+
+
+
+
+var id="{{notices|length}}";
+
+(function sticky_footer (argument) {
+var id_int=parseInt(id);
+
+    if($(window).width()>=780 && id_int<=3){
+
+        $("footer").css({
+            'position':'fixed',
+            'bottom':'0px',
+            'width':'calc(100vw - 220px)'
+        })
+    }
+    else{
+        $("footer").css({
+            'position':'relative',
+            'width':'auto'
+        })
+    }
+})();
+
+
+
+
 </script>
+
+
 </body>
 
 </html>

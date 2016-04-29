@@ -21,6 +21,16 @@
 </head>
 
 <body>
+
+	 <div class="loader-container">
+    <div class="loader">
+      <img src="{% static "images/connect.gif"%}">
+    </div>
+    
+  </div>
+
+
+
 	<div class="overlay-dark-mob">
 		<div class="cross-mobile"><i class="fa fa-times"></i></div>
 	</div>
@@ -47,66 +57,69 @@
 		<div class="cross-mobile"><i class="fa fa-times"></i></div>
 	</div>
 
-	<div class="left-nav">
-		<div class="logo">
-			<img src="{% static "images/logo.PNG" %}">
-		</div>
+	 <div class="left-nav">
+        <div class="logo">
+            <img src="{% static "images/logo.PNG"%}">
+        </div>
 
-		<div class="left-nav-inner">
-			<ul>
-				<li class=" move-in">
-					<a href="{% url 'relevent-notice-list' %}">
-					<i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
-				</li>
-				<li class=" move-in">
-					<a href="{% url "notice-list" %}?category=Administration">
-					<i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
-				</li>
-				<li class=" move-in">
-					<a href="{% url "notice-list" %}?category=Academics">
-					<i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
-				</li>
-				<li class=" move-in">
-					<a href="{% url "notice-list" %}?category=Events">
-					<i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
-				</a>
-					<li class=" move-in">
-						<a href="{% url "notice-list" %}?category=Placement">
-						<i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
-					</li>
-					<!-- <li class="">
-						<a class="search2">
-						<i class="fa fa-filter"></i> &nbsp;Filter Notices<! <span class="number">1</span> --><!-- </a>
-					</li> --> 
-					<li class=" move-in">
-						<a href="{% url "notice-list" %}?category=Miscellaneous">
-						<i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
-					</li>
-					<li class=" move-in">
-						<a href="{% url "bookmark-list" %}">
-						<i class="fa fa-star"></i> &nbsp;Starred</a>
-					</li>
+        <div class="left-nav-inner">
+            <ul>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;All Notices<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "relevent-notice-list" %}">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Administration">
+                    <i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Academics">
+                    <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Events">
+                    <i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
+                </a>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=Placement">
+                        <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
+                    </li>
+                 
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=Miscellaneous">
+                        <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+                    </li>
+                       <li class="">
+                        <a class="search2">
+                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "bookmark-list" %}">
+                        <i class="fa fa-star"></i> &nbsp;Starred</a>
+                    </li>
 
-					<div class="line">
-					</div>
+                    <div class="line">
+                    </div>
 
-					<li class=" active move-in">
-						<a href="{% url "user-profile" user_id=request.user.username %}">
-						<i class="fa fa-user"></i> &nbsp;My profile</a>
-					</li>
-					<li>
+                    <li class=" move-in">
+                        <a href="{% url "user-profile" user_id=request.user.username %}">
+                        <i class="fa fa-user"></i> &nbsp;My profile</a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "user-profile" user_id=request.user.username %}">
+                        <i class="fa fa-user"></i> &nbsp;My uploaded notices</a>
+                    </li>
+                    <li>
                         <a href="{% url "account_logout" %}">
                         <i class="fa fa-inbox"></i> &nbsp;Logout</a>
                     </li>
-					
-
-
-
-			</ul>
-		</div>
-
-	</div>
-
+                </ul>
+            </div>
+        </div>
 
 
 <div class="relevant-page">

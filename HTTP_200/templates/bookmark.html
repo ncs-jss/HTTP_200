@@ -20,6 +20,15 @@
 </head>
 
 <body>
+
+   <div class="loader-container">
+    <div class="loader">
+      <img src="{% static "images/connect.gif"%}">
+    </div>
+    
+  </div>
+
+
     {% for message in messages %}    
         <div class="notice-msg" id="bookmark-notification">
             {{ message }}
@@ -59,7 +68,11 @@
 
         <div class="left-nav-inner">
             <ul>
-                <li class="move-in">
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;All Notices<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
                     <a href="{% url "relevent-notice-list" %}">
                     <i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
                 </li>
@@ -79,13 +92,14 @@
                         <a href="{% url "notice-list" %}?category=Placement">
                         <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
                     </li>
-                    <li class="">
-                        <a class="search2">
-                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
-                    </li>
+                 
                     <li class=" move-in">
                         <a href="{% url "notice-list" %}?category=Miscellaneous">
                         <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+                    </li>
+                       <li class="">
+                        <a class="search2">
+                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
                     </li>
                     <li class="active move-in">
                         <a href="{% url "bookmark-list" %}">
@@ -99,6 +113,10 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
+                    <li class=" move-in">
+                        <a href="{% url "user-profile" user_id=request.user.username %}">
+                        <i class="fa fa-user"></i> &nbsp;My uploaded notices</a>
+                    </li>
                     <li>
                         <a href="{% url "account_logout" %}">
                         <i class="fa fa-inbox"></i> &nbsp;Logout</a>
@@ -106,7 +124,6 @@
                 </ul>
             </div>
         </div>
-
     <!-- details==== -->
 
     <div class="relevant-info">
@@ -287,7 +304,7 @@
                     </div>
                 </li>
                 {% empty %}
-                No notices to display.
+                <h3 class="empty-notice">No notices to display.</h3>
                 {% endfor %}
                 <ul>
         </div>
@@ -463,6 +480,13 @@
     </div>
     
 </div>
+
+
+<div class="form-hid">
+    <input type="hidden" value="{{notices|length}}">
+    </div>
+
+
 
 
     <script src="{% static "js/jquery.js"%}"></script>

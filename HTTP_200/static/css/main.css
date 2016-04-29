@@ -1,6 +1,7 @@
 
 body{
 	font-family: 'Roboto';
+	transition:all 0.2s ease-in-out;
 
 }
 .left-nav-inner ul li .active{
@@ -1221,12 +1222,29 @@ button.no-delete:hover{
 .loader img{
 	width: 100%;
 }
+.star-margin div {
+	margin-right: 15px;
+}
+
+.empty-notice{
+	padding: 20px;
+	font-size: 1.2em;
+	color: #9d9d9d;
+	font-family: 'Roboto Medium'
+
+}
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px
 	}
 	.new-notices-container h2{
 	padding-left: 30px;
+}
+.head-links{
+	display: none;
+}
+.mob-side-link{
+	display: inline-block;
 }
 
 }
