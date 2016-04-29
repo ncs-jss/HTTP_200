@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
 $("body").css({
 	'overflow-y':'hidden'
 })
@@ -118,8 +119,10 @@ $(".loader-container").fadeIn();
 
 	$(".relevant-info").hide();
 
+
 	$(".sec,.preview,.pad-list").click(function () {
 		location.hash = "details";
+
 		$(".relevant-info").hide().fadeIn();
 		var index = $(".relevant-content ul li").index(this);
 		var id = $(this).attr('id');

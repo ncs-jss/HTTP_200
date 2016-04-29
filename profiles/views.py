@@ -160,6 +160,14 @@ class EditProfile(LoginRequiredMixin, View):
 
         return redirect("user-profile", user_id=user.username)
 
+class Contact(View): 
+    def get(self, request):
+        template_name='contact.html'
+        return render(request, template_name)
+
+    # def post(self, request, *args, **kwargs):
+        
+    #     return redirect
 
 class Contact(View):
     def get(self, request):
@@ -202,7 +210,6 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
         return super(PasswordChangeView, self).form_valid(form)
 
 password_change = CustomPasswordChangeView.as_view()
-
 
 def about(request, template_name='about.html'):
     return render(request, template_name,)
