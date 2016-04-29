@@ -64,3 +64,9 @@ HTTP_200/media
 
 # django migrations
 */migrations/*
+
+# static files
+HTTP_200/static/ckeditor
+HTTP_200/static/rest_framework
+HTTP_200/static/debug_toolbar
+HTTP_200/static/admin
