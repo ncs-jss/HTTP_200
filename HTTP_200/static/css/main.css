@@ -677,12 +677,19 @@ footer h4{
 	transition:all 0.2s ease-in-out;
 
 }
+.bold-light{
+	color: #4d4d4d;
+	font-family: 'Roboto Medium'
+}
+.index-author{
+	color: #9d9d9d;
+}
 .pad-list a:hover{
 	background: #ddd;
 	
 }
 .date-index{
-	text-align: center;
+	text-align: left;
 	color: #9d9d9d;
 	font-family: 'Roboto Medium';
 	transition:all 0.2s ease-in-out;
@@ -1076,13 +1083,142 @@ button.no-delete:hover{
 	background: #403469;
 	border: 2px solid #403469;
 }
+.about-container{
+	padding: 0px 70px 20px 70px;
+	color: #4d4d4d;
+	font-family: 'Roboto';
+	line-height: 19px;
+}
+/*contact us====================*/
 
-.empty-notices {
+.contact-container{
 	text-align: center;
-	font-family: 'Roboto Medium';
-	color: #4D4D4D;
+}
+.contact-container h3{
+	font-size: 1em;
+}
+.contact-container form{
+	width: 500px;
+	padding-top: 40px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 40px;
+}
+.contact-container form textarea{
+	height: 100px;
+}
+.contact-container form input{
+	margin-top: 0px;
+	color: #252525;
+}
+.reset-contact,.submit-contact{
+	display: inline;
+	padding: 10px 17px;
+	background: #403469;
+	border-radius: 20px;
+	outline: 0;
+	box-shadow: 0px;
+	border: 0px;
+	cursor: pointer;
+	transition:all 0.2s ease-in-out;
+	color: #fff;
+	float: right;
+	margin-top: 10px;
+}
+.change-password form{
+	margin-top: -20px;
+}
+ .submit-contact:hover{
+	background: #2d2251;
+}
+.change-warning{
+	margin-top: 20px;
+	text-align: left;
+}
+.change-warning i{
+	color: #e6c115;
+}
+.reset-contact
+{float: left;
+	color: #4d4d4d;
+	padding: 8px 15px;
+	background: transparent;
+	border: 2px solid #9d9d9d;
+}
+.reset-contact:hover{
+	color: #fff;
+	background: #403469;
+	border: 2px solid #403469;
+
 }
 
+/*coming soon========*/
+
+.coming-soon{
+	text-align: center;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+.coming-soon h2{
+	color: #252525;
+	font-family: 'Roboto Medium'
+}
+.coming-soon h3{
+	color: #4d4d4d;
+	margin-top: 5px;
+
+}
+/*loader==============*/
+
+.loader-container{
+	z-index: 200;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: #fff;
+
+}
+.loader{
+	display: inline-block;
+	position: absolute;
+	margin-right: auto;
+	margin-left: auto;
+	left: 0px;
+	right: 0px;
+	/*border: 1px solid red;*/
+	width: 70px;
+	height: 70px;
+	margin-top: 250px;
+	animation-name:rotate-loader;
+	animation-duration:8s;
+	animation-iteration-count:infinite;
+	animation-direction:linear;
+	animation-timing-function: linear;
+}
+@keyframes rotate-loader{
+	from{
+		transform:rotate(0deg);
+	}
+	to{
+		transform:rotate(720deg);
+	}
+}
+.load-text{
+	position: absolute;
+	bottom: 40px;
+	margin-right: auto;
+	margin-left: auto;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	font-family: 'Roboto Medium';
+	color: #4d4d4d;
+
+}
+.loader img{
+	width: 100%;
+}
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px
@@ -1152,7 +1288,7 @@ button.no-delete:hover{
 	display: none;
 }
 .date-index{
-	text-align: right;
+	text-align: left;
 }
 .auth-index{
 	text-align: left;
@@ -1204,6 +1340,14 @@ ul li.my-notice-list  .my-notice-pad{
 	.my-desktop{
 		display: none;
 	}
+	.about-container{
+	padding: 20px;
+	
+}
+.loader{
+	
+	margin-top: 190px;
+}
 }
 
 
@@ -1236,7 +1380,9 @@ ul li.my-notice-list  .my-notice-pad{
 h3.create-head{
 	font-size: 22px;
 }
-
+.contact-container form{
+	width: 300px;
+}
 }
 @media(max-width: 480px){
 	.jss-logo{

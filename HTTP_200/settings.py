@@ -105,23 +105,23 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': config_keys.DATABASE_NAME,
-        'USER': config_keys.MYSQL_USERNAME,
-        'PASSWORD': config_keys.MYSQL_PASSWORD,
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME': config_keys.DATABASE_NAME,
+#         'USER': config_keys.MYSQL_USERNAME,
+#         'PASSWORD': config_keys.MYSQL_PASSWORD,
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -222,7 +222,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGOUT_ON_GET = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(APP_DIR, 'static')
+# STATIC_ROOT = os.path.join(APP_DIR, 'static')
 
 STATICFILES_DIRS = (
     os.path.join(APP_DIR, 'static'),

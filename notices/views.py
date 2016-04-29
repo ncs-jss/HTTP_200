@@ -16,6 +16,7 @@ import utils.constants as constants
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
+
 class NoticeList(LoginRequiredMixin, generic.View):
 
     def get(self, request):
@@ -28,7 +29,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
 
         bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
 
-        # To check if the notices are bookmarked by user or not 
+        # To check if the notices are bookmarked by user or not
         for notice in notice_list:
             for bookmark_id in bookmark_id_list:
                 if bookmark_id == notice.pk:
@@ -93,8 +94,8 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
 class NoticeUpdateView(LoginRequiredMixin, UpdateView):
     model = Notice
     form_class = NoticeCreateForm
-    template_name = 'notices/notice_edit.html'
-    success_url = reverse_lazy('notice-list')
+    template_name = 'notices/notice_create.html'
+    success_url = reverse_lazy('my-uploaded-notices')
 
     def get_queryset(self):
         base_queryset = super(NoticeUpdateView, self).get_queryset()
@@ -105,12 +106,11 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
             raise PermissionDenied()
 
     def form_valid(self, form):
-        branch_list = self.request.POST.getlist('branches')
-        semester_list = self.request.POST.getlist('semesters')
-        course_list = self.request.POST.getlist('courses')
-        form.instance.branches = " ".join(branch_list)
-        form.instance.semesters = " ".join(semester_list)
-        form.instance.courses = " ".join(course_list)
+        notice_for = self.request.POST.getlist('notice_for')
+        course_branch_year = " ".join(notice_for)
+        form.instance.course_branch_year = course_branch_year
+        form.save()
+        messages.success(self.request, 'Notice updated successfully.')
         return super(NoticeUpdateView, self).form_valid(form)
 
 
@@ -215,6 +215,18 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
             notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
 
+        paginator = Paginator(notices, 10)
+
+        page = request.GET.get('page')
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            notices = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            notices = paginator.page(paginator.num_pages)
+
         return render(request, template_name, {'notices': notices})
 
     def post(self, request, *args, **kwargs):
@@ -262,20 +274,21 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             Notices = Notices.filter(description__contains=description)
 
         if faculty != "":
-            Notices = Notices.filter(Q(faculty__user__username__contains=faculty) | 
-                                Q(faculty__user__first_name__contains=faculty) |
-                                Q(faculty__user__last_name__contains=faculty) )
+            Notices = Notices.filter(
+                Q(faculty__user__username__contains=faculty) |
+                Q(faculty__user__first_name__contains=faculty) |
+                Q(faculty__user__last_name__contains=faculty))
 
-        if course != "" :
+        if course != "":
             Notices = Notices.filter(course_branch_year__contains=course+"-")
 
-        if branch != "" :
+        if branch != "":
             Notices = Notices.filter(course_branch_year__contains="-"+branch+"-")
 
-        if year != "" :
+        if year != "":
             Notices = Notices.filter(course_branch_sem__contains="-"+year+"-")
 
-        if section != "" :
+        if section != "":
             Notices = Notices.filter(course_branch_sem__contains="-"+section)
 
         if date_desktop != "":
@@ -316,7 +329,7 @@ class MyUploadedNotices(LoginRequiredMixin, generic.View):
         notice_list = Notice.objects.filter(faculty__user=faculty.user).order_by('-modified')
         bookmark_id_list = BookmarkedNotice.objects.filter(user=faculty.user).values_list('notice__pk', flat=True)
 
-        # To check if the notices are bookmarked by user or not 
+        # To check if the notices are bookmarked by user or not
         for notice in notice_list:
             for bookmark_id in bookmark_id_list:
                 if bookmark_id == notice.pk:
