@@ -1,16 +1,22 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.views.generic import View
 from django.views.generic import TemplateView
 from django.contrib import messages
 
-from .models import StudentDetail, FacultyDetail
+from allauth.account.views import PasswordChangeView
+from django.contrib.auth import update_session_auth_hash
+from allauth.account.adapter import get_adapter
+from allauth.account import signals
+from braces.views import LoginRequiredMixin
+
+from .models import StudentDetail, FacultyDetail, ContactUsMessage
 from .forms import StudentForm, FacultyForm, UserForm
 from notices.models import Notice, TrendingInCollege
 
-from braces.views import LoginRequiredMixin
 
 import permissions
 
@@ -154,15 +160,45 @@ class EditProfile(LoginRequiredMixin, View):
 
         return redirect("user-profile", user_id=user.username)
 
-class Contact(View): 
+class Contact(View):
     def get(self, request):
         template_name='contact.html'
         return render(request, template_name)
 
-    # def post(self, request, *args, **kwargs):
-        
-    #     return redirect
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        contactus = ContactUsMessage(
+            name=name,
+            email=email,
+            message=message)
+        contactus.save()
+        return redirect(reverse_lazy('contact'))
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    """
+    Custom class to override the password change view 
+    """
+    success_url = reverse_lazy('home')
+
+    # Override form valid view to keep user logged i
+    def form_valid(self, form):
+        form.save()
+        # Update session to keep user logged in.
+        update_session_auth_hash(self.request, form.user)
+
+        get_adapter().add_message(self.request,
+                                            messages.SUCCESS,
+                                            'account/messages/password_changed.txt')
+        signals.password_changed.send(sender=self.request.user.__class__,
+                                            request=self.request,
+                                            user=self.request.user)
+
+        return super(PasswordChangeView, self).form_valid(form)
+
+password_change = CustomPasswordChangeView.as_view()
 
 def about(request, template_name='about.html'):
     return render(request, template_name,)
-

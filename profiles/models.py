@@ -115,3 +115,15 @@ class FacultyDetail(models.Model):
 
     def get_full_name(self):
         return self.user.first_name + " " + self.user.last_name
+
+
+class ContactUsMessage(models.Model):
+    '''
+    It stores the information about the faculties/administration of college
+    '''
+    name = models.CharField(max_length=100, blank=False, null=False)
+    email = models.URLField(max_length=100, blank=False, null=False)
+    message = models.TextField(blank=False, null=False)
+
+    def __unicode__(self):
+        return self.name
