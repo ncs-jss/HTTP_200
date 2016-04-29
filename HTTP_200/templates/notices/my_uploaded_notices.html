@@ -286,9 +286,11 @@
 							<div class="col sm-col-6" id="notice_modified_{{ notice.id }}">
 								{{ notice.modified }}
 							</div>
-							<div class="my-icons col sm-col-3" id="edit_notice_{{ notice.id }}">
-								<i class="fa fa-pencil">
-								</i>
+							<div class="my-icons col sm-col-3 edit_notice" id="edit_notice_{{ notice.id }}" >
+								<a href="{% url 'notice-update' pk=notice.id%}">
+									<i class="fa fa-pencil">
+									</i>
+								</a>
 							</div>
 							<div class="my-icons col sm-col-3">
 								<i class="trash-notice fa fa-trash" id="delete_notice_{{ notice.id }}">
@@ -537,6 +539,7 @@ $(".delete-notice").on("click", function(e){
     var id = $("#confirm_delete_notice").val();
     $('#deleteForm').attr('action', "/notices/"+id+"/delete/").submit();
 });
+
 </script>
 </body>
 

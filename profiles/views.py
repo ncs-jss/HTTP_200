@@ -99,6 +99,7 @@ class UserProfile(LoginRequiredMixin, View):
         else:
             raise PermissionDenied
 
+
 class EditProfile(LoginRequiredMixin, View):
     '''
     View for editing the profiles of the User

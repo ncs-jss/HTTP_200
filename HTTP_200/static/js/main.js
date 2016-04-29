@@ -655,10 +655,7 @@ $(".add").click(function () {
 // });
 
 $("#tag-input").append("<li>"+tag_value+"&nbsp;&nbsp;&nbsp;<i class='fa fa-times'></i><input type='hidden' name='notice_for' value="+tag_value_remove+"></li>");
-$("#tag-input li i").click(function(){
-	console.log("ebr")
-	$(this).parent().remove();
-})
+
 $(".create-warn-msg").hide();
 }
 else{
@@ -666,6 +663,12 @@ else{
 }
 })
 
+
+setInterval(function(){
+	$("#tag-input li i").click(function(){
+	$(this).parent().remove();
+})
+})
 
 // remove loader on click back button
 

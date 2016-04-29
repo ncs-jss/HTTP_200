@@ -50,25 +50,24 @@ class StudentDetail(models.Model):
         (4, 4),
     )
 
-
     SECTION = (
         ('AllSections', 'None'),
-        ('CSE1','CSE1'),
-        ('CSE2','CSE2'),
-        ('IT1','IT1'),
-        ('IT2','IT2'),
-        ('ECE1','ECE1'),
-        ('ECE2','ECE2'),
-        ('EE1','EE1'),
-        ('EE2','EE2'),
-        ('CE1','CE1'),
-        ('CE2','CE2'),
-        ('ICE1','ICE1'),
-        ('ICE2','ICE2'),
-        ('MT1','MT1'),
-        ('MT2','MT2'),
-        ('ME1','ME1'),
-        ('ME2','ME2'),
+        ('CSE1', 'CSE1'),
+        ('CSE2', 'CSE2'),
+        ('IT1', 'IT1'),
+        ('IT2', 'IT2'),
+        ('ECE1', 'ECE1'),
+        ('ECE2', 'ECE2'),
+        ('EE1', 'EE1'),
+        ('EE2', 'EE2'),
+        ('CE1', 'CE1'),
+        ('CE2', 'CE2'),
+        ('ICE1', 'ICE1'),
+        ('ICE2', 'ICE2'),
+        ('MT1', 'MT1'),
+        ('MT2', 'MT2'),
+        ('ME1', 'ME1'),
+        ('ME2', 'ME2'),
     )
 
     user = models.OneToOneField(User)
