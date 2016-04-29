@@ -63,6 +63,7 @@
     <div class="index-overlay">
     </div>
     <div class="logo logo-index">
+    
       <img src="{% static "images/jss-logo.png"%}">
         <h3> JSS Academy Of Technical Educatiom</h3>
     </div>
@@ -73,7 +74,7 @@
           <a href="{% url "home" %}"><i class="fa fa-home"></i> &nbsp;Home</a>
         </li>
         <li>
-          <a href="{% url "notice-list" %}"><i class="fa fa-thumb-tack"></i> &nbsp;All Notices</a>
+          <a href="{% url "notice-list" %}"><i class="fa fa-thumb-tack"></i> &nbsp;All notices</a>
         </li>
         <!-- <li>
           <a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
@@ -99,8 +100,8 @@
             <i class="fa fa-user"></i> &nbsp;My profile</a>
           </li>
           <li>
-            <a href="{% url "relevent-notice-list" %}">
-            <i class="fa fa-globe"></i> &nbsp;Relevent Notices</a>
+            <a href="{% url "my-uploaded-notices" %}">
+            <i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
           </li>
           <li>
             <a href="{% url "account_logout" %}">
@@ -128,7 +129,8 @@
   
     <div class="index-head">
     <div class="index-logo">
-      <img src="{% static "images/logo-dark.png"%}">
+        <a href="{% url "home" %}">
+      <img src="{% static "images/logo-dark.png"%}"></a>
     </div>
     <h3 class="tag-line">Be updated anywhere and anytime!</h3>
     {% if request.user.is_authenticated %}

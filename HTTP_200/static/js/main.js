@@ -254,9 +254,13 @@ $(".overlay-dark,.overlay-dark-mob").hide();
 	var win_width=$(window).width();
 
 	if(win_width<=640){
-		$(".head-links-resize").removeClass("sm-col-8").addClass("sm-col-4");
-		$(".heading-small").removeClass("sm-col-4").addClass("sm-col-8");
+		
+		
 	$(".relevant-content ul li .post_head").removeClass("sm-col-8").addClass("sm-col-12");
+}
+if(win_width<=940){
+	$(".heading-small").removeClass("sm-col-4").addClass("sm-col-8");
+	$(".head-links-resize").removeClass("sm-col-8").addClass("sm-col-4");
 }
 
 
@@ -662,9 +666,7 @@ $(".add").click(function () {
 
 		var tag_value_remove=tag_value.split(' ').join('');
 
-// 	$("#tag-input-val").val(function(){
-// 	return c=c+tag_value+', ';
-// });
+
 
 $("#tag-input").append("<li>"+tag_value+"&nbsp;&nbsp;&nbsp;<i class='fa fa-times'></i><input type='hidden' name='notice_for' value="+tag_value_remove+"></li>");
 $("#tag-input li i").click(function(){
@@ -690,11 +692,13 @@ else{
   });
 
   // notice messages======
-
-  $(".notice-msg").animate({
+setTimeout(function  () {
+	  $(".notice-msg").animate({
   	'top':'20px',
   	'opacity':'1'
   },700);
+},1000)
+
 
 var back_notice=function(){
 	$(".notice-msg").animate({
@@ -706,7 +710,7 @@ var back_notice=function(){
 setTimeout(function(){
 	back_notice();
 
-},2000)
+},3000)
 
 $(".notice-msg-cross").click(function(){
 	back_notice();
@@ -725,24 +729,33 @@ $(".no-delete").click(function() {
 
 // making footer down fixed
 
-var id=5;
+var stick_num=$(".form-hid input").val();
+// var id=parseInt(stick_num);
+var id=parseInt(stick_num);
 
-(function sticky_footer (argument) {
+	(function sticky_footer () {
 
-	if($(window).width()>=780 && id<=3){
-		$("footer").css({
-			'position':'fixed',
-			'bottom':'0px',
-			'width':'calc(100vw - 220px)'
-		})
-	}
-	else{
-		$("footer").css({
-			'position':'relative',
-			'width':'auto'
-		})
-	}
+		if($(window).width()>=780 && id<=3){
+			$("footer").css({
+				'position':'fixed',
+				'bottom':'0px',
+				'width':'calc(100vw - 220px)'
+			})
+		}
+		else{
+			$("footer").css({
+				'position':'relative',
+				'width':'auto'
+			})
+		}
+
 })();
+
+$(".left-nav-inner ul .move-in").click(function  () {
+	$("body").css({
+		'opacity':'0'
+	})
+})
 
 
 });
