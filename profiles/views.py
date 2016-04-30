@@ -42,7 +42,11 @@ class Home(View):
         template_name = 'index.html'
         trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
         notices = Notice.objects.all().order_by('-modified')[:5]
-        return render(request, template_name, {'notices': notices, 'trending': trending})
+
+        user_type = 'not_faculty'
+        if request.user.is_authenticated and (permissions.is_in_group(request.user, 'FacultyGroup')):
+            user_type = 'faculty'
+        return render(request, template_name, {'notices': notices, 'trending': trending, 'user_type':user_type})
 
 
 class FaqDisplayView(TemplateView):

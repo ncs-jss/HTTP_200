@@ -110,10 +110,12 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
+                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
+                    {% endifequal %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -201,11 +203,11 @@
 				<div class="col col-6">
 					<h2>Category</h2>
 					<select  placeholder="" class="input-style"  name="category" required>
-						<option value="ACD" {%ifequal notice.category 'ACD' %}selected="selected"{% endifequal %}>Academics</option>
-						<option value="ADMN" {%ifequal notice.category 'ADMN' %}selected="selected"{% endifequal %}>Administration</option>
-						<option value="TNP" {%ifequal notice.category 'TNP' %}selected="selected"{% endifequal %}>Training and Placement</option>
-						<option value="EVNT" {%ifequal notice.category 'EVNT' %}selected="selected"{% endifequal %}>Events</option>
-						<option value="MISC" {%ifequal notice.category 'MISC' %}selected="selected"{% endifequal %}>Miscelleneous</option>
+						<option value="academics" {%ifequal notice.category 'academics' %}selected="selected"{% endifequal %}>Academics</option>
+						<option value="administration" {%ifequal notice.category 'administration' %}selected="selected"{% endifequal %}>Administration</option>
+						<option value="tnp" {%ifequal notice.category 'tnp' %}selected="selected"{% endifequal %}>Training and Placement</option>
+						<option value="events" {%ifequal notice.category 'events' %}selected="selected"{% endifequal %}>Events</option>
+						<option value="misc" {%ifequal notice.category 'misc' %}selected="selected"{% endifequal %}>Miscelleneous</option>
 					</select>
 				</div>
 				<div class="col col-6">
@@ -237,7 +239,7 @@
 						<option>ECE</option>
 						<option>EE</option>
 						<option>CE</option>
-						<option>ICE</option>
+						<option>IC</option>
 						<option>MT</option>
 						<option>ME</ssoption>
 					</select>
@@ -266,8 +268,8 @@
 						<option>EE2</option>
 						<option>CE1</option>
 						<option>CE2</option>
-						<option>ICE1</option>
-						<option>ICE2</option>
+						<option>IC1</option>
+						<option>IC2</option>
 						<option>MT1</option>
 						<option>MT2</option>
 						<option>ME1</option>
@@ -298,6 +300,7 @@
 			Create 
 		</button>&nbsp;&nbsp;<span class="create-warn-msg">Please select atleast one Course, Branch, Year and Section 
 					</span>
+          {{ form.errors }}
 	</form>
 
 	</div>
@@ -450,7 +453,7 @@
                         <option value="ECE">ECE</option>
                         <option value="EE">EE</option>
                         <option value="CE">CE</option>
-                        <option value="ICE">ICE</option>
+                        <option value="IC">IC</option>
                         <option value="MT">MT</option>
                         <option value="ME">ME</ssoption>
 
@@ -483,8 +486,8 @@
                         <option value="EE2">EE2</option>
                         <option value="CE1">CE1</option>
                         <option value="CE2">CE2</option>
-                        <option value="ICE1">ICE1</option>
-                        <option value="ICE2">ICE2</option>
+                        <option value="IC1">IC1</option>
+                        <option value="IC2">IC2</option>
                         <option value="MT1">MT1</option>
                         <option value="MT2">MT2</option>
                         <option value="ME1">ME1</option>

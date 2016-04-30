@@ -120,10 +120,12 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
+                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
+                    {% endifequal %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -217,40 +219,39 @@
 							<h2><i class="fa fa-graduation-cap"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
 							 <select  placeholder="" name="course" class="input-style edit-input"  disabled>
                         
-                        <option value="">Courses</option>
-                        <option value="BTech">BTech</option>
-                        <option value="MTech">MTech</option>
-                        <option value="MCA">MCA</option>
-                        <option value="MBA">MBA</option>
+		                        <option value="" >Courses</option>
+		                        <option value="BTech" {%ifequal detail_list.course 'BTech' %}selected="selected"{% endifequal %} >BTech</option>
+		                        <option value="MTech" {%ifequal detail_list.course 'MTech' %}selected="selected"{% endifequal %} >MTech</option>
+		                        <option value="MCA" {%ifequal detail_list.course 'MCA' %}selected="selected"{% endifequal %} >MCA</option>
+		                        <option value="MBA" {%ifequal detail_list.course 'MBA' %}selected="selected"{% endifequal %} >MBA</option>
 
                     </select>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-code-fork"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
-							  <select  placeholder="" name="branch" class="input-style edit-input"  disabled>
-                        <option value="">Branches</option>
-                        <option value="CSE">CSE</option>
-                        <option value="IT">IT</option>
-                        <option value="ECE">ECE</option>
-                        <option value="EE">EE</option>
-                        <option value="CE">CE</option>
-                        <option value="ICE">ICE</option>
-                        <option value="MT">MT</option>
-                        <option value="ME">ME</ssoption>
-
-                        
-                    </select>
+							<select  placeholder="" name="branch" class="input-style edit-input"  disabled>
+	                        <option value="" {%ifequal detail_list.branch '' %}selected="selected"{% endifequal %}>Branches</option>
+	                        <option value="CSE" {%ifequal detail_list.branch 'CSE' %}selected="selected"{% endifequal %}>CSE</option>
+	                        <option value="IT" {%ifequal detail_list.branch 'IT' %}selected="selected"{% endifequal %}>IT</option>
+	                        <option value="ECE" {%ifequal detail_list.branch 'ECE' %}selected="selected"{% endifequal %}>ECE</option>
+	                        <option value="EE" {%ifequal detail_list.branch 'EE' %}selected="selected"{% endifequal %}>EE</option>
+	                        <option value="EEE" {%ifequal detail_list.branch 'EEE' %}selected="selected"{% endifequal %}>EEE</option>
+	                        <option value="CE" {%ifequal detail_list.branch 'CE' %}selected="selected"{% endifequal %}>CE</option>
+	                        <option value="IC" {%ifequal detail_list.branch 'IC' %}selected="selected"{% endifequal %}>IC</option>
+	                        <option value="MT" {%ifequal detail_list.branch 'MT' %}selected="selected"{% endifequal %}>MT</option>
+	                        <option value="ME" {%ifequal detail_list.branch 'ME' %}selected="selected"{% endifequal %}>ME</ssoption>
+	                    	</select>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Year <i class="show-icon fa fa-pencil"></i></h2>
 							  <select  placeholder="" name="year" class="input-style edit-input"  disabled>
-                        <option value="" selected>Year</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
+                        <option value="" {%ifequal detail_list.year '' %}selected="selected"{% endifequal %}>Year</option>
+                        <option value="1" {%ifequal detail_list.year 1 %}selected="selected"{% endifequal %}>1</option>
+                        <option value="2" {%ifequal detail_list.year 2 %}selected="selected"{% endifequal %}>2</option>
+                        <option value="3" {%ifequal detail_list.year 3 %}selected="selected"{% endifequal %}>3</option>
+                        <option value="4" {%ifequal detail_list.year 4 %}selected="selected"{% endifequal %}>4</option>
 
                         
                     </select>
@@ -262,23 +263,25 @@
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-puzzle-piece" ></i>	&nbsp;Section <i class="show-icon fa fa-pencil"></i></h2>
 							  <select  placeholder="" name="section" class="input-style edit-input"  disabled>
-                        <option value="" selected>Sections</option>
-                        <option value="CSE1">CSE1</option>
-                        <option value="CSE2">CSE2</option>
-                        <option value="IT1">IT1</option>
-                        <option value="IT2">IT2</option>
-                        <option value="ECE1">ECE1</option>
-                        <option value="ECE2">ECE2</option>
-                        <option value="EE1">EE1</option>
-                        <option value="EE2">EE2</option>
-                        <option value="CE1">CE1</option>
-                        <option value="CE2">CE2</option>
-                        <option value="ICE1">ICE1</option>
-                        <option value="ICE2">ICE2</option>
-                        <option value="MT1">MT1</option>
-                        <option value="MT2">MT2</option>
-                        <option value="ME1">ME1</option>
-                        <option value="ME2">ME2</option>
+                        <option value="" {%ifequal detail_list.section '' %}selected="selected"{% endifequal %}>Sections</option>
+                        <option value="CSE1" {%ifequal detail_list.section 'CSE1' %}selected="selected"{% endifequal %}>CSE1</option>
+                        <option value="CSE2" {%ifequal detail_list.section 'CSE2' %}selected="selected"{% endifequal %}>CSE2</option>
+                        <option value="IT1" {%ifequal detail_list.section 'IT1' %}selected="selected"{% endifequal %}>IT1</option>
+                        <option value="IT2" {%ifequal detail_list.section 'IT2' %}selected="selected"{% endifequal %}>IT2</option>
+                        <option value="ECE1" {%ifequal detail_list.section 'ECE1' %}selected="selected"{% endifequal %}>ECE1</option>
+                        <option value="ECE2" {%ifequal detail_list.section 'ECE2' %}selected="selected"{% endifequal %}>ECE2</option>
+                        <option value="EE1" {%ifequal detail_list.section 'EE1' %}selected="selected"{% endifequal %}>EE1</option>
+                        <option value="EE2" {%ifequal detail_list.section 'EE2' %}selected="selected"{% endifequal %}>EE2</option>
+                        <option value="CE1" {%ifequal detail_list.section 'CE1' %}selected="selected"{% endifequal %}>CE1</option>
+                        <option value="CE2" {%ifequal detail_list.section 'CE2' %}selected="selected"{% endifequal %}>CE2</option>
+                        <option value="EEE1" {%ifequal detail_list.section 'EEE1' %}selected="selected"{% endifequal %}>EEE1</option>
+                        <option value="EEE2" {%ifequal detail_list.section 'EEE2' %}selected="selected"{% endifequal %}>EE2</option>
+                        <option value="IC1" {%ifequal detail_list.section 'IC1' %}selected="selected"{% endifequal %}>IC1</option>
+                        <option value="IC2" {%ifequal detail_list.section 'IC2' %}selected="selected"{% endifequal %}>IC2</option>
+                        <option value="MT1" {%ifequal detail_list.section 'MT1' %}selected="selected"{% endifequal %}>MT1</option>
+                        <option value="MT2" {%ifequal detail_list.section 'MT2' %}selected="selected"{% endifequal %}>MT2</option>
+                        <option value="ME1" {%ifequal detail_list.section 'ME1' %}selected="selected"{% endifequal %}>ME1</option>
+                        <option value="ME2" {%ifequal detail_list.section 'ME2' %}selected="selected"{% endifequal %}>ME2</option>
                         
                     </select>
 						</div>
@@ -350,7 +353,17 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-building"></i>	&nbsp;Department <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Department" value="{{ detail_list.department }}" name="department" disabled>
+							<select  placeholder="Department" name="department" class="input-style edit-input"  disabled>
+	                        <option value="" {%ifequal detail_list.department 'BTech' %}selected="selected"{% endifequal %}>Branches</option>
+	                        <option value="CSE" {%ifequal detail_list.department 'CSE' %}selected="selected"{% endifequal %}>CSE</option>
+	                        <option value="IT" {%ifequal detail_list.department 'IT' %}selected="selected"{% endifequal %}>IT</option>
+	                        <option value="ECE" {%ifequal detail_list.department 'ECE' %}selected="selected"{% endifequal %}>ECE</option>
+	                        <option value="EE" {%ifequal detail_list.department 'EE' %}selected="selected"{% endifequal %}>EE</option>
+	                        <option value="CE" {%ifequal detail_list.department 'CE' %}selected="selected"{% endifequal %}>CE</option>
+	                        <option value="IC" {%ifequal detail_list.department 'IC' %}selected="selected"{% endifequal %}>IC</option>
+	                        <option value="MT" {%ifequal detail_list.department 'MT' %}selected="selected"{% endifequal %}>MT</option>
+	                        <option value="ME" {%ifequal detail_list.department 'ME' %}selected="selected"{% endifequal %}>ME</ssoption>
+	                    	</select>
 						</div>
 
 						{% if not detail_list.display_to_others == False or user == user_list %}
@@ -530,7 +543,7 @@
                         <option value="ECE">ECE</option>
                         <option value="EE">EE</option>
                         <option value="CE">CE</option>
-                        <option value="ICE">ICE</option>
+                        <option value="IC">IC</option>
                         <option value="MT">MT</option>
                         <option value="ME">ME</ssoption>
 
@@ -563,8 +576,8 @@
                         <option value="EE2">EE2</option>
                         <option value="CE1">CE1</option>
                         <option value="CE2">CE2</option>
-                        <option value="ICE1">ICE1</option>
-                        <option value="ICE2">ICE2</option>
+                        <option value="IC1">IC1</option>
+                        <option value="IC2">IC2</option>
                         <option value="MT1">MT1</option>
                         <option value="MT2">MT2</option>
                         <option value="ME1">ME1</option>

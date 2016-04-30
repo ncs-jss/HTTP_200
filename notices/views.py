@@ -16,12 +16,12 @@ import utils.constants as constants
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
-
 class NoticeList(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         category = request.GET.get('category', None)
         template = 'notices/list.html'
+        search = request.GET.get('search', None)
 
         page_type = ''
         if category is None:
@@ -30,6 +30,17 @@ class NoticeList(LoginRequiredMixin, generic.View):
         else:
             notice_list = Notice.objects.filter(category=category).order_by('-modified')
             page_type = category
+
+        if search is not None:
+            notice_list = Notice.objects.filter(Q(faculty__user__username__contains=search) |
+                Q(faculty__user__first_name__contains=search) |
+                Q(faculty__user__last_name__contains=search) |
+                Q(category__contains=search) |
+                Q(title__contains=search) |
+                Q(description__contains=search) |
+                Q(category__contains=search) |
+                Q(course_branch_year__contains=search))
+            notice_list = notice_list.order_by('-modified')
 
         bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
 
@@ -54,6 +65,39 @@ class NoticeList(LoginRequiredMixin, generic.View):
             notices = paginator.page(paginator.num_pages)
         return render(request, template, {"notices": notices, 'page_type':page_type})
 
+# class FullTextSearch(LoginRequiredMixin, generic.View):
+#     def get(self, request):
+#         template = 'notices/list.html'
+#         page_type = 'All Notices'
+
+#         text = request.GET.get('search', '')
+#         category = request.GET.get('category', '')
+
+#         notices = Notice.objects.all()
+#         notices = notices.filter(Q(faculty__user__username__contains=text) |
+#                 Q(faculty__user__first_name__contains=text) |
+#                 Q(faculty__user__last_name__contains=text) |
+#                 Q(category__contains=text) |
+#                 Q(title__contains=text) |
+#                 Q(description__contains=text) |
+#                 Q(category__contains=text) |
+#                 Q(course_branch_year__contains=text))
+
+#         paginator = Paginator(notices, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
+        
+#         page = request.GET.get('page','')
+#         page = page+'?search='+'text'+'category='+category
+        
+#         try:
+#             notices = paginator.page(page)
+#         except PageNotAnInteger:
+#             # If page is not an integer, deliver first page.
+#             notices = paginator.page(1)
+#         except EmptyPage:
+#             # If page is out of range (e.g. 9999), deliver last page of results.
+#             notices = paginator.page(paginator.num_pages)
+#         return render(request, template, {"notices": notices, 'page_type':page_type, 
+#             'search':text, 'category':category})
 
 class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     """
@@ -75,7 +119,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         form.save()
         messages.success(self.request, 'Notice created successfully.')
         return super(CreateView, self).form_valid(form)
-
+    
     def dispatch(self, request, *args, **kwargs):
         try:
             FacultyDetail.objects.get(user__id=self.request.user.id)

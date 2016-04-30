@@ -13,14 +13,12 @@
 
     <link rel="stylesheet" href="{% static "css/style.css"%}">
     <link rel="stylesheet" href="{% static "css/font-awesome.css"%}">
-
     
     
  
 </head>
 
 <body>
-
     <div class="loader-container">
     <div class="loader">
       <img src="{% static "images/connect.gif"%}">
@@ -119,10 +117,13 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
+
+                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
+                    {% endifequal %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -222,7 +223,9 @@
                         {% endifequal %}
 
                         <div class="search  col-6 push-right">
-                            <input type="text" name="search" placeholder="search"><i class="fa fa-search"></i>
+                            <form id="full_text_search" method="GET" action="{% url 'notice-list' %}">
+                            <input type="text" name="search" placeholder="search"><i class="fa fa-search" id="search_full"></i>
+                            <form>
                         </div>
 
 
@@ -329,7 +332,7 @@
                 <ul>
         </div>
         <div class="pagination">
-            Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+        Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
             {% if notices.has_previous %}
                 <a href="?page={{ notices.previous_page_number }}">
                     <i class="fa fa-chevron-circle-left"></i>
@@ -337,10 +340,11 @@
             {% endif %}
             &nbsp;&nbsp;
             {% if notices.has_next %}
-                <a href="?page={{ notices.next_page_number }}">
+                <a href="?page={{ notices.next_page_number}}">
                     <i class="fa fa-chevron-circle-right"></i>
                 </a>
             {% endif %}
+
         </div>
         <footer>
       <h4>Quick Links</h4>
@@ -483,7 +487,7 @@
                         <option value="ECE">ECE</option>
                         <option value="EE">EE</option>
                         <option value="CE">CE</option>
-                        <option value="ICE">ICE</option>
+                        <option value="IC">IC</option>
                         <option value="MT">MT</option>
                         <option value="ME">ME</ssoption>
 
@@ -516,8 +520,8 @@
                         <option value="EE2">EE2</option>
                         <option value="CE1">CE1</option>
                         <option value="CE2">CE2</option>
-                        <option value="ICE1">ICE1</option>
-                        <option value="ICE2">ICE2</option>
+                        <option value="IC1">IC1</option>
+                        <option value="IC2">IC2</option>
                         <option value="MT1">MT1</option>
                         <option value="MT2">MT2</option>
                         <option value="ME1">ME1</option>

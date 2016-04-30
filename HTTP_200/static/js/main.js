@@ -1,7 +1,9 @@
 $(document).ready(function () {
-var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 
-console.log(full);
+$("#search_full").click(function(){
+	$("#full_text_search").submit();
+})
+
 
 $("body").css({
 	'overflow-y':'hidden'
@@ -576,14 +578,14 @@ $("#create-course").change(function  () {
 
 	switch(course_val){
 		case "All Courses":
-			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option><option>ECE</option><option>EE</option><option>EEE</option><option>CE</option><option>ICE</option><option>MT</option><option>ME</option>")
+			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option><option>ECE</option><option>EE</option><option>EEE</option><option>CE</option><option>IC</option><option>MT</option><option>ME</option>")
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
-			$("#create-section").html("<option selected>All Sections</option><option>CS1</option><option>CS2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>ICE1</option><option>ICE2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
+			$("#create-section").html("<option selected>All Sections</option><option>CS1</option><option>CS2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>IC1</option><option>IC2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
 			break;
 		case "BTech":
-			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option><option>ECE</option><option>EE</option><option>EEE</option><option>CE</option><option>ICE</option><option>MT</option><option>ME</option>")
+			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option><option>ECE</option><option>EE</option><option>EEE</option><option>CE</option><option>IC</option><option>MT</option><option>ME</option>")
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
-			$("#create-section").html("<option selected>All Sections</option><option>CS1</option><option>CS2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>ICE1</option><option>ICE2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
+			$("#create-section").html("<option selected>All Sections</option><option>CS1</option><option>CS2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>IC1</option><option>IC2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
 			break;
 		case "MTech":
 			$("#create-branch").html("<option selected>All Branches</option><option>CSE</option><option>IT</option>")
@@ -615,7 +617,7 @@ $("#create-branch").change(function  () {
 	switch(branch_val){
 		case "All Branches":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
-			$("#create-section").html("<option selected>All Sections</option><option>CSE1</option><option>CSE2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>ICE1</option><option>ICE2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
+			$("#create-section").html("<option selected>All Sections</option><option>CSE1</option><option>CSE2</option><option>IT1</option><option>IT2</option><option>ECE1</option><option>ECE2</option><option>EE1</option><option>EE2</option><option>CE1</option><option>CE2</option><option>IC1</option><option>IC2</option><option>MT1</option><option>MT2</option><option>ME1</option><option>ME2</option>");
 			break;
 		case "CSE":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
@@ -642,9 +644,9 @@ $("#create-branch").change(function  () {
 			$("#create-section").html("<option selected>All Sections</option><option >CE1</option><option>CE2</option>")
 			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
 			break;
-		case "ICE":
+		case "IC":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
-			$("#create-section").html("<option selected>All Sections</option><option >ICE1</option><option>ICE2</option>")
+			$("#create-section").html("<option selected>All Sections</option><option >IC1</option><option>IC2</option>")
 			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
 			break;
 		case "MT":
@@ -830,7 +832,6 @@ setInterval(function  () {
 	}
 
 })	
-
 
 
 
