@@ -83,8 +83,8 @@ class StudentDetail(models.Model):
     address = models.CharField(max_length=500, blank=True, null=True)
     display_to_others = models.BooleanField(default=True)
 
-    created = models.DateTimeField("Created", auto_now_add=True, null=True)
-    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+    created = models.DateTimeField("Created", null=True)
+    modified = models.DateTimeField("Last Modified", null=True)
     # relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
@@ -108,8 +108,8 @@ class FacultyDetail(models.Model):
     alternate_email = models.EmailField(max_length=254, blank=True, null=True)
     display_to_others = models.BooleanField(default=False)
 
-    created = models.DateTimeField("Created", auto_now_add=True, null=True)
-    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+    created = models.DateTimeField("Created", null=True)
+    modified = models.DateTimeField("Last Modified", null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -125,6 +125,9 @@ class ContactMessage(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
     email = models.URLField(max_length=100, blank=False, null=False)
     message = models.TextField(blank=False, null=False)
+
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
 
     def __unicode__(self):
         return self.name
