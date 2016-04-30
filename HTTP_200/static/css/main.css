@@ -13,7 +13,7 @@ body{
 	position: fixed;
 	display: block;
 	width: 220px;
-	height: 100vh;
+	height: 105vh;
 	background: #2d2251;
 	transition:all 0.3s ease;
 	
@@ -405,7 +405,7 @@ footer h4{
 }
 .relevant-info {
 	width: 100%;
-	height:100vh;
+	height:104vh;
 	position: fixed;
 	z-index: 5;
 	background-color: #fff ;
@@ -970,9 +970,7 @@ input[type="file"].input-upload{
 	border: 0px;
 	transition:all 0.2s ease-in-out;
 }
-.create-notice-button:hover{
-	background: #403469;
-}
+
 
 /*notice msg================*/
 
@@ -1232,6 +1230,16 @@ button.no-delete:hover{
 	color: #9d9d9d;
 	font-family: 'Roboto Medium'
 
+}
+.ck{
+	margin-bottom: 20px;
+
+}
+.ck h2{
+	margin-bottom: 20px;
+}
+#cke_id_description{
+	width: 100% !important;
 }
 @media(max-width: 950px){
 	.pad-list a{

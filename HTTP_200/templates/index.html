@@ -75,23 +75,23 @@
 
     <div class="left-nav-inner left-nav-inner-index">
       <ul>
-        <li class="active">
+        <li class="active index-list">
           <a href="{% url "home" %}"><i class="fa fa-home"></i> &nbsp;Home</a>
         </li>
-        <li>
+        <li class="index-list">
           <a href="{% url "notice-list" %}"><i class="fa fa-thumb-tack"></i> &nbsp;All notices</a>
         </li>
         <!-- <li>
           <a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
         </li> -->
-        <li><a href="{% url "about" %}" >
+        <li class=" index-list"><a href="{% url "about" %}" >
           <i class="fa fa-globe"></i> &nbsp;About</a>
         </li>
-          <li>
+          <li class=" index-list">
             <a href="{% url "contact" %}">
             <i class="fa fa-user"></i> &nbsp;Contact</a>
           </li>
-          <li>
+          <li class="index-list">
             <a href="http://jssaten.ac.in" target="_blank">
             <i class="fa fa-phone"></i> &nbsp;JSS Website</a>
           </li>
@@ -100,20 +100,25 @@
           <div class="line">
           </div>
           {% if request.user.is_authenticated %}
-          <li>
+          <li class="index-list">
             <a href="{% url "user-profile" user_id=request.user.username %}">
             <i class="fa fa-user"></i> &nbsp;My profile</a>
           </li>
-          <li>
+         
+          <li class="index-list">
             <a href="{% url "my-uploaded-notices" %}">
             <i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
           </li>
-          <li>
+           <li class="index-list move-in">
+                        <a href="{% url "password_change" %}">
+                        <i class="fa fa-key"></i> &nbsp;Change Password</a>
+                    </li>
+          <li class="index-list">
             <a href="{% url "account_logout" %}">
             <i class="fa fa-inbox"></i> &nbsp;Logout</a>
           </li>
           {% else %}
-          <li>
+          <li class="index-list">
             <a href="{% url "account_login" %}">
             <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
           </li>
@@ -126,7 +131,6 @@
 
   </div>
 
-
     
 
 <!-- right-page container============ -->
@@ -137,7 +141,7 @@
         <a href="{% url "home" %}">
       <img src="{% static "images/logo-dark.png"%}"></a>
     </div>
-    <h3 class="tag-line">Be updated anywhere and anytime!</h3>
+    <h3 class="tag-line">Stay updated, anywhere anytime!</h3>
     {% if request.user.is_authenticated %}
     <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span><a href="{% url "user-profile" user_id=request.user.username %}">Welcome {{ request.user.first_name }} {{ request.user.last_name }}</a></h3>
     {% else %}
@@ -269,7 +273,7 @@
         </div>
       </div>
       <div class="sub-footer ">
-        <h4>JSS Academy Of Technical Education</h4>
+        <h4><a href="http://www.hackncs.com" target="_blank"> Nibble Computer Society</a></h4>
       </div>
     </footer>
   </div>

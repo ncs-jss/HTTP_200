@@ -5,13 +5,11 @@
 	position: fixed;
 	z-index: 0;
 	width: 100vw;
-	height: 100vh;
+	height: 104vh;
 	background: url(../images/ab-1.JPG);
 	background-size: cover;
-
-	/*overflow-y: scroll;*/
-	/*overflow-x:hidden;*/
 }
+
 .login{
 	display: inline-block;
 	position: absolute;
@@ -29,9 +27,8 @@
 	border-radius: 2px;
 	overflow: hidden;
 	transition:all 0.2s ease-in-out;
-
-
 }
+
 .login-img{
 	position: relative;
 	width: 100%;
@@ -201,10 +198,10 @@ input[type="checkbox"]{
 	top: 0px;
 	display: block;
 	position: absolute;
-	z-index: 1;
+	z-index: 100;
 	background: rgba(255,255,255,0.9);
 	width: 100vw;
-	height: 100vh;
+	height: 104vh;
 	overflow-y:scroll;
 	overflow-x:hidden;
 	position: fixed;

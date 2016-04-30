@@ -178,7 +178,7 @@ $(".loader-container").fadeIn();
 
 
 $(".overlay-dark,.overlay-dark-mob").hide();
-	if($(window).width()<=780){
+	if($(window).width()<=950){
 
 		$(".search2").click(function(){
 
@@ -248,6 +248,9 @@ $(".overlay-dark,.overlay-dark-mob").hide();
 	})
 
 }
+
+
+
 	
 
 	// responsive list in mobile
@@ -505,9 +508,9 @@ $(".edit-save,.edit-save-2,.show-icon,i.mob-save").hide();
 
 $(".edit-save,.edit-save-2,i.mob-save").click(function(){
 	$(".profile-form form").submit();
-	$(".profile-form input").prop('disabled',true);
+	$(".profile-form .edit-input").prop('disabled',true);
 
-	$(".show-icon").fadeOut();
+	// $(".show-icon").fadeOut();
 
 
 })
@@ -525,8 +528,8 @@ $(".edit-click,i.mob-edit").click(function(){
 	$(".edit-click,i.mob-edit").hide();
 	$(".edit-save").fadeIn("fast");
 
-	$(".profile-form input").prop('disabled',false);
-	$(".profile-form input").css({
+	$(".profile-form .edit-input").prop('disabled',false);
+	$(".profile-form .edit-input").css({
 		'border-bottom':'1px solid #e6c115',
 		'color':'#9d9d9d'
 	})
@@ -603,42 +606,42 @@ $("#create-branch").change(function  () {
 		case "CSE":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >CSE1</option><option>CSE2</option>");
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option><option >MTech</option>");
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option><option >MTech</option>");
 			break;
 		case "IT":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >IT1</option><option>IT2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option><option >MTech</option>");
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option><option >MTech</option>");
 			break;
 		case "ECE":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >ECE1</option><option>ECE2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
 			break;
 		case "EE":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >EE1</option><option>EE2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
 			break;
 		case "CE":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >CE1</option><option>CE2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>");
 			break;
 		case "ICE":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >ICE1</option><option>ICE2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
 			break;
 		case "MT":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >MT1</option><option>MT2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
 			break;
 		case "ME":
 			$("#create-year").html("<option selected>All Years</option><option >1</option><option >2</option><option >3</option><option >4</option>")
 			$("#create-section").html("<option selected>All Sections</option><option >ME1</option><option>ME2</option>")
-			$("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
+			// $("#create-course").html("<option selected>All Courses</option><option >BTech</option>")
 			break;
 	}
 	
@@ -653,7 +656,11 @@ $("#create-section").change(function  () {
 
 $(".create-warn-msg").hide();
 
+
 $(".add").click(function () {
+	
+	
+
 	if(course_val!="Course" && year_val!="Year" && branch_val!="Branch" && section_val!="Section"){
 
 
@@ -669,10 +676,7 @@ $(".add").click(function () {
 
 
 $("#tag-input").append("<li>"+tag_value+"&nbsp;&nbsp;&nbsp;<i class='fa fa-times'></i><input type='hidden' name='notice_for' value="+tag_value_remove+"></li>");
-$("#tag-input li i").click(function(){
-	console.log("ebr")
-	$(this).parent().remove();
-})
+
 $(".create-warn-msg").hide();
 }
 else{
@@ -680,6 +684,15 @@ else{
 }
 })
 
+
+setInterval(function  () {
+	$("#tag-input li i").click(function(){
+	
+	$(this).parent().remove();
+	
+})
+
+})
 
 // remove loader on click back button
 
@@ -751,11 +764,59 @@ var id=parseInt(stick_num);
 
 })();
 
-$(".left-nav-inner ul .move-in").click(function  () {
+$(".left-nav-inner ul .move-in,.button-create,.left-nav-inner ul .index-list").click(function  () {
 	$("body").css({
 		'opacity':'0'
 	})
 })
+
+
+
+
+setInterval(function  () {
+	if($("#tag-input li").length>=1){
+		$(".create-notice-button").css({
+			'opacity':'1'
+		})
+		$(".create-notice-button").mouseenter(function  () {
+			$(this).css({
+			'background':'#2D2251'
+		})
+		})
+		$(".create-notice-button").mouseleave(function  () {
+			$(this).css({
+			'background':'#5d5473'
+		})
+		})
+		$(".create-warn-msg").hide();
+	$("#create-submit").prop("disabled",false);
+	}
+	else{
+		$(".create-notice-button").css({
+			'opacity':'0.5'
+		})
+		$(".create-notice-button").mouseenter(function  () {
+			$(this).css({
+			'background':'#5d5473'
+		})
+		})
+		$(".create-notice-button").mouseleave(function  () {
+			$(this).css({
+			'background':'#5d5473'
+		})
+		})
+		
+		$("#create-submit").prop("disabled", true);
+
+		$(".create-warn-msg").fadeIn("fast");
+		
+
+		
+	}
+
+})	
+
+
 
 
 });
