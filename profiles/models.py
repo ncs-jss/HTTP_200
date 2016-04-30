@@ -83,8 +83,8 @@ class StudentDetail(models.Model):
     address = models.CharField(max_length=500, blank=True, null=True)
     display_to_others = models.BooleanField(default=True)
 
-    created = models.DateTimeField("Created", null=True)
-    modified = models.DateTimeField("Last Modified", null=True)
+    created = models.DateTimeField("Created", null=True, auto_now_add=True)
+    modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
     # relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
