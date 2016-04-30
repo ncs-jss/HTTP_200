@@ -66,75 +66,12 @@
 		<div class="cross-mobile"><i class="fa fa-times"></i></div>
 	</div>
 
-	<div class="left-nav">
-
+	  <div class="left-nav">
         <div class="logo">
-             <a href="{% url "home" %}">
+           <a href="{% url "home" %}">
             <img src="{% static "images/logo.PNG"%}">
         </a>
         </div>
-
-		<div class="left-nav-inner">
-			<ul>
-				<li class=" move-in">
-					<a href="{% url "relevent-notice-list" %}">
-					<i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
-				</li>
-				<li class=" move-in">
-					<a href="?category=administration">
-					<i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
-				</li>
-				<li class=" move-in">
-					<a href="?category=academics">
-					<i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
-				</li>
-				<li class=" move-in">
-					<a href="?category=events">
-					<i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
-				</a>
-					<li class=" move-in">
-						<a href="?category=tnp">
-						<i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
-					</li>
-					<!-- <li class="">
-						<a class="search2">
-						<i class="fa fa-filter"></i> &nbsp;Filter Notices<! <span class="number">1</span> --><!-- </a>
-					</li> --> 
-					<li class=" move-in">
-						<a href="?category=misc">
-						<i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
-					</li>
-					<li class=" move-in">
-						<a href="">
-						<i class="fa fa-star"></i> &nbsp;Starred</a>
-					</li>
-
-					<div class="line">
-					</div>
-
-					{% if request.user.is_authenticated %}
-
-					<li class=" active move-in">
-						<a href="{% url "user-profile" user_id=request.user.username %}">
-						<i class="fa fa-user"></i> &nbsp;My profile</a>
-					</li>
-					<li class=" move-in">
-						<a href="{% url "account_logout" %}">
-						<i class="fa fa-sign-out"></i> &nbsp;Logout</a>
-					</li>
-					{% else %}
-			        <li>
-			          <a href="{% url "account_login" %}">
-			          <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
-			        </li>
-			        {% endif %}
-					
-
-
-
-			</ul>
-		</div>
-
 
         <div class="left-nav-inner">
             <ul>
@@ -147,24 +84,24 @@
                     <i class="fa fa-tags"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
                 </li>
                 <li class=" move-in">
-                    <a href="{% url "notice-list" %}?category=Administration">
+                    <a href="{% url "notice-list" %}?category=administration">
                     <i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
                 </li>
                 <li class=" move-in">
-                    <a href="{% url "notice-list" %}?category=Academics">
+                    <a href="{% url "notice-list" %}?category=academics">
                     <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
                 </li>
                 <li class=" move-in">
-                    <a href="{% url "notice-list" %}?category=Events">
+                    <a href="{% url "notice-list" %}?category=events">
                     <i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
                 </a>
                     <li class=" move-in">
-                        <a href="{% url "notice-list" %}?category=Placement">
+                        <a href="{% url "notice-list" %}?category=tnp">
                         <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
                     </li>
                  
                     <li class=" move-in">
-                        <a href="{% url "notice-list" %}?category=Miscellaneous">
+                        <a href="{% url "notice-list" %}?category=misc">
                         <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
                     </li>
                        <li class="">
@@ -198,6 +135,7 @@
                 </ul>
             </div>
         </div>
+
 
 
 
@@ -276,37 +214,84 @@
 
 					<div class=" row">
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-envelope"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Course" value="{{ detail_list.course }}" name="course" disabled>
+							<h2><i class="fa fa-graduation-cap"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
+							 <select  placeholder="" name="course" class="input-style edit-input"  disabled>
+                        
+                        <option value="">Courses</option>
+                        <option value="BTech">BTech</option>
+                        <option value="MTech">MTech</option>
+                        <option value="MCA">MCA</option>
+                        <option value="MBA">MBA</option>
+
+                    </select>
 						</div>
 
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-envelope"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Branch" value="{{ detail_list.branch }}" name="branch" disabled>
+							<h2><i class="fa fa-code-fork"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
+							  <select  placeholder="" name="branch" class="input-style edit-input"  disabled>
+                        <option value="">Branches</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EE">EE</option>
+                        <option value="CE">CE</option>
+                        <option value="ICE">ICE</option>
+                        <option value="MT">MT</option>
+                        <option value="ME">ME</ssoption>
+
+                        
+                    </select>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Year <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Year" value="{{ detail_list.year }}" name="year" disabled>
+							  <select  placeholder="" name="year" class="input-style edit-input"  disabled>
+                        <option value="" selected>Year</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+
+                        
+                    </select>
 						</div>
 					
 					</div>
 					<div class="row">
 
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-envelope"></i>	&nbsp;Section <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Section" value="{{ detail_list.section }}" name="section" disabled>
+							<h2><i class="fa fa-puzzle-piece" ></i>	&nbsp;Section <i class="show-icon fa fa-pencil"></i></h2>
+							  <select  placeholder="" name="section" class="input-style edit-input"  disabled>
+                        <option value="" selected>Sections</option>
+                        <option value="CSE1">CSE1</option>
+                        <option value="CSE2">CSE2</option>
+                        <option value="IT1">IT1</option>
+                        <option value="IT2">IT2</option>
+                        <option value="ECE1">ECE1</option>
+                        <option value="ECE2">ECE2</option>
+                        <option value="EE1">EE1</option>
+                        <option value="EE2">EE2</option>
+                        <option value="CE1">CE1</option>
+                        <option value="CE2">CE2</option>
+                        <option value="ICE1">ICE1</option>
+                        <option value="ICE2">ICE2</option>
+                        <option value="MT1">MT1</option>
+                        <option value="MT2">MT2</option>
+                        <option value="ME1">ME1</option>
+                        <option value="ME2">ME2</option>
+                        
+                    </select>
 						</div>
 
 						{% if not detail_list.display_to_others == False or user == user_list %}
 
 						<div class="top-range col col-4 ">
-							<h2><i class="fa fa-info"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
+							<h2><i class="fa fa-envelope"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
 							<input type="text" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
 						</div>
 
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-envelope"></i>	&nbsp;University Roll No. <i class="show-icon fa fa-pencil"></i></h2>
+							<h2><i class="fa fa-building"></i>	&nbsp;University Roll No. <i class="show-icon fa fa-pencil"></i></h2>
 							<input type="text" class="input-style edit-input" placeholder="University Roll No." value="{{ detail_list.univ_roll_no }}" name="univ_roll_no" disabled>
 						</div>
 
@@ -314,7 +299,7 @@
 					
 					<div class=" row">
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-building"></i>	&nbsp;Contact No. <i class="show-icon fa fa-pencil"></i></h2>
+							<h2><i class="fa fa-phone"></i>	&nbsp;Contact No. <i class="show-icon fa fa-pencil"></i></h2>
 							<input type="text" class="input-style edit-input" placeholder="Contact No." value="{{ detail_list.contact_no }}" name="contact_no" disabled>
 						</div>
 						<div class="top-range col col-4">
@@ -322,7 +307,7 @@
 							<input type="text" class="input-style edit-input" placeholder="Address" value="{{ detail_list.address }}" name="address" disabled>
 						</div>
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-building"></i>	&nbsp;Father's Name <i class="show-icon fa fa-pencil"></i></h2>
+							<h2><i class="fa fa-user"></i>	&nbsp;Father's Name <i class="show-icon fa fa-pencil"></i></h2>
 							<input type="text" class="input-style edit-input" placeholder="Father's Name" value="{{ detail_list.father_name }}"  name="father_name" disabled>
 						</div>
 					</div>
@@ -331,7 +316,7 @@
 						
 						
 						<div class="top-range col col-4">
-							<h2><i class="fa fa-building"></i>	&nbsp;Mother's Name <i class="show-icon fa fa-pencil"></i></h2>
+							<h2><i class="fa fa-user"></i>	&nbsp;Mother's Name <i class="show-icon fa fa-pencil"></i></h2>
 							<input type="text" class="input-style edit-input" placeholder="Mother's Name" value="{{ detail_list.mother_name }}" name="mother_name" disabled>
 						</div>
 
@@ -475,6 +460,131 @@
       </div>
     </footer>
 	</div>
+
+
+
+
+<div class="search-container">
+
+    <div class="cross">
+        <i class="fa fa-times">
+        </i>
+    </div>
+    <div class="login-overlay search-overlay"></div>
+
+    <div class="login search-main">
+        
+            <div class="login-head search-head">
+                <h3>Search for Uploaded Notices.</h3>
+            </div>
+            
+        
+        <div class="login-form search-form">
+            <form action="{% url 'notice-search' %}" method="POST">
+            {% csrf_token %}
+                <input class="input-style" type="text" placeholder="Title" name="title">
+                <input class="input-style" type="text" placeholder="Description" name="description">
+                <input class="input-style" type="text" placeholder="Posted By" name="faculty">
+
+
+
+                <div class="side-text">Posting Date Between </div>
+                <div class="row">
+                    <div id="desktop-date"> 
+                        <div class="col sm-col-12">
+                            <input type="text" id="daterangepicker" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_desktop">
+                        </div>
+                    </div>
+                    <div id="mobile-date">  
+                        <div class="col sm-col-12">
+                            <input type="text" id="mobile-datepicker-1" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_start">
+                        </div>
+                        <div class="col sm-col-12">
+                            <input type="text" id="mobile-datepicker-2" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_end">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="side-text">Posting for </div>
+                <div class="row">
+                
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="course" class="input-style" id="create-course1">
+                        
+                        <option value="">All Courses</option>
+                        <option value="BTech">BTech</option>
+                        <option value="MTech">MTech</option>
+                        <option value="MCA">MCA</option>
+                        <option value="MBA">MBA</option>
+
+                    </select>
+                </div>
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="branch" class="input-style" id="create-branch1">
+                        <option value="">All Branches</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EE">EE</option>
+                        <option value="CE">CE</option>
+                        <option value="ICE">ICE</option>
+                        <option value="MT">MT</option>
+                        <option value="ME">ME</ssoption>
+
+                        
+                    </select>
+                </div>
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="year" class="input-style" id="create-year1">
+                        <option value="" selected>All Years</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+
+                        
+                    </select>
+                </div>
+                <div class="col col-3">
+                    
+                    <select  placeholder="" name="section" class="input-style" id="create-section1">
+                        <option value="" selected>All Sections</option>
+                        <option value="CSE1">CSE1</option>
+                        <option value="CSE2">CSE2</option>
+                        <option value="IT1">IT1</option>
+                        <option value="IT2">IT2</option>
+                        <option value="ECE1">ECE1</option>
+                        <option value="ECE2">ECE2</option>
+                        <option value="EE1">EE1</option>
+                        <option value="EE2">EE2</option>
+                        <option value="CE1">CE1</option>
+                        <option value="CE2">CE2</option>
+                        <option value="ICE1">ICE1</option>
+                        <option value="ICE2">ICE2</option>
+                        <option value="MT1">MT1</option>
+                        <option value="MT2">MT2</option>
+                        <option value="ME1">ME1</option>
+                        <option value="ME2">ME2</option>
+                        
+                    </select>
+                </div>
+
+
+                <button type="reset" value="reset"  class="reset reset-search">Reset</button>
+                <button type="submit" value="submit" class="right">Search</button>
+                <div class="clear">
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    
+</div>
+
 
 
 <!-- scripts============ -->

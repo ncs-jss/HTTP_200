@@ -357,6 +357,7 @@ setInterval(function(){
 		})
 
  	 }
+ 	 
 
  	 if($("#date-id option:selected").text()=="Date" ) { 
       

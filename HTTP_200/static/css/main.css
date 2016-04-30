@@ -826,7 +826,8 @@ h3.profile-head{
 	transition:all 0.2s ease-in-out;
 }
 
-.profile-form input{
+.profile-form input,
+.profile-form select{
 	font-family: 'Roboto';
 	font-size: 1em;
 	color: #252525;
@@ -1158,7 +1159,6 @@ button.no-delete:hover{
 	border: 2px solid #403469;
 
 }
-
 /*coming soon========*/
 
 .coming-soon{
@@ -1179,7 +1179,7 @@ button.no-delete:hover{
 
 
 .loader-container{
-	z-index: 200;
+	z-index: 5000;
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
