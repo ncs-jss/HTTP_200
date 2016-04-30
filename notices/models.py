@@ -12,11 +12,11 @@ class Notice(models.Model):
     '''
     It stores the information about the Notices
     '''
-    ACADEMICS = 'ACD'
-    ADMINISTRATION = 'ADMN'
-    TNP = 'TNP'
-    EVENTS = 'EVNT'
-    MISC = 'MISC'
+    ACADEMICS = 'academics'
+    ADMINISTRATION = 'administration'
+    TNP = 'tnp'
+    EVENTS = 'events'
+    MISC = 'misc'
     CATEGORY = (
         (ACADEMICS, 'Academics'),
         (ADMINISTRATION, 'Administration'),

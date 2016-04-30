@@ -133,10 +133,8 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
             user=self.request.user,
             notice=notice)
         if created:
-            messages.success(self.request, 'Successfully Bookmarked.')
             return HttpResponse("Successfully Bookmarked")
         else:
-            messages.success(self.request, 'Already bookmarked this notice.')
             return HttpResponse("You have already bookmarked this notice")
 
 
