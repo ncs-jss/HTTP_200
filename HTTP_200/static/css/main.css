@@ -427,6 +427,9 @@ footer h4{
 	cursor: pointer;
 	background-color: transparent;
 }
+.white-cross{
+	background: #fff !important;
+}
 .relevant-info .cross i{
 	color: #4d4d4d;
     font-size: 1em;
@@ -480,6 +483,10 @@ footer h4{
 }
 .mobile-menu{
 	display: none;
+}
+.content-info #notice_description{
+	margin-top: 10px;
+	color: #4d4d4d;
 }
 
 /*overlay*/
@@ -819,7 +826,8 @@ h3.profile-head{
 	transition:all 0.2s ease-in-out;
 }
 
-.profile-form input{
+.profile-form input,
+.profile-form select{
 	font-family: 'Roboto';
 	font-size: 1em;
 	color: #252525;
@@ -1151,7 +1159,6 @@ button.no-delete:hover{
 	border: 2px solid #403469;
 
 }
-
 /*coming soon========*/
 
 .coming-soon{
@@ -1172,7 +1179,7 @@ button.no-delete:hover{
 
 
 .loader-container{
-	z-index: 200;
+	z-index: 5000;
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
@@ -1410,6 +1417,17 @@ h3.create-head{
 .contact-container form{
 	width: 300px;
 }
+.relevant-info {
+
+	padding: 30px 30px;
+	;
+}
+.cross{
+	
+	right: 15px !important;
+	
+}
+
 }
 @media(max-width: 480px){
 	.jss-logo{
