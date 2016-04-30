@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        JSS Nucleus
+        JSS Connect
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -117,10 +117,12 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
+                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
+                    {% endifequal %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -138,7 +140,7 @@
         <div class="info-header">
 
             <h2>
-                Relevant
+                Starred
             </h2>
 
         </div>
@@ -205,7 +207,7 @@
             <div class="row">
                 <div class="heading col sm-col-6">
 
-                    <h1><span class="mobile-menu"><i class="fa fa-bars"></i></span>Relevant</h1>
+                    <h1><span class="mobile-menu"><i class="fa fa-bars"></i></span>Starred</h1>
                 </div>
                 <div class="col sm-col-6">
 

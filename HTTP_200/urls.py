@@ -1,5 +1,6 @@
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
+from allauth.account.views import login, logout
 from profiles.views import Home, FaqDisplayView, about, Contact
 import settings
 
@@ -7,6 +8,8 @@ urlpatterns = [
     url(r'^$', Home.as_view(), name="home"),
     url(r'^notices/', include('notices.urls')),
     url(r'^accounts/password/change/$', 'profiles.views.password_change', name='password_change'),
+    url(r'^login/$', login, name="account_login"),
+    url(r'^logout/$', logout, name="account_logout"),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^token/', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),

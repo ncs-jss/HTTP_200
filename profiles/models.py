@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
+from django.core.validators import MinValueValidator,MaxValueValidator
 
 class StudentDetail(models.Model):
     '''
@@ -62,8 +62,8 @@ class StudentDetail(models.Model):
         ('EE2', 'EE2'),
         ('CE1', 'CE1'),
         ('CE2', 'CE2'),
-        ('ICE1', 'ICE1'),
-        ('ICE2', 'ICE2'),
+        ('IC1', 'IC1'),
+        ('IC2', 'IC2'),
         ('MT1', 'MT1'),
         ('MT2', 'MT2'),
         ('ME1', 'ME1'),
@@ -71,10 +71,11 @@ class StudentDetail(models.Model):
     )
 
     user = models.OneToOneField(User)
-    course = models.CharField(max_length=5, choices=COURSE, default=None, null=True, blank=True)
-    branch = models.CharField(max_length=5, choices=BRANCH, default=None, null=True, blank=True)
-    year = models.PositiveIntegerField(null=True, blank=True, default=1)
-    section = models.CharField(default=None, choices=SECTION, max_length=10, null=True, blank=True)
+    course = models.CharField(max_length=5, choices=COURSE, default='AllCourses', null=True, blank=True)
+    branch = models.CharField(max_length=5, choices=BRANCH, default='AllBranches', null=True, blank=True)
+    year = models.PositiveIntegerField(null=True, blank=True, default=1, 
+        validators=[MinValueValidator(0.5),MaxValueValidator(6.5)])
+    section = models.CharField(default='AllSections', choices=SECTION, max_length=10, null=True, blank=True)
     univ_roll_no = models.PositiveIntegerField(blank=True, null=True)
     contact_no = models.PositiveIntegerField(blank=True, null=True)
     father_name = models.CharField(max_length=200, blank=True, null=True)
@@ -82,8 +83,8 @@ class StudentDetail(models.Model):
     address = models.CharField(max_length=500, blank=True, null=True)
     display_to_others = models.BooleanField(default=True)
 
-    created = models.DateTimeField("Created", auto_now_add=True, null=True)
-    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+    created = models.DateTimeField("Created", null=True, auto_now_add=True)
+    modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
     # relevent_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # academics_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
     # administration_last_seen = models.DateTimeField(auto_now_add=True,editable = True)
@@ -107,8 +108,8 @@ class FacultyDetail(models.Model):
     alternate_email = models.EmailField(max_length=254, blank=True, null=True)
     display_to_others = models.BooleanField(default=False)
 
-    created = models.DateTimeField("Created", auto_now_add=True, null=True)
-    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+    created = models.DateTimeField("Created", null=True)
+    modified = models.DateTimeField("Last Modified", null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -117,13 +118,16 @@ class FacultyDetail(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
-class ContactUsMessage(models.Model):
+class ContactMessage(models.Model):
     '''
     It stores the information about the faculties/administration of college
     '''
     name = models.CharField(max_length=100, blank=False, null=False)
     email = models.URLField(max_length=100, blank=False, null=False)
     message = models.TextField(blank=False, null=False)
+
+    created = models.DateTimeField("Created", auto_now_add=True, null=True)
+    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
 
     def __unicode__(self):
         return self.name
