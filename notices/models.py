@@ -61,8 +61,11 @@ class BookmarkedNotice(models.Model):
 class TrendingInCollege(models.Model):
     title = models.CharField(max_length=200, blank=False)
     small_description = models.CharField(max_length=200, blank=True, null=True)
-    url = models.URLField()
+    attachment = models.FileField(upload_to="trending", blank=True, null=True)
     visibility = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+
+    def filename(self):
+        return os.path.basename(self.file.name)
