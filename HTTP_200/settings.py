@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import HTTP_200.config_keys as config_keys
+from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.join(BASE_DIR, 'HTTP_200')
@@ -231,7 +232,7 @@ STATICFILES_DIRS = (
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL = "/notices/relevent/"
+LOGIN_REDIRECT_URL = reverse_lazy('relevent-notice-list')
 SAMPLEDATAHELPER_SEED = 123456789
 
 

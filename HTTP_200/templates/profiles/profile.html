@@ -20,6 +20,17 @@
 
 <body>
 
+
+
+    <div class="loader-container">
+    <div class="loader">
+      <img src="{% static "images/connect.gif"%}">
+    </div>
+    
+  </div>
+
+
+
 	{% for message in messages %}    
         <div class="notice-msg">
             {{ message }}
@@ -32,17 +43,20 @@
 	<div class="dot-menu-links">
 		
 		<ul>				
-			<li>
-				Home
-			</li>
-			<li>
-				About
-			</li>
-			<li>
-				Contact
-			</li>
-			<li>
-				JSS Website
+			   <li>
+                    <a href="{% url "home" %}">Home</a>
+                </li>
+                
+                <li>
+                    <a href="{% url "about" %}">About</a>
+                </li>
+                <li>
+                    <a href="{% url "contact" %}">Contact</a>
+                </li>
+                
+                <li>
+                    <a href="http://jssaten.ac.in" target="_blank">JSS Website</a>
+                </li>
 			</li>
 			
 		</ul>
@@ -53,9 +67,12 @@
 	</div>
 
 	<div class="left-nav">
-		<div class="logo">
-			<img src="{% static "images/logo.PNG" %}">
-		</div>
+
+        <div class="logo">
+             <a href="{% url "home" %}">
+            <img src="{% static "images/logo.PNG"%}">
+        </a>
+        </div>
 
 		<div class="left-nav-inner">
 			<ul>
@@ -64,19 +81,19 @@
 					<i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
 				</li>
 				<li class=" move-in">
-					<a href="#">
+					<a href="?category=administration">
 					<i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
 				</li>
 				<li class=" move-in">
-					<a href="#">
+					<a href="?category=academics">
 					<i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
 				</li>
 				<li class=" move-in">
-					<a href="#">
+					<a href="?category=events">
 					<i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
 				</a>
 					<li class=" move-in">
-						<a href="#">
+						<a href="?category=tnp">
 						<i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
 					</li>
 					<!-- <li class="">
@@ -84,11 +101,11 @@
 						<i class="fa fa-filter"></i> &nbsp;Filter Notices<! <span class="number">1</span> --><!-- </a>
 					</li> --> 
 					<li class=" move-in">
-						<a href="#">
+						<a href="?category=misc">
 						<i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
 					</li>
 					<li class=" move-in">
-						<a href="#">
+						<a href="">
 						<i class="fa fa-star"></i> &nbsp;Starred</a>
 					</li>
 
@@ -117,8 +134,70 @@
 
 			</ul>
 		</div>
+>>>>>>> 385f2ddfd9093c98a0de3528ff29d4814f2380be
 
-	</div>
+        <div class="left-nav-inner">
+            <ul>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}">
+                    <i class="fa fa-thumb-tack"></i> &nbsp;All Notices<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "relevent-notice-list" %}">
+                    <i class="fa fa-tags"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Administration">
+                    <i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Academics">
+                    <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
+                </li>
+                <li class=" move-in">
+                    <a href="{% url "notice-list" %}?category=Events">
+                    <i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
+                </a>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=Placement">
+                        <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
+                    </li>
+                 
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=Miscellaneous">
+                        <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+                    </li>
+                       <li class="">
+                        <a class="search2">
+                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "bookmark-list" %}">
+                        <i class="fa fa-star"></i> &nbsp;Starred</a>
+                    </li>
+
+                    <div class="line">
+                    </div>
+
+                    <li class=" active move-in">
+                        <a href="{% url "user-profile" user_id=request.user.username %}">
+                        <i class="fa fa-user"></i> &nbsp;My profile</a>
+                    </li>
+                    <li class="  move-in">
+                        <a href="{% url "my-uploaded-notices" %}">
+                        <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
+                    </li>
+                    <li class="  move-in">
+                        <a href="{% url "password_change" %}">
+                        <i class="fa fa-key"></i> &nbsp;Change Password</a>
+                    </li>
+                    <li>
+                        <a href="{% url "account_logout" %}">
+                        <i class="fa fa-inbox"></i> &nbsp;Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 
 
@@ -131,20 +210,20 @@
 				<div class="head-links-resize col sm-col-8">
 					<div class="head-links">
 						<ul>
-							<li>
-								<a href="index.html">Home</a>
-							</li>
-							
-							<li>
-								<a href="#">About</a>
-							</li>
-							<li>
-								<a href="#">Contact</a>
-							</li>
-							
-							<li>
-								<a href="#">JSS Website</a>
-							</li>
+							   <li>
+                                <a href="{% url "home" %}">Home</a>
+                            </li>
+                            
+                            <li>
+                                <a href="{% url "about" %}">About</a>
+                            </li>
+                            <li>
+                                <a href="{% url "contact" %}">Contact</a>
+                            </li>
+                            
+                            <li>
+                                <a href="http://jssaten.ac.in" target="_blank">JSS Website</a>
+                            </li>
 							
 						</ul>
 
@@ -180,16 +259,16 @@
 				
 				<div class=" row">
 					<div class="top-range col col-4">
-						<h2><i class="fa fa-user-secret"></i>	&nbsp;Username <i class="show-icon fa fa-pencil"></i></h2>
-						<input type="text" class="input-style" placeholder="Username" value="{{user_list.username}}" name="username" disabled>
+						<h2><i class="fa fa-user-secret"></i>	&nbsp;Username </h2>
+						<input type="text" class="input-style " placeholder="Username" value="{{user_list.username}}" name="username" disabled>
 					</div>
 					<div class="top-range col col-4">
 						<h2><i class="fa fa-user"></i>	&nbsp;First Name <i class="show-icon fa fa-pencil"></i></h2>
-						<input type="text" class="input-style" placeholder="First Name" value="{{ user_list.first_name }}" name="first_name" disabled>
+						<input type="text" class="input-style edit-input" placeholder="First Name" value="{{ user_list.first_name }}" name="first_name" disabled>
 					</div>
 					<div class="top-range col col-4">
 						<h2><i class="fa fa-user"></i>	&nbsp;Last Name <i class="show-icon fa fa-pencil"></i></h2>
-						<input type="text" class="input-style" placeholder="Last Name" value="{{ user_list.last_name }}" name="last_name" disabled>
+						<input type="text" class="input-style edit-input" placeholder="Last Name" value="{{ user_list.last_name }}" name="last_name" disabled>
 					</div>
 				</div>
 				
@@ -198,17 +277,17 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Course" value="{{ detail_list.course }}" name="course" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Course" value="{{ detail_list.course }}" name="course" disabled>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Branch" value="{{ detail_list.branch }}" name="branch" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Branch" value="{{ detail_list.branch }}" name="branch" disabled>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Year <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Year" value="{{ detail_list.year }}" name="year" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Year" value="{{ detail_list.year }}" name="year" disabled>
 						</div>
 					
 					</div>
@@ -216,19 +295,19 @@
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Section <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Section" value="{{ detail_list.section }}" name="section" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Section" value="{{ detail_list.section }}" name="section" disabled>
 						</div>
 
 						{% if not detail_list.display_to_others == False or user == user_list %}
 
 						<div class="top-range col col-4 ">
 							<h2><i class="fa fa-info"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;University Roll No. <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="University Roll No." value="{{ detail_list.univ_roll_no }}" name="univ_roll_no" disabled>
+							<input type="text" class="input-style edit-input" placeholder="University Roll No." value="{{ detail_list.univ_roll_no }}" name="univ_roll_no" disabled>
 						</div>
 
 					</div>
@@ -236,15 +315,15 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-building"></i>	&nbsp;Contact No. <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Contact No." value="{{ detail_list.contact_no }}" name="contact_no" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Contact No." value="{{ detail_list.contact_no }}" name="contact_no" disabled>
 						</div>
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-home"></i>	&nbsp;Address <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Address" value="{{ detail_list.address }}" name="address" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Address" value="{{ detail_list.address }}" name="address" disabled>
 						</div>
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-building"></i>	&nbsp;Father's Name <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Father's Name" value="{{ detail_list.father_name }}"  name="father_name" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Father's Name" value="{{ detail_list.father_name }}"  name="father_name" disabled>
 						</div>
 					</div>
 
@@ -253,7 +332,7 @@
 						
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-building"></i>	&nbsp;Mother's Name <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Mother's Name" value="{{ detail_list.mother_name }}" name="mother_name" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Mother's Name" value="{{ detail_list.mother_name }}" name="mother_name" disabled>
 						</div>
 
 					</div>
@@ -268,17 +347,17 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
 						</div>
 
 						<div class="top-range col col-4 ">
 							<h2><i class="fa fa-info"></i>	&nbsp;Alternate Email <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Alternate Email" value="{{ detail_list.alternate_email }}" name="alternate_email" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Alternate Email" value="{{ detail_list.alternate_email }}" name="alternate_email" disabled>
 						</div>
 
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Designation <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="University Roll No." value="{{ detail_list.designation }}" name="designation" disabled>
+							<input type="text" class="input-style edit-input" placeholder="University Roll No." value="{{ detail_list.designation }}" name="designation" disabled>
 						</div>
 
 					</div>
@@ -286,17 +365,17 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-building"></i>	&nbsp;Department <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style" placeholder="Department" value="{{ detail_list.department }}" name="department" disabled>
+							<input type="text" class="input-style edit-input" placeholder="Department" value="{{ detail_list.department }}" name="department" disabled>
 						</div>
 
 						{% if not detail_list.display_to_others == False or user == user_list %}
 							<div class="top-range col col-4">
 								<h2><i class="fa fa-phone"></i>	&nbsp;Contact Number <i class="show-icon fa fa-pencil"></i></h2>
-								<input type="text" class="input-style" placeholder="Contact Number" value="{{ detail_list.contact_no }}" name="contact_no" disabled>
+								<input type="text" class="input-style edit-input" placeholder="Contact Number" value="{{ detail_list.contact_no }}" name="contact_no" disabled>
 							</div>
 							<div class="top-range col col-4">
 								<h2><i class="fa fa-home"></i>	&nbsp;Address <i class="show-icon fa fa-pencil"></i></h2>
-								<input type="text" class="input-style" placeholder="Address" value="{{ detail_list.address }}"name="address" disabled>
+								<input type="text" class="input-style edit-input" placeholder="Address" value="{{ detail_list.address }}"name="address" disabled>
 							</div>
 					</div>
 						{% else %}
@@ -325,77 +404,76 @@
 </div>
 
 <footer>
-			<h4>Quick Links</h4>
-			<div class="footer-line"></div>
-			<div class="row">
-				<div class="footer-links">
-					<div class="col col-3">
-						<h4>View Result</h4>
-					</div>
-					<div class="col col-3">
-						<h4>My Inbox</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Register</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Forum</h4>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="footer-links">
-					<div class="col col-3">
-						<h4>JSS Library</h4>
-					</div>
-					<div class="col col-3">
-						<h4>JSS Mailbox</h4>
-					</div>
-					<div class="col col-3">
-						<h4>JSS STEP</h4>
-					</div>
-					<div class="col col-3">
-						<h4>UPTU Website</h4>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="footer-links">
-					<div class="col col-3">
-						<h4>Old Question Paper</h4>
-					</div>
-					<div class="col col-3">
-						<h4>JSS Mailbox</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Nibble Website</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Other Societies</h4>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="footer-links">
-					<div class="col col-3">
-						<h4>Computer Science & Engineering</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Electrical Engineering</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Electronics & Communication Engineering</h4>
-					</div>
-					<div class="col col-3">
-						<h4>Mechanical Engineering</h4>
-					</div>
-				</div>
-			</div>
-			<div class="sub-footer ">
-				<h4>JSS Academy Of Technical Education</h4>
-			</div>
-		</footer>
-
+      <h4>Quick Links</h4>
+      <div class="footer-line"></div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>View Result</h4>
+          </div>
+          <div class="col col-3">
+            <h4>My Inbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Register</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Forum</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>JSS Library</h4>
+          </div>
+          <div class="col col-3">
+            <h4>JSS Mailbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>JSS STEP</h4>
+          </div>
+          <div class="col col-3">
+            <h4>UPTU Website</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>Old Question Paper</h4>
+          </div>
+          <div class="col col-3">
+            <h4>JSS Mailbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Nibble Website</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Other Societies</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>Computer Science & Engineering</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Electrical Engineering</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Electronics & Communication Engineering</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Mechanical Engineering</h4>
+          </div>
+        </div>
+      </div>
+      <div class="sub-footer ">
+        <h4><a href="http://www.hackncs.com" target="_blank"> Nibble Computer Society</a></h4>
+      </div>
+    </footer>
 	</div>
 
 
