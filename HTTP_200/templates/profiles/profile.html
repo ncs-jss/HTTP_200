@@ -67,11 +67,74 @@
 	</div>
 
 	<div class="left-nav">
+
         <div class="logo">
              <a href="{% url "home" %}">
             <img src="{% static "images/logo.PNG"%}">
         </a>
         </div>
+
+		<div class="left-nav-inner">
+			<ul>
+				<li class=" move-in">
+					<a href="{% url "relevent-notice-list" %}">
+					<i class="fa fa-thumb-tack"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
+				</li>
+				<li class=" move-in">
+					<a href="?category=administration">
+					<i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
+				</li>
+				<li class=" move-in">
+					<a href="?category=academics">
+					<i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
+				</li>
+				<li class=" move-in">
+					<a href="?category=events">
+					<i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
+				</a>
+					<li class=" move-in">
+						<a href="?category=tnp">
+						<i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
+					</li>
+					<!-- <li class="">
+						<a class="search2">
+						<i class="fa fa-filter"></i> &nbsp;Filter Notices<! <span class="number">1</span> --><!-- </a>
+					</li> --> 
+					<li class=" move-in">
+						<a href="?category=misc">
+						<i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+					</li>
+					<li class=" move-in">
+						<a href="">
+						<i class="fa fa-star"></i> &nbsp;Starred</a>
+					</li>
+
+					<div class="line">
+					</div>
+
+					{% if request.user.is_authenticated %}
+
+					<li class=" active move-in">
+						<a href="{% url "user-profile" user_id=request.user.username %}">
+						<i class="fa fa-user"></i> &nbsp;My profile</a>
+					</li>
+					<li class=" move-in">
+						<a href="{% url "account_logout" %}">
+						<i class="fa fa-sign-out"></i> &nbsp;Logout</a>
+					</li>
+					{% else %}
+			        <li>
+			          <a href="{% url "account_login" %}">
+			          <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
+			        </li>
+			        {% endif %}
+					
+
+
+
+			</ul>
+		</div>
+>>>>>>> 385f2ddfd9093c98a0de3528ff29d4814f2380be
 
         <div class="left-nav-inner">
             <ul>

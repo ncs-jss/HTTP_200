@@ -12,11 +12,11 @@ class Notice(models.Model):
     '''
     It stores the information about the Notices
     '''
-    ACADEMICS = 'ACD'
-    ADMINISTRATION = 'ADMN'
-    TNP = 'TNP'
-    EVENTS = 'EVNT'
-    MISC = 'MISC'
+    ACADEMICS = 'academics'
+    ADMINISTRATION = 'administration'
+    TNP = 'tnp'
+    EVENTS = 'events'
+    MISC = 'misc'
     CATEGORY = (
         (ACADEMICS, 'Academics'),
         (ADMINISTRATION, 'Administration'),
@@ -28,13 +28,12 @@ class Notice(models.Model):
     title = models.CharField(max_length=500)
     description = RichTextField()
     file_attached = models.FileField(upload_to="attachments", blank=True, null=True)
-    subject = models.CharField(max_length=200)
     category = models.CharField(max_length=4,
                                 choices=CATEGORY,
                                 default=MISC)
-    course_branch_year = models.CharField(max_length=200, blank=False, null=True)
-    created = models.DateTimeField("Created", auto_now_add=True, null=True)
-    modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+    course_branch_year = models.CharField(max_length=200, blank=False, null=True, default="AllCourses-AllBranches-AllYears-AllSections")
+    created = models.DateTimeField("Created", null=True)
+    modified = models.DateTimeField("Last Modified", null=True)
     # scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)
 
     def get_absolute_url(self):
@@ -62,8 +61,11 @@ class BookmarkedNotice(models.Model):
 class TrendingInCollege(models.Model):
     title = models.CharField(max_length=200, blank=False)
     small_description = models.CharField(max_length=200, blank=True, null=True)
-    url = models.URLField()
+    attachment = models.FileField(upload_to="trending", blank=True, null=True)
     visibility = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
+
+    def filename(self):
+        return os.path.basename(self.file.name)

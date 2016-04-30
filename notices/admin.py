@@ -3,7 +3,7 @@ from notices.models import Notice, BookmarkedNotice, TrendingInCollege
 
 
 class NoticeAdmin(admin.ModelAdmin):
-    list_display = ('faculty', 'title', 'course_branch_year', 'created',)
+    list_display = ('faculty', 'title', 'course_branch_year', 'created', 'modified')
     list_display_links = ('title', 'faculty')
     list_filter = ('faculty', 'category')
     list_per_page = 15
@@ -12,7 +12,7 @@ class NoticeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'classes': ('wide', 'extrapretty'),
-            'fields': ('faculty', ('subject', 'category'), 'title', 'description', 'file_attached', 'course_branch_year', ),
+            'fields': ('faculty', 'category', 'title', 'description', 'file_attached', 'course_branch_year', ),
         }),
     )
 
@@ -31,7 +31,7 @@ class BookmarkedNoticeAdmin(admin.ModelAdmin):
 
 
 class TrendingInCollegeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'url', 'visibility')
+    list_display = ('title', 'attachment', 'visibility')
 
 admin.site.register(Notice, NoticeAdmin)
 admin.site.register(BookmarkedNotice, BookmarkedNoticeAdmin)

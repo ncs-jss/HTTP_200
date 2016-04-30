@@ -71,10 +71,10 @@ class StudentDetail(models.Model):
     )
 
     user = models.OneToOneField(User)
-    course = models.CharField(max_length=5, choices=COURSE, default=None, null=True)
-    branch = models.CharField(max_length=5, choices=BRANCH, default=None, null=True)
+    course = models.CharField(max_length=5, choices=COURSE, default=None, null=True, blank=True)
+    branch = models.CharField(max_length=5, choices=BRANCH, default=None, null=True, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True, default=1)
-    section = models.CharField(default=None, choices=SECTION, max_length=10, null=True)
+    section = models.CharField(default=None, choices=SECTION, max_length=10, null=True, blank=True)
     univ_roll_no = models.PositiveIntegerField(blank=True, null=True)
     contact_no = models.PositiveIntegerField(blank=True, null=True)
     father_name = models.CharField(max_length=200, blank=True, null=True)
