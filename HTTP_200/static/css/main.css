@@ -1179,7 +1179,7 @@ button.no-delete:hover{
 
 
 .loader-container{
-	z-index: 200;
+	z-index: 5000;
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
