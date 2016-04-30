@@ -427,6 +427,9 @@ footer h4{
 	cursor: pointer;
 	background-color: transparent;
 }
+.white-cross{
+	background: #fff !important;
+}
 .relevant-info .cross i{
 	color: #4d4d4d;
     font-size: 1em;
@@ -480,6 +483,10 @@ footer h4{
 }
 .mobile-menu{
 	display: none;
+}
+.content-info #notice_description{
+	margin-top: 10px;
+	color: #4d4d4d;
 }
 
 /*overlay*/
@@ -1410,6 +1417,17 @@ h3.create-head{
 .contact-container form{
 	width: 300px;
 }
+.relevant-info {
+
+	padding: 30px 30px;
+	;
+}
+.cross{
+	
+	right: 15px !important;
+	
+}
+
 }
 @media(max-width: 480px){
 	.jss-logo{
