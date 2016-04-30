@@ -1106,11 +1106,11 @@ button.no-delete:hover{
 }
 .contact-container form{
 	width: 500px;
-	padding-top: 40px;
+	padding-top: 60px;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
-	margin-bottom: 90px;
+	margin-bottom: 130px;
 
 }
 .contact-container form textarea{
