@@ -117,7 +117,7 @@ class FacultyDetail(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
-class ContactUsMessage(models.Model):
+class ContactMessage(models.Model):
     '''
     It stores the information about the faculties/administration of college
     '''

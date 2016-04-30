@@ -13,7 +13,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account import signals
 from braces.views import LoginRequiredMixin
 
-from .models import StudentDetail, FacultyDetail, ContactUsMessage
+from .models import StudentDetail, FacultyDetail, ContactMessage
 from .forms import StudentForm, FacultyForm, UserForm
 from notices.models import Notice, TrendingInCollege
 
@@ -170,7 +170,7 @@ class Contact(View):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        contactus = ContactUsMessage(
+        contactus = ContactMessage(
             name=name,
             email=email,
             message=message)
