@@ -1,5 +1,7 @@
 $(document).ready(function () {
+var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 
+console.log(full);
 
 $("body").css({
 	'overflow-y':'hidden'

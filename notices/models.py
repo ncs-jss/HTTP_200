@@ -28,7 +28,7 @@ class Notice(models.Model):
     title = models.CharField(max_length=500)
     description = RichTextField()
     file_attached = models.FileField(upload_to="attachments", blank=True, null=True)
-    category = models.CharField(max_length=4,
+    category = models.CharField(max_length=15,
                                 choices=CATEGORY,
                                 default=MISC)
     course_branch_year = models.CharField(max_length=200, blank=False, null=True, default="AllCourses-AllBranches-AllYears-AllSections")

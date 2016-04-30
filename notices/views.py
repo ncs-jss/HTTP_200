@@ -22,10 +22,14 @@ class NoticeList(LoginRequiredMixin, generic.View):
     def get(self, request):
         category = request.GET.get('category', None)
         template = 'notices/list.html'
+
+        page_type = ''
         if category is None:
             notice_list = Notice.objects.order_by('-modified')
+            page_type = 'All Notices'
         else:
             notice_list = Notice.objects.filter(category=category).order_by('-modified')
+            page_type = category
 
         bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
 
@@ -48,7 +52,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
-        return render(request, template, {"notices": notices})
+        return render(request, template, {"notices": notices, 'page_type':page_type})
 
 
 class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
@@ -190,6 +194,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         template_name = "notices/list.html"
+        page_type = 'Relevant'
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
             notices = Notice.objects.filter(
@@ -214,7 +219,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
 
-        return render(request, template_name, {'notices': notices})
+        return render(request, template_name, {'notices': notices, 'page_type':page_type})
 
     def post(self, request, *args, **kwargs):
         notice = Notice.objects.filter(id=request.POST['notice_id'])[0]
