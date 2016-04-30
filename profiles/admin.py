@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import StudentDetail, FacultyDetail, ContactUsMessage
+from .models import StudentDetail, FacultyDetail, ContactMessage
 # Register your models here.
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
@@ -23,4 +23,4 @@ class FacultyAdmin(admin.ModelAdmin):
 
 admin.site.register(FacultyDetail, FacultyAdmin)
 admin.site.register(StudentDetail, StudentAdmin)
-admin.site.register(ContactUsMessage)
+admin.site.register(ContactMessage)

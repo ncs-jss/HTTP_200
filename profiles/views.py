@@ -13,7 +13,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account import signals
 from braces.views import LoginRequiredMixin
 
-from .models import StudentDetail, FacultyDetail, ContactUsMessage
+from .models import StudentDetail, FacultyDetail, ContactMessage
 from .forms import StudentForm, FacultyForm, UserForm
 from notices.models import Notice, TrendingInCollege
 
@@ -42,7 +42,11 @@ class Home(View):
         template_name = 'index.html'
         trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
         notices = Notice.objects.all().order_by('-modified')[:5]
-        return render(request, template_name, {'notices': notices, 'trending': trending})
+
+        user_type = 'not_faculty'
+        if request.user.is_authenticated and (permissions.is_in_group(request.user, 'FacultyGroup')):
+            user_type = 'faculty'
+        return render(request, template_name, {'notices': notices, 'trending': trending, 'user_type':user_type})
 
 
 class FaqDisplayView(TemplateView):
@@ -170,7 +174,7 @@ class Contact(View):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        contactus = ContactUsMessage(
+        contactus = ContactMessage(
             name=name,
             email=email,
             message=message)

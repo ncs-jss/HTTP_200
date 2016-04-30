@@ -31,7 +31,7 @@ class NoticeCreateForm(forms.ModelForm):
         (ECE, 'ECE'),
         (EEE, 'EEE'),
         (CE, 'CE'),
-        (IC, 'ICE'),
+        (IC, 'IC'),
         (ME, 'ME'),
         (MT, 'MT'),
         (ALL, 'ALL')
@@ -61,30 +61,3 @@ class NoticeCreateForm(forms.ModelForm):
         model = Notice
         exclude = ('faculty', 'course_branch_year')
         widgets = {'description': CKEditorWidget, }
-
-    def __init__(self, *args, **kwargs):
-        try:
-            notice_instance = Notice.objects.filter(
-                title=kwargs['instance']).values()
-
-            course_set = set()
-            branch_set = set()
-            sem_set = set()
-
-            course_branch_year = notice_instance[0]['course_branch_year']
-            course_branch_year_list = course_branch_year.strip().split()
-
-            for item in course_branch_year_list:
-                item = item.split('-')
-                course, branch, sem = item[0], item[1], item[2]
-                course_set.add(course)
-                branch_set.add(branch)
-                sem_set.add(sem)
-
-            kwargs['initial'].update({'courses': list(course_set)})
-            kwargs['initial'].update({'branches': list(branch_set)})
-            kwargs['initial'].update({'semesters': list(sem_set)})
-
-        except:
-            pass
-        super(NoticeCreateForm, self).__init__(*args, **kwargs)
