@@ -1110,7 +1110,8 @@ button.no-delete:hover{
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
-	margin-bottom: 40px;
+	margin-bottom: 90px;
+
 }
 .contact-container form textarea{
 	height: 100px;
@@ -1294,7 +1295,7 @@ div#warn-msg-login i{
 	position: fixed;
 	margin-left: -250px;
 	width: 220px;
-	height: 100vh;
+	height: 104vh;
 	/*background: #2d2251;*/
 	
 
@@ -1428,7 +1429,7 @@ h3.create-head{
 .relevant-info {
 
 	padding: 30px 30px;
-	;
+
 }
 .cross{
 	
