@@ -124,7 +124,7 @@ $(".loader-container").fadeIn();
 	$(".relevant-info").hide();
 
 
-	$(".sec,.preview,.pad-list").click(function () {
+	$(".sec,.preview,.modal-index").click(function () {
 		var login_status = $('#login_status').val();
 		console.log(login_status);
 
