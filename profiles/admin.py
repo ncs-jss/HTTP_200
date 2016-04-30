@@ -13,6 +13,7 @@ class StudentResource(resources.ModelResource):
 
 class StudentAdmin(ImportExportModelAdmin):
     list_display = ('__unicode__', 'univ_roll_no', 'branch', 'year', 'section')
+    search_fields = ('user__username',)
     resource_class = StudentResource
     pass
 
