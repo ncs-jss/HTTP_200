@@ -6,6 +6,7 @@
 	<title>
 		JSS Connect
 	</title>
+  <meta name="theme-color" content="#2d2251">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{% static "css/default.css" %}">
 	<link rel="stylesheet" href="{% static "css/main.css" %}">
@@ -48,17 +49,18 @@
         <!-- <li>
           <a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
         </li> -->
-        <li class="active index-list"><a href="{% url "about" %}" >
-          <i class="fa fa-globe"></i> &nbsp;About</a>
+        <li class=" index-list"><a href="{% url "about" %}" >
+          <i class="fa fa-newspaper-o"></i> &nbsp;About</a>
         </li>
           <li class=" index-list">
             <a href="{% url "contact" %}">
-            <i class="fa fa-user"></i> &nbsp;Contact</a>
+            <i class="fa fa-phone"></i> &nbsp;Contact</a>
           </li>
-          <li class="index-list">
+          <li class="">
             <a href="http://jssaten.ac.in" target="_blank">
-            <i class="fa fa-phone"></i> &nbsp;JSS Website</a>
+            <i class="fa fa-globe"></i> &nbsp;JSS Website</a>
           </li>
+          
           
 
           <div class="line">
@@ -68,11 +70,12 @@
             <a href="{% url "user-profile" user_id=request.user.username %}">
             <i class="fa fa-user"></i> &nbsp;My profile</a>
           </li>
-         
+         {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
           <li class="index-list">
             <a href="{% url "my-uploaded-notices" %}">
             <i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
           </li>
+          {% endifequal %}
            <li class="index-list move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -101,7 +104,8 @@
 	
 		<div class="index-head">
 		<div class="index-logo">
-			<img src="{% static "images/logo-dark.png" %}">
+		 <a href="{% url "home" %}">
+      <img src="{% static "images/logo-dark.png"%}"></a>
 		</div>
 		<h3 class="tag-line">Be updated anywhere and anytime!</h3>
 		<h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span>About Us</h3>

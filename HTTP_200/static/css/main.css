@@ -22,11 +22,11 @@ body{
 	width: 100%;
 	height: 100px;
 	border-bottom: 1px solid #5d5473;
-	padding: 25px 15px 20px 20px;
+	padding: 10px;
 	text-align: center;
 }
 .logo img{
-	height: 100%;
+	width: 100%;
 
 }
 .logo-index{
@@ -38,7 +38,7 @@ body{
 	position: absolute;
 	top:115;
 	width: 100%;
-	height:calc(100% - 118px);
+	height:calc(100vh - 145px);
 	/*height:100%;*/
 	padding:0px;
 	/*border: 1px solid red;*/
@@ -401,11 +401,19 @@ footer h4{
 	background-color: #2d2251;
 	margin-top: 20px;
 	font-size: 0.8em;
+	
 
+}
+.sub-footer a{
+	color: #BEA42E;
+	transition:all 0.2s ease-in-out;
+}
+.sub-footer a:hover{
+	color: #fff;
 }
 .relevant-info {
 	width: 100%;
-	height:104vh;
+	height:100vh;
 	position: fixed;
 	z-index: 5;
 	background-color: #fff ;
@@ -493,7 +501,7 @@ footer h4{
 
 .overlay-dark{
 	width: 100vw;
-	height: 100vh;
+	height: 120vh;
 	/*display: none;*/
 	background: rgba(0,0,0,0.8);
 	position: fixed;
@@ -524,7 +532,7 @@ footer h4{
 }
 .dot-menu-links{
 	display: block;
-	height: 100vh;
+	height: 120vh;
 	padding:10px  20px;
 	color: #fff;
 	background: #2D2251;
@@ -574,7 +582,7 @@ footer h4{
 .overlay-dark-mob{
 	display: block;
 	width: 100vw;
-	height: 100%;
+	height: 120vh;
 	background-color: rgba(0,0,0,0.8);
 	position: fixed;
 	z-index: 2;
@@ -782,7 +790,7 @@ footer h4{
 
 }
 .left-nav-inner-index{
-	height:calc(100% - 152px);
+	height:calc(100vh - 173px);
 }
 .index-bars i{
 	font-size: 26px;
@@ -1106,11 +1114,12 @@ button.no-delete:hover{
 }
 .contact-container form{
 	width: 500px;
-	padding-top: 40px;
+	padding-top: 60px;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
-	margin-bottom: 40px;
+	margin-bottom: 130px;
+
 }
 .contact-container form textarea{
 	height: 100px;
@@ -1228,7 +1237,7 @@ button.no-delete:hover{
 	width: 100%;
 }
 .star-margin div {
-	margin-right: 15px;
+	margin-right: 17px;
 }
 
 .empty-notice{
@@ -1248,6 +1257,14 @@ button.no-delete:hover{
 #cke_id_description{
 	width: 100% !important;
 }
+div#warn-msg-login{
+	margin-top: 25px;
+	color: #252525;
+	font-size: 0.9em;
+}
+div#warn-msg-login i{
+	color: #e6c115;
+}
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px
@@ -1261,7 +1278,9 @@ button.no-delete:hover{
 .mob-side-link{
 	display: inline-block;
 }
-
+.star-margin div {
+	margin-right: 8px;
+}
 }
 
 
@@ -1286,7 +1305,7 @@ button.no-delete:hover{
 	position: fixed;
 	margin-left: -250px;
 	width: 220px;
-	height: 100vh;
+	height: 120vh;
 	/*background: #2d2251;*/
 	
 
@@ -1304,7 +1323,7 @@ button.no-delete:hover{
 	}
 	.left-nav-inner {
 	   
-	    height: calc(100% - 116px);
+	    height: calc(100vh - 120px);
 	   
 	}
 	.footer-links div{
@@ -1324,7 +1343,7 @@ button.no-delete:hover{
 		display: none;
 	}
 	.date-index{
-		text-align: right;
+		text-align: left;
 	}
 	.auth-index{
 		text-align: left;
@@ -1340,7 +1359,7 @@ button.no-delete:hover{
 		text-align: left;
 	}
 	.left-nav-inner-index{
-		height:calc(100% - 152px);
+		height:calc(100vh - 152px);
 	}
 	.edit-profile-text{
 		margin-right: 40px;
@@ -1381,6 +1400,10 @@ button.no-delete:hover{
 	
 	margin-top: 190px;
 }
+.star-margin div {
+	margin-right: 5px;
+}
+
 
 }
 
@@ -1420,7 +1443,7 @@ h3.create-head{
 .relevant-info {
 
 	padding: 30px 30px;
-	;
+
 }
 .cross{
 	
@@ -1440,6 +1463,7 @@ h3.create-head{
 	.my-prompt h2{
 		font-size: 1.2em;
 	}
+
 }
 
 

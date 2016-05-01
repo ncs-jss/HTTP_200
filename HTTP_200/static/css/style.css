@@ -295,4 +295,7 @@ color: #9d9d9d;
 		.login-form form .reset{
 			float: left;
 		}
+		div#warn-msg-login{
+	margin-top: 40px;
+}
 	}

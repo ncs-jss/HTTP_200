@@ -124,7 +124,7 @@ $(".loader-container").fadeIn();
 	$(".relevant-info").hide();
 
 
-	$(".sec,.preview,.pad-list").click(function () {
+	$(".sec,.preview,.modal-index").click(function () {
 		var login_status = $('#login_status').val();
 		console.log(login_status);
 
@@ -146,11 +146,11 @@ $(".loader-container").fadeIn();
 		var modified = $("#notice_modified_"+id).text();
 		var faculty = $("#notice_faculty_"+id).text();
 		var file_attached = $("#notice_file_attached_"+id).val();
-		console.log("'"+file_attached+"'");
 		if (typeof file_attached == "undefined") {
 			$("#notice_download_attachment").hide();
 		}
 		else {
+			$("#notice_download_attachment").show();
 			$("a#download_attachment").prop("href", file_attached);
 		}
 		$("#notice_description").html(description);
