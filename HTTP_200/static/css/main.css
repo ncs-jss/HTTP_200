@@ -401,7 +401,15 @@ footer h4{
 	background-color: #2d2251;
 	margin-top: 20px;
 	font-size: 0.8em;
+	
 
+}
+.sub-footer a{
+	color: #BEA42E;
+	transition:all 0.2s ease-in-out;
+}
+.sub-footer a:hover{
+	color: #fff;
 }
 .relevant-info {
 	width: 100%;
@@ -1335,7 +1343,7 @@ div#warn-msg-login i{
 		display: none;
 	}
 	.date-index{
-		text-align: right;
+		text-align: left;
 	}
 	.auth-index{
 		text-align: left;
