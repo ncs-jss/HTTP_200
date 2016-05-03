@@ -716,6 +716,9 @@ setInterval(function  () {
     
       if (location.hash == null || location.hash == "") {
           $(".relevant-info").hide();
+          $("body").css({
+          	'overflow-y':'scroll'
+          })
       }
     
   });
