@@ -247,10 +247,10 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         except:
             notices = Notice.objects.all()
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
-            notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
-            notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
-            notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
-            notices.order_by('-modified')
+            notices = notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
+            notices = notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
+            notices = notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
+            notices = notices.order_by('-modified')
         paginator = Paginator(notices, 10)
 
         page = request.GET.get('page')
