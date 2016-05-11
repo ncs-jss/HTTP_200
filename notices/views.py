@@ -250,7 +250,8 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             notices = notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
             notices = notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
             notices = notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
-            notices = notices.order_by('-modified')
+
+        notices = notices.order_by('-modified')
         paginator = Paginator(notices, 10)
 
         page = request.GET.get('page')
