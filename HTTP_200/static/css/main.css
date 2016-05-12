@@ -4,6 +4,7 @@ body{
 	transition:all 0.2s ease-in-out;
 
 }
+
 .left-nav-inner ul li .active{
 	background: #403469;
 	color: #fff;
@@ -1193,9 +1194,8 @@ button.no-delete:hover{
 	width: 100vw;
 	height: 100vh;
 	background: #fff;
-
-
 }
+
 .loader{
 	display: inline-block;
 	position: absolute;
@@ -1212,6 +1212,7 @@ button.no-delete:hover{
 	animation-iteration-count:infinite;
 	animation-direction:linear;
 	animation-timing-function: linear;
+
 }
 @keyframes rotate-loader{
 	from{
