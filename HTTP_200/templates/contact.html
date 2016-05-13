@@ -8,6 +8,8 @@
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#2d2251">
+
+  <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico"%}">
 	<link rel="stylesheet" href="{% static "css/default.css" %}">
 	<link rel="stylesheet" href="{% static "css/main.css" %}">
 	<link rel="stylesheet" href="{% static "css/style.css" %}">
@@ -51,7 +53,7 @@
         <li class=" index-list"><a href="{% url "about" %}" >
           <i class="fa fa-newspaper-o"></i> &nbsp;About</a>
         </li>
-          <li class=" index-list">
+          <li class="active index-list">
             <a href="{% url "contact" %}">
             <i class="fa fa-phone"></i> &nbsp;Contact</a>
           </li>
@@ -160,7 +162,7 @@
             <h4>JSS Library</h4>
           </div>
           <div class="col col-3">
-            <h4>JSS Mailbox</h4>
+            <h4>JSS Website</h4>
           </div>
           <div class="col col-3">
             <h4>JSS STEP</h4>
