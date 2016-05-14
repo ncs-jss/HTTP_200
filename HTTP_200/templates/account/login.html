@@ -45,7 +45,7 @@
 		<div class="login-form">
 			<form  method="POST" action="{% url 'account_login' %}">
 			{% csrf_token %}
-				<input class="input-style" type="text" placeholder="Username" name="login" required>
+				<input class="input-style" type="text" placeholder="Username eg 12cse015" name="login" required>
 				<input class="input-style" type="password" placeholder="Password" name="password" required>
 
 				<span class="check">
@@ -67,8 +67,16 @@
 			</form>
 			<h4><a href="/"><i class="fa fa-chevron-left"></i> &nbsp;Back to home</a></h4>
 		</div>
+ <div class="modal-content">
+
+          Hello User! If you are a student then please Login with
+          password same as of your username and change your password afterwords.
+        </div>
+
 
 	</div>
+
+	
 	</div>
 
 
