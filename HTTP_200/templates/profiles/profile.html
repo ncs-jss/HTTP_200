@@ -292,7 +292,7 @@
 
 						<div class="top-range col col-4 ">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
+							<input type="email" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
 						</div>
 
 						<div class="top-range col col-4">
@@ -305,7 +305,7 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-phone"></i>	&nbsp;Contact No. <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Contact No." value="{{ detail_list.contact_no }}" name="contact_no" disabled>
+							<input type="text" id="num" maxlength="10" class="input-style edit-input" placeholder="Contact No." value="{{ detail_list.contact_no }}" name="contact_no" disabled>
 						</div>
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-home"></i>	&nbsp;Address <i class="show-icon fa fa-pencil"></i></h2>
@@ -337,12 +337,12 @@
 					<div class=" row">
 						<div class="top-range col col-4">
 							<h2><i class="fa fa-envelope"></i>	&nbsp;Email <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
+							<input type="email" class="input-style edit-input" placeholder="Email" value="{{ user_list.email }}" name="email" disabled>
 						</div>
 
 						<div class="top-range col col-4 ">
 							<h2><i class="fa fa-info"></i>	&nbsp;Alternate Email <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Alternate Email" value="{{ detail_list.alternate_email }}" name="alternate_email" disabled>
+							<input type="email" class="input-style edit-input" placeholder="Alternate Email" value="{{ detail_list.alternate_email }}" name="alternate_email" disabled>
 						</div>
 
 						<div class="top-range col col-4">
@@ -371,7 +371,7 @@
 						{% if not detail_list.display_to_others == False or user == user_list %}
 							<div class="top-range col col-4">
 								<h2><i class="fa fa-phone"></i>	&nbsp;Contact Number <i class="show-icon fa fa-pencil"></i></h2>
-								<input type="text" class="input-style edit-input" placeholder="Contact Number" value="{{ detail_list.contact_no }}" name="contact_no" disabled>
+								<input type="text" max="10" id="num2" class="input-style edit-input" placeholder="Contact Number" value="{{ detail_list.contact_no }}" name="contact_no" disabled>
 							</div>
 							<div class="top-range col col-4">
 								<h2><i class="fa fa-home"></i>	&nbsp;Address <i class="show-icon fa fa-pencil"></i></h2>
@@ -397,7 +397,12 @@
 			
 			<div class="edit-profile edit-save">
 				 Save Details
-			</div>
+			</div>  
+
+				<!-- working with django -->
+			&nbsp;&nbsp;
+
+			<span id="profile-warn"> Please enter valid email address!</span>
 			{% endif %}
 		
 
@@ -603,7 +608,14 @@
 
 
 <!-- scripts============ -->
-
+<script>
+document.getElementById('num').addEventListener('input', function (e) {
+ e.target.value = e.target.value.replace(/[^\dA-Z]/g, '');
+});
+document.getElementById('num2').addEventListener('input', function (e) {
+ e.target.value = e.target.value.replace(/[^\dA-Z]/g, '');
+});
+</script>
 <script src="{% static "js/jquery.js" %}"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="{% static "js/jquery.daterange.js" %}"></script>

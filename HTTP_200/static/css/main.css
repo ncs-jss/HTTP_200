@@ -466,6 +466,10 @@ footer h4{
 }
 .content-info{
 	margin-top: 18px;
+	line-height: 1.1em;
+}
+#notice_title{
+	line-height: 1.1em;
 }
 .content-info p{
 	color: #4d4d4d;
@@ -1288,6 +1292,10 @@ div#warn-msg-login i{
 
 	color: #fff;
 }
+#profile-warn{
+	font-family: 'Roboto';
+	color: #E6C115;
+}
 @media(max-width: 950px){
 	.pad-list a{
 		padding:18px 30px 18px 30px
@@ -1473,7 +1481,11 @@ h3.create-head{
 	right: 15px !important;
 	
 }
+.left-index-bg{
+	background:transparent;
 
+
+}
 }
 @media(max-width: 480px){
 	.jss-logo{
