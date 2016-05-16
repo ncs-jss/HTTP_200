@@ -262,7 +262,32 @@
                 </li>
                 <li class="mobile">
                     <div class="row">
-                    <div class="pagination col sm-col sm-col-12">
+                <div class="pagination col sm-col sm-col-12">
+                    {% if notices.has_previous %}
+                            <a href="?{{params.urlencode}}&amp;page={{ notices.previous_page_number }}">
+                                <i class="fa fa-chevron-circle-left"></i>    
+                            </a>
+                    {% endif %}
+                    
+                    Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+                    
+                    <!-- A good feature to be included later -->
+                    
+                    <!-- {% for page in notices.paginator.page_range  %}
+                        {% if page == summaries.number %}
+                            <a class="active" href="?{{params.urlencode}}&amp;page={{ page }}" style="color:red;" >{{ page }}</a>
+                        {% else %}
+                            <a href="?{{params.urlencode}}&amp;page={{ page }}" >{{ page }}</a>
+                        {% endif %}
+                    {% endfor %} -->
+                    {% if notices.has_next %}
+                        <a href="?{{params.urlencode}}&amp;page={{ notices.next_page_number }}">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                    <!-- <div class="pagination col sm-col sm-col-12">
                     Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
                     {% if notices.has_previous %}
                         <a href="?page={{ notices.previous_page_number }}">
@@ -275,7 +300,8 @@
                             <i class="fa fa-chevron-circle-right"></i>
                         </a>
                     {% endif %}
-                    </div>
+                    </div> -->
+                    
                     </div>
                 </li>
                 <ul>
@@ -333,7 +359,32 @@
                 {% endfor %}
                 <ul>
         </div>
-        <div class="pagination">
+        <div class="pagination ">
+                {% if notices.has_previous %}
+                        <a href="?{{params.urlencode}}&amp;page={{ notices.previous_page_number }}">
+                            <i class="fa fa-chevron-circle-left"></i>    
+                        </a>
+                {% endif %}
+                
+                Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+                
+                <!-- A good feature to be included later -->
+                
+                <!-- {% for page in notices.paginator.page_range  %}
+                    {% if page == summaries.number %}
+                        <a class="active" href="?{{params.urlencode}}&amp;page={{ page }}" style="color:red;" >{{ page }}</a>
+                    {% else %}
+                        <a href="?{{params.urlencode}}&amp;page={{ page }}" >{{ page }}</a>
+                    {% endif %}
+                {% endfor %} -->
+                {% if notices.has_next %}
+                    <a href="?{{params.urlencode}}&amp;page={{ notices.next_page_number }}">
+                    <i class="fa fa-chevron-circle-right"></i>
+                    </a>
+                {% endif %}
+        </div>
+
+        <!-- <div class="pagination">
         Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
             {% if notices.has_previous %}
                 <a href="?page={{ notices.previous_page_number }}">
@@ -347,7 +398,7 @@
                 </a>
             {% endif %}
 
-        </div>
+        </div> -->
         <footer>
       <h4>Quick Links</h4>
       <div class="footer-line"></div>

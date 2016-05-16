@@ -102,8 +102,11 @@ class UserProfile(LoginRequiredMixin, View):
 
             if detail_form.is_valid():
                 detail = detail_form.save()
+                messages.success(self.request, 'Profile updated successfully.')
+            else:
+                messages.success(self.request, 'Error, Profile not updated.')
 
-            messages.success(self.request, 'Profile updated successfully.')
+
             return redirect("user-profile", user_id=request.user.username)
 
         else:

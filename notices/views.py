@@ -54,16 +54,43 @@ class NoticeList(LoginRequiredMixin, generic.View):
                     notice.is_bookmarked_by_user = False
 
         paginator = Paginator(notice_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
-        page = request.GET.get('page')
+
+        extra_param = request.GET.copy()
+        if 'page' in  extra_param.keys():
+            del  extra_param['page']
+
+        length = len(notice_list)
+
+        # get page number from GET request
+        page_num = request.GET.get('page', 1)
+
+        # get objects from paginator according to page number
         try:
-            notices = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            notices = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
+            notices = paginator.page(page_num)
+        except(EmptyPage, InvalidPage):
             notices = paginator.page(paginator.num_pages)
-        return render(request, template, {"notices": notices, 'page_type':page_type})
+
+        context_dict = {
+            'object_amount': length,
+            'notices': notices,
+            'params' : extra_param,
+        }
+
+
+        # sssssssssssssssss
+        # page = request.GET.get('page')
+        # try:
+        #     notices = paginator.page(page)
+        # except PageNotAnInteger:
+        #     # If page is not an integer, deliver first page.
+        #     notices = paginator.page(1)
+        # except EmptyPage:
+        #     # If page is out of range (e.g. 9999), deliver last page of results.
+        #     notices = paginator.page(paginator.num_pages)
+        context_dict['notices'] = notices
+        context_dict['page_type'] = page_type
+
+        return render(request, template, context_dict)
 
 # class FullTextSearch(LoginRequiredMixin, generic.View):
 #     def get(self, request):
@@ -184,15 +211,41 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
     def get(self, request):
         template_name = "bookmark.html"
         bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
+        
+
         paginator = Paginator(bookmark_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
-        page = request.GET.get('page')
+
+        extra_param = request.GET.copy()
+        if 'page' in  extra_param.keys():
+            del  extra_param['page']
+
+        length = len(bookmark_list)
+
+        # get page number from GET request
+        page_num = request.GET.get('page', 1)
+
+        # get objects from paginator according to page number
         try:
-            bookmarks = paginator.page(page)
-        except PageNotAnInteger:
-            bookmarks = paginator.page(1)
-        except EmptyPage:
+            bookmarks = paginator.page(page_num)
+        except(EmptyPage, InvalidPage):
             bookmarks = paginator.page(paginator.num_pages)
-        return render(request, template_name, {"notices": bookmarks})
+
+        context_dict = {
+            'object_amount': length,
+            'notices': bookmarks,
+            'params' : extra_param,
+        }
+
+        # paginator = Paginator(bookmark_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
+        # page = request.GET.get('page')
+        # try:
+        #     bookmarks = paginator.page(page)
+        # except PageNotAnInteger:
+        #     bookmarks = paginator.page(1)
+        # except EmptyPage:
+        #     bookmarks = paginator.page(paginator.num_pages)
+
+        return render(request, template_name, context_dict)
 
 
 class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
@@ -239,19 +292,33 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
     def get(self, request):
         template_name = "notices/list.html"
         page_type = 'Relevant'
+        notices = Notice.objects.all()
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
             notices = Notice.objects.filter(
                 Q(course_branch_year__contains=faculty.department) | Q(course_branch_year__contains='-AllBranches-') | Q(course_branch_year__contains='-AllBranches-')
             )
         except:
-            notices = Notice.objects.all()
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             notices = notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
             notices = notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
             notices = notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
+        else:
+            pass
 
         notices = notices.order_by('-modified')
+
+        # To check if the notices are bookmarked by user or not
+        bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
+
+        for notice in notices:
+            for bookmark_id in bookmark_id_list:
+                if bookmark_id == notice.pk:
+                    notice.is_bookmarked_by_user = True
+                    break
+                else:
+                    notice.is_bookmarked_by_user = False
+
         paginator = Paginator(notices, 10)
 
         page = request.GET.get('page')
@@ -264,6 +331,11 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
 
+        # queries_without_page = request.GET.copy()
+        # if queries_without_page.has_key('page'):
+        #     del queries_without_page['page']
+        # context['queries'] = queries_without_page
+        
         return render(request, template_name, {'notices': notices, 'page_type':page_type})
 
     def post(self, request, *args, **kwargs):
