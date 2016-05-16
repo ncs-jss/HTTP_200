@@ -77,7 +77,7 @@ class StudentDetail(models.Model):
         validators=[MinValueValidator(0.5),MaxValueValidator(6.5)])
     section = models.CharField(default='AllSections', choices=SECTION, max_length=10, null=True, blank=True)
     univ_roll_no = models.PositiveIntegerField(blank=True, null=True)
-    contact_no = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(10000000000),MaxValueValidator(9999999999)])
+    contact_no = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000000000),MaxValueValidator(9999999999)])
     father_name = models.CharField(max_length=200, blank=True, null=True)
     mother_name = models.CharField(max_length=200, blank=True, null=True)
     address = models.CharField(max_length=500, blank=True, null=True)
