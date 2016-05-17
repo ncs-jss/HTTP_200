@@ -24,8 +24,8 @@ class Command(BaseCommand):
 
         # for assigning Groups -
         #   0:No group
-        #   1:StudentGroup
-        #   2:FacultyGroup
+        #   1:student
+        #   2:faculty
         logger.debug("Creating a Faculty Superuser with username: admin and password %s" % admin_md5)
         admin = autofixture.create_one('auth.User',
                                        field_values={'username': 'admin',

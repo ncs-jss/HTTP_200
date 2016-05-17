@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.core.validators import MinValueValidator,MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 class StudentDetail(models.Model):
     '''
@@ -73,11 +74,14 @@ class StudentDetail(models.Model):
     user = models.OneToOneField(User)
     course = models.CharField(max_length=5, choices=COURSE, default='AllCourses', null=True, blank=True)
     branch = models.CharField(max_length=5, choices=BRANCH, default='AllBranches', null=True, blank=True)
-    year = models.PositiveIntegerField(null=True, blank=True, default=1, 
-        validators=[MinValueValidator(0.5),MaxValueValidator(6.5)])
+    year = models.PositiveIntegerField(null=True, blank=True, default=1,
+                                       validators=[MinValueValidator(0.5),
+                                                   MaxValueValidator(6.5)])
     section = models.CharField(default='AllSections', choices=SECTION, max_length=10, null=True, blank=True)
     univ_roll_no = models.PositiveIntegerField(blank=True, null=True)
-    contact_no = models.PositiveIntegerField(blank=True, null=True)
+    contact_no = models.PositiveIntegerField(blank=True, null=True,
+                                             validators=[MinValueValidator(1000000000),
+                                                         MaxValueValidator(9999999999)])
     father_name = models.CharField(max_length=200, blank=True, null=True)
     mother_name = models.CharField(max_length=200, blank=True, null=True)
     address = models.CharField(max_length=500, blank=True, null=True)

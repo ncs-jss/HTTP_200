@@ -41,12 +41,21 @@ class Home(View):
     def get(self, request):
         template_name = 'index.html'
         trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
-        notices = Notice.objects.all().order_by('-modified')[:5]
+
+        if request.user.is_authenticated():
+            user_group = request.user.groups.all()[0].name.lower()
+
+            notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
+            notices = notices.order_by('-modified')[:5]
+        else:
+            notices = Notice.objects.filter(**{'visible_for_student': True})
+            notices = notices.order_by('-modified')[:5]
 
         user_type = 'not_faculty'
-        if request.user.is_authenticated and (permissions.is_in_group(request.user, 'FacultyGroup')):
+        if request.user.is_authenticated and (permissions.is_in_group(request.user, 'faculty')):
             user_type = 'faculty'
-        return render(request, template_name, {'notices': notices, 'trending': trending, 'user_type':user_type})
+        return render(request, template_name,
+                      {'notices': notices, 'trending': trending, 'user_type': user_type})
 
 
 class FaqDisplayView(TemplateView):
@@ -65,10 +74,10 @@ class UserProfile(LoginRequiredMixin, View):
         user_type = None
         user_list = get_object_or_404(User, username=user_id)
         detail_list = None
-        if permissions.is_in_group(user_list, 'StudentGroup'):
+        if permissions.is_in_group(user_list, 'student'):
             user_type = 'student'
             detail_list = get_object_or_404(StudentDetail, user=user_list)
-        elif permissions.is_in_group(user_list, 'FacultyGroup'):
+        elif permissions.is_in_group(user_list, 'faculty'):
             user_type = 'faculty'
             detail_list = get_object_or_404(FacultyDetail, user=user_list)
         else:
@@ -82,13 +91,13 @@ class UserProfile(LoginRequiredMixin, View):
         detail = None
 
         if username == request.user:
-            if permissions.is_in_group(username, 'StudentGroup'):
+            if permissions.is_in_group(username, 'student'):
                 user = get_object_or_404(User, pk=username.id)
                 user_form = UserForm(request.POST, instance=user)
                 detail = get_object_or_404(StudentDetail, user=user)
                 detail_form = StudentForm(request.POST, instance=detail)
 
-            elif permissions.is_in_group(username, 'FacultyGroup'):
+            elif permissions.is_in_group(username, 'faculty'):
                 user = get_object_or_404(User, pk=username.id)
                 user_form = UserForm(request.POST, instance=user)
                 detail = get_object_or_404(FacultyDetail, user=user)
@@ -102,8 +111,10 @@ class UserProfile(LoginRequiredMixin, View):
 
             if detail_form.is_valid():
                 detail = detail_form.save()
+                messages.success(self.request, 'Profile updated successfully.')
+            else:
+                messages.success(self.request, 'Error, Please enter correct details.')
 
-            messages.success(self.request, 'Profile updated successfully.')
             return redirect("user-profile", user_id=request.user.username)
 
         else:
@@ -119,13 +130,13 @@ class EditProfile(LoginRequiredMixin, View):
         username = request.user
         detail = None
 
-        if permissions.is_in_group(username, 'StudentGroup'):
+        if permissions.is_in_group(username, 'student'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(instance=detail)
 
-        elif permissions.is_in_group(username, 'FacultyGroup'):
+        elif permissions.is_in_group(username, 'faculty'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)
@@ -141,13 +152,13 @@ class EditProfile(LoginRequiredMixin, View):
         username = request.user
         detail = None
 
-        if permissions.is_in_group(username, 'StudentGroup'):
+        if permissions.is_in_group(username, 'student'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(request.POST, instance=detail)
 
-        elif permissions.is_in_group(username, 'FacultyGroup'):
+        elif permissions.is_in_group(username, 'faculty'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)
@@ -164,9 +175,10 @@ class EditProfile(LoginRequiredMixin, View):
 
         return redirect("user-profile", user_id=user.username)
 
+
 class Contact(View):
     def get(self, request):
-        template_name='contact.html'
+        template_name = 'contact.html'
         return render(request, template_name)
 
     def post(self, request, *args, **kwargs):
@@ -181,9 +193,10 @@ class Contact(View):
         contactus.save()
         return redirect(reverse_lazy('contact'))
 
+
 class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     """
-    Custom class to override the password change view 
+    Custom class to override the password change view
     """
     success_url = reverse_lazy('home')
 
@@ -194,15 +207,16 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
         update_session_auth_hash(self.request, form.user)
 
         get_adapter().add_message(self.request,
-                                            messages.SUCCESS,
-                                            'account/messages/password_changed.txt')
+                                  messages.SUCCESS,
+                                  'account/messages/password_changed.txt')
         signals.password_changed.send(sender=self.request.user.__class__,
-                                            request=self.request,
-                                            user=self.request.user)
+                                      request=self.request,
+                                      user=self.request.user)
 
         return super(PasswordChangeView, self).form_valid(form)
 
 password_change = CustomPasswordChangeView.as_view()
+
 
 def about(request, template_name='about.html'):
     return render(request, template_name,)

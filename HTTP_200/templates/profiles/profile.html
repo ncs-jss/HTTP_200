@@ -122,12 +122,12 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
-                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
+                    {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
-                    {% endifequal %}
+                    {% endif %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -399,11 +399,11 @@
 				 Save Details
 			</div>  
 
-				<!-- working with django -->
-			&nbsp;&nbsp;
+			<!-- working with django -->
+			<!-- &nbsp;&nbsp;
 
 			<span id="profile-warn"> Please enter valid email address!</span>
-			{% endif %}
+			{% endif %} -->
 		
 
 </div>

@@ -112,12 +112,12 @@
                         <a href="{% url "user-profile" user_id=request.user.username %}">
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
-                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
+                    {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
-                    {% endifequal %}
+                    {% endif %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -223,23 +223,23 @@
           <h2>Upload for</h2><br>
 
           <div class="col col-3">
-          <input type="checkbox" id="entire" name="check" checked>Entire College
+          <input type="checkbox" id="entire" name="uploaded_for" value="entire_college" {% if notice.visible_for_student %}checked{% endif %}>Entire College
         </div>
 
           <div  class="col col-2">
-          <input id="hod" type="checkbox">HOD 
+          <input id="hod" name="uploaded_for" value="hod" type="checkbox" {% if notice.visible_for_hod %}checked{% endif %}>HOD 
         </div>
 
             <div  class="col col-2">
-          <input id="fac" type="checkbox">Faculty
+          <input id="fac" name="uploaded_for" value="faculty" type="checkbox" {% if notice.visible_for_faculty %}checked{% endif %}>Faculty
         </div>
 
             <div  class="col col-3">
-          <input id="manage" type="checkbox">Management
+          <input id="manage" name="uploaded_for" value="management" type="checkbox" {% if notice.visible_for_management %}checked{% endif %}>Management
         </div>
 
          <div  class="col col-2">
-          <input id="others" type="checkbox">Others
+          <input id="others" name="uploaded_for" value="others" type="checkbox" {% if notice.visible_for_others %}checked{% endif %}>Others
         </div>
         </div>
       </div>
