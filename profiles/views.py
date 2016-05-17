@@ -44,7 +44,7 @@ class Home(View):
         notices = Notice.objects.all().order_by('-modified')[:5]
 
         user_type = 'not_faculty'
-        if request.user.is_authenticated and (permissions.is_in_group(request.user, 'FacultyGroup')):
+        if request.user.is_authenticated and (permissions.is_in_group(request.user, 'faculty')):
             user_type = 'faculty'
         return render(request, template_name, {'notices': notices, 'trending': trending, 'user_type':user_type})
 
@@ -65,10 +65,10 @@ class UserProfile(LoginRequiredMixin, View):
         user_type = None
         user_list = get_object_or_404(User, username=user_id)
         detail_list = None
-        if permissions.is_in_group(user_list, 'StudentGroup'):
+        if permissions.is_in_group(user_list, 'student'):
             user_type = 'student'
             detail_list = get_object_or_404(StudentDetail, user=user_list)
-        elif permissions.is_in_group(user_list, 'FacultyGroup'):
+        elif permissions.is_in_group(user_list, 'faculty'):
             user_type = 'faculty'
             detail_list = get_object_or_404(FacultyDetail, user=user_list)
         else:
@@ -82,13 +82,13 @@ class UserProfile(LoginRequiredMixin, View):
         detail = None
 
         if username == request.user:
-            if permissions.is_in_group(username, 'StudentGroup'):
+            if permissions.is_in_group(username, 'student'):
                 user = get_object_or_404(User, pk=username.id)
                 user_form = UserForm(request.POST, instance=user)
                 detail = get_object_or_404(StudentDetail, user=user)
                 detail_form = StudentForm(request.POST, instance=detail)
 
-            elif permissions.is_in_group(username, 'FacultyGroup'):
+            elif permissions.is_in_group(username, 'faculty'):
                 user = get_object_or_404(User, pk=username.id)
                 user_form = UserForm(request.POST, instance=user)
                 detail = get_object_or_404(FacultyDetail, user=user)
@@ -122,13 +122,13 @@ class EditProfile(LoginRequiredMixin, View):
         username = request.user
         detail = None
 
-        if permissions.is_in_group(username, 'StudentGroup'):
+        if permissions.is_in_group(username, 'student'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(instance=detail)
 
-        elif permissions.is_in_group(username, 'FacultyGroup'):
+        elif permissions.is_in_group(username, 'faculty'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)
@@ -144,13 +144,13 @@ class EditProfile(LoginRequiredMixin, View):
         username = request.user
         detail = None
 
-        if permissions.is_in_group(username, 'StudentGroup'):
+        if permissions.is_in_group(username, 'student'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(request.POST, instance=detail)
 
-        elif permissions.is_in_group(username, 'FacultyGroup'):
+        elif permissions.is_in_group(username, 'faculty'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(request.POST, instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)

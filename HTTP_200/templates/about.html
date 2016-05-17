@@ -72,12 +72,12 @@
             <a href="{% url "user-profile" user_id=request.user.username %}">
             <i class="fa fa-user"></i> &nbsp;My profile</a>
           </li>
-         {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
+         {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
           <li class="index-list">
             <a href="{% url "my-uploaded-notices" %}">
             <i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
           </li>
-          {% endifequal %}
+          {% endif %}
            <li class="index-list move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
