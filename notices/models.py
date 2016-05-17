@@ -36,7 +36,7 @@ class Notice(models.Model):
     visible_for_faculty = models.BooleanField(default=False)
     visible_for_management = models.BooleanField(default=False)
     visible_for_others = models.BooleanField(default=False)
-    course_branch_year = models.CharField(max_length=200, blank=False, null=True, default="AllCourses-AllBranches-AllYears-AllSections")
+    course_branch_year = models.CharField(max_length=200, blank=True, null=True, default="AllCourses-AllBranches-AllYears-AllSections")
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
     # scheduled_time = models.DateTimeField(blank=True,auto_now_add=True)

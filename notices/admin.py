@@ -12,9 +12,9 @@ class NoticeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'classes': ('wide', 'extrapretty'),
-            'fields': ('faculty', 'category', 'title', 'description', 'file_attached', 'course_branch_year', 'visible_for_student', 
-                'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 
-                'visible_for_management', ),
+            'fields': ('faculty', 'category', 'title', 'description', 'file_attached', 'course_branch_year',
+                       'visible_for_student', 'visible_for_faculty', 'visible_for_hod',
+                       'visible_for_others', 'visible_for_management', ),
         }),
     )
 

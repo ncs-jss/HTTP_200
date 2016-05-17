@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -16,6 +16,7 @@ import utils.constants as constants
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
+
 class NoticeList(LoginRequiredMixin, generic.View):
 
     def get(self, request):
@@ -25,7 +26,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
 
         user_group = request.user.groups.all()[0].name.lower()
 
-        notices = Notice.objects.filter(**{ 'visible_for_'+user_group: True })
+        notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
 
         page_type = ''
         if category is None:
@@ -37,13 +38,13 @@ class NoticeList(LoginRequiredMixin, generic.View):
 
         if search is not None:
             notices = Notice.objects.filter(Q(faculty__user__username__contains=search) |
-                Q(faculty__user__first_name__contains=search) |
-                Q(faculty__user__last_name__contains=search) |
-                Q(category__contains=search) |
-                Q(title__contains=search) |
-                Q(description__contains=search) |
-                Q(category__contains=search) |
-                Q(course_branch_year__contains=search))
+                                            Q(faculty__user__first_name__contains=search) |
+                                            Q(faculty__user__last_name__contains=search) |
+                                            Q(category__contains=search) |
+                                            Q(title__contains=search) |
+                                            Q(description__contains=search) |
+                                            Q(category__contains=search) |
+                                            Q(course_branch_year__contains=search))
             notices = notices.order_by('-modified')
 
         bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
@@ -60,8 +61,8 @@ class NoticeList(LoginRequiredMixin, generic.View):
         paginator = Paginator(notices, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
 
         extra_param = request.GET.copy()
-        if 'page' in  extra_param.keys():
-            del  extra_param['page']
+        if 'page' in extra_param.keys():
+            del extra_param['page']
 
         length = len(notices)
 
@@ -71,13 +72,13 @@ class NoticeList(LoginRequiredMixin, generic.View):
         # get objects from paginator according to page number
         try:
             notices = paginator.page(page_num)
-        except(EmptyPage, InvalidPage):
+        except:
             notices = paginator.page(paginator.num_pages)
 
         context_dict = {
             'object_amount': length,
             'notices': notices,
-            'params' : extra_param,
+            'params': extra_param,
         }
 
         context_dict['notices'] = notices
@@ -90,6 +91,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     """
     View for creating the Notices
     """
+
     group_required = u'faculty'
     form_class = NoticeCreateForm
     exclude = ['faculty']
@@ -103,11 +105,36 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         course_branch_year = " ".join(notice_for)
         form.instance.faculty = faculty
         form.instance.course_branch_year = course_branch_year
-        
+
+        uploaded_for = self.request.POST.getlist('uploaded_for')
+
+        form.instance.visible_for_student = False
+        if 'entire_college' in uploaded_for:
+            form.instance.visible_for_student = True
+            form.instance.visible_for_hod = True
+            form.instance.visible_for_faculty = True
+            form.instance.visible_for_management = True
+            form.instance.visible_for_others = True
+        else:
+            if 'hod' in uploaded_for:
+                form.instance.visible_for_hod = True
+
+            if 'faculty' in uploaded_for:
+                form.instance.visible_for_hod = True
+                form.instance.visible_for_faculty = True
+                form.instance.visible_for_management = True
+
+            if 'management' in uploaded_for:
+                form.instance.visible_for_management = True
+
+            if 'others' in uploaded_for:
+                form.instance.visible_for_others = True
+
         form.save()
+
         messages.success(self.request, 'Notice created successfully.')
         return super(CreateView, self).form_valid(form)
-    
+
     def dispatch(self, request, *args, **kwargs):
         try:
             FacultyDetail.objects.get(user__id=self.request.user.id)
@@ -134,6 +161,31 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
         notice_for = self.request.POST.getlist('notice_for')
         course_branch_year = " ".join(notice_for)
         form.instance.course_branch_year = course_branch_year
+
+        uploaded_for = self.request.POST.getlist('uploaded_for')
+
+        form.instance.visible_for_student = False
+        if 'entire_college' in uploaded_for:
+            form.instance.visible_for_student = True
+            form.instance.visible_for_hod = True
+            form.instance.visible_for_faculty = True
+            form.instance.visible_for_management = True
+            form.instance.visible_for_others = True
+        else:
+            if 'hod' in uploaded_for:
+                form.instance.visible_for_hod = True
+
+            if 'faculty' in uploaded_for:
+                form.instance.visible_for_hod = True
+                form.instance.visible_for_faculty = True
+                form.instance.visible_for_management = True
+
+            if 'management' in uploaded_for:
+                form.instance.visible_for_management = True
+
+            if 'others' in uploaded_for:
+                form.instance.visible_for_others = True
+
         form.save()
         messages.success(self.request, 'Notice updated successfully.')
         return super(NoticeUpdateView, self).form_valid(form)
@@ -172,13 +224,12 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
     def get(self, request):
         template_name = "bookmark.html"
         bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
-        
 
         paginator = Paginator(bookmark_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
 
         extra_param = request.GET.copy()
-        if 'page' in  extra_param.keys():
-            del  extra_param['page']
+        if 'page' in extra_param.keys():
+            del extra_param['page']
 
         length = len(bookmark_list)
 
@@ -188,13 +239,13 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
         # get objects from paginator according to page number
         try:
             bookmarks = paginator.page(page_num)
-        except(EmptyPage, InvalidPage):
+        except:
             bookmarks = paginator.page(paginator.num_pages)
 
         context_dict = {
             'object_amount': length,
             'notices': bookmarks,
-            'params' : extra_param,
+            'params': extra_param,
         }
 
         return render(request, template_name, context_dict)
@@ -247,7 +298,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
         user_group = request.user.groups.all()[0].name.lower()
 
-        notices = Notice.objects.filter(**{ 'visible_for_'+user_group: True })
+        notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
 
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
@@ -287,12 +338,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             # If page is out of range (e.g. 9999), deliver last page of results.
             notices = paginator.page(paginator.num_pages)
 
-        # queries_without_page = request.GET.copy()
-        # if queries_without_page.has_key('page'):
-        #     del queries_without_page['page']
-        # context['queries'] = queries_without_page
-        
-        return render(request, template_name, {'notices': notices, 'page_type':page_type})
+        return render(request, template_name, {'notices': notices, 'page_type': page_type})
 
     def post(self, request, *args, **kwargs):
         notice = Notice.objects.filter(id=request.POST['notice_id'])[0]
@@ -329,9 +375,9 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             # Get date range from mobile version
             date_m_end = request.POST.get('date_m_end', "")
             date_m_start = request.POST.get('date_m_start', "")
-        
+
         user_group = request.user.groups.all()[0].name.lower()
-        notices = Notice.objects.filter(**{ 'visible_for_'+user_group: True })
+        notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
 
         if title != "":
             notices = notices.filter(title__contains=title)

@@ -223,23 +223,23 @@
           <h2>Upload for</h2><br>
 
           <div class="col col-3">
-          <input type="checkbox" id="entire" name="check" checked>Entire College
+          <input type="checkbox" id="entire" name="uploaded_for" value="entire_college" {% if notice.visible_for_student %}checked{% endif %}>Entire College
         </div>
 
           <div  class="col col-2">
-          <input id="hod" type="checkbox">HOD 
+          <input id="hod" name="uploaded_for" value="hod" type="checkbox" {% if notice.visible_for_hod %}checked{% endif %}>HOD 
         </div>
 
             <div  class="col col-2">
-          <input id="fac" type="checkbox">Faculty
+          <input id="fac" name="uploaded_for" value="faculty" type="checkbox" {% if notice.visible_for_faculty %}checked{% endif %}>Faculty
         </div>
 
             <div  class="col col-3">
-          <input id="manage" type="checkbox">Management
+          <input id="manage" name="uploaded_for" value="management" type="checkbox" {% if notice.visible_for_management %}checked{% endif %}>Management
         </div>
 
          <div  class="col col-2">
-          <input id="others" type="checkbox">Others
+          <input id="others" name="uploaded_for" value="others" type="checkbox" {% if notice.visible_for_others %}checked{% endif %}>Others
         </div>
         </div>
       </div>
