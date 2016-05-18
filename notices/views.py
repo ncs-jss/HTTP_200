@@ -92,7 +92,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     View for creating the Notices
     """
 
-    group_required = u'faculty'
+    group_required = [u'faculty', u'hod', u'management']
     form_class = NoticeCreateForm
     exclude = ['faculty']
     success_url = reverse_lazy('notice-list')
@@ -302,17 +302,34 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-            notices = notices.filter(
-                Q(course_branch_year__icontains=faculty.department) | Q(course_branch_year__icontains='-AllBranches-')
-            )
-        except:
+
+            notices = notices.filter(Q(course_branch_year__contains='-AllBranches-') | Q(course_branch_year__contains='-AllBranches-'))
             try:
-                student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
-                notices = notices.filter(Q(course_branch_year__icontains=student.course+"-") | Q(course_branch_year__icontains='AllCourses-'))
-                notices = notices.filter(Q(course_branch_year__icontains="-"+student.branch+"-") | Q(course_branch_year__icontains='-AllBranches-'))
-                notices = notices.filter(Q(course_branch_year__icontains="-"+str(student.year)+"-") | Q(course_branch_year__icontains='-AllYears-'))
+                notices = notices.filter(course_branch_year__contains=faculty.department)
             except:
                 pass
+
+        except:
+            student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
+            try:
+                notices = notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
+            except:
+                pass
+            try:
+                notices = notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
+            except:
+                pass
+            try:
+                notices = notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
+            except:
+                pass
+
+            # notices = notices.filter(
+            #     Q(course_branch_year__contains='AllCourses-') |
+            #     Q(course_branch_year__contains='-AllBranches-') |
+            #     Q(course_branch_year__contains='-AllYears-') )
+        else:
+            pass
 
         notices = notices.order_by('-modified')
 
