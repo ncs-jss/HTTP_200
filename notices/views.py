@@ -303,24 +303,24 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
 
-            notices = notices.filter(Q(course_branch_year__contains='-AllBranches-'))
+            notices = notices.filter(Q(course_branch_year__icontains='-AllBranches-'))
             try:
-                notices = notices.filter(course_branch_year__contains=faculty.department)
+                notices = notices.filter(course_branch_year__icontains=faculty.department)
             except:
                 pass
 
         except:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             try:
-                notices = notices.filter(Q(course_branch_year__contains=student.course+"-") | Q(course_branch_year__contains='AllCourses-'))
+                notices = notices.filter(Q(course_branch_year__icontains=student.course+"-") | Q(course_branch_year__icontains='AllCourses-'))
             except:
                 pass
             try:
-                notices = notices.filter(Q(course_branch_year__contains="-"+student.branch+"-") | Q(course_branch_year__contains='-AllBranches-'))
+                notices = notices.filter(Q(course_branch_year__icontains="-"+student.branch+"-") | Q(course_branch_year__icontains='-AllBranches-'))
             except:
                 pass
             try:
-                notices = notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-") | Q(course_branch_year__contains='-AllYears-'))
+                notices = notices.filter(Q(course_branch_year__icontains="-"+str(student.year)+"-") | Q(course_branch_year__icontains='-AllYears-'))
             except:
                 pass
 
