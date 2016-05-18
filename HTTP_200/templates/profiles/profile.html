@@ -7,7 +7,6 @@
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#2d2251">
-
 	<link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico"%}">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="{% static "css/default.css" %}">
@@ -620,5 +619,33 @@ document.getElementById('num2').addEventListener('input', function (e) {
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="{% static "js/jquery.daterange.js" %}"></script>
 <script src="{% static "js/main.js"  %}"></script>
+
+        <script>
+            var width = $(document).width();
+            if(width>640)
+            {
+                $("#mobile-date").hide();
+                $(function () {
+                    $("#daterangepicker").daterange({
+                       dateFormat: "dd/mm/yy", //date format
+                    rangeSeparator: "-" // the string between first and last date
+                    });
+                });
+            }
+            else{
+                $("#desktop-date").hide();
+                $(function() {
+                    $("#mobile-datepicker-1, #mobile-datepicker-2").datepicker();
+                });
+            }
+            
+
+            $(".search-container").on("scroll", function(){
+            var cale = $(this).find("input.hasDatepicker");
+            $("#ui-datepicker-div").css("top", cale.offset().top +cale.outerHeight());
+ 
+        })
+
+</script>
 </body>
 </html>
