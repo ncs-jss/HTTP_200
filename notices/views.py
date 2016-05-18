@@ -303,7 +303,7 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
 
-            notices = notices.filter(Q(course_branch_year__contains='-AllBranches-') | Q(course_branch_year__contains='-AllBranches-'))
+            notices = notices.filter(Q(course_branch_year__contains='-AllBranches-'))
             try:
                 notices = notices.filter(course_branch_year__contains=faculty.department)
             except:
@@ -324,10 +324,6 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             except:
                 pass
 
-            # notices = notices.filter(
-            #     Q(course_branch_year__contains='AllCourses-') |
-            #     Q(course_branch_year__contains='-AllBranches-') |
-            #     Q(course_branch_year__contains='-AllYears-') )
         else:
             pass
 
