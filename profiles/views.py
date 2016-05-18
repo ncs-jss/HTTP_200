@@ -136,7 +136,7 @@ class EditProfile(LoginRequiredMixin, View):
             detail = get_object_or_404(StudentDetail, pk=slug)
             detail_form = StudentForm(instance=detail)
 
-        elif permissions.is_in_group(username, 'faculty'):
+        elif permissions.is_in_group(username, 'faculty') or permissions.is_in_group(username, 'hod') or permissions.is_in_group(username, 'management') or permissions.is_in_group(username, 'others'):
             user = get_object_or_404(User, pk=username.id)
             user_form = UserForm(instance=user)
             detail = get_object_or_404(FacultyDetail, pk=slug)
