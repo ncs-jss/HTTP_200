@@ -37,14 +37,14 @@ class NoticeList(LoginRequiredMixin, generic.View):
             page_type = category
 
         if search is not None:
-            notices = Notice.objects.filter(Q(faculty__user__username__contains=search) |
-                                            Q(faculty__user__first_name__contains=search) |
-                                            Q(faculty__user__last_name__contains=search) |
-                                            Q(category__contains=search) |
-                                            Q(title__contains=search) |
-                                            Q(description__contains=search) |
-                                            Q(category__contains=search) |
-                                            Q(course_branch_year__contains=search))
+            notices = Notice.objects.filter(Q(faculty__user__username__icontains=search) |
+                                            Q(faculty__user__first_name__icontains=search) |
+                                            Q(faculty__user__last_name__icontains=search) |
+                                            Q(category__icontains=search) |
+                                            Q(title__icontains=search) |
+                                            Q(description__icontains=search) |
+                                            Q(category__icontains=search) |
+                                            Q(course_branch_year__icontains=search))
             notices = notices.order_by('-modified')
 
         bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
@@ -302,30 +302,28 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
         try:
             faculty = get_object_or_404(FacultyDetail, user__id=self.request.user.id)
-            notices = notices.filter(Q(course_branch_year__contains='-AllBranches-') | Q(course_branch_year__contains='-AllBranches-'))
+
+            notices = notices.filter(Q(course_branch_year__icontains='-AllBranches-'))
             try:
-                notices = notices.filter(course_branch_year__contains=faculty.department)
+                notices = notices.filter(course_branch_year__icontains=faculty.department)
             except:
                 pass
 
         except:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             try:
-                notices = notices.filter(Q(course_branch_year__contains=student.course+"-"))
+                notices = notices.filter(Q(course_branch_year__icontains=student.course+"-") | Q(course_branch_year__icontains='AllCourses-'))
             except:
                 pass
             try:
-                notices = notices.filter(Q(course_branch_year__contains="-"+student.branch+"-"))
+                notices = notices.filter(Q(course_branch_year__icontains="-"+student.branch+"-") | Q(course_branch_year__icontains='-AllBranches-'))
             except:
                 pass
             try:
-                notices = notices.filter(Q(course_branch_year__contains="-"+str(student.year)+"-"))
+                notices = notices.filter(Q(course_branch_year__icontains="-"+str(student.year)+"-") | Q(course_branch_year__icontains='-AllYears-'))
             except:
                 pass
 
-            notices = notices.filter(course_branch_year__contains='AllCourses-')
-            notices = notices.filter(course_branch_year__contains='-AllBranches-')
-            notices = notices.filter(course_branch_year__contains='-AllYears-')
         else:
             pass
 
@@ -396,28 +394,28 @@ class SearchNotices(LoginRequiredMixin, generic.View):
         notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
 
         if title != "":
-            notices = notices.filter(title__contains=title)
+            notices = notices.filter(title__icontains=title)
 
         if description != "":
-            notices = notices.filter(description__contains=description)
+            notices = notices.filter(description__icontains=description)
 
         if faculty != "":
             notices = notices.filter(
-                Q(faculty__user__username__contains=faculty) |
-                Q(faculty__user__first_name__contains=faculty) |
-                Q(faculty__user__last_name__contains=faculty))
+                Q(faculty__user__username__icontains=faculty) |
+                Q(faculty__user__first_name__icontains=faculty) |
+                Q(faculty__user__last_name__icontains=faculty))
 
         if course != "":
-            notices = notices.filter(course_branch_year__contains=course+"-")
+            notices = notices.filter(course_branch_year__icontains=course+"-")
 
         if branch != "":
-            notices = notices.filter(course_branch_year__contains="-"+branch+"-")
+            notices = notices.filter(course_branch_year__icontains="-"+branch+"-")
 
         if year != "":
-            notices = notices.filter(course_branch_sem__contains="-"+year+"-")
+            notices = notices.filter(course_branch_sem__icontains="-"+year+"-")
 
         if section != "":
-            notices = notices.filter(course_branch_sem__contains="-"+section)
+            notices = notices.filter(course_branch_sem__icontains="-"+section)
 
         if date_desktop != "":
             start_date_list = date_desktop.split('-')[0]
