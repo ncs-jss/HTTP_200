@@ -3,7 +3,9 @@ from notices.models import Notice, BookmarkedNotice, TrendingInCollege
 
 
 class NoticeAdmin(admin.ModelAdmin):
-    list_display = ('faculty', 'title', 'course_branch_year', 'created', 'modified', )
+    list_display = ('faculty', 'title', 'course_branch_year', 'created', 'modified', 'visible_for_student',
+        'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management'
+    )
     list_display_links = ('title', 'faculty')
     list_filter = ('faculty', 'category')
     list_per_page = 15
