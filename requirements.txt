@@ -1,5 +1,4 @@
 django==1.8.2
-Markdown==2.6.2       # Markdown support for the browsable API.
 jsonfield==1.0.3
 requests==2.2.1
 django-cors-headers==1.1.0
@@ -17,3 +16,4 @@ django-debug-toolbar==1.4
 coverage==4.0.3
 pytest-django==2.9.1
 django-import-export==0.4.2
+flake8

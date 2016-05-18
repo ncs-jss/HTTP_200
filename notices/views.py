@@ -92,7 +92,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     View for creating the Notices
     """
 
-    group_required = u'faculty'
+    group_required = [u'faculty', u'hod', u'management']
     form_class = NoticeCreateForm
     exclude = ['faculty']
     success_url = reverse_lazy('notice-list')
