@@ -792,25 +792,28 @@ $(".left-nav-inner ul .move-in,.button-create,.left-nav-inner ul .index-list").c
 
 
 
-
-
-setInterval(function  () {
-
-if($("#entire").prop("checked")){
-	$(".tag").css({
-		'height':'90px',
-		'transition':'all 0.2s ease-in-out',
-		'overflow':'hidden'
-	});
-	$(".hidedata").css({
-		'height':'90px',
-		'transition':'all 0.2s ease-in-out',
-		'overflow':'hidden'
-	});
-	$("#create-submit").prop("disabled",false);
-	if($("#tag-input li").length>=1){
-		$(".create-notice-button").css({
-			'opacity':'1'
+var disable_button=function(){
+	$(".create-notice-button").css({
+			'opacity':'0.5',
+			'cursor':'default'
+		})
+		$(".create-notice-button").mouseenter(function  () {
+			$(this).css({
+			'background':'#5d5473'
+		})
+		})
+		$(".create-notice-button").mouseleave(function  () {
+			$(this).css({
+			'background':'#5d5473'
+		})
+		})
+			
+		$("#create-submit").prop("disabled",true);
+}
+var enable_button=function(){
+	$(".create-notice-button").css({
+			'opacity':'1',
+			'cursor':'pointer'
 		})
 		$(".create-notice-button").mouseenter(function  () {
 			$(this).css({
@@ -822,27 +825,34 @@ if($("#entire").prop("checked")){
 			'background':'#5d5473'
 		})
 		})
-		$(".create-warn-msg").fadeOut();
+	
+		$("#create-submit").prop("disabled",false);
+}
+
+setInterval(function  () {
+
+if($("#entire").prop("checked")){
+	$(".tag").css({
+		'height':'auto',
+		'transition':'all 0.2s ease-in-out',
+		'overflow':'hidden'
+	});
+	$(".hidedata").css({
+		'height':'90px',
+		'transition':'all 0.2s ease-in-out',
+		'overflow':'hidden'
+	});
 	$("#create-submit").prop("disabled",false);
+	if($("#tag-input li").length>=1){
+		$(".create-warn-msg").hide();
+		enable_button()
+		
 	}
 	else{
-		$(".create-notice-button").css({
-			'opacity':'0.5'
-		})
-		$(".create-notice-button").mouseenter(function  () {
-			$(this).css({
-			'background':'#5d5473'
-		})
-		})
-		$(".create-notice-button").mouseleave(function  () {
-			$(this).css({
-			'background':'#5d5473'
-		})
-		})
+			$(".create-warn-msg").show();
+		disable_button()
 		
-		$("#create-submit").prop("disabled", true);
-
-		$(".create-warn-msg").fadeIn("fast");
+	
 		
 
 		
@@ -868,7 +878,15 @@ else{
 		})
 		})
 		$(".create-warn-msg").fadeOut();
-	$("#create-submit").prop("disabled",false);
+	if($("#fac").prop("checked") || $("#manage").prop("checked") || $("#others").prop("checked") || $("#hod").prop("checked"))
+		{
+				// $(".create-warn-msg").show();
+		enable_button();
+	}
+	else{
+			// $(".create-warn-msg").hide();
+		disable_button();
+	}
 	$(".tag").css({
 		'height':'0px',
 		'transition':'all 0.2s ease-in-out',

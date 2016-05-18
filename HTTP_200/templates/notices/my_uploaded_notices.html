@@ -229,11 +229,11 @@
                         <!-- <div class="quick-link  col-2 push-right">
                 <i class="fa fa-ellipsis-v"></i>
                 </div> -->
-                        {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %} 
+                        {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %} 
                         <div class="button-create  col-4 push-right">
                             <a href="{% url "notice-add" %}">Create New</a>
                         </div>
-                        {% endifequal %}
+                        {% endif %}
 
                         <div class="search  col-6 push-right">
                             <input type="text" name="search" placeholder="search"><i class="fa fa-search"></i>

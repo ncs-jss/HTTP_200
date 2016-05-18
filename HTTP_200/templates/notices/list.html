@@ -7,7 +7,6 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#2d2251">
-
     <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico"%}">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="{% static "css/default.css"%}">
@@ -120,12 +119,12 @@
                         <i class="fa fa-user"></i> &nbsp;My profile</a>
                     </li>
 
-                    {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %}
+                    {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
                     <li class="  move-in">
                         <a href="{% url "my-uploaded-notices" %}">
                         <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
                     </li>
-                    {% endifequal %}
+                    {% endif %}
                     <li class="  move-in">
                         <a href="{% url "password_change" %}">
                         <i class="fa fa-key"></i> &nbsp;Change Password</a>
@@ -218,11 +217,11 @@
                         <!-- <div class="quick-link  col-2 push-right">
                 <i class="fa fa-ellipsis-v"></i>
                 </div> -->
-                        {% ifequal request.user.groups.all.0.name 'FacultyGroup'  %} 
+                        {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %} 
                         <div class="button-create  col-4 push-right">
                             <a href="{% url "notice-add" %}">Create New</a>
                         </div>
-                        {% endifequal %}
+                        {% endif %}
 
                         <div class="search  col-6 push-right">
                             <form id="full_text_search" method="GET" action="{% url 'notice-list' %}">
@@ -262,7 +261,32 @@
                 </li>
                 <li class="mobile">
                     <div class="row">
-                    <div class="pagination col sm-col sm-col-12">
+                <div class="pagination col sm-col sm-col-12">
+                    {% if notices.has_previous %}
+                            <a href="?{{params.urlencode}}&amp;page={{ notices.previous_page_number }}">
+                                <i class="fa fa-chevron-circle-left"></i>    
+                            </a>
+                    {% endif %}
+                    
+                    Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+                    
+                    <!-- A good feature to be included later -->
+                    
+                    <!-- {% for page in notices.paginator.page_range  %}
+                        {% if page == summaries.number %}
+                            <a class="active" href="?{{params.urlencode}}&amp;page={{ page }}" style="color:red;" >{{ page }}</a>
+                        {% else %}
+                            <a href="?{{params.urlencode}}&amp;page={{ page }}" >{{ page }}</a>
+                        {% endif %}
+                    {% endfor %} -->
+                    {% if notices.has_next %}
+                        <a href="?{{params.urlencode}}&amp;page={{ notices.next_page_number }}">
+                        <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                    <!-- <div class="pagination col sm-col sm-col-12">
                     Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
                     {% if notices.has_previous %}
                         <a href="?page={{ notices.previous_page_number }}">
@@ -275,7 +299,8 @@
                             <i class="fa fa-chevron-circle-right"></i>
                         </a>
                     {% endif %}
-                    </div>
+                    </div> -->
+                    
                     </div>
                 </li>
                 <ul>
@@ -333,7 +358,32 @@
                 {% endfor %}
                 <ul>
         </div>
-        <div class="pagination">
+        <div class="pagination ">
+                {% if notices.has_previous %}
+                        <a href="?{{params.urlencode}}&amp;page={{ notices.previous_page_number }}">
+                            <i class="fa fa-chevron-circle-left"></i>    
+                        </a>
+                {% endif %}
+                
+                Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
+                
+                <!-- A good feature to be included later -->
+                
+                <!-- {% for page in notices.paginator.page_range  %}
+                    {% if page == summaries.number %}
+                        <a class="active" href="?{{params.urlencode}}&amp;page={{ page }}" style="color:red;" >{{ page }}</a>
+                    {% else %}
+                        <a href="?{{params.urlencode}}&amp;page={{ page }}" >{{ page }}</a>
+                    {% endif %}
+                {% endfor %} -->
+                {% if notices.has_next %}
+                    <a href="?{{params.urlencode}}&amp;page={{ notices.next_page_number }}">
+                    <i class="fa fa-chevron-circle-right"></i>
+                    </a>
+                {% endif %}
+        </div>
+
+        <!-- <div class="pagination">
         Page {{ notices.number }} of {{ notices.paginator.num_pages }}&nbsp;&nbsp;
             {% if notices.has_previous %}
                 <a href="?page={{ notices.previous_page_number }}">
@@ -347,7 +397,7 @@
                 </a>
             {% endif %}
 
-        </div>
+        </div> -->
         <footer>
       <h4>Quick Links</h4>
       <div class="footer-line"></div>

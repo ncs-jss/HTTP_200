@@ -8,7 +8,9 @@ install:
 - pip install -r requirements.txt
 - pip install coveralls
 
-script: coverage
+# script: coverage
+script:
+  - flake8 ./
 
 after_success: coveralls
 
