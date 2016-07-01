@@ -27,6 +27,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
         user_group = request.user.groups.all()[0].name.lower()
 
         notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
+        print "*********************notices***************",notices
 
         page_type = ''
         if category is None:
