@@ -76,3 +76,6 @@ HTTP_200/static/ckeditor
 HTTP_200/static/rest_framework
 HTTP_200/static/debug_toolbar
 HTTP_200/static/admin
+
+connect_uwsgi.ini
+

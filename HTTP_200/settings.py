@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import HTTP_200.config_keys as config_keys
+# import HTTP_200.config_keys as config_keys
 from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,9 +26,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
-INTERNAL_IPS = '127.0.0.1:80'
+INTERNAL_IPS = '127.0.0.1'
 
 APPEND_SLASH = True
 # Application definition
@@ -106,23 +106,23 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': config_keys.DATABASE_NAME,
-#         'USER': config_keys.MYSQL_USERNAME,
-#         'PASSWORD': config_keys.MYSQL_PASSWORD,
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config_keys.DATABASE_NAME,
+        'USER': config_keys.MYSQL_USERNAME,
+        'PASSWORD': config_keys.MYSQL_PASSWORD,
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -268,3 +268,5 @@ SPAGHETTI_SAUCE = {
 }
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+SESSION_COOKIE_SECURE = True
