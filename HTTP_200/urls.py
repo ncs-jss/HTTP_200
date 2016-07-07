@@ -1,7 +1,7 @@
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from allauth.account.views import login, logout
-from profiles.views import Home, FaqDisplayView, about, Contact
+from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser
 import settings
 
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^busers/$', BulkUser.as_view(), name='bulk_users'),
 ]
 
 # For development environment

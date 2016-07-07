@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.generic import View
 from django.views.generic import TemplateView
 from django.contrib import messages
@@ -17,6 +17,7 @@ from .models import StudentDetail, FacultyDetail, ContactMessage
 from .forms import StudentForm, FacultyForm, UserForm
 from notices.models import Notice, TrendingInCollege
 
+from django.contrib.auth.models import Group
 
 import permissions
 
@@ -220,3 +221,43 @@ password_change = CustomPasswordChangeView.as_view()
 
 def about(request, template_name='about.html'):
     return render(request, template_name,)
+
+
+class BulkUser(LoginRequiredMixin, View):
+    '''
+    Custom class to create bulk student users.
+    '''
+
+    def get(self, request):
+        username=request.user
+
+        if username.is_superuser:
+            return render(request, "bulkuserform.html")
+        else:
+            return render(request, "404.html")
+
+    def post(self, request):
+        username=request.user
+
+        if username.is_superuser:
+            format = request.POST["format"]
+            user_start = int(request.POST["start"])
+            user_end = int(request.POST["end"])
+            branch = request.POST["branch"]
+            year = request.POST["year"]
+            course = request.POST["course"]
+            group = Group.objects.get(name="student")
+
+            if user_start<user_end:
+                user_no = ["%.3d" %users for users in range(user_start, user_end+1)]
+
+                for student in user_no:
+                    new_user = User.objects.create(username=format+str(student), password=format+str(student))
+                    group.user_set.add(new_user)
+                    StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
+                return render(request, "bulkuser.html")
+            else:
+                return render(request, "bulkuserform.html", {"error":1})
+
+        else:
+            return render(request, "404.html")
