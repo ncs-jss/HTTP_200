@@ -9,7 +9,7 @@
 				{% csrf_token %}
 			<div>
 				<label for="format"> Format : </label>
-				<input type="text" name="format" placeholder="14/it/" pattern="[0-9][0-9]/[A-Za-z][A-Za-z]/" required>
+				<input type="text" name="format" placeholder="14it" pattern="[0-9][0-9][A-Za-z][A-Za-z]" required>
 			</div>
 			{% if error %}
 			<div>
@@ -50,7 +50,7 @@
             </div>
 			<div>
 				<label for="year"> Year : </label>
-				<input type="text" name="year" placeholder="Enter year" required>
+				<input type="text" name="year" placeholder="Enter year" pattern="[1-4]" required>
 			</div>
 			<div>
 				<input type="submit" name="submit">

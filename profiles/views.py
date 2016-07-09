@@ -248,11 +248,11 @@ class BulkUser(LoginRequiredMixin, View):
             course = request.POST["course"]
             group = Group.objects.get(name="student")
 
-            if user_start<user_end:
+            if user_start < user_end:
                 user_no = ["%.3d" %users for users in range(user_start, user_end+1)]
-
+                
                 for student in user_no:
-                    new_user = User.objects.create(username=format+str(student), password=format+str(student))
+                    new_user = User.objects.create_user(username=format+str(student), password=str(format)+str(student))
                     group.user_set.add(new_user)
                     StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
                 return render(request, "bulkuser.html")
