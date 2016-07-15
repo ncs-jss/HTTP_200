@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-# import HTTP_200.config_keys as config_keys
+import HTTP_200.config_keys as config_keys
 from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -268,5 +268,3 @@ SPAGHETTI_SAUCE = {
 }
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-
-SESSION_COOKIE_SECURE = True

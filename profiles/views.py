@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.views.generic import View
 from django.views.generic import TemplateView
 from django.contrib import messages
@@ -229,7 +229,7 @@ class BulkUser(LoginRequiredMixin, View):
     '''
 
     def get(self, request):
-        username=request.user
+        username = request.user
 
         if username.is_superuser:
             return render(request, "bulkuserform.html")
@@ -237,7 +237,7 @@ class BulkUser(LoginRequiredMixin, View):
             return render(request, "404.html")
 
     def post(self, request):
-        username=request.user
+        username = request.user
 
         if username.is_superuser:
             format = request.POST["format"]
@@ -250,7 +250,6 @@ class BulkUser(LoginRequiredMixin, View):
 
             if user_start < user_end:
                 user_no = ["%.3d" %users for users in range(user_start, user_end+1)]
-                
                 for student in user_no:
                     new_user = User.objects.create_user(username=format+str(student), password=str(format)+str(student))
                     group.user_set.add(new_user)
@@ -258,6 +257,5 @@ class BulkUser(LoginRequiredMixin, View):
                 return render(request, "bulkuser.html")
             else:
                 return render(request, "bulkuserform.html", {"error":1})
-
         else:
             return render(request, "404.html")
