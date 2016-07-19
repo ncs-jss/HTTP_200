@@ -240,12 +240,12 @@ class BulkUser(LoginRequiredMixin, View):
         username = request.user
 
         if username.is_superuser:
-            format = request.POST["format"]
-            user_start = int(request.POST["start"])
-            user_end = int(request.POST["end"])
-            branch = request.POST["branch"]
-            year = request.POST["year"]
-            course = request.POST["course"]
+            format = request.POST.get("format")
+            user_start = int(request.POST.get("start"))
+            user_end = int(request.POST.get("end"))
+            branch = request.POST.get("branch")
+            year = request.POST.get("year")
+            course = request.POST.get("course")
             group = Group.objects.get(name="student")
 
             if user_start < user_end:
