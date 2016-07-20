@@ -23,7 +23,7 @@ class FacultyAdmin(admin.ModelAdmin):
 
 
 class ContactAdmin(admin.ModelAdmin):
-	search_fields = ('name', 'email')
+    search_fields = ('name', 'email')
 
 admin.site.register(FacultyDetail, FacultyAdmin)
 admin.site.register(StudentDetail, StudentAdmin)
