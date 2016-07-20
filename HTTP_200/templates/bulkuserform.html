@@ -11,8 +11,8 @@
         <form method="post">
             {% csrf_token %}
         <div>
-            <label for="format"> Format : </label>
-            <input type="text" name="format" placeholder="14it" pattern="[0-9][0-9][A-Za-z][A-Za-z]" required>
+            <label for="admission_format"> Format : </label>
+            <input type="text" name="admission_format" placeholder="14it" pattern="[0-9][0-9][A-Za-z][A-Za-z]" required>
         </div>
         {% if error %}
         <div>
@@ -59,6 +59,10 @@
             <input type="submit" name="submit">
         </div>
         </form>
+    </div>
+    <div>
+
+        <p><a href="/admin"> Back to admin Pannel </a><p>
     </div>
 </body>
 </html>

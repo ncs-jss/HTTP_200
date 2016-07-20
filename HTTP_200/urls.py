@@ -4,6 +4,8 @@ from allauth.account.views import login, logout
 from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser
 import settings
 
+admin.site.site_header = "JSS InfoConnect Admin Interface"
+
 urlpatterns = [
     url(r'^$', Home.as_view(), name="home"),
     url(r'^notices/', include('notices.urls')),
@@ -21,7 +23,7 @@ urlpatterns = [
     url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
-    url(r'^busers/$', BulkUser.as_view(), name='bulk_users'),
+    url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
 ]
 
 # For development environment

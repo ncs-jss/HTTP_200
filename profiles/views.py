@@ -240,7 +240,7 @@ class BulkUser(LoginRequiredMixin, View):
         username = request.user
 
         if username.is_superuser:
-            format = request.POST.get("format")
+            admission_format = request.POST.get("admission_format")
             user_start = int(request.POST.get("start"))
             user_end = int(request.POST.get("end"))
             branch = request.POST.get("branch")
@@ -251,7 +251,7 @@ class BulkUser(LoginRequiredMixin, View):
             if user_start < user_end:
                 user_no = ["%.3d" % users for users in range(user_start, user_end+1)]
                 for student in user_no:
-                    new_user = User.objects.create_user(username=format+str(student), password=str(format)+str(student))
+                    new_user = User.objects.create_user(username=admission_format+str(student), password=str(admission_format)+str(student))
                     group.user_set.add(new_user)
                     StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
                 return render(request, "bulkuser.html")
