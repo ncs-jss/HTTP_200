@@ -1,0 +1,68 @@
+{% load static %}
+
+<html>
+<head>
+<title>
+    Bulk Users
+</title>
+</head>
+<body>
+ <div>
+        <form method="post">
+            {% csrf_token %}
+        <div>
+            <label for="admission_format"> Format : </label>
+            <input type="text" name="admission_format" placeholder="14it" pattern="[0-9][0-9][A-Za-z][A-Za-z][A-Za-z]" required>
+        </div>
+        {% if error %}
+        <div>
+            <p> The start value cannot be greater than end value </p>
+        </div>
+        {% endif %}
+        <div>
+            <label for="startid"> Start ID :</label>
+            <input type="text" name="start" placeholder="Enter Starting Admission no" required>
+        </div>
+        <div>
+            <label for="endid"> End Id :</label>
+            <input type="text" name="end" placeholder="Enter last Admission no" required>
+        </div>
+        <div>
+            <label for="course"> Course : </label>
+                <select id="course" name="course" >
+                    <option value="BTECH"> Btech </option>
+                    <option value="MBA"> MBA </option>
+                    <option value="MCA">MCA </option>
+                    <option value="MAM">MAM</option>
+                    <option value="MTECH">Mtech</option>
+                </select>
+            </div>
+         <div>
+            <label for="branch" > Branch : </label>
+                <select id="branch" name="branch" >
+                    <option value="None"> None </option>
+                    <option value="CSE">CSE </option>
+                    <option value="IT">IT</option>
+                    <option value="EE">EE </option>
+                    <option value="ECE">ECE </option>
+                    <option value="CE">CE</option>
+                    <option value="IC">IC </option>
+                    <option value="ME">ME </option>
+                    <option value="MT">MT </option>
+                </select>
+        </div>
+        <div>
+            <label for="year"> Year : </label>
+            <input type="text" name="year" placeholder="Enter year" pattern="[1-4]" required>
+        </div>
+        <div>
+            <input type="submit" name="submit">
+        </div>
+        </form>
+    </div>
+    <div>
+
+        <p><a href="/admin"> Back to admin Pannel </a><p>
+    </div>
+</body>
+</html>
