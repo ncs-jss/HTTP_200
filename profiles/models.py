@@ -127,6 +127,7 @@ class ContactMessage(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
     email = models.URLField(max_length=100, blank=False, null=False)
     message = models.TextField(blank=False, null=False)
+    message_sent = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
     modified = models.DateTimeField("Last Modified", auto_now=True, null=True)
