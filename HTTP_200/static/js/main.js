@@ -901,3 +901,20 @@ else{
 
 });
 
+
+function ValidateBranch(){
+
+  var course = document.getElementById("course").value
+  var branch = document.getElementById("branch").value
+
+  if (course == "BTECH" || course == "MTECH")
+    {
+      if (branch == "None")
+      { 
+        alert("Please Enter the Branch")
+        return false
+      }
+      else
+        return true
+    }
+}
