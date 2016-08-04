@@ -23,9 +23,8 @@ urlpatterns = [
     url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
-    url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
     url(r'^students/create/single/$', SingleUser.as_view(), name='single_user_create'),
-
+    url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
 ]
 
 # For development environment

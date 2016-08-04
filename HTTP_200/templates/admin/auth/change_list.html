@@ -53,24 +53,11 @@
         <ul class="object-tools">
           {% block object-tools-items %}
           <li>
-              <!-- {% url cl.opts|admin_urlname:'add' as add_url %} -->
               <a href="{% url 'bulk_students_create' %}"> Create Bulk Users </a>
-                <!-- {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %} -->
-              <!-- </a> -->
-            </li>
-            <li>
-              <!-- {% url cl.opts|admin_urlname:'add' as add_url %} -->
+          </li>
+          <li>
               <a href="{% url 'single_user_create' %}"> Create Single User </a>
-                <!-- {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %} -->
-              <!-- </a> -->
-            </li>
-            <!-- <li>
-              {% url cl.opts|admin_urlname:'add' as add_url %}
-              <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink">
-                {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
-              </a>
-            </li> -->
-            
+          </li>
           {% endblock %}
         </ul>
       {% endif %}
