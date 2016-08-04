@@ -20,7 +20,6 @@ from notices.models import Notice, TrendingInCollege
 from django.contrib.auth.models import Group
 
 import permissions
-# import csv
 
 
 def bad_request_404(request):
