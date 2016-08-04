@@ -253,9 +253,13 @@ class BulkUser(LoginRequiredMixin, View):
             if user_start < user_end:
                 user_no = ["%.3d" % users for users in range(user_start, user_end+1)]
                 for student in user_no:
-                    new_user = User.objects.create_user(username=admission_format+str(student), password=str(admission_format)+str(student))
-                    group.user_set.add(new_user)
-                    StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
+                    profile = User.objects.filter(username=admission_format+str(student)).exists()
+                    if profile:
+                        pass
+                    else:
+                        new_user = User.objects.create_user(username=admission_format+str(student), password=str(admission_format)+str(student))
+                        group.user_set.add(new_user)
+                        StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
                 return render(request, "bulkuser.html")
             else:
                 return render(request, "bulkuserform.html", {"error": 1})
@@ -287,12 +291,16 @@ class SingleUser(LoginRequiredMixin, View):
             group = str(request.POST.get("group"))
             group = Group.objects.get(name=group)
 
-            new_user = User.objects.create_user(username=admission_format, password=admission_format)
-            group.user_set.add(new_user)
-            if (group == "student"):
-                StudentDetail.objects.create(user=new_user, branch=branch, course=course, year=year)
+            profile = User.objects.filter(username=admission_format).exists()
+            if profile:
+                pass
             else:
-                FacultyDetail.objects.create(user=new_user)
+                new_user = User.objects.create_user(username=admission_format, password=admission_format)
+                group.user_set.add(new_user)
+                if (group == "student"):
+                    StudentDetail.objects.create(user=new_user, branch=branch, course=course, year=year)
+                else:
+                    FacultyDetail.objects.create(user=new_user)
             return render(request, "singleuser.html")
         else:
             return render(request, "404.html")
