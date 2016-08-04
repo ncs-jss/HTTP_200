@@ -1505,4 +1505,24 @@ h3.create-head{
 
 }
 
+#return-adminpanel{
+float: none !important;
+margin-right: 10px;
+}
+
+.main-heading{
+
+	font-size: 1.2em !important;
+	margin-top: 30px !important;
+	margin-bottom: 10px !important;
+}
+.extra-links p{
+
+	display: inline-block;
+	margin-right:300px;
+}
+.adjust{
+
+	height: 250px;
+}
 
