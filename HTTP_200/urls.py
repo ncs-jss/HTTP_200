@@ -1,7 +1,7 @@
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from allauth.account.views import login, logout
-from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser
+from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser, SingleUser
 import settings
 
 admin.site.site_header = "JSS InfoConnect Admin Interface"
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
     # url(r'', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^students/create/single/$', SingleUser.as_view(), name='single_user_create'),
     url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
 ]
 

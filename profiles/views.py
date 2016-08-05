@@ -237,25 +237,69 @@ class BulkUser(LoginRequiredMixin, View):
             return render(request, "404.html")
 
     def post(self, request):
-        username = request.user
+        user = request.user
 
-        if username.is_superuser:
+        if user.is_superuser:
             admission_format = request.POST.get("admission_format")
             user_start = int(request.POST.get("start"))
             user_end = int(request.POST.get("end"))
             branch = request.POST.get("branch")
             year = request.POST.get("year")
             course = request.POST.get("course")
-            group = Group.objects.get(name="student")
+            group = str(request.POST.get("group"))
+            group = Group.objects.get(name=group)
 
             if user_start < user_end:
                 user_no = ["%.3d" % users for users in range(user_start, user_end+1)]
                 for student in user_no:
-                    new_user = User.objects.create_user(username=admission_format+str(student), password=str(admission_format)+str(student))
-                    group.user_set.add(new_user)
-                    StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
+                    profile = User.objects.filter(username=admission_format+str(student)).exists()
+                    if profile:
+                        pass
+                    else:
+                        new_user = User.objects.create_user(username=admission_format+str(student), password=str(admission_format)+str(student))
+                        group.user_set.add(new_user)
+                        StudentDetail.objects.create(user=new_user, branch=branch.upper(), year=year, course=course)
                 return render(request, "bulkuser.html")
             else:
                 return render(request, "bulkuserform.html", {"error": 1})
+        else:
+            return render(request, "404.html")
+
+
+class SingleUser(LoginRequiredMixin, View):
+    '''
+    Custom Class to create single user.
+    '''
+
+    def get(self, request):
+        user = request.user
+
+        if user.is_superuser:
+            return render(request, "singleuserform.html")
+        else:
+            return render(request, "404.html")
+
+    def post(self, request):
+        user = request.user
+
+        if user.is_superuser:
+            admission_format = request.POST.get("admission_format")
+            branch = request.POST.get("branch")
+            year = request.POST.get("year")
+            course = request.POST.get("course")
+            group = str(request.POST.get("group"))
+            group = Group.objects.get(name=group)
+
+            profile = User.objects.filter(username=admission_format).exists()
+            if profile:
+                pass
+            else:
+                new_user = User.objects.create_user(username=admission_format, password=admission_format)
+                group.user_set.add(new_user)
+                if (group == "student"):
+                    StudentDetail.objects.create(user=new_user, branch=branch, course=course, year=year)
+                else:
+                    FacultyDetail.objects.create(user=new_user)
+            return render(request, "singleuser.html")
         else:
             return render(request, "404.html")
