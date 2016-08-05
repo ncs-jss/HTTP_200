@@ -763,13 +763,13 @@ var id=parseInt(stick_num);
 			'position':'fixed',
 			'bottom':'0px',
 			'width':'calc(100vw - 220px)'
-		})
+		});
 	}
 	else{
 		$("footer").css({
 			'position':'relative',
 			'width':'auto'
-		})
+		});
 	}
 
 })();
@@ -777,23 +777,20 @@ var id=parseInt(stick_num);
 $(".left-nav-inner ul .move-in,.button-create,.left-nav-inner ul .index-list").click(function  () {
 	$("body").css({
 		'opacity':'0'
-	})
-})
+	});
+});
 
 
 $(document).on('click', "#tag-input li i", function(){
-	$(this).parent().remove()
-	console.log('adssad');
+	$(this).parent().remove();
 
 
 	if($("#tag-input li").length>=1){
 		$(".create-warn-msg").hide();
-		console.log('enable_button')
-		enable_button()
+		enable_button();
 	}else{
 		$(".create-warn-msg").show();
-		console.log('disable_button')
-		disable_button()
+		disable_button();
 	}
 })
 
@@ -806,12 +803,12 @@ var disable_button=function(){
 	$(".create-notice-button").mouseenter(function  () {
 		$(this).css({
 			'background':'#5d5473'
-		})
+		});
 	})
 	$(".create-notice-button").mouseleave(function  () {
 		$(this).css({
 			'background':'#5d5473'
-		})
+		});
 	})
 
 	$("#create-submit").prop("disabled",true);
@@ -835,74 +832,6 @@ var enable_button=function(){
 	$("#create-submit").prop("disabled",false);
 }
 
-/*setInterval(function  () {
-
-	if($("#entire").prop("checked")){
-		$(".tag").css({
-			'height':'auto',
-			'transition':'all 0.2s ease-in-out',
-			'overflow':'hidden'
-		});
-		$(".hidedata").css({
-			'height':'90px',
-			'transition':'all 0.2s ease-in-out',
-			'overflow':'hidden'
-		});
-		$("#create-submit").prop("disabled",false);
-		if($("#tag-input li").length>=1){
-			$(".create-warn-msg").hide();
-			enable_button()
-
-		}
-		else{
-			$(".create-warn-msg").show();
-			disable_button()
-
-
-
-
-
-		}
-	}
-	else{
-		$(".hidedata").css({
-			'height':'0px',
-			'transition':'all 0.2s ease-in-out',
-			'overflow':'hidden'
-		});
-		$(".create-notice-button").css({
-			'opacity':'1'
-		})
-		$(".create-notice-button").mouseenter(function  () {
-			$(this).css({
-				'background':'#2D2251'
-			})
-		})
-		$(".create-notice-button").mouseleave(function  () {
-			$(this).css({
-				'background':'#5d5473'
-			})
-		})
-		$(".create-warn-msg").fadeOut();
-		if($("#fac").prop("checked") || $("#manage").prop("checked") || $("#others").prop("checked") || $("#hod").prop("checked"))
-		{
-				// $(".create-warn-msg").show();
-				enable_button();
-			}
-			else{
-			// $(".create-warn-msg").hide();
-			disable_button();
-		}
-		$(".tag").css({
-			'height':'0px',
-			'transition':'all 0.2s ease-in-out',
-			'overflow':'hidden'
-		});
-
-	}
-
-})	
-*/
 $(".hidedata").css({
 	'height':'0px',
 	'transition':'all 0.2s ease-in-out',
@@ -918,14 +847,12 @@ disable_button();
 $('.add').click(function(){
 	if($("#tag-input li").length>=1){
 		$(".create-warn-msg").hide();
-		console.log('enable_button')
-		enable_button()
+		enable_button();
 	}else{
 		$(".create-warn-msg").show();
-		console.log('disable_button')
-		disable_button()
+		disable_button();
 	}
-})
+});
 
 
 $("#entire").change(function(){
@@ -958,29 +885,28 @@ $("#entire").change(function(){
 var should_enable_button = function(){
 	if($("#fac").prop("checked") || $("#manage").prop("checked") || 
 		$("#others").prop("checked") || $("#hod").prop("checked")){	
-		console.log('enable_button')
-	enable_button();
-}else{
-	console.log('disable_button')
-	disable_button();
-}
-}
+		enable_button();
+	}else{
+		console.log('disable_button');
+		disable_button();
+	}
+};
 
 $('#fac').click(function(){
-	should_enable_button()
-})
+	should_enable_button();
+});
 
 $('#manage').click(function(){
-	should_enable_button()
-})
+	should_enable_button();
+});
 
 $('#hod').click(function(){
-	should_enable_button()
-})
+	should_enable_button();
+});
 
 $('#others').click(function(){
-	should_enable_button()
-})
+	should_enable_button();
+});
 
 });
 
