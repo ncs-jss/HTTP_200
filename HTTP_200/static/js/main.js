@@ -887,6 +887,7 @@ var should_enable_button = function(){
 	if($("#fac").prop("checked") || $("#manage").prop("checked") || 
 		$("#others").prop("checked") || $("#hod").prop("checked")){	
 		enable_button();
+		$(".create-warn-msg").fadeOut();
 	}else{
 		console.log('disable_button');
 		disable_button();
