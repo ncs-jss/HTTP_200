@@ -889,8 +889,10 @@ var should_enable_button = function(){
 		enable_button();
 		$(".create-warn-msg").fadeOut();
 	}else{
-		console.log('disable_button');
-		disable_button();
+		if(!$("#entire").prop('checked')){
+			$(".create-warn-msg").fadeIn();
+			disable_button();
+		}
 	}
 };
 
