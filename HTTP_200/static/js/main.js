@@ -868,7 +868,8 @@ $("#entire").change(function(){
 			'overflow':'hidden'
 		});
 	}else{
-		$(".create-warn-msg").fadeOut();
+		$(".create-warn-msg").fadeIn();
+		disable_button();
 		$(".hidedata").css({
 			'height':'0px',
 			'transition':'all 0.2s ease-in-out',
