@@ -296,7 +296,7 @@ class SingleUser(LoginRequiredMixin, View):
             else:
                 new_user = User.objects.create_user(username=admission_format, password=admission_format)
                 group.user_set.add(new_user)
-                if (group == "student"):
+                if (str(group) == "student"):
                     StudentDetail.objects.create(user=new_user, branch=branch, course=course, year=year)
                 else:
                     FacultyDetail.objects.create(user=new_user)
