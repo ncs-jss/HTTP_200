@@ -22,7 +22,7 @@ from django.utils.decorators import method_decorator
 class NoticeList(LoginRequiredMixin, generic.View):
 
     @method_decorator(default_password_change)
-    @method_decorator(student_profile_complete) 
+    @method_decorator(student_profile_complete)
     def get(self, request):
         category = request.GET.get('category', None)
         template = 'notices/list.html'
