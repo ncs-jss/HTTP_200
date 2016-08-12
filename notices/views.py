@@ -15,7 +15,7 @@ import utils.constants as constants
 
 from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
-from notices.decorators import student_profile_complete, student_password_change
+from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 
 
@@ -294,7 +294,7 @@ class PinCreateView(LoginRequiredMixin, generic.View):
 
 class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
-    @method_decorator(student_password_change)
+    @method_decorator(default_password_change)
     @method_decorator(student_profile_complete)
     def get(self, request):
         template_name = "notices/list.html"

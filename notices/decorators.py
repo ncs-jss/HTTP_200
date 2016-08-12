@@ -9,19 +9,19 @@ def student_profile_complete(function):
 	"""
 	Decorator to check that user profile is completed or not.
 	"""
-	def _inner(request, *args, **kwargs):
+	def wrapper(request, *args, **kwargs):
 		user = User.objects.get(username=request.user.username)
 		profile = StudentDetail.objects.get(user=user)
-		if user.first_name and user.last_name and user.email and profile.course and profile.branch and profile.year and profile.contact_no and profile.address and profile.mother_name and profile.father_name:
+		if user.first_name == " " or user.last_name == " " or user.email == " " or profile.course == " " or profile.branch == " " or profile.year == " " or profile.contact_no == " " or profile.address == " " or profile.mother_name == " " or profile.father_name == " ":
 			print "enter if "
 			return HttpResponseRedirect(reverse("relevent-notice-list"))			
 		else:
 			print "enter else"
 			return HttpResponseRedirect(reverse("user-profile", kwargs={"user_id": str(request.user.username)}))
-	return _inner
+	return wrapper
 
 
-def student_password_change(function):
+def default_password_change(function):
 	"""
 	Decorator to check if user password is changed or not.
 	"""
