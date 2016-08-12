@@ -18,6 +18,9 @@ from .forms import StudentForm, FacultyForm, UserForm
 from notices.models import Notice, TrendingInCollege
 
 from django.contrib.auth.models import Group
+from notices.decorators import student_profile_complete, default_password_change
+from django.utils.decorators import method_decorator
+
 
 import permissions
 
@@ -39,6 +42,8 @@ class Home(View):
             Home Display view
     '''
 
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete)
     def get(self, request):
         template_name = 'index.html'
         trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
@@ -201,7 +206,7 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     """
     success_url = reverse_lazy('home')
 
-    # Override form valid view to keep user logged i
+    # Override form valid view to keep user logged in
     def form_valid(self, form):
         form.save()
         # Update session to keep user logged in.

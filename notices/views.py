@@ -21,6 +21,8 @@ from django.utils.decorators import method_decorator
 
 class NoticeList(LoginRequiredMixin, generic.View):
 
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete) 
     def get(self, request):
         category = request.GET.get('category', None)
         template = 'notices/list.html'
@@ -206,6 +208,8 @@ class BookmarkCreateView(LoginRequiredMixin, generic.View):
     '''
             Adding a Bookmark to a notice
     '''
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete)
     def post(self, request, pk=None):
         notice = Notice.objects.get(pk=pk)
         obj, created = BookmarkedNotice.objects.get_or_create(
@@ -222,7 +226,8 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
     """
         View for listing the bookmarked notices
     """
-
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete)
     def get(self, request):
         template_name = "bookmark.html"
         bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
@@ -373,6 +378,8 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
 
 class SearchNotices(LoginRequiredMixin, generic.View):
 
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete)
     def post(self, request, *args, **kwargs):
 
         template = 'notices/list.html'
