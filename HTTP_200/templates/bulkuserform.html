@@ -41,58 +41,10 @@
 
     <div class="left-nav-inner left-nav-inner-index">
       <ul>
-        <li class="index-list">
-          <a href="{% url "home" %}"><i class="fa fa-home"></i> &nbsp;Home</a>
-        </li>
-        <li class="index-list">
-          <a href="{% url "notice-list" %}"><i class="fa fa-thumb-tack"></i> &nbsp;All notices</a>
-        </li>
-        <!-- <li>
-          <a class="search2"><i class="fa fa-search"></i> &nbsp;Search</a>
-        </li> -->
-        <li class=" index-list"><a href="{% url "about" %}" >
-          <i class="fa fa-newspaper-o"></i> &nbsp;About</a>
-        </li>
-          <li class="index-list">
-            <a href="{% url "contact" %}">
-            <i class="fa fa-phone"></i> &nbsp;Contact</a>
-          </li>
           <li class="">
             <a href="http://jssaten.ac.in" target="_blank">
             <i class="fa fa-globe"></i> &nbsp;JSS Website</a>
           </li>
-          
-
-          <div class="line">
-          </div>
-          {% if request.user.is_authenticated %}
-          <li class="index-list">
-            <a href="{% url "user-profile" user_id=request.user.username %}">
-            <i class="fa fa-user"></i> &nbsp;My profile</a>
-          </li>
-          {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
-          <li class="index-list">
-            <a href="{% url "my-uploaded-notices" %}">
-            <i class="fa fa-cloud-upload"></i> &nbsp;My uploaded notices</a>
-          </li>
-            {% endif %}
-           <li class="index-list move-in">
-                        <a href="{% url "password_change" %}">
-                        <i class="fa fa-key"></i> &nbsp;Change Password</a>
-                    </li>
-          <li class="index-list">
-            <a href="{% url "account_logout" %}">
-            <i class="fa fa-inbox"></i> &nbsp;Logout</a>
-          </li>
-          {% else %}
-          <li class="index-list">
-            <a href="{% url "account_login" %}">
-            <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
-          </li>
-          {% endif %}
-          
-
-
       </ul>
     </div>
 
