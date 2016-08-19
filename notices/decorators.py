@@ -19,7 +19,7 @@ def student_profile_complete(function):
             return HttpResponseRedirect(reverse("user-profile", kwargs={"user_id": str(request.user.username)}))
         else:
             return function(request, *args, **kwargs)
-        return wrapper
+    return wrapper
 
 
 def default_password_change(function):
