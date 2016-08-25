@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'private_notices',
     'import_export',
+    'wifi',
 )
 
 MIDDLEWARE_CLASSES = (
