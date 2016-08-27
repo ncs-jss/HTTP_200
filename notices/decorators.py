@@ -34,7 +34,7 @@ def default_password_change(function):
         except:
             return function(request, *args, **kwargs)
 
-        if check_password(str(request.user.username), user.password):
+        if check_password(str(user).lower(), user.password) or check_password(str(user).upper(), user.password) :
             messages.warning(request, "Change password to continue.")
             return HttpResponseRedirect(reverse("password_change"))
         else:
