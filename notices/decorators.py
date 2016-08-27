@@ -16,6 +16,7 @@ def student_profile_complete(function):
             profile = StudentDetail.objects.get(user=user)
         except:
             return function(request, *args, **kwargs)
+
         if user.first_name == "" or user.email == "" or profile.course is None or profile.branch is None or profile.year is None or profile.contact_no == "None" or profile.address == "None" or profile.father_name == "None":
             messages.warning(request, "Fill in details to continue")
             return HttpResponseRedirect(reverse("user-profile", kwargs={"user_id": str(request.user.username)}))
