@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import StudentwifiDetail
+from .models import WifiDetail
 # Register your models here.
 
-class wifiAdmin(admin.ModelAdmin):
-	search_fields = ('laptop_mac_address',)
+class WifiAdmin(admin.ModelAdmin):
+	search_fields = ('laptop_mac_address','user')
 
-admin.site.register(StudentwifiDetail, wifiAdmin)
+admin.site.register(WifiDetail, WifiAdmin)
