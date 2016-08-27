@@ -23,6 +23,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
 		hosteler = request.POST.get("hosteler")
 		laptop_mac_address = request.POST.get("laptop_mac_address")
 		user = User.objects.get(username=request.user.username)
+		details = StudentDetail.objects.get(user=user)
 		profile = WifiDetail.objects.filter(user=user)
 		if profile:
 			return render(request, 'wifi/studentwifiform.html', {"error": "you have already applied for it.", "user": user, "details": details})
