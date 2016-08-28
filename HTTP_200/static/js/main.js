@@ -916,8 +916,9 @@ $('#others').click(function(){
 
 
 function ValidateBranch(){
-  var course = document.getElementById("course").value
-  var branch = document.getElementById("branch").value
+
+  var course = document.getElementById("course").value;
+  var branch = document.getElementById("branch").value;
   if (course == "BTECH" || course == "MTECH")
     {
       if (branch == "None")

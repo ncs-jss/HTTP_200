@@ -23,7 +23,6 @@ from django.utils.decorators import method_decorator
 
 
 import permissions
-# import csv
 
 
 def bad_request_404(request):
@@ -87,8 +86,11 @@ class UserProfile(LoginRequiredMixin, View):
         elif permissions.is_in_group(user_list, 'faculty'):
             user_type = 'faculty'
             detail_list = get_object_or_404(FacultyDetail, user=user_list)
+        elif permissions.is_in_group(user_list, 'others'):
+            user_type = 'others'
+            detail_list = get_object_or_404(user_list)
         else:
-            return Http404()
+            raise Http404()
 
         template_name = 'profiles/profile.html'
         return render(request, template_name, {'user_type': user_type, 'user_list': user_list, 'detail_list': detail_list})

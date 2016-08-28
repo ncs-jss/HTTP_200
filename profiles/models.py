@@ -110,8 +110,8 @@ class FacultyDetail(models.Model):
     alternate_email = models.EmailField(max_length=254, blank=True, null=True)
     display_to_others = models.BooleanField(default=False)
 
-    created = models.DateTimeField("Created", null=True)
-    modified = models.DateTimeField("Last Modified", null=True)
+    created = models.DateTimeField("Created", null=True, auto_now_add=True)
+    modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
 
     def __unicode__(self):
         return self.user.username

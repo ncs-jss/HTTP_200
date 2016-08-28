@@ -65,9 +65,9 @@
         <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span>Create Multiple Users</h3>
         </div>
       </div>
-        
         <div class="about-container contact-container">   
             <h3>Create multiple student profiles!</h3>
+        <div class="about-container contact-container">
             <form name="{% url 'bulk_students_create' %}" method="POST" id="main_form" onsubmit="return ValidateBranch()">
                 {% csrf_token %}
                 <input type="text" name="admission_format" class="input-style" placeholder="Admission Format: For eg. 16CSE" pattern="^[0-9]{2}[A-Za-z]{2,3}$" required>
@@ -97,9 +97,6 @@
                     <option value="ME">ME </option>
                     <option value="MT">MT </option>
                     <option value="EEE"> EEE </option>
-                </select>
-                <select id="group" name="group" placeholder="Group" class="input-style">
-                    <option value="student"> Student </option>
                 </select>
                 <select id="group" name="group" placeholder="Group" class="input-style">
                     <option value="student"> Student </option>

@@ -1,0 +1,25 @@
+<html>
+<head>
+<title> Wi-Fi Form</title>
+</head>
+<body>
+	{% if error %}
+	{{error}}
+	{% endif %}
+<form method="POST">
+	{% csrf_token %}
+	<p>
+	<label> Staying in Hostel : </label>
+	<input type="radio" name="hosteler" value="yes"> Yes
+	<input type="radio" name="hosteler" value="no"> No
+	</p>
+	<p> 
+	<label> Laptop Mac Address : </label>
+	<input type="text" name="laptop_mac_address" placeholder="Enter Laptop Mac Address">
+	</p>
+	<p>
+	<input type="submit" value="Submit">
+	</p>
+</form>
+</body>
+</html>
