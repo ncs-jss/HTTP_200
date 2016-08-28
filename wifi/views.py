@@ -18,7 +18,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(username=request.user.username)
         details = StudentDetail.objects.get(user=user)
-        return render(request, 'wifi/studentwifiform1.html', {"user": user, "details": details})
+        return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
 
     def post(self, request):
         hosteler = request.POST.get("hosteler")
@@ -43,7 +43,7 @@ class FacultyWifiForm(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(username=request.user.username)
         details = FacultyDetail.objects.get(user=user)
-        return render(request, 'wifi/facultywifiform1.html', {"user": user, "details": details})
+        return render(request, 'wifi/facultywifiform.html', {"user": user, "details": details})
 
     def post(self, request):
         laptop_mac_address = request.POST.get("laptop_mac_address")
@@ -57,6 +57,43 @@ class FacultyWifiForm(LoginRequiredMixin, View):
             WifiDetail.objects.create(user=user, laptop_mac_address=laptop_mac_address)
             messages.success(request, "Successfully Registered for Wi-Fi")
             return HttpResponseRedirect(reverse("relevent-notice-list"))
+
+
+import xlsxwriter
+
+def excel_writer(request):
+    workbook = xlsxwriter.Workbook('Wifi.xlsx')
+    worksheet = workbook.add_worksheet()
+
+    user=User.objects.get(username=request.user.username)
+    details_student = StudentDetail.objects.get(user=user)
+    details_faculty = FacultyDetail.objects.get(user=user)
+    wifi_detail = WifiDetail.objects.get(user=user)
+    length = wifi_detail.count()
+
+    data = ()
+    for i in xrange(len(length)):
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # def export_xls(modeladmin, request, queryset):
