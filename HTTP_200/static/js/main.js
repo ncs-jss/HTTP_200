@@ -916,10 +916,8 @@ $('#others').click(function(){
 
 
 function ValidateBranch(){
-
-  var course = document.getElementById("course").value;
-  var branch = document.getElementById("branch").value;
-
+  var course = document.getElementById("course").value
+  var branch = document.getElementById("branch").value
   if (course == "BTECH" || course == "MTECH")
     {
       if (branch == "None")
@@ -929,5 +927,10 @@ function ValidateBranch(){
       }
       else
         return true;
+        alert("Please Enter the Branch")
+        return false
+      }
+      else
+        return true
     }
 }
