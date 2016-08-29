@@ -1,484 +1,538 @@
-{% load staticfiles %}
+    {% load staticfiles %}
 
-<html>
-<head>
-	<title>
-		Wi-Fi
-	</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#2d2251">
-	<link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico"%}">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<link rel="stylesheet" href="{% static "css/default.css" %}">
-	<link rel="stylesheet" href="{% static "css/main.css" %}">
-	<link rel="stylesheet" href="{% static "css/style.css" %}">
-	<link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+    <html>
+    <head>
+    	<title>
+    		Wi-Fi
+    	</title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<meta name="theme-color" content="#2d2251">
+    	<link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico"%}">
+    	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    	<link rel="stylesheet" href="{% static "css/default.css" %}">
+    	<link rel="stylesheet" href="{% static "css/main.css" %}">
+    	<link rel="stylesheet" href="{% static "css/style.css" %}">
+    	<link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
 
-	
-</head>
+    	
+    </head>
 
-<body>
-
-
-
-    <div class="loader-container">
-    <div class="loader">
-      <img src="{% static "images/connect.gif"%}">
-    </div>
-    
-  </div>
+    <body>
 
 
 
-	{% for message in messages %}    
-        <div class="notice-msg">
-            {{ message }}
+        <div class="loader-container">
+        <div class="loader">
+          <img src="{% static "images/connect.gif"%}">
         </div>
-    {% endfor %}
+        
+      </div>
 
-	<div class="overlay-dark-mob">
-		<div class="cross-mobile"><i class="fa fa-times"></i></div>
-	</div>
-	<div class="dot-menu-links">
-		
-		<ul>				
-			   <li>
-                    <a href="{% url "home" %}">Home</a>
-                </li>
-                
-                <li>
-                    <a href="{% url "about" %}">About</a>
-                </li>
-                <li>
-                    <a href="{% url "contact" %}">Contact</a>
-                </li>
-                
-                <li>
-                    <a href="http://jssaten.ac.in" target="_blank">JSS Website</a>
-                </li>
-			</li>
-			
-		</ul>
-	</div>
-	
-		<div class="overlay-dark">
-		<div class="cross-mobile"><i class="fa fa-times"></i></div>
-	</div>
 
-	  <div class="left-nav">
-        <div class="logo">
-           <a href="{% url "home" %}">
-            <img src="{% static "images/logo.PNG"%}">
-        </a>
-        </div>
 
-        <div class="left-nav-inner">
-            <ul>
-                <li class=" move-in">
-                    <a href="{% url "notice-list" %}">
-                    <i class="fa fa-thumb-tack"></i> &nbsp;All Notices<!-- <span class="number active_number">5</span> --></a>
-                </li>
-                <li class=" move-in">
-                    <a href="{% url "relevent-notice-list" %}">
-                    <i class="fa fa-tags"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
-                </li>
-                <li class=" move-in">
-                    <a href="{% url "notice-list" %}?category=administration">
-                    <i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
-                </li>
-                <li class=" move-in">
-                    <a href="{% url "notice-list" %}?category=academics">
-                    <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
-                </li>
-                <li class=" move-in">
-                    <a href="{% url "notice-list" %}?category=events">
-                    <i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
-                </a>
-                    <li class=" move-in">
-                        <a href="{% url "notice-list" %}?category=tnp">
-                        <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
-                    </li>
-                 
-                    <li class=" move-in">
-                        <a href="{% url "notice-list" %}?category=misc">
-                        <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
-                    </li>
-                       <li class="">
-                        <a class="search2">
-                        <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
-                    </li>
-                    <li class=" move-in">
-                        <a href="{% url "bookmark-list" %}">
-                        <i class="fa fa-star"></i> &nbsp;Starred</a>
-                    </li>
+    	{% for message in messages %}    
+            <div class="notice-msg">
+                {{ message }}
+            </div>
+        {% endfor %}
 
-                    <div class="line">
-                    </div>
-
-                    <li class=" active move-in">
-                        <a href="{% url "user-profile" user_id=request.user.username %}">
-                        <i class="fa fa-user"></i> &nbsp;My profile</a>
+    	<div class="overlay-dark-mob">
+    		<div class="cross-mobile"><i class="fa fa-times"></i></div>
+    	</div>
+    	<div class="dot-menu-links">
+    		
+    		<ul>				
+    			   <li>
+                        <a href="{% url "home" %}">Home</a>
                     </li>
-                    {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
-                    <li class="  move-in">
-                        <a href="{% url "my-uploaded-notices" %}">
-                        <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
-                    </li>
-                    {% endif %}
-                    <li class="  move-in">
-                        <a href="{% url "password_change" %}">
-                        <i class="fa fa-key"></i> &nbsp;Change Password</a>
+                    
+                    <li>
+                        <a href="{% url "about" %}">About</a>
                     </li>
                     <li>
-                        <a href="{% url "account_logout" %}">
-                        <i class="fa fa-inbox"></i> &nbsp;Logout</a>
+                        <a href="{% url "contact" %}">Contact</a>
                     </li>
-                </ul>
+                    
+                    <li>
+                        <a href="http://jssaten.ac.in" target="_blank">JSS Website</a>
+                    </li>
+    			</li>
+    			
+    		</ul>
+    	</div>
+    	
+    		<div class="overlay-dark">
+    		<div class="cross-mobile"><i class="fa fa-times"></i></div>
+    	</div>
+
+    	  <div class="left-nav">
+            <div class="logo">
+               <a href="{% url "home" %}">
+                <img src="{% static "images/logo.PNG"%}">
+            </a>
             </div>
-        </div>
+
+            <div class="left-nav-inner">
+                <ul>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}">
+                        <i class="fa fa-thumb-tack"></i> &nbsp;All Notices<!-- <span class="number active_number">5</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "relevent-notice-list" %}">
+                        <i class="fa fa-tags"></i> &nbsp;Relevant<!-- <span class="number active_number">5</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=administration">
+                        <i class="fa fa-university"></i> &nbsp;Administration<!-- <span class="number">6</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=academics">
+                        <i class="fa fa- fa-pencil-square-o"></i> &nbsp;Academics<!-- <span class="number">2</span> --></a>
+                    </li>
+                    <li class=" move-in">
+                        <a href="{% url "notice-list" %}?category=events">
+                        <i class="fa fa-calendar"></i> &nbsp;Events<!-- <span class="number">2</span> --></a></li>
+                    </a>
+                        <li class=" move-in">
+                            <a href="{% url "notice-list" %}?category=tnp">
+                            <i class="fa fa-graduation-cap"></i> &nbsp;Placement<!-- <span class="number">1</span> --></a>
+                        </li>
+                     
+                        <li class=" move-in">
+                            <a href="{% url "notice-list" %}?category=misc">
+                            <i class="fa fa-list-alt"></i> &nbsp;Misc.<!-- <span class="number">9+</span> --></a>
+                        </li>
+                           <li class="">
+                            <a class="search2">
+                            <i class="fa fa-filter"></i> &nbsp;Filter Notices<!-- <span class="number">1</span> --></a>
+                        </li>
+                        <li class=" move-in">
+                            <a href="{% url "bookmark-list" %}">
+                            <i class="fa fa-star"></i> &nbsp;Starred</a>
+                        </li>
+
+                        <div class="line">
+                        </div>
+                            <li class="  move-in">
+                            <a href="{% url "password_change" %}">
+                            <i class="fa fa-wifi"></i> &nbsp;Wifi-Form</a>
+                        </li>
+                        <li class=" active move-in">
+                            <a href="{% url "user-profile" user_id=request.user.username %}">
+                            <i class="fa fa-user"></i> &nbsp;My profile</a>
+                        </li>
+                        {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
+                        <li class="  move-in">
+                            <a href="{% url "my-uploaded-notices" %}">
+                            <i class="fa fa-user-secret"></i> &nbsp;My uploaded notices</a>
+                        </li>
+                        {% endif %}
+                        <li class="  move-in">
+                            <a href="{% url "password_change" %}">
+                            <i class="fa fa-key"></i> &nbsp;Change Password</a>
+                        </li>
+                        <li>
+                            <a href="{% url "account_logout" %}">
+                            <i class="fa fa-inbox"></i> &nbsp;Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
 
 
 
-<div class="relevant-page">
-		<header class="profile-header">
-			<div class="row">
-				<div class="heading-small col sm-col-4">
-					<h3 class="profile-head"><span class="mobile-menu"><i class="fa fa-bars"></i></span>Wi-Fi Details</h3>
-				</div>
-				<div class="head-links-resize col sm-col-8">
-					<div class="head-links">
-						<ul>
-							   <li>
-                                <a href="{% url "home" %}">Home</a>
-                            </li>
-                            
-                            <li>
-                                <a href="{% url "about" %}">About</a>
-                            </li>
-                            <li>
-                                <a href="{% url "contact" %}">Contact</a>
-                            </li>
-                            
-                            <li>
-                                <a href="http://jssaten.ac.in" target="_blank">JSS Website</a>
-                            </li>
-							
-						</ul>
+    <div class="relevant-page">
+    		<header class="profile-header">
+    			<div class="row">
+    				<div class="heading-small col sm-col-4">
+    					<h3 class="profile-head"><span class="mobile-menu"><i class="fa fa-bars"></i></span>Wi-Fi Details</h3>
+    				</div>
+    				<div class="head-links-resize col sm-col-8">
+    					<div class="head-links">
+    						<ul>
+    							   <li>
+                                    <a href="{% url "home" %}">Home</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="{% url "about" %}">About</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "contact" %}">Contact</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="http://jssaten.ac.in" target="_blank">JSS Website</a>
+                                </li>
+    							
+    						</ul>
 
-					</div>
-					<br>
+    					</div>
+    					<br>
 
-						<i class="mob-edit fa fa-pencil"></i> 
-						<i class="mob-save fa fa-save"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<div class="mob-side-link">
-						<span class="dot-mob">
-						</span>
-						<span class="dot-mob">
-						</span>
-						<span class="dot-mob">
-						</span>
-					</div>
+    						<i class="mob-edit fa fa-pencil"></i> 
+    						<i class="mob-save fa fa-save"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    						<div class="mob-side-link">
+    						<span class="dot-mob">
+    						</span>
+    						<span class="dot-mob">
+    						</span>
+    						<span class="dot-mob">
+    						</span>
+    					</div>
 
-				</div>
-			</div>
-		</header>
-			<div class="profile-form" >
-				
-				<form id="studentwifi-form" action="{% url 'student-wifi' %}" method="POST">
+    				</div>
+    			</div>
+    		</header>
+    			<div class="profile-form" >
+    				
+    				<form id="studentwifi-form" action="{% url 'student-wifi' %}" method="POST">
 
-				{% csrf_token %}
-				
-				<div class=" row">
-					<div class="top-range col col-4">
-						<h2><i class="fa fa-user-secret"></i>	&nbsp;Username </h2>
-						<input type="text" class="input-style " value="{{user.username}}" disabled>
-					</div>
-					<div class="top-range col col-4">
-						<h2><i class="fa fa-user"></i>	&nbsp;First Name <i class="show-icon fa fa-pencil"></i></h2>
-						<input type="text" class="input-style edit-input" value="{{ user.first_name }}" disabled>
-					</div>
-					<div class="top-range col col-4">
-						<h2><i class="fa fa-user"></i>	&nbsp;Last Name <i class="show-icon fa fa-pencil"></i></h2>
-						<input type="text" class="input-style edit-input" placeholder="Last Name" value="{{ user.last_name }}"disabled>
-					</div>
-				</div>
+    				{% csrf_token %}
+    				
+    				<div class=" row">
+    					<div class="top-range col col-4">
+    						<h2><i class="fa fa-user-secret"></i>	&nbsp;Username </h2>
+    						<input type="text" class="input-style " value="{{user.username}}" disabled>
+    					</div>
+    					<div class="top-range col col-4">
+    						<h2><i class="fa fa-user"></i>	&nbsp;First Name <i class="show-icon fa fa-pencil"></i></h2>
+    						<input type="text" class="input-style edit-input" value="{{ user.first_name }}" disabled>
+    					</div>
+    					<div class="top-range col col-4">
+    						<h2><i class="fa fa-user"></i>	&nbsp;Last Name <i class="show-icon fa fa-pencil"></i></h2>
+    						<input type="text" class="input-style edit-input" placeholder="Last Name" value="{{ user.last_name }}"disabled>
+    					</div>
+    				</div>
 
-					<div class=" row">
-						<div class="top-range col col-4">
-							<h2><i class="fa fa-graduation-cap"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" value="{{ details.course }}" disabled>
-						</div>
+    					<div class=" row">
+    						<div class="top-range col col-4">
+    							<h2><i class="fa fa-graduation-cap"></i>	&nbsp;Course <i class="show-icon fa fa-pencil"></i></h2>
+    							<input type="text" class="input-style edit-input" value="{{ details.course }}" disabled>
+    						</div>
 
-						<div class="top-range col col-4">
-							<h2><i class="fa fa-code-fork"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" value="{{ details.branch }}" disabled>
-						</div>
+    						<div class="top-range col col-4">
+    							<h2><i class="fa fa-code-fork"></i>	&nbsp;Branch <i class="show-icon fa fa-pencil"></i></h2>
+    							<input type="text" class="input-style edit-input" value="{{ details.branch }}" disabled>
+    						</div>
 
-						<div class="top-range col col-4">
-							<h2><i class="fa fa-envelope"></i>	&nbsp;Year <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" value="{{ details.year }}" disabled>
-						</div>
-					
-					</div>
-					<div class="row">
+    						<div class="top-range col col-4">
+    							<h2><i class="fa fa-envelope"></i>	&nbsp;Year <i class="show-icon fa fa-pencil"></i></h2>
+    							<input type="text" class="input-style edit-input" value="{{ details.year }}" disabled>
+    						</div>
+    					
+    					</div>
+    					<div class="row">
 
-						<div class="top-range col col-4">
-							<h2><i class="fa fa-puzzle-piece" ></i>	&nbsp;Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
-							<input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" name="laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" >
-						</div>
-                        <div class="top-range col col-4">
-                            <a class="fa fa-puzzle-piece" href="https://google.co.in" target="_blank"> How to find Mac Address </a>
+    						<div class="top-range col col-4">
+    							<h2><i class="fa fa-puzzle-piece" ></i>	&nbsp;Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
+    							<input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" name="laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" >
+                                <a class="fa fa-external-link" href="https://google.co.in" target="_blank"> How to find Mac Address </a>
+    						</div>
+                          
+
+    					</div>
+                        <div class="row">
+                            <div class="top-range col col-1">
+                                <button class="submit-contact" onclick="" type="button" id="myBtn"> Next </button> 
+                            </div>
+                        </div>
+                    </div>
+    			</form>
+                <footer>
+          <h4>Quick Links</h4>
+          <div class="footer-line"></div>
+          <div class="row">
+            <div class="footer-links">
+              <div class="col col-3">
+                <h4>View Result</h4>
+              </div>
+              <div class="col col-3">
+                <h4>My Inbox</h4>
+              </div>
+              <div class="col col-3">
+                <h4>Register</h4>
+              </div>
+              <div class="col col-3">
+                <h4>Forum</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="footer-links">
+              <div class="col col-3">
+                <h4>JSS Library</h4>
+              </div>
+              <div class="col col-3">
+                <h4><a href="http://jssaten.ac.in/" target="_blank">JSS Website</a></h4>
+              </div>
+              <div class="col col-3">
+                <h4>JSS STEP</h4>
+              </div>
+              <div class="col col-3">
+                <h4><a href="http://aktu.ac.in/" target="_blank">UPTU Website</a></h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="footer-links">
+              <div class="col col-3">
+                <h4>Old Question Paper</h4>
+              </div>
+              <div class="col col-3">
+                <h4>JSS Mailbox</h4>
+              </div>
+              <div class="col col-3">
+                <h4><a href="http://hackncs.com/" target="_blank">Nibble Website</a></h4>
+              </div>
+              <div class="col col-3">
+                <h4>Other Societies</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="footer-links">
+              <div class="col col-3">
+                <h4>Computer Science & Engineering</h4>
+              </div>
+              <div class="col col-3">
+                <h4>Electrical Engineering</h4>
+              </div>
+              <div class="col col-3">
+                <h4>Electronics & Communication Engineering</h4>
+              </div>
+              <div class="col col-3">
+                <h4>Mechanical Engineering</h4>
+              </div>
+            </div>
+          </div>
+          <div class="sub-footer ">
+            <h4><a href="http://www.hackncs.com" target="_blank"> Nibble Computer Society</a></h4>
+          </div>
+        </footer>
+
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal2-content">
+        <span class="close">x</span>
+        
+
+            <h2 class="rules-header">NORMS FOR OPERATION<h2>
+    <p class="rules">
+    All the students of JSSATEN are hereby informed that college has provided Wi-Fi
+
+    facility to internet users (faculty / staff / students / visitors)<br>
+
+    1. Access to Wi-Fi connectivity is permitted to only for legalized activities. Anyone
+
+    found using the facility for anti-social and anti-national activities has to face legal
+
+    action as per law.<br>
+
+    2. Users are forbidden to send unsolicited mail, Spam mail and virus on network.<br>
+
+    3. Access to anti-national and pornographic sites, social networking sites and chat
+
+    servers related to these is strictly forbidden. Users violating these norms will lose
+
+    their right to access internet from the college and disciplinary action will be
+
+    initiated against them.<br>
+
+    4. Only a valid account holder is permitted to use the facility.<br>
+
+    5. Any user found misusing the facility, like bringing their friends / outsiders, passing
+
+    on their account to others, etc., will lose their right to access the Internet/Wi-Fi
+
+    facility.<br>
+
+    6. Institute will not be liable for any damages arising from the use of this facility and
+
+    does not endorse or accept any responsibility for the content. User has to make
+
+    their own arrangements for the Security of their systems.</p>
+ <form action="" class="terms">
+            <input type="checkbox">I agreee to the terms & conditions</input>
+        </form>
+         <div class="row">
+                            <div class="top-range col col-1">
+                                <button class="submit-contact" onclick="" type="button" id="myBtn"> Submit </button> 
+                            </div>
                         </div>
 
-					</div>
+      </div>
+
+        
+
+    </div>
+
+    <div class="search-container">
+
+        <div class="cross">
+            <i class="fa fa-times">
+            </i>
+        </div>
+        <div class="login-overlay search-overlay"></div>
+
+        <div class="login search-main">
+            
+                <div class="login-head search-head">
+                    <h3>Search for Uploaded Notices.</h3>
+                </div>
+                
+            
+            <div class="login-form search-form">
+                <form action="{% url 'notice-search' %}" method="POST">
+                {% csrf_token %}
+                    <input class="input-style" type="text" placeholder="Title" name="title">
+                    <input class="input-style" type="text" placeholder="Description" name="description">
+                    <input class="input-style" type="text" placeholder="Posted By" name="faculty">
+
+
+
+                    <div class="side-text">Posting Date Between </div>
                     <div class="row">
-                        <div class="top-range col col-1">
-                            <button class="submit-contact" onclick="" type="button"> Next </button> 
+                        <div id="desktop-date"> 
+                            <div class="col sm-col-12">
+                                <input type="text" id="daterangepicker" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_desktop">
+                            </div>
+                        </div>
+                        <div id="mobile-date">  
+                            <div class="col sm-col-12">
+                                <input type="text" id="mobile-datepicker-1" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_start">
+                            </div>
+                            <div class="col sm-col-12">
+                                <input type="text" id="mobile-datepicker-2" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_end">
+                            </div>
                         </div>
                     </div>
-                </div>
-			</form>
-
-</div>
-
-<footer>
-      <h4>Quick Links</h4>
-      <div class="footer-line"></div>
-      <div class="row">
-        <div class="footer-links">
-          <div class="col col-3">
-            <h4>View Result</h4>
-          </div>
-          <div class="col col-3">
-            <h4>My Inbox</h4>
-          </div>
-          <div class="col col-3">
-            <h4>Register</h4>
-          </div>
-          <div class="col col-3">
-            <h4>Forum</h4>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="footer-links">
-          <div class="col col-3">
-            <h4>JSS Library</h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/" target="_blank">JSS Website</a></h4>
-          </div>
-          <div class="col col-3">
-            <h4>JSS STEP</h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://aktu.ac.in/" target="_blank">UPTU Website</a></h4>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="footer-links">
-          <div class="col col-3">
-            <h4>Old Question Paper</h4>
-          </div>
-          <div class="col col-3">
-            <h4>JSS Mailbox</h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://hackncs.com/" target="_blank">Nibble Website</a></h4>
-          </div>
-          <div class="col col-3">
-            <h4>Other Societies</h4>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="footer-links">
-          <div class="col col-3">
-            <h4>Computer Science & Engineering</h4>
-          </div>
-          <div class="col col-3">
-            <h4>Electrical Engineering</h4>
-          </div>
-          <div class="col col-3">
-            <h4>Electronics & Communication Engineering</h4>
-          </div>
-          <div class="col col-3">
-            <h4>Mechanical Engineering</h4>
-          </div>
-        </div>
-      </div>
-      <div class="sub-footer ">
-        <h4><a href="http://www.hackncs.com" target="_blank"> Nibble Computer Society</a></h4>
-      </div>
-    </footer>
-</div>
 
 
-<div class="search-container">
+                    <div class="side-text">Posting for </div>
+                    <div class="row">
+                    
+                    <div class="col col-3">
+                        
+                        <select  placeholder="" name="course" class="input-style" id="create-course1">
+                            
+                            <option value="">All Courses</option>
+                            <option value="BTech">BTech</option>
+                            <option value="MTech">MTech</option>
+                            <option value="MCA">MCA</option>
+                            <option value="MBA">MBA</option>
 
-    <div class="cross">
-        <i class="fa fa-times">
-        </i>
-    </div>
-    <div class="login-overlay search-overlay"></div>
+                        </select>
+                    </div>
+                    <div class="col col-3">
+                        
+                        <select  placeholder="" name="branch" class="input-style" id="create-branch1">
+                            <option value="">All Branches</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EE">EE</option>
+                            <option value="CE">CE</option>
+                            <option value="IC">IC</option>
+                            <option value="MT">MT</option>
+                            <option value="ME">ME</ssoption>
 
-    <div class="login search-main">
-        
-            <div class="login-head search-head">
-                <h3>Search for Uploaded Notices.</h3>
+                            
+                        </select>
+                    </div>
+                    <div class="col col-3">
+                        
+                        <select  placeholder="" name="year" class="input-style" id="create-year1">
+                            <option value="" selected>All Years</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+
+                            
+                        </select>
+                    </div>
+                    <div class="col col-3">
+                        
+                        <select  placeholder="" name="section" class="input-style" id="create-section1">
+                            <option value="" selected>All Sections</option>
+                            <option value="CSE1">CSE1</option>
+                            <option value="CSE2">CSE2</option>
+                            <option value="IT1">IT1</option>
+                            <option value="IT2">IT2</option>
+                            <option value="ECE1">ECE1</option>
+                            <option value="ECE2">ECE2</option>
+                            <option value="EE1">EE1</option>
+                            <option value="EE2">EE2</option>
+                            <option value="CE1">CE1</option>
+                            <option value="CE2">CE2</option>
+                            <option value="IC1">IC1</option>
+                            <option value="IC2">IC2</option>
+                            <option value="MT1">MT1</option>
+                            <option value="MT2">MT2</option>
+                            <option value="ME1">ME1</option>
+                            <option value="ME2">ME2</option>
+                            
+                        </select>
+                    </div>
+
+
+                    <button type="reset" value="reset"  class="reset reset-search">Reset</button>
+                    <button type="submit" value="submit" class="right">Search</button>
+                    <div class="clear">
+                    </div>
+                    
+                </form>
             </div>
-            
-        
-        <div class="login-form search-form">
-            <form action="{% url 'notice-search' %}" method="POST">
-            {% csrf_token %}
-                <input class="input-style" type="text" placeholder="Title" name="title">
-                <input class="input-style" type="text" placeholder="Description" name="description">
-                <input class="input-style" type="text" placeholder="Posted By" name="faculty">
-
-
-
-                <div class="side-text">Posting Date Between </div>
-                <div class="row">
-                    <div id="desktop-date"> 
-                        <div class="col sm-col-12">
-                            <input type="text" id="daterangepicker" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_desktop">
-                        </div>
-                    </div>
-                    <div id="mobile-date">  
-                        <div class="col sm-col-12">
-                            <input type="text" id="mobile-datepicker-1" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_start">
-                        </div>
-                        <div class="col sm-col-12">
-                            <input type="text" id="mobile-datepicker-2" class="input-style input-calendar" placeholder="dd/mm/yyyy" name="date_m_end">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="side-text">Posting for </div>
-                <div class="row">
-                
-                <div class="col col-3">
-                    
-                    <select  placeholder="" name="course" class="input-style" id="create-course1">
-                        
-                        <option value="">All Courses</option>
-                        <option value="BTech">BTech</option>
-                        <option value="MTech">MTech</option>
-                        <option value="MCA">MCA</option>
-                        <option value="MBA">MBA</option>
-
-                    </select>
-                </div>
-                <div class="col col-3">
-                    
-                    <select  placeholder="" name="branch" class="input-style" id="create-branch1">
-                        <option value="">All Branches</option>
-                        <option value="CSE">CSE</option>
-                        <option value="IT">IT</option>
-                        <option value="ECE">ECE</option>
-                        <option value="EE">EE</option>
-                        <option value="CE">CE</option>
-                        <option value="IC">IC</option>
-                        <option value="MT">MT</option>
-                        <option value="ME">ME</ssoption>
-
-                        
-                    </select>
-                </div>
-                <div class="col col-3">
-                    
-                    <select  placeholder="" name="year" class="input-style" id="create-year1">
-                        <option value="" selected>All Years</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-
-                        
-                    </select>
-                </div>
-                <div class="col col-3">
-                    
-                    <select  placeholder="" name="section" class="input-style" id="create-section1">
-                        <option value="" selected>All Sections</option>
-                        <option value="CSE1">CSE1</option>
-                        <option value="CSE2">CSE2</option>
-                        <option value="IT1">IT1</option>
-                        <option value="IT2">IT2</option>
-                        <option value="ECE1">ECE1</option>
-                        <option value="ECE2">ECE2</option>
-                        <option value="EE1">EE1</option>
-                        <option value="EE2">EE2</option>
-                        <option value="CE1">CE1</option>
-                        <option value="CE2">CE2</option>
-                        <option value="IC1">IC1</option>
-                        <option value="IC2">IC2</option>
-                        <option value="MT1">MT1</option>
-                        <option value="MT2">MT2</option>
-                        <option value="ME1">ME1</option>
-                        <option value="ME2">ME2</option>
-                        
-                    </select>
-                </div>
-
-
-                <button type="reset" value="reset"  class="reset reset-search">Reset</button>
-                <button type="submit" value="submit" class="right">Search</button>
-                <div class="clear">
-                </div>
-                
-            </form>
         </div>
+        
     </div>
-    
-</div>
 
 
 
-<!-- scripts============ -->
-<script>
-document.getElementById('num').addEventListener('input', function (e) {
- e.target.value = e.target.value.replace(/[^\dA-Z]/g, '');
-});
-document.getElementById('num2').addEventListener('input', function (e) {
- e.target.value = e.target.value.replace(/[^\dA-Z]/g, '');
-});
-</script>
-<script src="{% static "js/jquery.js" %}"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="{% static "js/jquery.daterange.js" %}"></script>
-<script src="{% static "js/main.js"  %}"></script>
+    <!-- scripts============ -->
+    <script>
+    document.getElementById('num').addEventListener('input', function (e) {
+     e.target.value = e.target.value.replace(/[^\dA-Z]/g, '');
+    });
+    document.getElementById('num2').addEventListener('input', function (e) {
+     e.target.value = e.target.value.replace(/[^\dA-Z]/g, '');
+    });
+    </script>
+    <script src="{% static "js/jquery.js" %}"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="{% static "js/jquery.daterange.js" %}"></script>
+    <script src="{% static "js/main.js"  %}"></script>
 
-        <script>
-            var width = $(document).width();
-            if(width>640)
-            {
-                $("#mobile-date").hide();
-                $(function () {
-                    $("#daterangepicker").daterange({
-                       dateFormat: "dd/mm/yy", //date format
-                    rangeSeparator: "-" // the string between first and last date
+            <script>
+                var width = $(document).width();
+                if(width>640)
+                {
+                    $("#mobile-date").hide();
+                    $(function () {
+                        $("#daterangepicker").daterange({
+                           dateFormat: "dd/mm/yy", //date format
+                        rangeSeparator: "-" // the string between first and last date
+                        });
                     });
-                });
-            }
-            else{
-                $("#desktop-date").hide();
-                $(function() {
-                    $("#mobile-datepicker-1, #mobile-datepicker-2").datepicker();
-                });
-            }
-            
+                }
+                else{
+                    $("#desktop-date").hide();
+                    $(function() {
+                        $("#mobile-datepicker-1, #mobile-datepicker-2").datepicker();
+                    });
+                }
+                
 
-            $(".search-container").on("scroll", function(){
-            var cale = $(this).find("input.hasDatepicker");
-            $("#ui-datepicker-div").css("top", cale.offset().top +cale.outerHeight());
- 
-        })
+                $(".search-container").on("scroll", function(){
+                var cale = $(this).find("input.hasDatepicker");
+                $("#ui-datepicker-div").css("top", cale.offset().top +cale.outerHeight());
+     
+            })
 
-</script>
-</body>
-</html>
+    </script>
+    </body>
+    </html>
