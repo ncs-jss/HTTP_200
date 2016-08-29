@@ -9,6 +9,11 @@ from django.core.urlresolvers import reverse
 from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.http import JsonResponse, HttpResponse
+from io import BytesIO
+
+import xlsxwriter
 
 
 class StudentWifiForm(LoginRequiredMixin, View):
@@ -59,77 +64,42 @@ class FacultyWifiForm(LoginRequiredMixin, View):
             return HttpResponseRedirect(reverse("relevent-notice-list"))
 
 
-import xlsxwriter
+class excel_writer(LoginRequiredMixin, View):
+    def get(self, request):
+        output = BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet("wifi")
+        wifi = WifiDetail.objects.all()
+        bold = workbook.add_format({'bold':True})
+        columns = ["Username", "First Name", "Last Name", "Course", "Branch", "Year", "Laptop Mac Address", "Date Applied"]
+        row = 0
+        for i, elem in enumerate(columns):
+            worksheet.write(row, i, elem, bold)
 
-def excel_writer(request):
-    workbook = xlsxwriter.Workbook('Wifi.xlsx')
-    worksheet = workbook.add_worksheet()
+        row+=1
+        for users in wifi:
+            try:
+                user = User.objects.get(username=users.user)
+                student = StudentDetail.objects.get(user=user)
+                worksheet.write(row , 0, user.username)
+                worksheet.write(row , 1, user.first_name)
+                worksheet.write(row , 2, user.last_name)
+                worksheet.write(row , 3, student.course)
+                worksheet.write(row , 4, student.branch)
+                worksheet.write(row , 5, student.year)
+                worksheet.write(row , 6, users.laptop_mac_address)
+                row+=1
+            except:
+                user = User.objects.get(username=users.user)
+                faculty = FacultyDetail.objects.get(user=user)
+                worksheet.write(row , 0, user.username)
+                worksheet.write(row , 1, user.first_name)
+                worksheet.write(row , 2, user.last_name)
+                worksheet.write(row , 4, faculty.department)
+                worksheet.write(row , 6, users.laptop_mac_address)
+                row+=1
 
-    user=User.objects.get(username=request.user.username)
-    details_student = StudentDetail.objects.get(user=user)
-    details_faculty = FacultyDetail.objects.get(user=user)
-    wifi_detail = WifiDetail.objects.get(user=user)
-    length = wifi_detail.count()
-
-    data = ()
-    for i in xrange(len(length)):
-        pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def export_xls(modeladmin, request, queryset):
-#     import xlwt
-#     response = HttpResponse(mimetype='application/ms-excel')
-#     response['Content-Disposition'] = 'attachment; filename=wifiregister.xls'
-#     wb = xlwt.Workbook(encoding='utf-8')
-#     ws = wb.add_sheet("WiFi-Register")
-
-#     row_num = 0
-
-#     columns = [
-#     (u"ID", 5000),
-#     (u"Laptop Mac Address", 5000),
-#     ]
-
-#     font_style = xlwt.XFStyle()
-#     font_style.font.bold = True
-
-#     for col_num in xrange(len(columns)):
-#         ws.write(row_num, col_num, columns[col_num][0], font_style)
-#         ws.col(col_num).width = columns[col_num][1]
-
-#     font_style = xlwt.XFStyle()
-#     font_style.alignment.wrap = 1
-
-#     for obj in queryset:
-#         row_num += 1
-#         row = [
-#                 obj.pk,
-#                 obj.laptop_mac_address,
-#         ]
-#         for col_num in xrange(len(row)):
-#             ws.write(row_num, col_num, row[col_num], font_style)
-
-#     wb.save(response)
-#     return response
-
-# export_xls.short_description = u"Export XLS"
+        workbook.close()
+        output.seek(0)
+        response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        return response
