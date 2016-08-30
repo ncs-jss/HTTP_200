@@ -67,7 +67,7 @@ class excel_writer(LoginRequiredMixin, View):
 
     def get(self, request):
         '''
-        Custom class for xls file downloader
+        Custom class for xls file downloader.
         '''
 
         output = BytesIO()
@@ -107,3 +107,4 @@ class excel_writer(LoginRequiredMixin, View):
         output.seek(0)
         response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         return response
+        
