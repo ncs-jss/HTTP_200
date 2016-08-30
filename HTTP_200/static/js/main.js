@@ -917,17 +917,41 @@ $('#others').click(function(){
 
 function ValidateBranch(){
 
-  var course = document.getElementById("course").value;
-  var branch = document.getElementById("branch").value;
-
-  if (course == "BTECH" || course == "MTECH")
+	var course = document.getElementById("course").value;
+	var branch = document.getElementById("branch").value;
+  	if (course == "BTECH" || course == "MTECH")
     {
-      if (branch == "None")
-      { 
-        alert("Please Enter the Branch");
-        return false;
-      }
-      else
-        return true;
+      	if (branch == "None")
+      	{ 
+        	alert("Please Enter the Branch");
+        	return false;
+      	}
+      	else
+        	return true
+    }
+}
+
+var modal = document.getElementById('myModal');
+
+
+var btn = document.getElementById("myBtn");
+
+
+var span = document.getElementsByClassName("close")[0];
+
+ 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
 }

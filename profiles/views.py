@@ -297,7 +297,6 @@ class SingleUser(LoginRequiredMixin, View):
             course = request.POST.get("course")
             group = str(request.POST.get("group"))
             group = Group.objects.get(name=group)
-
             profile = User.objects.filter(username=admission_format).exists()
             if profile:
                 pass
