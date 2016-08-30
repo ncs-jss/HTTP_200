@@ -9,8 +9,7 @@ from django.core.urlresolvers import reverse
 from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse
 from io import BytesIO
 
 import xlsxwriter
@@ -65,7 +64,12 @@ class FacultyWifiForm(LoginRequiredMixin, View):
 
 
 class excel_writer(LoginRequiredMixin, View):
+
     def get(self, request):
+        '''
+        Custom class for xls file downloader
+        '''
+
         output = BytesIO()
         workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet("wifi")
