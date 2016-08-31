@@ -955,3 +955,21 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+var checker = $('#checker');
+var sendBtn = $('#sendBtn');
+checker.change(function(){
+	if($(this).prop('checked'))
+		sendBtn.show();
+	else
+		sendBtn.hide();
+
+});
+
+$('#sendBtn').click(function(){
+	$('#studentwifi-form').submit();
+});
+
+$('#sendBtn').click(function(){
+	$('#facultywifi-form').submit();
+});
