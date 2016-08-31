@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 #  }
 
 DATABASES = {
-   'default': {
+       'default': {
        'ENGINE': 'django.db.backends.mysql',
        'NAME': config_keys.DATABASE_NAME,
        'USER': config_keys.MYSQL_USERNAME,

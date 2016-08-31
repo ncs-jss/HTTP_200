@@ -70,7 +70,7 @@ class excel_writer(LoginRequiredMixin, View):
         worksheet = workbook.add_worksheet()
         wifi = WifiDetail.objects.all()
         bold = workbook.add_format({'bold': True})
-        worksheet.set_column(1,160,7)
+        worksheet.set_column(1, 160, 7)
         columns = ["Username", "First Name", "Last Name", "Course", "Branch", "Year", "Laptop Mac Address", "Date Applied"]
         row = 0
         for i, elem in enumerate(columns):
