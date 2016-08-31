@@ -10,7 +10,6 @@ from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.http import HttpResponse
-from io import BytesIO
 
 import xlsxwriter
 
@@ -25,7 +24,6 @@ class StudentWifiForm(LoginRequiredMixin, View):
         return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
 
     def post(self, request):
-        hosteler = request.POST.get("hosteler")
         laptop_mac_address = request.POST.get("laptop_mac_address")
         user = User.objects.get(username=request.user.username)
         details = StudentDetail.objects.get(user=user)
@@ -67,13 +65,13 @@ class excel_writer(LoginRequiredMixin, View):
 
     def get(self, request):
         '''
-        Custom class for xls file downloader.
+        Custom class to download xls file.
         '''
 
-        output = BytesIO()
-        workbook = xlsxwriter.Workbook(output)
-        worksheet = workbook.add_worksheet("wifi")
+        workbook = xlsxwriter.Workbook("wifi_details.xls")
+        worksheet = workbook.add_worksheet()
         wifi = WifiDetail.objects.all()
+        print type(wifi[0].created)
         bold = workbook.add_format({'bold':True})
         columns = ["Username", "First Name", "Last Name", "Course", "Branch", "Year", "Laptop Mac Address", "Date Applied"]
         row = 0
@@ -92,6 +90,7 @@ class excel_writer(LoginRequiredMixin, View):
                 worksheet.write(row , 4, student.branch)
                 worksheet.write(row , 5, student.year)
                 worksheet.write(row , 6, users.laptop_mac_address)
+                worksheet.write(row , 7, str(users.created))
                 row+=1
             except:
                 user = User.objects.get(username=users.user)
@@ -101,10 +100,11 @@ class excel_writer(LoginRequiredMixin, View):
                 worksheet.write(row , 2, user.last_name)
                 worksheet.write(row , 4, faculty.department)
                 worksheet.write(row , 6, users.laptop_mac_address)
+                worksheet.write(row , 7, str(users.created))
                 row+=1
 
         workbook.close()
-        output.seek(0)
-        response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response = HttpResponse(file("wifi_details.xls"))
+        response['Content-Type'] = "application/vnd.ms-excel"
+        response['Content-Disposition'] = 'attachment; filename="wifi_details.xls"'
         return response
-        
