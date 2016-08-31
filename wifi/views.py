@@ -26,7 +26,6 @@ class StudentWifiForm(LoginRequiredMixin, View):
     def post(self, request):
         laptop_mac_address = request.POST.get("laptop_mac_address")
         user = User.objects.get(username=request.user.username)
-        details = StudentDetail.objects.get(user=user)
         profile = WifiDetail.objects.filter(user=user)
         if profile:
             messages.error(request, "Already Registered")
@@ -50,7 +49,6 @@ class FacultyWifiForm(LoginRequiredMixin, View):
     def post(self, request):
         laptop_mac_address = request.POST.get("laptop_mac_address")
         user = User.objects.get(username=request.user.username)
-        details = FacultyDetail.objects.get(user=user)
         profile = WifiDetail.objects.filter(user=user)
         if profile:
             messages.error(request, "Already Registered")
@@ -65,43 +63,43 @@ class excel_writer(LoginRequiredMixin, View):
 
     def get(self, request):
         '''
-        Custom class to download xls file.
+        Custom class to download Xls File .
         '''
 
         workbook = xlsxwriter.Workbook("wifi_details.xls")
         worksheet = workbook.add_worksheet()
         wifi = WifiDetail.objects.all()
-        print type(wifi[0].created)
-        bold = workbook.add_format({'bold':True})
+        bold = workbook.add_format({'bold': True})
+        worksheet.set_column(1,160,7)
         columns = ["Username", "First Name", "Last Name", "Course", "Branch", "Year", "Laptop Mac Address", "Date Applied"]
         row = 0
         for i, elem in enumerate(columns):
             worksheet.write(row, i, elem, bold)
 
-        row+=1
+        row += 1
         for users in wifi:
             try:
                 user = User.objects.get(username=users.user)
                 student = StudentDetail.objects.get(user=user)
-                worksheet.write(row , 0, user.username)
-                worksheet.write(row , 1, user.first_name)
-                worksheet.write(row , 2, user.last_name)
-                worksheet.write(row , 3, student.course)
-                worksheet.write(row , 4, student.branch)
-                worksheet.write(row , 5, student.year)
-                worksheet.write(row , 6, users.laptop_mac_address)
-                worksheet.write(row , 7, str(users.created))
-                row+=1
+                worksheet.write(row, 0, user.username)
+                worksheet.write(row, 1, user.first_name)
+                worksheet.write(row, 2, user.last_name)
+                worksheet.write(row, 3, student.course)
+                worksheet.write(row, 4, student.branch)
+                worksheet.write(row, 5, student.year)
+                worksheet.write(row, 6, users.laptop_mac_address)
+                worksheet.write(row, 7, str(users.created))
+                row += 1
             except:
                 user = User.objects.get(username=users.user)
                 faculty = FacultyDetail.objects.get(user=user)
-                worksheet.write(row , 0, user.username)
-                worksheet.write(row , 1, user.first_name)
-                worksheet.write(row , 2, user.last_name)
-                worksheet.write(row , 4, faculty.department)
-                worksheet.write(row , 6, users.laptop_mac_address)
-                worksheet.write(row , 7, str(users.created))
-                row+=1
+                worksheet.write(row, 0, user.username)
+                worksheet.write(row, 1, user.first_name)
+                worksheet.write(row, 2, user.last_name)
+                worksheet.write(row, 4, faculty.department)
+                worksheet.write(row, 6, users.laptop_mac_address)
+                worksheet.write(row, 7, str(users.created))
+                row += 1
 
         workbook.close()
         response = HttpResponse(file("wifi_details.xls"))

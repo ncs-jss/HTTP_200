@@ -11,3 +11,6 @@ class WifiDetail(models.Model):
 
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
+
+    def __unicode__(self):
+    	return self.user
