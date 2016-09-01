@@ -78,6 +78,9 @@ class excel_writer(LoginRequiredMixin, View):
 
         row += 1
         for users in wifi:
+            date_registered = str(users.created)
+            date_registered = date_registered.split(" ")
+            date_registered =  date_registered[0]
             try:
                 user = User.objects.get(username=users.user)
                 student = StudentDetail.objects.get(user=user)
@@ -88,7 +91,7 @@ class excel_writer(LoginRequiredMixin, View):
                 worksheet.write(row, 4, student.branch)
                 worksheet.write(row, 5, student.year)
                 worksheet.write(row, 6, users.laptop_mac_address)
-                worksheet.write(row, 7, str(users.created))
+                worksheet.write(row, 7, date_registered)
                 row += 1
             except:
                 user = User.objects.get(username=users.user)
@@ -98,7 +101,7 @@ class excel_writer(LoginRequiredMixin, View):
                 worksheet.write(row, 2, user.last_name)
                 worksheet.write(row, 4, faculty.department)
                 worksheet.write(row, 6, users.laptop_mac_address)
-                worksheet.write(row, 7, str(users.created))
+                worksheet.write(row, 7, date_registered)
                 row += 1
 
         workbook.close()
