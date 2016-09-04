@@ -78,9 +78,7 @@ class excel_writer(LoginRequiredMixin, View):
 
         row += 1
         for users in wifi:
-            date_registered = str(users.created)
-            date_registered = date_registered.split(" ")
-            date_registered =  date_registered[0]
+            date_registered = str(users.created).split(' ')[0]
             try:
                 user = User.objects.get(username=users.user)
                 student = StudentDetail.objects.get(user=user)
