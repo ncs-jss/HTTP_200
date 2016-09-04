@@ -115,13 +115,13 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.mysql',
-       'NAME': config_keys.DATABASE_NAME,
-       'USER': config_keys.MYSQL_USERNAME,
-       'PASSWORD': config_keys.MYSQL_PASSWORD,
-       'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-       'PORT': '3306',
-   }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config_keys.DATABASE_NAME,
+        'USER': config_keys.MYSQL_USERNAME,
+        'PASSWORD': config_keys.MYSQL_PASSWORD,
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
 }
 
 # Internationalization
