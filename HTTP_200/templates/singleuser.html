@@ -4,7 +4,7 @@
 
 <head>
 	<title>
-		JSS Connect
+		Bulk User
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#2d2251">
@@ -69,12 +69,9 @@
 
 			</div>
 			<center>
-				<button type="submit" class="submit-contact" id="return-adminpanel"><a href="{% url 'single_user_create' %}"> Create More Users  </a>
-				</button>
-				<button type="submit" class="submit-contact" id="return-adminpanel"><a href="/admin/auth/user/"> See the created users  </a>
-				</button>
-				<button type="submit" class="submit-contact" id="return-adminpanel"><a href="{%url 'admin:index' %}"> Return to Admin Panel  </a>
-				</button>
+				<a href="{% url 'single_user_create' %}" class="submit-contact" id="return-adminpanel"> Create More Users  </a>
+				<a href="/admin/auth/user/" class="submit-contact" id="return-adminpanel"> See the created users</a>
+				<a href="{%url 'admin:index' %}" class="submit-contact" id="return-adminpanel"> Return to Admin Panel  </a>
 			</center>
 
 		</div>

@@ -1,0 +1,109 @@
+from django.shortcuts import render
+from .models import WifiDetail
+from profiles.models import StudentDetail, FacultyDetail
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from braces.views import LoginRequiredMixin
+from django.views.generic import View
+from django.core.urlresolvers import reverse
+from notices.decorators import student_profile_complete, default_password_change
+from django.utils.decorators import method_decorator
+from django.contrib import messages
+from django.http import HttpResponse
+
+import xlsxwriter
+
+
+class StudentWifiForm(LoginRequiredMixin, View):
+
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete)
+    def get(self, request):
+        user = User.objects.get(username=request.user.username)
+        details = StudentDetail.objects.get(user=user)
+        return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
+
+    def post(self, request):
+        laptop_mac_address = request.POST.get("laptop_mac_address")
+        user = User.objects.get(username=request.user.username)
+        profile = WifiDetail.objects.filter(user=user)
+        if profile:
+            messages.error(request, "Already Registered")
+            return HttpResponseRedirect(reverse("relevent-notice-list"))
+
+        else:
+            WifiDetail.objects.create(user=user, laptop_mac_address=laptop_mac_address)
+            messages.success(request, "Successfully Registered for Wi-Fi")
+            return HttpResponseRedirect(reverse("relevent-notice-list"))
+
+
+class FacultyWifiForm(LoginRequiredMixin, View):
+
+    @method_decorator(default_password_change)
+    @method_decorator(student_profile_complete)
+    def get(self, request):
+        user = User.objects.get(username=request.user.username)
+        details = FacultyDetail.objects.get(user=user)
+        return render(request, 'wifi/facultywifiform.html', {"user": user, "details": details})
+
+    def post(self, request):
+        laptop_mac_address = request.POST.get("laptop_mac_address")
+        user = User.objects.get(username=request.user.username)
+        profile = WifiDetail.objects.filter(user=user)
+        if profile:
+            messages.error(request, "Already Registered")
+            return HttpResponseRedirect(reverse("relevent-notice-list"))
+        else:
+            WifiDetail.objects.create(user=user, laptop_mac_address=laptop_mac_address)
+            messages.success(request, "Successfully Registered for Wi-Fi")
+            return HttpResponseRedirect(reverse("relevent-notice-list"))
+
+
+class excel_writer(LoginRequiredMixin, View):
+
+    def get(self, request):
+        '''
+        Custom class to download Xls File .
+        '''
+
+        workbook = xlsxwriter.Workbook("wifi_details.xls")
+        worksheet = workbook.add_worksheet()
+        wifi = WifiDetail.objects.all()
+        bold = workbook.add_format({'bold': True})
+        worksheet.set_column(1, 160, 7)
+        columns = ["Username", "First Name", "Last Name", "Course", "Branch", "Year", "Laptop Mac Address", "Date Applied"]
+        row = 0
+        for i, elem in enumerate(columns):
+            worksheet.write(row, i, elem, bold)
+
+        row += 1
+        for users in wifi:
+            date_registered = str(users.created).split(' ')[0]
+            try:
+                user = User.objects.get(username=users.user)
+                student = StudentDetail.objects.get(user=user)
+                worksheet.write(row, 0, user.username)
+                worksheet.write(row, 1, user.first_name)
+                worksheet.write(row, 2, user.last_name)
+                worksheet.write(row, 3, student.course)
+                worksheet.write(row, 4, student.branch)
+                worksheet.write(row, 5, student.year)
+                worksheet.write(row, 6, users.laptop_mac_address)
+                worksheet.write(row, 7, date_registered)
+                row += 1
+            except:
+                user = User.objects.get(username=users.user)
+                faculty = FacultyDetail.objects.get(user=user)
+                worksheet.write(row, 0, user.username)
+                worksheet.write(row, 1, user.first_name)
+                worksheet.write(row, 2, user.last_name)
+                worksheet.write(row, 4, faculty.department)
+                worksheet.write(row, 6, users.laptop_mac_address)
+                worksheet.write(row, 7, date_registered)
+                row += 1
+
+        workbook.close()
+        response = HttpResponse(file("wifi_details.xls"))
+        response['Content-Type'] = "application/vnd.ms-excel"
+        response['Content-Disposition'] = 'attachment; filename="wifi_details.xls"'
+        return response
