@@ -201,7 +201,7 @@
 			</div>
 		</header>
 			<div class="profile-form" >
-				
+				<h3 style="color:red;"> * All the fields are mandatory.</h3>
 				<form id="userprofile-form" action="{% url 'user-profile' user_id=request.user.username %}" method="POST">
 
 				{% csrf_token %}
