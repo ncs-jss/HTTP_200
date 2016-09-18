@@ -10,6 +10,7 @@ from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.http import HttpResponse
+from .forms import WifiForm
 
 import xlsxwriter
 
@@ -24,7 +25,6 @@ class StudentWifiForm(LoginRequiredMixin, View):
         return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
 
     def post(self, request):
-        laptop_mac_address = request.POST.get("laptop_mac_address")
         user = User.objects.get(username=request.user.username)
         profile = WifiDetail.objects.filter(user=user)
         if profile:
@@ -32,9 +32,17 @@ class StudentWifiForm(LoginRequiredMixin, View):
             return HttpResponseRedirect(reverse("relevent-notice-list"))
 
         else:
-            WifiDetail.objects.create(user=user, laptop_mac_address=laptop_mac_address)
-            messages.success(request, "Successfully Registered for Wi-Fi")
-            return HttpResponseRedirect(reverse("relevent-notice-list"))
+            user = User.objects.get(username=request.user.username)
+            wifi_form = WifiForm(request.POST)
+            if wifi_form.is_valid():
+                wifi_form = wifi_form.save(commit=False)
+                wifi_form.user = user
+                wifi_form.save()
+                messages.success(request, "Successfully Registered for Wi-Fi")
+                return HttpResponseRedirect(reverse("relevent-notice-list"))
+            else:
+                messages.error(request, "Enter Laptop Mac Address")
+                return HttpResponseRedirect(reverse("student-wifi"))
 
 
 class FacultyWifiForm(LoginRequiredMixin, View):
@@ -47,16 +55,23 @@ class FacultyWifiForm(LoginRequiredMixin, View):
         return render(request, 'wifi/facultywifiform.html', {"user": user, "details": details})
 
     def post(self, request):
-        laptop_mac_address = request.POST.get("laptop_mac_address")
         user = User.objects.get(username=request.user.username)
         profile = WifiDetail.objects.filter(user=user)
         if profile:
             messages.error(request, "Already Registered")
             return HttpResponseRedirect(reverse("relevent-notice-list"))
         else:
-            WifiDetail.objects.create(user=user, laptop_mac_address=laptop_mac_address)
-            messages.success(request, "Successfully Registered for Wi-Fi")
-            return HttpResponseRedirect(reverse("relevent-notice-list"))
+            user = User.objects.get(username=request.user.username)
+            wifi_form = WifiForm(request.POST)
+            if wifi_form.is_valid():
+                wifi_form = wifi_form.save(commit=False)
+                wifi_form.user = user
+                wifi_form.save()
+                messages.success(request, "Successfully Registered for Wi-Fi")
+                return HttpResponseRedirect(reverse("relevent-notice-list"))
+            else:
+                messages.error(request, "Enter Laptop Mac Address")
+                return HttpResponseRedirect(reverse("faculty-wifi"))
 
 
 class excel_writer(LoginRequiredMixin, View):
