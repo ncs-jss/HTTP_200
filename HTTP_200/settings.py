@@ -106,23 +106,23 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#      }
-#  }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config_keys.DATABASE_NAME,
-        'USER': config_keys.MYSQL_USERNAME,
-        'PASSWORD': config_keys.MYSQL_PASSWORD,
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     }
+ }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config_keys.DATABASE_NAME,
+#         'USER': config_keys.MYSQL_USERNAME,
+#         'PASSWORD': config_keys.MYSQL_PASSWORD,
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -230,7 +230,6 @@ STATICFILES_DIRS = (
     os.path.join(APP_DIR, 'static'),
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = reverse_lazy('relevent-notice-list')
 SAMPLEDATAHELPER_SEED = 123456789
@@ -268,3 +267,9 @@ SPAGHETTI_SAUCE = {
 }
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+EMAIL_HOST = config_keys.HOST
+EMAIL_HOST_USER = config_keys.USERNAME
+EMAIL_HOST_PASSWORD = config_keys.PASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
