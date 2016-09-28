@@ -9,6 +9,7 @@ class WifiDetail(models.Model):
     '''
     user = models.OneToOneField(User)
     laptop_mac_address = models.CharField(max_length=200, blank=False, null=False)
+    mac_registered = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
