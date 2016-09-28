@@ -17,7 +17,7 @@ class WifiDetail(models.Model):
         return "%s" % (self.user.email)
 
     def name(self):
-        return  "%s" % (self.user.first_name)
+        return "%s" % (self.user.first_name)
 
     def branch(self):
         try:
@@ -27,7 +27,7 @@ class WifiDetail(models.Model):
         except:
             user = User.objects.get(username=self.user)
             profile = FacultyDetail.objects.get(user=user)
-            return "%s" % (profile.branch)
+            return "%s" % (profile.department)
 
     def __unicode__(self):
         return "%s" % (self.user)
