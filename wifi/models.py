@@ -13,11 +13,21 @@ class WifiDetail(models.Model):
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
 
-    def user_email(self):
-    	return self.user.email
+    def email(self):
+        return "%s" % (self.user.email)
 
-    def user_name(self):
-    	return self.user.first_name
+    def name(self):
+        return  "%s" % (self.user.first_name)
+
+    def branch(self):
+        try:
+            user = User.objects.get(username=self.user)
+            profile = StudentDetail.objects.get(user=user)
+            return "%s" % (profile.branch)
+        except:
+            user = User.objects.get(username=self.user)
+            profile = FacultyDetail.objects.get(user=user)
+            return "%s" % (profile.branch)
 
     def __unicode__(self):
         return "%s" % (self.user)
