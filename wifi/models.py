@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from profiles.models import StudentDetail, FacultyDetail
 
 
 class WifiDetail(models.Model):
@@ -11,6 +12,12 @@ class WifiDetail(models.Model):
 
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
+
+    def user_email(self):
+    	return self.user.email
+
+    def user_name(self):
+    	return self.user.first_name
 
     def __unicode__(self):
         return "%s" % (self.user)
