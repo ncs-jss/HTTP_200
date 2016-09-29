@@ -230,7 +230,6 @@ STATICFILES_DIRS = (
     os.path.join(APP_DIR, 'static'),
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = reverse_lazy('relevent-notice-list')
 SAMPLEDATAHELPER_SEED = 123456789
@@ -268,3 +267,9 @@ SPAGHETTI_SAUCE = {
 }
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+EMAIL_HOST = config_keys.HOST
+EMAIL_HOST_USER = config_keys.USERNAME
+EMAIL_HOST_PASSWORD = config_keys.PASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
