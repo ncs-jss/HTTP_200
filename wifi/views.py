@@ -41,7 +41,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
                 messages.success(request, "Successfully Registered for Wi-Fi")
                 return HttpResponseRedirect(reverse("relevent-notice-list"))
             else:
-                messages.error(request, "Enter Laptop Mac Address")
+                messages.error(request, "Enter Mac Address in Given Format.")
                 return HttpResponseRedirect(reverse("student-wifi"))
 
 
