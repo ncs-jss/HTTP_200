@@ -69,6 +69,7 @@ class StudentDetail(models.Model):
         ('MT2', 'MT2'),
         ('ME1', 'ME1'),
         ('ME2', 'ME2'),
+        ('ME3', 'ME3'),
     )
 
     user = models.OneToOneField(User)
