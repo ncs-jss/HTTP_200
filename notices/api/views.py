@@ -7,7 +7,6 @@ from rest_framework.generics import (
 
 from rest_framework.permissions import(
     IsAuthenticated,
-    AllowAny,
     )
 
 from notices.models import Notice 
@@ -16,9 +15,13 @@ from .serializers import (
     NoticeListSerializer,
     )
 
-from .pagination import NoticeLimitOffSetPagination, NoticePageNumberPagination
+from .pagination import (
+    NoticePageNumberPagination,
+    )
+
 
 class NoticeListAPIView(ListAPIView):
     queryset = Notice.objects.all()
     serializer_class = NoticeListSerializer
-    permission_class = [AllowAny]
+    pagination_class = NoticePageNumberPagination
+    permission_class = [IsAuthenticated]
