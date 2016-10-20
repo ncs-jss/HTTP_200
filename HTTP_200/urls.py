@@ -8,7 +8,6 @@ from allauth.account.views import login, logout
 from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser, SingleUser
 
 # django rest_framework_jwt imports
-from rest_framework_jwt.views import obtain_jwt_token
 
 import settings
 

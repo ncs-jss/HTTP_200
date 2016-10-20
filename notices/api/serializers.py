@@ -8,6 +8,7 @@ from rest_framework.serializers import (
 
 class NoticeListSerializer(serializers.ModelSerializer):
     faculty = SerializerMethodField()
+
     class Meta:
         model = Notice
         fields = [
@@ -18,7 +19,7 @@ class NoticeListSerializer(serializers.ModelSerializer):
             'category',
             'created',
             'modified',
-    ]
+        ]
 
     def get_faculty(self, obj):
 
@@ -33,4 +34,3 @@ class NoticeListSerializer(serializers.ModelSerializer):
             file_attached = None
 
         return file_attached
-

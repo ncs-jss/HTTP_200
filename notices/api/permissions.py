@@ -1,5 +1,4 @@
 from django.contrib.auth.models import Group
-from djangorestframework.permissions import _403_FORBIDDEN_RESPONSE, BasePermission
 
 # class GroupBasePermission(BasePermission):
 

@@ -1,15 +1,8 @@
-from django.contrib.auth import get_user_model
-
 from rest_framework import serializers
 from rest_framework.serializers import (
     CharField,
-    HyperlinkedIdentityField,
-    ModelSerializer,
-    SerializerMethodField,
     ValidationError,
-    )
-
-from django.contrib.auth.models import Group, User
+)
 from django.db.models import Q
 from rest_framework.authtoken.models import Token
 
@@ -17,6 +10,7 @@ from rest_framework.authtoken.models import Token
 class UserLoginSerializer(ModelSerializer):
     token = CharField(allow_blank=True, read_only=True)
     username = CharField()
+
     class Meta:
         model = User
         fields = [
@@ -24,9 +18,9 @@ class UserLoginSerializer(ModelSerializer):
             'password',
             'token',
         ]
-        extra_kwargs = { "password" :
-                            {"write_only" : True }
-                        }
+        extra_kwargs = {"password":
+                        {"write_only": True}
+                    }
 
     def validate(self, data):
         user_obj = None
@@ -37,7 +31,7 @@ class UserLoginSerializer(ModelSerializer):
 
         user = User.objects.filter(
             Q(username=username)
-            ).distinct()
+        ).distinct()
 
         if user.exists() and user.count() == 1:
             user_obj = user.first()
