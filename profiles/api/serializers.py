@@ -5,9 +5,9 @@ from rest_framework.serializers import (
 )
 from django.db.models import Q
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 
-
-class UserLoginSerializer(ModelSerializer):
+class UserLoginSerializer(serializers.ModelSerializer):
     token = CharField(allow_blank=True, read_only=True)
     username = CharField()
 
@@ -20,7 +20,7 @@ class UserLoginSerializer(ModelSerializer):
         ]
         extra_kwargs = {"password":
                         {"write_only": True}
-                    }
+        }
 
     def validate(self, data):
         user_obj = None

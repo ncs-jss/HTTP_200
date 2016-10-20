@@ -6,5 +6,5 @@ from .views import (
 
 urlpatterns = [
 	url(r'^login/$', UserLoginAPIView.as_view(), name='login'),
-	
+
 ]
