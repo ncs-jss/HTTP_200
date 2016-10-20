@@ -19,7 +19,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
             'password',
             'token',
         ]
-        extra_kwargs = {"password":{"write_only": True}}
+        extra_kwargs = {"password": {"write_only": True}}
 
     def validate(self, data):
         user_obj = None
