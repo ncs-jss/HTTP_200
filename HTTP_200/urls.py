@@ -18,8 +18,8 @@ urlpatterns = [
     url(r'^$', Home.as_view(), name="home"),
     url(r'^notices/', include('notices.urls')),
     url(r'^accounts/password/change/$', 'profiles.views.password_change', name='password_change'),
-    # url(r'^login/$', login, name="account_login"),
-    # url(r'^logout/$', logout, name="account_logout"),
+    url(r'^login/$', login, name="account_login"),
+    url(r'^logout/$', logout, name="account_logout"),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('profiles.urls')),
@@ -33,9 +33,11 @@ urlpatterns = [
     url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
     url(r'wifi/', include('wifi.urls')),
     # api urls
-    url(r'^api/auth/token/', obtain_jwt_token),
+    # url(r'^api/auth/token/', obtain_jwt_token),
     # url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
+    url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles-api')),
     url(r'^api/notices/', include("notices.api.urls", namespace='notice-api')),
+
 ]
 
 # For development environment
