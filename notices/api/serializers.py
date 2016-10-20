@@ -1,15 +1,13 @@
 from rest_framework import serializers
-from notices.models import Notice 
+from notices.models import Notice
 
 from rest_framework.serializers import (
-    HyperlinkedIdentityField,
     SerializerMethodField,
-    )
+)
 
 
 class NoticeListSerializer(serializers.ModelSerializer):
     faculty = SerializerMethodField()
-    file_attached = SerializerMethodField()
     class Meta:
         model = Notice
         fields = [
@@ -38,10 +36,29 @@ class NoticeListSerializer(serializers.ModelSerializer):
 
 
 """
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE3Y3NlMDAxIiwidXNlcl9pZCI6MTMsImVtYWlsIjoiIiwiZXhwIjoxNDc3MTY0MzI0fQ.OxqVAI6fzT33ccx9qSccVAwGzzeaPdNDUdMaFBuodmM
 
-curl -X GET -d eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE3Y3NlMDAxIiwidXNlcl9pZCI6MTMsImVtYWlsIjoiIiwiZXhwIjoxNDc3Mjk5OTUzfQ.tUPex3QSHI_G57rbY5t8w1DGp4SOa61fzJHIyCbGAu4 'http://127.0.0.1:8000/api/notices/'
+curl -X GET -d eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE3Y3NlMDAxIiwidXNlcl9pZCI6MTMsImVtYWlsIjoiYWJjQHN3Zi5jb20iLCJleHAiOjE0Nzc0ODMyMTR9.l2y3iaZZVFsu7MHAYC94yuXPTuZdvFl_k_3uqsemqo4 'http://127.0.0.1:8000/api/notices/'
 
+curl -X GET "username=17cse001&password=123" 'http://127.0.0.1:8000/api/notices/'
 
-curl -X POST -d "username=17cse001&password=17cse001" http://127.0.0.1:8000/api/auth/token/
+curl -X POST -d "username=17cse001&password=123" http://127.0.0.1:8000/api/auth/token/
+
 """
+
+from django.contrib.auth.models import Group, User
+
+class GroupSerializer(serializers.ModelSerializer):
+    name = SerializerMethodField()
+    class Meta:
+        model = Group
+        fields = [
+        'name',
+        ]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    group = GroupSerializer(many=True)
+    model = User
+    fields = [
+    'group'
+    ]
