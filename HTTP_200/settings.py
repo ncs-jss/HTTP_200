@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'private_notices',
     'import_export',
     'wifi',
+    'rest_framework.authtoken'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,23 +107,23 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#      }
-#  }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config_keys.DATABASE_NAME,
-        'USER': config_keys.MYSQL_USERNAME,
-        'PASSWORD': config_keys.MYSQL_PASSWORD,
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     }
+ }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config_keys.DATABASE_NAME,
+#         'USER': config_keys.MYSQL_USERNAME,
+#         'PASSWORD': config_keys.MYSQL_PASSWORD,
+#         'HOST': '210.212.85.155',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -149,12 +150,13 @@ AUTH_USER_MODEL = 'auth.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework.filters.DjangoFilterBackend',
@@ -268,8 +270,8 @@ SPAGHETTI_SAUCE = {
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
-EMAIL_HOST = config_keys.HOST
-EMAIL_HOST_USER = config_keys.USERNAME
-EMAIL_HOST_PASSWORD = config_keys.PASSWORD
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# EMAIL_HOST = config_keys.HOST
+# EMAIL_HOST_USER = config_keys.USERNAME
+# EMAIL_HOST_PASSWORD = config_keys.PASSWORD
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True

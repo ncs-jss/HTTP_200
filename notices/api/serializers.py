@@ -3,11 +3,15 @@ from notices.models import Notice
 
 from rest_framework.serializers import (
     SerializerMethodField,
+    CharField,
 )
-
+from django.db.models import Q
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 
 class NoticeListSerializer(serializers.ModelSerializer):
     faculty = SerializerMethodField()
+    token = CharField()
 
     class Meta:
         model = Notice
