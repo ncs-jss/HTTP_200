@@ -18,7 +18,6 @@ class UserLoginAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        print "datdata",data
         serializer = UserLoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             new_data = serializer.data

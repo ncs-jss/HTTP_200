@@ -5,9 +5,7 @@ from rest_framework.serializers import (
     SerializerMethodField,
     CharField,
 )
-from django.db.models import Q
-from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
+
 
 class NoticeListSerializer(serializers.ModelSerializer):
     faculty = SerializerMethodField()
@@ -38,23 +36,3 @@ class NoticeListSerializer(serializers.ModelSerializer):
             file_attached = None
 
         return file_attached
-
-    def validate(self, request):
-        token = request.META.get('Authorization')
-        username = request.META.get('username')
-
-        if not username:
-            raise validationError("A username is required.")
-
-        user = User.objects.filter(
-            Q(username=username)
-        ).distinct()
-
-        token_obj = Token.objects.filter(
-            Q(username=username)
-        ).distinct()
-
-        if user.exists() and token == token_obj:
-            print "user is authenticated."
-
-        

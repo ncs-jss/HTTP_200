@@ -40,9 +40,6 @@ class UserLoginSerializer(serializers.ModelSerializer):
             if not user_obj.check_password(password):
                 raise ValidationError("Incorrect Credentials.")
 
-
         token = Token.objects.get_or_create(user=user_obj)
         data["token"] = token[0]
-        print "DATA", data
-
         return data
