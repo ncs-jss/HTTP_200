@@ -61,6 +61,7 @@ class StudentDetail(models.Model):
         ('ECE2', 'ECE2'),
         ('EE1', 'EE1'),
         ('EE2', 'EE2'),
+        ('EEE1', 'EEE1'),
         ('CE1', 'CE1'),
         ('CE2', 'CE2'),
         ('IC1', 'IC1'),
