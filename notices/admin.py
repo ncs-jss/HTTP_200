@@ -37,6 +37,7 @@ class BookmarkedNoticeAdmin(admin.ModelAdmin):
 class TrendingInCollegeAdmin(admin.ModelAdmin):
     list_display = ('title', 'attachment', 'visibility')
 
+
 admin.site.register(Notice, NoticeAdmin)
 admin.site.register(BookmarkedNotice, BookmarkedNoticeAdmin)
 admin.site.register(TrendingInCollege, TrendingInCollegeAdmin)

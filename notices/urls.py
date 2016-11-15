@@ -4,9 +4,11 @@ from notices.views import (
     NoticeUpdateView, NoticeDeleteView, BookmarkCreateView,
     BookmarkDeleteView, BookmarkListView, PinCreateView,
     ReleventNoticeListView, SearchNotices, MyUploadedNotices,
+    ShareNoticeView,
 )
 
 urlpatterns = [
+    url(r'(?P<pk>[0-9]+)/share/notice/$', ShareNoticeView.as_view(), name='share-notice'),
     url(r'(?P<pk>[0-9]+)/bookmark/$', BookmarkCreateView.as_view(), name='bookmark-add'),
     url(r'(?P<pk>[0-9]+)/bookmark/delete/$', BookmarkDeleteView.as_view(), name='bookmark-delete'),
     url(r'(?P<pk>[0-9]+)/edit/$', NoticeUpdateView.as_view(), name='notice-update'),

@@ -224,6 +224,7 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
         return super(PasswordChangeView, self).form_valid(form)
 
+
 password_change = CustomPasswordChangeView.as_view()
 
 

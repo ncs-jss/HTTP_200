@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<html>
+
+<head>
+
+    <title>
+
+        JSS InfoConnect
+
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#2d2251">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico"%}">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{% static "css/default.css"%}">
+    <link rel="stylesheet" href="{% static "css/main.css"%}">
+    <link rel="stylesheet" href="{% static "css/style.css"%}">
+    <link rel="stylesheet" href="{% static "css/font-awesome.css"%}">
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53104159-5', 'auto');
+  ga('send', 'pageview');
+
+    </script>
+
+</head>
+    <div class="relevant-info">
+        <div class="info-header">
+
+            <h2>
+                {{ notice.category }}
+            </h2>
+
+        </div>
+        <div class="head-info">
+            <h3>Title</h3>
+            <div id="notice_title"></div>
+                <p id="notice_title_{{ notice.id }}">
+                    {{ notice.title }}
+                </p>
+        </div>
+        <div class="content-info">
+            <h3>Details</h3>
+             <div id="notice_description_{{ notice.id }}">
+                <p id="notice_description_{{notice.id}}">
+                    {{ description | linebreaksbr }}
+                </p>
+            </div>
+            {% if notice.file_attached %}
+        <div class="head-info download" id="notice_download_attachment">
+            <a href="#" id="download_attachment" download><h3>Download Attachment</h3>&nbsp;
+                <input id="notice_file_attached_{{ notice.id }}" type="hidden" value="/media/{{notice.file_attached}}">
+            <i class="fa fa-download"></i></a>
+        </div>
+        {% endif %}
+        </div>
+        <div class="date-author-info" id="notice_posted_by"> 
+            <span class="col-sm-12 col-md-2"> Posted by {{ notice.faculty.user.get_full_name }}</span>
+            <span class="col-sm-12 col-md-offset-3" id="notice_modified_{{ notice.id }}">{{ notice.modified }}</span>
+        </div>
+</html>
