@@ -17,7 +17,6 @@ from datetime import datetime
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
-from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 
 
@@ -490,11 +489,11 @@ class MyUploadedNotices(LoginRequiredMixin, generic.View):
         return render(request, template, {"notices": notices})
 
 
-class ShareNoticeView(LoginRequiredMixin, generic.View):
+class ShareNoticeView(generic.View):
 
     def get(self, request, pk=None):
         template_name = "notices/api/share_notice.html"
         notice = Notice.objects.get(pk=pk)
         description = strip_tags(notice.description)
 
-        return render(request, template_name, {"notice":notice, "description":description}) 
+        return render(request, template_name, {"notice": notice, "description": description})
