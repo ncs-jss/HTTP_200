@@ -490,7 +490,7 @@ class MyUploadedNotices(LoginRequiredMixin, generic.View):
         return render(request, template, {"notices": notices})
 
 
-class ShareNoticeView(LoginRequiredMixin, generic.View):
+class ShareNoticeView(generic.View):
 
     def get(self, request, pk=None):
         template_name = "notices/api/share_notice.html"
