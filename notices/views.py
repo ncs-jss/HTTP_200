@@ -495,5 +495,5 @@ class ShareNoticeView(LoginRequiredMixin, generic.View):
         template_name = "notices/api/share_notice.html"
         notice = Notice.objects.get(pk=pk)
         description = strip_tags(notice.description)
-        
+
         return render(request, template_name, {"notice": notice, "description": description})
