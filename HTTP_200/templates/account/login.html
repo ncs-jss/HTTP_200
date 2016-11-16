@@ -55,6 +55,9 @@
 		<div class="login-form">
 			<form  method="POST" action="{% url 'account_login' %}">
 			{% csrf_token %}
+				 {% if redirect_field_value %}
+  				<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  				 {% endif %}
 				<input class="input-style" type="text" placeholder="Username eg 12cse015" name="login" required>
 				<input class="input-style" type="password" placeholder="Password" name="password" required>
 
