@@ -1,7 +1,14 @@
+# django imports
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
+
+# allauth imports
 from allauth.account.views import login, logout
+
 from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser, SingleUser
+
+# django rest_framework_jwt imports
+
 import settings
 
 admin.site.site_header = "JSS InfoConnect Admin Interface"
@@ -13,12 +20,10 @@ urlpatterns = [
     url(r'^login/$', login, name="account_login"),
     url(r'^logout/$', logout, name="account_logout"),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^token/', 'rest_framework_jwt.views.obtain_jwt_token'),
-    url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('profiles.urls')),
     url(r'^faq/$', FaqDisplayView.as_view(), name="faq"),
-    url(r'^pnotices/', include('private_notices.urls')),
+    # url(r'^pnotices/', include('private_notices.urls')),
     url(r'^about/$', about, name='about'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
@@ -26,6 +31,12 @@ urlpatterns = [
     url(r'^students/create/single/$', SingleUser.as_view(), name='single_user_create'),
     url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
     url(r'wifi/', include('wifi.urls')),
+    # api urls
+    # url(r'^api/auth/token/', obtain_jwt_token),
+    # url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
+    url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles-api')),
+    url(r'^api/v1/', include("HTTP_200.api_urls")),
+
 ]
 
 # For development environment
