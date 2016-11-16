@@ -5,7 +5,7 @@ from django.conf.urls import url
 from notices.api.views import (
     NoticeListViewSet,
     NoticeCreateViewSet,
-    MyUploadedNoticeViewSet,
+    # MyUploadedNoticeViewSet,
 )
 
 router = routers.SimpleRouter()

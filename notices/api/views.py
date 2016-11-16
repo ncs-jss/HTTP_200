@@ -19,12 +19,11 @@ from rest_framework.serializers import (
     ValidationError,
 )
 from django.contrib.auth import get_user_model
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
 from profiles.models import FacultyDetail
-from django.shortcuts import render, get_object_or_404
 from rest_framework.mixins import ListModelMixin
 
 User = get_user_model()
@@ -89,12 +88,6 @@ class MyUploadedNoticeViewSet(APIView, ListModelMixin):
     serializer_class = NoticeCreateSerializer
     pagination_class = NoticePageNumberPagination
 
-    # def get_object(self, pk):
-        # try:
-        #     return Notice.objects.get(pk=pk)
-        # except Notice.DoesNotExist:
-        #     raise Http404
-
     def get(self, request):
         faculty = self.request.META.get('HTTP_FACULTY')
         if faculty:
@@ -108,14 +101,12 @@ class MyUploadedNoticeViewSet(APIView, ListModelMixin):
         else:
             raise ValidationError({"faculty": "This filed can't be empty."})
 
-
-
-        # if user.groups.all()[0].name.lower() == "student":
-        #     raise ValidationError({"error": "Student Can't delete notice."})
-        # else:
-        #     try:
-        #         notice = self.get_object(pk)
-        #         notice.delete()
-        #         return Response(status=HTTP_204_NO_CONTENT)
-        #     except:
-        #         return Response(status=HTTP_400_BAD_REQUEST)
+# if user.groups.all()[0].name.lower() == "student":
+#     raise ValidationError({"error": "Student Can't delete notice."})
+# else:
+#     try:
+#         notice = self.get_object(pk)
+#         notice.delete()
+#         return Response(status=HTTP_204_NO_CONTENT)
+#     except:
+#         return Response(status=HTTP_400_BAD_REQUEST)
