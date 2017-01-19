@@ -1,19 +1,25 @@
 # django imports
-from django.conf.urls import url, include, patterns
 from django.contrib import admin
+from django.conf.urls import url, include, patterns
 
 # allauth imports
 from allauth.account.views import login, logout
 
-from profiles.views import Home, FaqDisplayView, about, Contact, BulkUser, SingleUser
+# local file imports
+from profiles.views import (Home,
+                            FaqDisplayView,
+                            about,
+                            Contact,
+                            BulkUser,
+                            SingleUser)
 
-# django rest_framework_jwt imports
 
 import settings
 
 admin.site.site_header = "JSS InfoConnect Admin Interface"
 
 urlpatterns = [
+    # Web urls
     url(r'^$', Home.as_view(), name="home"),
     url(r'^notices/', include('notices.urls')),
     url(r'^accounts/password/change/$', 'profiles.views.password_change', name='password_change'),
@@ -31,11 +37,9 @@ urlpatterns = [
     url(r'^students/create/single/$', SingleUser.as_view(), name='single_user_create'),
     url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
     url(r'wifi/', include('wifi.urls')),
+
     # api urls
-    # url(r'^api/auth/token/', obtain_jwt_token),
-    # url(r'^tokenverify/', 'rest_framework_jwt.views.verify_jwt_token'),
     url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles-api')),
-    url(r'^api/v1/', include("HTTP_200.api_urls")),
 
 ]
 
