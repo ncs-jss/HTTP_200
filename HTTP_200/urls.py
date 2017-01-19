@@ -39,7 +39,8 @@ urlpatterns = [
     url(r'wifi/', include('wifi.urls')),
 
     # api urls
-    url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles-api')),
+    url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles_api')),
+    url(r'^api/notices/', include("notices.api.urls", namespace='notices_api')),
 
 ]
 
