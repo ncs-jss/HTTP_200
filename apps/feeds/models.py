@@ -1,8 +1,5 @@
 from django.db import models
-from django.core.validators import URLValidator
 from django.core import urlresolvers
-from jsonfield import JSONField
-from datetime import datetime
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -171,7 +168,7 @@ class Notice(models.Model):
 
 class BookmarkedNotice(models.Model):
     """
-            Defines the databse table for storing the bookmarks as done by the user. 
+    Defines the databse table for storing the bookmarks as done by the user.
     """
     user = models.ForeignKey(User)
     notice = models.ForeignKey(Notice)

@@ -1,12 +1,10 @@
 from django.conf.urls import include, url, patterns
-from django.contrib import admin
-from rest_framework import renderers
-from feeds.views import *
+from feeds.views import *  # noqa ignore=F405
 
 
 '''
-	The below `notice_list_only` is for displaying the small part of all notices that us used to 
-	display the specific details on the dashboard.
+The below `notice_list_only` is for displaying the small part of all notices that us used to
+display the specific details on the dashboard.
 '''
 notice_list_only = NoticeListViewSet.as_view({
     'get': 'list'
@@ -73,7 +71,7 @@ urlpatterns = [
 ]
 
 '''
-the below module import is used for importing the foramt type in which we 
+the below module import is used for importing the foramt type in which we
 the data like json or xml
 '''
 from rest_framework.urlpatterns import format_suffix_patterns

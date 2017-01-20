@@ -1,5 +1,5 @@
 from django import forms
-from private_notices.models import PrivateNotice, Notification
+from private_notices.models import PrivateNotice
 
 
 class PostForm(forms.ModelForm):

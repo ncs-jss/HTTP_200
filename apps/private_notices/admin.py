@@ -15,4 +15,5 @@ class PrivateNoticeAdmin(admin.ModelAdmin):
     def seen_yet(self, obj):
         return obj.notification.get(mid=obj).seen
 
+
 admin.site.register(PrivateNotice, PrivateNoticeAdmin)

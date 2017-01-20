@@ -1,8 +1,6 @@
-from django.forms import widgets
 from rest_framework import serializers
-from feeds.models import *
+from feeds.models import *  # noqa ignore=F405
 from django.contrib.auth.models import User
-from django.http import request
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from private_notices.models import PrivateNotice, Notification
+from private_notices.models import PrivateNotice
 
 
 class NotificationSerializer(serializers.Serializer):

@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'private_notices',
     'import_export',
     'wifi',
+    'rest_framework_docs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,7 +77,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'HTTP_200.urls'
 
-TEMPLATE_DIR  = os.path.join(BASE_DIR, 'HTTP_200')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'HTTP_200')
 
 TEMPLATES = [
     {

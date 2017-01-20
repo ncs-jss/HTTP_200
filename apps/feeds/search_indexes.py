@@ -1,6 +1,6 @@
 # import datetime
 from haystack import indexes
-from feeds.models import *
+from feeds.models import *  # noqa ignore=F405
 from datetime import datetime
 
 
