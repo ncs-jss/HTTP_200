@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 import HTTP_200.config_keys as config_keys
 from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-APP_DIR = os.path.join(BASE_DIR, 'HTTP_200')
-
+APPS_DIR = os.path.join(BASE_DIR, 'apps')
+sys.path.append(APPS_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -75,11 +76,13 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'HTTP_200.urls'
 
+TEMPLATE_DIR  = os.path.join(BASE_DIR, 'HTTP_200')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(APP_DIR, 'templates'),
+            os.path.join(TEMPLATE_DIR, 'templates'),
             # os.path.join(BASE_DIR, 'profiles/templates'),
             # os.path.join(BASE_DIR, 'notices/templates'),
         ],
@@ -227,7 +230,7 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(APP_DIR, 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(APP_DIR, 'static'),
+    os.path.join(TEMPLATE_DIR, 'static'),
 )
 
 
@@ -258,7 +261,7 @@ SAMPLEDATAHELPER_MODELS = [
     }
 ]
 
-MEDIA_ROOT = os.path.join(APP_DIR, 'media')
+MEDIA_ROOT = os.path.join(TEMPLATE_DIR, 'media')
 
 SPAGHETTI_SAUCE = {
     'apps': ['auth', 'notices', 'profiles'],
@@ -268,8 +271,8 @@ SPAGHETTI_SAUCE = {
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
-EMAIL_HOST = config_keys.HOST
-EMAIL_HOST_USER = config_keys.USERNAME
-EMAIL_HOST_PASSWORD = config_keys.PASSWORD
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# EMAIL_HOST = config_keys.HOST
+# EMAIL_HOST_USER = config_keys.USERNAME
+# EMAIL_HOST_PASSWORD = config_keys.PASSWORD
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
