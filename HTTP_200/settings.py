@@ -119,8 +119,8 @@ DATABASES = {
         'NAME': config_keys.DATABASE_NAME,
         'USER': config_keys.MYSQL_USERNAME,
         'PASSWORD': config_keys.MYSQL_PASSWORD,
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'HOST': config_keys.HOST,   # Or an IP Address that your DB is hosted on
+        'PORT': config_keys.PORT,
     }
 }
 
