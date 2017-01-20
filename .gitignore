@@ -76,6 +76,8 @@ HTTP_200/static/ckeditor
 HTTP_200/static/rest_framework
 HTTP_200/static/debug_toolbar
 HTTP_200/static/admin
+
+#config files
 HTTP_200/config_keys.py
 
 connect_uwsgi.ini

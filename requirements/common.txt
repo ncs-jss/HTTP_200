@@ -18,4 +18,3 @@ pytest-django==2.9.1
 django-import-export==0.4.2
 flake8
 XlsxWriter==0.9.3
-`
