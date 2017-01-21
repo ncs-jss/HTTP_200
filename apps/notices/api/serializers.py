@@ -1,19 +1,17 @@
-from rest_framework import serializers
-from notices.models import Notice
-
-from rest_framework.serializers import (
-    SerializerMethodField,
-)
-from profiles.models import FacultyDetail
 from django.contrib.auth import get_user_model
+
+from rest_framework import serializers
+
+from notices.models import Notice
+from profiles.models import FacultyDetail
 
 User = get_user_model()
 
 
 class NoticeListSerializer(serializers.ModelSerializer):
-    faculty = SerializerMethodField()
-    file_attached = SerializerMethodField()
-    notice_id = SerializerMethodField()
+    faculty = serializers.SerializerMethodField()
+    file_attached = serializers.SerializerMethodField()
+    notice_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Notice
@@ -53,7 +51,7 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notice
-        fields = (
+        fields = [
             'faculty',
             'title',
             'description',
@@ -67,4 +65,4 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
             'course_branch_year',
             'created',
             'modified',
-        )
+        ]

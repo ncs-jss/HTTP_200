@@ -13,6 +13,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
     token = CharField(allow_blank=True, read_only=True)
     username = CharField()
     group = CharField(allow_blank=False, read_only=True)
+    # This is the id of the user from the Student Profile or Faculty Profile table.
     user_id = CharField(allow_blank=False, read_only=True)
 
     class Meta:

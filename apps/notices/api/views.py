@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from rest_framework import permissions, status
 from rest_framework.decorators import (api_view,
                                        permission_classes,)
@@ -5,7 +7,7 @@ from rest_framework.response import Response
 
 from notices.models import Notice
 from .pagination import paginated_queryset
-from .serializers import (NoticeListSerializer,)
+from .serializers import (NoticeListSerializer, NoticeCreateSerializer,)
 
 
 @api_view(['GET', ])
@@ -49,6 +51,26 @@ def get_notice_by_list(request):
     except:
         response_data = {'error': 'The User group does not exist !'}
         return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+@api_view(['POST', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def create_notice(request):
+    user = request.META.get('HTTP_USERNAME')
+    print "user", type(user)
+    user = User.objects.get(username=str(user))
+    if user.groups.all()[0].name.lower == "student":
+        response_data = {'error': 'Students are not allowed to create notice !'}
+        return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        try:
+            serializer = NoticeCreateSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            response_data = serializer.data
+            return Response(response_data, status=status.HTTP_200_OK)
+        except:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # class NoticeCreateViewSet(APIView):
 #     queryset = Notice.objects.all()
 #     serializer_class = NoticeCreateSerializer
