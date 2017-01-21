@@ -4,6 +4,7 @@ from rest_framework.decorators import (api_view,
 from rest_framework.response import Response
 
 from notices.models import Notice
+from .pagination import paginated_queryset
 from .serializers import (NoticeListSerializer,)
 
 
@@ -19,35 +20,35 @@ def get_notice_by_pk(request, notice_pk):
         response_data = {'error': 'Notice does not exist !'}
         return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-# class NoticeListViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAuthenticated, ]
-#     pagination_class = NoticePageNumberPagination
-#     serializer_class = NoticeListSerializer
-#     def get_queryset(self, **kwargs):
-#         user_group = self.request.user.groups.all()[0].name.lower()
-#         notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
-#         category = self.request.META.get('HTTP_CATEGORY')
-#         username = self.request.META.get('HTTP_USERNAME')
-#         try:
-#             notice_id = self.kwargs["pk"]
-#         except:
-#             notice_id = None
-#         if notice_id:
-#             queryset = Notice.objects.filter(pk=notice_id)
-#             return queryset
 
-#         else:
-#             if username:
-#                 if category == "none":
-#                     queryset = notices.order_by('-modified')
-#                     return queryset
-#                 elif category == "":
-#                     raise ValidationError({"category": "This field can't be left blank."})
-#                 else:
-#                     queryset = notices.filter(category=category).order_by('-modified')
-#                     return queryset
-#             else:
-#                 raise ValidationError({"username": "This field can't be left blank."})
+@api_view(['GET', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def get_notice_by_list(request):
+    try:
+        user_group = request.user.groups.all()[0].name.lower()
+        notices = Notice.objects.filter(**{'visible_for_'+user_group: True})
+        category = request.META.get('HTTP_CATEGORY')
+        username = request.META.get('HTTP_USERNAME')
+        if username:
+            if category is None:
+                notices = notices.order_by('-modified')
+                paginator, result_page = paginated_queryset(notices, request)
+                serializer = NoticeListSerializer(result_page, many=True)
+                response_data = serializer.data
+                return paginator.get_paginated_response(response_data)
+            else:
+                notices = notices.filter(category=category).order_by('-modified')
+                paginator, result_page = paginated_queryset(notices, request)
+                serializer = NoticeListSerializer(result_page, many=True)
+                print serializer.data
+                response_data = serializer.data
+                return paginator.get_paginated_response(response_data)
+        else:
+            response_data = {'error': 'username field cannot be blank !'}
+            return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
+    except:
+        response_data = {'error': 'The User group does not exist !'}
+        return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
 # class NoticeCreateViewSet(APIView):
 #     queryset = Notice.objects.all()
 #     serializer_class = NoticeCreateSerializer
