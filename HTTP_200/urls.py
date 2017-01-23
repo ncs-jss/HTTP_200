@@ -50,7 +50,7 @@ if settings.DEBUG:
     urlpatterns += patterns('',
                             (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
                                 'document_root': settings.MEDIA_ROOT}),
-                            url(r'^plate/', include('django_spaghetti.urls')),
+                            url(r'^dbschema/', include('django_spaghetti.urls')),
                             url(r'^__debug__/', include(debug_toolbar.urls)),
-                            url(r'^docs/', include('rest_framework_docs.urls')),
+                            url(r'^api/docs/', include('rest_framework_docs.urls')),
                             )
