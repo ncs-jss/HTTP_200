@@ -6,6 +6,6 @@ class Notification(models.Model):
 	"""
 	It stores the firebase id with corresponding users and their preferences.
 	"""
-	user = models.ForeignKey(User)
+	user = models.OneToOneField(User)
 	firebase_token = models.CharField(max_length=200, blank=False, null=False)
 	notification_preference = models.CharField(max_length=200, blank=False, default='00000', null=False)

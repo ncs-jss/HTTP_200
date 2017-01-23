@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'wifi',
     'rest_framework_docs',
     'rest_framework.authtoken',
+    'notifications',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -264,7 +265,7 @@ SAMPLEDATAHELPER_MODELS = [
 MEDIA_ROOT = os.path.join(TEMPLATE_DIR, 'media')
 
 SPAGHETTI_SAUCE = {
-    'apps': ['auth', 'notices', 'profiles'],
+    'apps': ['auth', 'notices', 'profiles', 'notifications'],
     'show_fields': True,
     # 'exclude':{'auth':['user']}
 }
