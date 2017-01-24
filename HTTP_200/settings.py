@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import HTTP_200.config_keys as config_keys
+import config as config
 from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -119,8 +120,8 @@ DATABASES = {
         'NAME': config_keys.DATABASE_NAME,
         'USER': config_keys.MYSQL_USERNAME,
         'PASSWORD': config_keys.MYSQL_PASSWORD,
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'HOST': config_keys.HOST,   # Or an IP Address that your DB is hosted on
+        'PORT': config_keys.PORT,
     }
 }
 
@@ -268,8 +269,8 @@ SPAGHETTI_SAUCE = {
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
-EMAIL_HOST = config_keys.HOST
-EMAIL_HOST_USER = config_keys.USERNAME
-EMAIL_HOST_PASSWORD = config_keys.PASSWORD
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = config.HOST
+EMAIL_HOST_USER = config.USERNAME
+EMAIL_HOST_PASSWORD = config.PASSWORD
+EMAIL_PORT = config.PORT
+EMAIL_USE_TLS = config.TLS
