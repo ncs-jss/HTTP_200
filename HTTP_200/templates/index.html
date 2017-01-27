@@ -111,10 +111,6 @@
             <a href="http://jssaten.ac.in" target="_blank">
             <i class="fa fa-globe"></i> &nbsp;JSS Website</a>
           </li>
-          
-
-          <div class="line">
-          </div>
           {% if request.user.is_authenticated %}
           <li class="index-list">
             <a href="{% url "user-profile" user_id=request.user.username %}">
@@ -140,8 +136,19 @@
             <i class="fa fa-sign-out"></i> &nbsp;LogIn</a>
           </li>
           {% endif %}
-          
-
+          <div class="line"></div>
+          <li class=" index-list">
+            <a href="{% url "home" %}">
+            <i class=""></i> &nbsp; MOOC</a>
+          </li>
+          <li class=" index-list">
+            <a href="http://nptel.ac.in">
+            <i class="fa fa-external-link"></i> &nbsp; NPTEL </a>
+          </li>
+          <li class=" index-list">
+            <a href="http://www.sakshat.ac.in">
+            <i class="fa fa-external-link"></i> &nbsp; SAKSHAT </a>
+          </li>
 
       </ul>
     </div>
