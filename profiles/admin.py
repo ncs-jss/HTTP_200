@@ -20,10 +20,12 @@ class StudentAdmin(ImportExportModelAdmin):
 
 class FacultyAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'department', 'contact_no', 'alternate_email')
+    search_fields = ('user__username',)
 
 
 class ContactAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'email')
+    list_display = ('__unicode__', 'email', 'message', 'message_sent')
+    search_fields = ('name', 'email',)
 
 
 admin.site.register(FacultyDetail, FacultyAdmin)
