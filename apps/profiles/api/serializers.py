@@ -59,3 +59,21 @@ class UserLoginSerializer(serializers.ModelSerializer):
             data["user_id"] = FacultyDetail.objects.filter(user=user)[0].id
 
         return data
+
+
+class StudentProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = StudentDetail
+        fields = [
+            'course',
+            'branch',
+            'year',
+            'section',
+            'univ_roll_no',
+            'contact_no',
+            'father_name',
+            'mother_name',
+            'address',
+            'display_to_others',
+        ]

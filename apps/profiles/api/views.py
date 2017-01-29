@@ -1,30 +1,46 @@
-from rest_framework.permissions import (
-    AllowAny,
-)
-from django.contrib.auth import get_user_model
-from .serializers import (
-    UserLoginSerializer,
-)
+from rest_framework import permissions, status
+from rest_framework.decorators import (api_view,
+                                       permission_classes,)
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.views import APIView
 
-User = get_user_model()
+from profiles.models import StudentDetail
+from .serializers import (UserLoginSerializer, StudentProfileSerializer)
 
 
-class UserLoginAPIView(APIView):
-    """
-    API to obtain the token from username and password of the user.
-    """
-    permission_classes = [AllowAny, ]
-    serializer_class = UserLoginSerializer
+@api_view(['POST', ])
+@permission_classes((permissions.AllowAny, ))
+def user_login(request):
+    serializer = UserLoginSerializer(data=request.data)
+    if serializer.is_valid():
+        response_data = serializer.data
+        return Response(response_data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        serializer = UserLoginSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
-            response_data = serializer.data
+
+@api_view(['GET', 'PUT', 'PATCH', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def student_profile_data(request, user_id):
+    try:
+        student_detail = StudentDetail.objects.get(pk=user_id)
+    except StudentDetail.DoesNotExist:
+        response_data = {'error': 'User does not exist'}
+        return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+    if request.method == 'GET':
+        student_detail = StudentDetail.objects.get(pk=user_id)
+        serializer = StudentProfileSerializer(student_detail)
+        response_data = serializer.data
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    elif request.method in ['PUT', 'PATCH']:
+        if request.method == 'PATCH':
+            serializer = StudentProfileSerializer(student_detail, data=request.data, partial=True)
+        else:
+            serializer = StudentProfileSerializer(student_detail, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            response_data = {'success': 'Profile Successfully updated!'}
             return Response(response_data, status=status.HTTP_200_OK)
         else:
-            response_data = serializer.errors
-            return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
