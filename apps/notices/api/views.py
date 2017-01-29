@@ -68,9 +68,10 @@ def create_notice(request):
         serializer = NoticeCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            response_data = serializer.data
+            response_data = {'success': 'Notice Created Successfully!'}
             return Response(response_data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST', ])
@@ -83,7 +84,8 @@ def add_starred_notice(request, notice_pk):
         serializer.save()
         response_data = {'message': 'Notice Bookmarked Successfully!'}
         return Response(response_data, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', ])
