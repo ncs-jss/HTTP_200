@@ -5,9 +5,9 @@ from rest_framework.decorators import (api_view,
                                        permission_classes,)
 from rest_framework.response import Response
 
-from notices.models import Notice
+from notices.models import Notice, BookmarkedNotice
 from .pagination import paginated_queryset
-from .serializers import (NoticeListSerializer, NoticeCreateSerializer,)
+from .serializers import (NoticeListSerializer, NoticeCreateSerializer, BookmarkedNoticeSerializer)
 
 
 @api_view(['GET', ])
@@ -42,7 +42,6 @@ def get_notice_by_list(request):
                 notices = notices.filter(category=category).order_by('-modified')
                 paginator, result_page = paginated_queryset(notices, request)
                 serializer = NoticeListSerializer(result_page, many=True)
-                print serializer.data
                 response_data = serializer.data
                 return paginator.get_paginated_response(response_data)
         else:
@@ -57,36 +56,44 @@ def get_notice_by_list(request):
 @permission_classes((permissions.IsAuthenticated, ))
 def create_notice(request):
     user = request.META.get('HTTP_USERNAME')
-    print "user", type(user)
+    if not user:
+        response_data = {'error': 'Also add username in the header.'}
+        return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
+
     user = User.objects.get(username=str(user))
     if user.groups.all()[0].name.lower == "student":
         response_data = {'error': 'Students are not allowed to create notice !'}
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
     else:
-        try:
-            serializer = NoticeCreateSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
+        serializer = NoticeCreateSerializer(data=request.data)
+        if serializer.is_valid():
             serializer.save()
             response_data = serializer.data
             return Response(response_data, status=status.HTTP_200_OK)
-        except:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-# class NoticeCreateViewSet(APIView):
-#     queryset = Notice.objects.all()
-#     serializer_class = NoticeCreateSerializer
-#     permission_classes = [IsAuthenticated, ]
-#     parser_classes = (MultiPartParser, FormParser,)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#     def post(self, request):
-#         user = self.request.META.get('HTTP_USERNAME')
-#         user = User.objects.filter(username=user)[0]
-#         if user.groups.all()[0].name.lower() == "student":
-#             raise ValidationError({"error": "Student Can't create notice."})
-#         else:
-#             try:
-#                 serializer = NoticeCreateSerializer(data=request.data)
-#                 serializer.is_valid(raise_exception=True)
-#                 serializer.save()
-#                 return Response(serializer.data, status=HTTP_200_OK)
-#             except:
-#                 return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+@api_view(['POST', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def add_starred_notice(request, notice_pk):
+    notice = Notice.objects.get(pk=notice_pk)
+    data = {'user': request.user.pk, 'notice': notice.pk}
+    serializer = BookmarkedNoticeSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        response_data = {'message': 'Notice Bookmarked Successfully!'}
+        return Response(response_data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def get_starred_notice_list(request):
+    try:
+        bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
+        serializer = BookmarkedNoticeSerializer(bookmark_list, remove_fields='user', many=True)
+        response_data = serializer.data
+        return Response(response_data, status=status.HTTP_200_OK)
+    except:
+        response_data = {'message': 'You have not Bookmarked any notices!'}
+        return Response(response_data, status=status.HTTP_200_OK)

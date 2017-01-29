@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from notices.models import Notice
+from notices.models import Notice, BookmarkedNotice
 from profiles.models import FacultyDetail
 
 User = get_user_model()
@@ -65,4 +65,20 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
             'course_branch_year',
             'created',
             'modified',
+        ]
+
+
+class BookmarkedNoticeSerializer(serializers.ModelSerializer):
+
+    def __init__(self, *args, **kwargs):
+        remove_fields = kwargs.pop('remove_fields', None)
+        super(BookmarkedNoticeSerializer, self).__init__(*args, **kwargs)
+        if remove_fields:
+            self.fields.pop(remove_fields)
+
+    class Meta:
+        model = BookmarkedNotice
+        fields = [
+            'user',
+            'notice',
         ]
