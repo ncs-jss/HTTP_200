@@ -57,7 +57,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
         group = user_obj.groups.all()[0].name.lower()
         data["group"] = group
         data["first_name"] = user_obj.first_name
-        data["user_id"] = User.objects.get(username=username).id
+        data["user_id"] = User.objects.get(username=username).pk
 
         if group == "student":
             data["student_id"] = StudentDetail.objects.filter(user=user)[0].id

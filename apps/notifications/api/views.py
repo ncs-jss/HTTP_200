@@ -10,7 +10,13 @@ from .serializers import FirebaseTokenSerializer
 @permission_classes((permissions.IsAuthenticated,))
 def set_firebase_token(request):
     serializer = FirebaseTokenSerializer(data=request.data)
-    if serializer.is_valid():
-        response_data = {'success': 'The Firebase token is successfully registered.'}
-        return Response(response_data, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+    if long(request.data['user_id']) == long(request.user.pk):
+        if serializer.is_valid():
+            serializer.save()
+            response_data = {'success': 'The Firebase token is successfully registered.'}
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+    else:
+        response_data = {'error': 'User id is not correct !'}
+        return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
