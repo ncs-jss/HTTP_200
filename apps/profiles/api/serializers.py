@@ -13,8 +13,11 @@ class UserLoginSerializer(serializers.ModelSerializer):
     token = CharField(allow_blank=True, read_only=True)
     username = CharField()
     group = CharField(allow_blank=False, read_only=True)
-    # This is the id of the user from the Student Profile or Faculty Profile table.
+    # This is the id of the user from the User table.
     user_id = CharField(allow_blank=False, read_only=True)
+    # This is the id of the user from the Student Profile or Faculty Profile table.
+    student_id = CharField(allow_blank=True, read_only=True)
+    faculty_id = CharField(allow_blank=True, read_only=True)
 
     class Meta:
         model = User
@@ -25,6 +28,8 @@ class UserLoginSerializer(serializers.ModelSerializer):
             'token',
             'group',
             'user_id',
+            'student_id',
+            'faculty_id',
         ]
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -52,11 +57,12 @@ class UserLoginSerializer(serializers.ModelSerializer):
         group = user_obj.groups.all()[0].name.lower()
         data["group"] = group
         data["first_name"] = user_obj.first_name
+        data["user_id"] = User.objects.get(username=username).id
 
         if group == "student":
-            data["user_id"] = StudentDetail.objects.filter(user=user)[0].id
+            data["student_id"] = StudentDetail.objects.filter(user=user)[0].id
         else:
-            data["user_id"] = FacultyDetail.objects.filter(user=user)[0].id
+            data["faculty_id"] = FacultyDetail.objects.filter(user=user)[0].id
 
         return data
 
