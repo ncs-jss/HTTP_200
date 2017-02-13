@@ -41,6 +41,7 @@ urlpatterns = [
     # api urls
     url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles_api')),
     url(r'^api/notices/', include("notices.api.urls", namespace='notices_api')),
+    url(r'^api/notifications/', include("notifications.api.urls", namespace='notifications_api')),
 
 ]
 
