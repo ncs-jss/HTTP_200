@@ -1,17 +1,17 @@
 from django.contrib import admin
 
-from .models import FirebaseToken, Preferences
+from .models import FirebaseToken, NotificationPreferences
 
 
 @admin.register(FirebaseToken)
 class FirebaseTokenAdmin(admin.ModelAdmin):
-    list_display = ("user", "firebase_token",)
-    list_filter = ("user",)
-    search_fields = ("user",)
+    list_display = ("user_id", "firebase_token",)
+    list_filter = ("user_id",)
+    search_fields = ("user_id",)
 
 
-@admin.register(Preferences)
-class Preferences(admin.ModelAdmin):
-    list_display = ("user", "notification_preferences",)
-    list_filter = ("user",)
-    search_fields = ("user",)
+@admin.register(NotificationPreferences)
+class NotificationPreferencesAdmin(admin.ModelAdmin):
+    list_display = ("user_id", "notification_preferences",)
+    list_filter = ("user_id",)
+    search_fields = ("user_id",)
