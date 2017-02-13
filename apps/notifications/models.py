@@ -10,7 +10,7 @@ class FirebaseToken(models.Model):
     firebase_token = models.CharField(max_length=200, blank=False, null=False)
 
 
-class NotificationPreferences(models.Model):
+class NotificationPreference(models.Model):
     """
     It stores the user Preferences with corresponding users.
     """

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from notifications.models import FirebaseToken
+from notifications.models import FirebaseToken, NotificationPreference
 
 
 class FirebaseTokenSerializer(serializers.ModelSerializer):
@@ -10,4 +10,14 @@ class FirebaseTokenSerializer(serializers.ModelSerializer):
         fields = [
             'user_id',
             'firebase_token',
+        ]
+
+
+class NotificationPreferenceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = NotificationPreference
+        fields = [
+            'user_id',
+            'notification_preferences',
         ]
