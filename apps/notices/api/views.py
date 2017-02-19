@@ -113,3 +113,26 @@ def delete_starred_notice(request, notice_pk):
     except:
         response_data = {'error': 'some error occured . please try again !'}
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def get_complete_starred_notice_list(request):
+    try:
+        bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
+        notice = list()
+        notices = list()
+        for notice_id in range(0, len(bookmark_list)):
+            notice.append(bookmark_list[notice_id].notice_id)
+
+        for notice in notice:
+            notice = Notice.objects.get(pk=notice)
+            notices.append(notice)
+
+        paginator, result_page = paginated_queryset(notices, request)
+        serializer = NoticeListSerializer(result_page, many=True)
+        response_data = serializer.data
+        return Response(response_data, status=status.HTTP_200_OK)
+    except:
+        response_data = {'message': 'You have not bookmarked any notice !'}
+        return Response(response_data, status=status.HTTP_200_OK)
