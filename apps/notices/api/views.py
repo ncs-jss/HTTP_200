@@ -99,3 +99,17 @@ def get_starred_notice_list(request):
     except:
         response_data = {'message': 'You have not Bookmarked any notices!'}
         return Response(response_data, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def delete_starred_notice(request, notice_pk):
+    try:
+        notice = Notice.objects.get(pk=notice_pk)
+        bookmark_notice = BookmarkedNotice.objects.get(notice=notice)
+        bookmark_notice.delete()
+        response_data = {'message': 'notice successfully unstarred !'}
+        return Response(response_data, status=status.HTTP_200_OK)
+    except:
+        response_data = {'error': 'some error occured . please try again !'}
+        return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
