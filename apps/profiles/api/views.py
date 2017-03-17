@@ -17,7 +17,7 @@ def user_login(request):
     return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
-@api_view(['GET', 'PUT', 'PATCH', ])
+@api_view(['GET', 'POST', ])
 @permission_classes((permissions.IsAuthenticated, ))
 def student_profile_data(request, user_id):
     try:
@@ -32,12 +32,8 @@ def student_profile_data(request, user_id):
         response_data = serializer.data
         return Response(response_data, status=status.HTTP_200_OK)
 
-    elif request.method in ['PUT', 'PATCH']:
-        if request.method == 'PATCH':
-            serializer = StudentProfileSerializer(student_detail, data=request.data, partial=True)
-        else:
-            serializer = StudentProfileSerializer(student_detail, data=request.data)
-
+    elif request.method == 'POST':
+        serializer = StudentProfileSerializer(student_detail, data=request.data)
         if serializer.is_valid():
             serializer.save()
             response_data = {'success': 'Profile Successfully updated!'}
