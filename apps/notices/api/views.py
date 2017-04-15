@@ -93,11 +93,15 @@ def add_starred_notice(request, notice_pk):
 def get_starred_notice_list(request):
     try:
         bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
-        serializer = BookmarkedNoticeSerializer(bookmark_list, remove_fields='user', many=True)
-        response_data = serializer.data
-        return Response(response_data, status=status.HTTP_200_OK)
+        if len(bookmark_list) == 0:
+            response_data = {'message': 'You have not Bookmarked any notices !'}
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            serializer = BookmarkedNoticeSerializer(bookmark_list, remove_fields='user', many=True)
+            response_data = serializer.data
+            return Response(response_data, status=status.HTTP_200_OK)
     except:
-        response_data = {'message': 'You have not Bookmarked any notices!'}
+        response_data = {'message': 'You have not Bookmarked any notices !'}
         return Response(response_data, status=status.HTTP_200_OK)
 
 
@@ -106,10 +110,14 @@ def get_starred_notice_list(request):
 def delete_starred_notice(request, notice_pk):
     try:
         notice = Notice.objects.get(pk=notice_pk)
-        bookmark_notice = BookmarkedNotice.objects.get(notice=notice)
-        bookmark_notice.delete()
-        response_data = {'message': 'notice successfully unstarred !'}
-        return Response(response_data, status=status.HTTP_200_OK)
+        try:
+            bookmark_notice = BookmarkedNotice.objects.get(user=request.user, notice=notice.pk)
+            bookmark_notice.delete()
+            response_data = {'message': 'notice successfully unstarred !'}
+            return Response(response_data, status=status.HTTP_200_OK)
+        except:
+            response_data = {'message': 'You have not bookmarked this notice !'}
+            return Response(response_data, status=status.HTTP_200_OK)
     except:
         response_data = {'error': 'some error occured . please try again !'}
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
@@ -129,10 +137,14 @@ def get_complete_starred_notice_list(request):
             notice = Notice.objects.get(pk=notice)
             notices.append(notice)
 
-        paginator, result_page = paginated_queryset(notices, request)
-        serializer = NoticeListSerializer(result_page, many=True)
-        response_data = serializer.data
-        return Response(response_data, status=status.HTTP_200_OK)
+        if len(notices) == 0:
+            response_data = {'message': 'You have not bookmarked any notice !'}
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            paginator, result_page = paginated_queryset(notices, request)
+            serializer = NoticeListSerializer(result_page, many=True)
+            response_data = serializer.data
+            return Response(response_data, status=status.HTTP_200_OK)
     except:
         response_data = {'message': 'You have not bookmarked any notice !'}
         return Response(response_data, status=status.HTTP_200_OK)
