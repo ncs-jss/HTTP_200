@@ -111,7 +111,7 @@ def delete_starred_notice(request, notice_pk):
     try:
         notice = Notice.objects.get(pk=notice_pk)
         try:
-            bookmark_notice = BookmarkedNotice.objects.get(user=request.user, notice=notice.pk)
+            bookmark_notice = BookmarkedNotice.objects.filter(user=request.user, notice=notice.pk)
             bookmark_notice.delete()
             response_data = {'message': 'notice successfully unstarred !'}
             return Response(response_data, status=status.HTTP_200_OK)
