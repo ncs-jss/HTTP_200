@@ -82,4 +82,22 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'mother_name',
             'address',
             'display_to_others',
+            'created',
+            'modified',
+        ]
+
+
+class FacultyProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FacultyDetail
+        fields = [
+            'designation',
+            'department',
+            'contact_no',
+            'address',
+            'alternate_email',
+            'display_to_others',
+            'created',
+            'modified',
         ]
