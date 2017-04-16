@@ -13,6 +13,12 @@ class FirebaseToken(models.Model):
 class NotificationPreference(models.Model):
     """
     It stores the user Preferences with corresponding users.
+    Starting from left to right the order is given below.
     """
+    # 0 - Academics
+    # 0 - Administration
+    # 0 - Tnp
+    # 0 - Events
+    # 0 - Misc
     user_id = models.OneToOneField(User)
-    notification_preferences = models.CharField(max_length=200, blank=False, null=False, default='00000')
+    notification_preferences = models.CharField(max_length=5, blank=False, null=False, default='00000')
