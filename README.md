@@ -84,4 +84,3 @@ Note: Ubuntu 14.04 LTS is recommended to use for the development environment.
 [osx venv]: http://docs.python-guide.org/en/latest/starting/install/osx/
 [bug]: https://github.com/docker/docker/issues/9628
 [localhost]: http://localhost:8000/
-
