@@ -27,7 +27,7 @@
   </script>
 </head>
 <body>
-{% for message in messages %}    
+{% for message in messages %}
         <div class="notice-msg">
             {{ message }}
         </div>
@@ -36,13 +36,13 @@
 <div class="loader-container">
     <div class="loader">
       <img src="{% static "images/connect.gif"%}">
-     
-      
+
+
 
 
 
     </div>
-    
+
   </div>
 
 
@@ -84,7 +84,7 @@
     <div class="index-overlay">
     </div>
     <div class="logo logo-index">
-    
+
       <img src="{% static "images/jss-logo.png"%}">
         <h3> JSS Academy Of Technical Education</h3>
     </div>
@@ -142,11 +142,11 @@
             <i class=""></i> &nbsp; MOOCs</a>
           </li>
           <li class=" index-list">
-            <a href="http://nptel.ac.in">
+            <a href="http://nptel.ac.in" target="_blank">
             <i class="fa fa-external-link"></i> &nbsp; NPTEL </a>
           </li>
           <li class=" index-list">
-            <a href="http://www.sakshat.ac.in">
+            <a href="http://www.sakshat.ac.in" target="_blank">
             <i class="fa fa-external-link"></i> &nbsp; SAKSHAT </a>
           </li>
 
@@ -155,11 +155,11 @@
 
   </div>
 
-    
+
 
 <!-- right-page container============ -->
   <div class="relevant-page index-page">
-  
+
     <div class="index-head">
     <div class="index-logo">
         <a href="{% url "home" %}">
@@ -177,13 +177,13 @@
     {% endif %}
 
     </div>
-    
+
     <div class="new-notices-container">
       <h2><i class="fa fa-thumb-tack"></i> &nbsp;New Notices</h2>
 
       <div class="new-notices-list">
         <ul>
-        
+
 
         {% for notice in notices %}
 
@@ -211,7 +211,7 @@
                 {% else %}
                 <input type="hidden" id="login_status" value="0">
                 {% endif %}
-                
+
               </div>
             </div>
           </a>
@@ -234,7 +234,7 @@
             </div>
             <div class="date-index col col-3">
                 <div class="row">
-                
+
                 <div class="date-index col sm-col-12">
               <i class="fa fa-calendar"></i> &nbsp;{{ trend.modified }}
             </div>
@@ -244,7 +244,7 @@
           </li>
           {% endfor %}
         </ul>
-        
+
       </div>
 
     </div>
