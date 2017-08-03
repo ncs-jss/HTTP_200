@@ -14,13 +14,13 @@ class WifiDetail(models.Model):
                                               null=False,
                                               default=None,
                                               validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$',
-                                              message='Enter MAc Address in Given Format.'), ])
+                                              message='Enter MAC Address in Given Format.'), ])
     new_laptop_mac_address = models.CharField(max_length=200,
-                                              blank=False,
-                                              null=False,
+                                              blank=True,
+                                              null=True,
                                               default=None,
                                               validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$',
-                                              message='Enter MAc Address in Given Format.'), ])
+                                              message='Enter MAC Address in Given Format.'), ])
     mac_registered = models.BooleanField(default=False)
 
 

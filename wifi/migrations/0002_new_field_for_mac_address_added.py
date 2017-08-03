@@ -19,11 +19,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='wifidetail',
             name='new_laptop_mac_address',
-            field=models.CharField(default=None, max_length=200, validators=[django.core.validators.RegexValidator(regex=b'^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message=b'Enter MAc Address in Given Format.')]),
+            field=models.CharField(default=None, max_length=200, null=True, blank=True, validators=[django.core.validators.RegexValidator(regex=b'^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message=b'Enter MAC Address in Given Format.')]),
         ),
         migrations.AddField(
             model_name='wifidetail',
             name='old_laptop_mac_address',
-            field=models.CharField(default=None, max_length=200, validators=[django.core.validators.RegexValidator(regex=b'^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message=b'Enter MAc Address in Given Format.')]),
+            field=models.CharField(default=None, max_length=200, validators=[django.core.validators.RegexValidator(regex=b'^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message=b'Enter MAC Address in Given Format.')]),
         ),
     ]
