@@ -9,8 +9,20 @@ class WifiDetail(models.Model):
     It stores information about the wifi form of all users.
     '''
     user = models.OneToOneField(User)
-    laptop_mac_address = models.CharField(max_length=200, blank=False, null=False, validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message='Enter MAc Address in Given Format.'), ])
+    old_laptop_mac_address = models.CharField(max_length=200,
+                                              blank=False,
+                                              null=False,
+                                              default=None,
+                                              validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$',
+                                              message='Enter MAc Address in Given Format.'), ])
+    new_laptop_mac_address = models.CharField(max_length=200,
+                                              blank=False,
+                                              null=False,
+                                              default=None,
+                                              validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$',
+                                              message='Enter MAc Address in Given Format.'), ])
     mac_registered = models.BooleanField(default=False)
+
 
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
