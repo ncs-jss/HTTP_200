@@ -220,7 +220,7 @@
     					</div>
     					<div class="top-range col col-4">
     						<h2><i class="fa fa-user"></i>	&nbsp;Last Name <i class="show-icon fa fa-pencil"></i></h2>
-    						<input type="text" class="input-style edit-input" placeholder="Last Name" value="{{ user.last_name }}"disabled>
+    						<input type="text" class="input-style edit-input" placeholder="Last Name" value="{{ user.last_name }}" disabled>
     					</div>
     				</div>
 
@@ -242,12 +242,27 @@
     					
     					</div>
     					<div class="row">
-
+                        {% if mac_address %}
     						<div class="top-range col col-4">
     							<h2><i class="fa fa-puzzle-piece" ></i>	&nbsp;Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
-    							<input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" name="old_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" required>
+    							<input type="text" class="input-style edit-input" value="{{mac_address.old_laptop_mac_address}}" name="old_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" disabled>
+                                <input type="hidden" value="{{mac_address.old_laptop_mac_address}}" name="old_laptop_mac_address">
                                 <a class="fa fa-external-link" href="https://www.wireless.bris.ac.uk/help/faq/faq-findmacaddress/" target="_blank"> How to find Mac Address </a>
     						</div>
+                            <div class="top-range col col-4">
+                                <h2><i class="fa fa-puzzle-piece" ></i> &nbsp;New Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" value="{{mac_address.new_laptop_mac_address}}" name="new_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})">
+                            </div>
+                            </form>
+                            {% else %}
+                            <form id="studentwifi-form" action="{% url 'student-wifi' %}" method="POST">
+                                {% csrf_token %}
+                            <div class="top-range col col-4">
+                                <h2><i class="fa fa-puzzle-piece" ></i> &nbsp;Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" name="old_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" required>
+                                <a class="fa fa-external-link" href="https://www.wireless.bris.ac.uk/help/faq/faq-findmacaddress/" target="_blank"> How to find Mac Address </a>
+                            </div>
+                            {% endif %}
     					</div>
                         <div class="row">
                             <div class="top-range col col-1">

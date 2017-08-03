@@ -10,6 +10,7 @@ from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import WifiForm
 
 import xlsxwriter
@@ -22,27 +23,33 @@ class StudentWifiForm(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(username=request.user.username)
         details = StudentDetail.objects.get(user=user)
-        return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
+        try:
+            mac_address = WifiDetail.objects.get(user=user)
+            if mac_address:
+                return render(request, 'wifi/studentwifiform.html',
+                             {"user": user, "details": details, "mac_address": mac_address})
+        except:
+            return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
 
     def post(self, request):
         user = User.objects.get(username=request.user.username)
-        profile = WifiDetail.objects.filter(user=user)
-        if profile:
-            messages.error(request, "Already Registered")
-            return HttpResponseRedirect(reverse("relevent-notice-list"))
 
-        else:
-            user = User.objects.get(username=request.user.username)
+        try:
+            detail = WifiDetail.objects.get(user=user)
+            wifi_form = WifiForm(request.POST, instance=detail)
+        except:
             wifi_form = WifiForm(request.POST)
-            if wifi_form.is_valid():
-                wifi_form = wifi_form.save(commit=False)
-                wifi_form.user = user
-                wifi_form.save()
-                messages.success(request, "Successfully Registered for Wi-Fi")
-                return HttpResponseRedirect(reverse("relevent-notice-list"))
-            else:
-                messages.error(request, "Enter Mac Address in Given Format.")
-                return HttpResponseRedirect(reverse("student-wifi"))
+
+        if wifi_form.is_valid():
+            wifi_form = wifi_form.save(commit=False)
+            wifi_form.user = user
+            wifi_form.save()
+            messages.success(request, "Successfully Registered for Wi-Fi")
+            return HttpResponseRedirect(reverse("relevent-notice-list"))
+        else:
+            print wifi_form.errors
+            messages.error(request, "Enter Mac Address in Given Format.")
+            return HttpResponseRedirect(reverse("student-wifi"))
 
 
 class FacultyWifiForm(LoginRequiredMixin, View):
