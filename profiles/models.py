@@ -12,12 +12,26 @@ class StudentDetail(models.Model):
     MCA = 'MCA'
     MBA = 'MBA'
     MTECH = 'MTech'
+    HUMANITIES = 'Humanities'
+    ENGLISH = 'English'
+    CHEMISTRY = 'Chemistry'
+    PHYSICS = 'Physics'
+    MATHS = 'Maths'
+    ADMINISTRATION = 'Administration'
+    MAINTENANCE = 'Maintenance'
     OTHERS = 'OTHER'
     COURSE = (
         (BTECH, 'BTech'),
         (MCA, 'MCA'),
         (MBA, 'MBA'),
         (MTECH, 'MTech'),
+        (HUMANITIES, 'Humanities'),
+        (ENGLISH, 'English'),
+        (CHEMISTRY, 'Chemistry'),
+        (PHYSICS, 'Physics'),
+        (MATHS, 'Maths'),
+        (ADMINISTRATION, 'Administration'),
+        (MAINTENANCE, 'Maintenance'),
         (OTHERS, 'Others'),
     )
     # List of branches
