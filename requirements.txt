@@ -12,7 +12,7 @@ django-braces
 django-autofixture
 django-ckeditor==5.0.2
 django-spaghetti-and-meatballs==0.1.1
-django-debug-toolbar==1.6
+django-debug-toolbar==1.4
 coverage==4.0.3
 pytest-django==2.9.1
 django-import-export==0.4.2

@@ -107,23 +107,23 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-DATABASES = {
-      'default': {
-          'ENGINE': 'django.db.backends.sqlite3',
-          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-      }
-  }
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.sqlite3',
+#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#      }
+#  }
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': config_keys.DATABASE_NAME,
-#        'USER': config_keys.MYSQL_USERNAME,
-#        'PASSWORD': config_keys.MYSQL_PASSWORD,
-#        'HOST': config_keys.HOST,   # Or an IP Address that your DB is hosted on
-#        'PORT': config_keys.PORT,
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config_keys.DATABASE_NAME,
+        'USER': config_keys.MYSQL_USERNAME,
+        'PASSWORD': config_keys.MYSQL_PASSWORD,
+        'HOST': config_keys.HOST,   # Or an IP Address that your DB is hosted on
+        'PORT': config_keys.PORT,
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -269,8 +269,8 @@ SPAGHETTI_SAUCE = {
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
-#EMAIL_HOST = config.HOST
-#EMAIL_HOST_USER = config.USERNAME
-#EMAIL_HOST_PASSWORD = config.PASSWORD
-#EMAIL_PORT = config.PORT
-#EMAIL_USE_TLS = config.TLS
+EMAIL_HOST = config.HOST
+EMAIL_HOST_USER = config.USERNAME
+EMAIL_HOST_PASSWORD = config.PASSWORD
+EMAIL_PORT = config.PORT
+EMAIL_USE_TLS = config.TLS
