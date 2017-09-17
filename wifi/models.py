@@ -13,13 +13,16 @@ class WifiDetail(models.Model):
                                               blank=False,
                                               null=False,
                                               default=None,
-                                              validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message='Enter MAC Address in Given Format.'), ])
+                                              validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$',
+                                              message='Enter MAC Address in Given Format.'), ])
     new_laptop_mac_address = models.CharField(max_length=200,
                                               blank=True,
                                               null=True,
                                               default=None,
-                                              validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$', message='Enter MAC Address in Given Format.'), ])
+                                              validators=[RegexValidator(regex='^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$',
+                                              message='Enter MAC Address in Given Format.'), ])
     mac_registered = models.BooleanField(default=False)
+
 
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
