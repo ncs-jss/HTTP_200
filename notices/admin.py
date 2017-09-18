@@ -1,12 +1,14 @@
 from django.contrib import admin
 from notices.models import Notice, BookmarkedNotice, TrendingInCollege
+from import_export.admin import ImportExportModelAdmin
 
 
-class NoticeAdmin(admin.ModelAdmin):
-    list_display = ('faculty', 'title', 'course_branch_year', 'created', 'modified', 'visible_for_student', 'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management'
+class NoticeAdmin(ImportExportModelAdmin):
+    list_display = ('id', 'faculty', 'title', 'course_branch_year', 'created', 'modified', 'visible_for_student',
+                    'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management'
                     )
     list_display_links = ('title', 'faculty')
-    list_filter = ('faculty', 'category')
+    list_filter = ('category',)
     list_per_page = 15
     # search_fields = ['title', 'faculty']
 
@@ -18,7 +20,7 @@ class NoticeAdmin(admin.ModelAdmin):
     )
 
 
-class BookmarkedNoticeAdmin(admin.ModelAdmin):
+class BookmarkedNoticeAdmin(ImportExportModelAdmin):
     list_display = ('user', 'pinned', 'notice', )
     # list_filter = ('notice',)
     list_per_page = 25
@@ -31,7 +33,7 @@ class BookmarkedNoticeAdmin(admin.ModelAdmin):
     )
 
 
-class TrendingInCollegeAdmin(admin.ModelAdmin):
+class TrendingInCollegeAdmin(ImportExportModelAdmin):
     list_display = ('title', 'attachment', 'visibility')
 
 
