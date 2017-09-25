@@ -4,7 +4,7 @@ from import_export.admin import ImportExportModelAdmin
 
 
 class NoticeAdmin(ImportExportModelAdmin):
-    list_display = ('id','faculty', 'title', 'course_branch_year', 'created', 'modified', 'visible_for_student',
+    list_display = ('id', 'faculty', 'title', 'course_branch_year', 'created', 'modified', 'visible_for_student',
                     'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management'
                     )
     list_display_links = ('title', 'faculty')
@@ -15,9 +15,7 @@ class NoticeAdmin(ImportExportModelAdmin):
     fieldsets = (
         (None, {
             'classes': ('wide', 'extrapretty'),
-            'fields': ('faculty', 'category', 'title', 'description', 'file_attached', 'course_branch_year',
-                       'visible_for_student', 'visible_for_faculty', 'visible_for_hod',
-                       'visible_for_others', 'visible_for_management', ),
+            'fields': ('faculty', 'category', 'title', 'description', 'file_attached', 'course_branch_year', 'visible_for_student', 'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management', ),
         }),
     )
 

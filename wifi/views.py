@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .models import WifiDetail
 from profiles.models import StudentDetail, FacultyDetail
 from django.contrib.auth.models import User
@@ -10,7 +9,7 @@ from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render
 from .forms import WifiForm
 
 import xlsxwriter
@@ -26,8 +25,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
         try:
             mac_address = WifiDetail.objects.get(user=user)
             if mac_address:
-                return render(request, 'wifi/studentwifiform.html',
-                             {"user": user, "details": details, "mac_address": mac_address})
+                return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details, "mac_address": mac_address})
         except:
             return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
 

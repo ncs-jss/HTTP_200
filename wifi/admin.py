@@ -3,8 +3,7 @@ from .models import WifiDetail
 
 
 class WifiAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'email', 'name', 'old_laptop_mac_address',
-    				'new_laptop_mac_address', 'branch', 'mac_registered','created', 'modified')
+    list_display = ('__unicode__', 'email', 'name', 'old_laptop_mac_address', 'new_laptop_mac_address', 'branch', 'mac_registered', 'created', 'modified')
     search_fields = ('old_laptop_mac_address', 'new_laptop_mac_address', 'user__username',)
 
 
