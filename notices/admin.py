@@ -38,7 +38,7 @@ class NoticeAdmin(ImportExportModelAdmin):
     )
 
 
-class TrendingInCollegeAdmin(admin.ModelAdmin):
+class TrendingInCollegeAdmin(ImportExportModelAdmin):
     list_display = ('title', 'attachment', 'visibility')
 
 
