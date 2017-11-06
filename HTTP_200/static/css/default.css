@@ -108,7 +108,19 @@
        	box-sizing: border-box;
        }
        /* HTML5 display-role reset for older browsers */
-       
+
+       table,
+       tr,
+       th,
+       td{
+              border: 1px solid #aaa;
+       }
+       th,
+       td{
+              padding: 8px;
+              white-space: nowrap;
+       }
+
        article,
        aside,
        details,
