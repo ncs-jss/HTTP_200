@@ -62,9 +62,7 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
             'visible_for_faculty',
             'visible_for_management',
             'visible_for_others',
-            'course_branch_year',
-            'created',
-            'modified',
+            'course_branch_year'
         ]
 
 
