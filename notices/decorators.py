@@ -15,7 +15,7 @@ def student_profile_complete(function):
         try:
             user = User.objects.get(username=request.user.username)
             profile = StudentDetail.objects.get(user=user)
-        except:
+        except BaseException:
             return function(request, *args, **kwargs)
 
         if re.split('(\d+)', str(user))[2] == "mca" or re.split('(\d+)', str(user))[2] == "mba" or re.split('(\d+)', str(user))[2] == "MCA" or re.split('(\d+)', str(user))[2] == "MBA":
@@ -41,7 +41,7 @@ def default_password_change(function):
     def password(request, *args, **kwargs):
         try:
             user = User.objects.get(username=request.user.username)
-        except:
+        except BaseException:
             return function(request, *args, **kwargs)
 
         if check_password(str(user).lower(), user.password) or check_password(str(user).upper(), user.password):
