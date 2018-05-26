@@ -1,34 +1,39 @@
 from django.contrib import admin
-from notices.models import Notice, BookmarkedNotice, TrendingInCollege
 from import_export.admin import ImportExportModelAdmin
+from notices.models import Notice, BookmarkedNotice, TrendingInCollege
 
 
-class NoticeAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'faculty', 'title', 'course_branch_year', 'created', 'modified', 'visible_for_student',
-                    'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management'
-                    )
-    list_display_links = ('title', 'faculty')
-    list_filter = ('category',)
-    list_per_page = 15
-    # search_fields = ['title', 'faculty']
-
+class BookmarkedNoticeAdmin(admin.TabularInline):
+    model = BookmarkedNotice
+    extra = 1
     fieldsets = (
         (None, {
-            'classes': ('wide', 'extrapretty'),
-            'fields': ('faculty', 'category', 'title', 'description', 'file_attached', 'course_branch_year', 'visible_for_student', 'visible_for_faculty', 'visible_for_hod', 'visible_for_others', 'visible_for_management', ),
+            'classes': ('extrapretty', 'wide'),
+            'fields': (('user', 'notice'), 'pinned'),
         }),
     )
 
 
-class BookmarkedNoticeAdmin(ImportExportModelAdmin):
-    list_display = ('user', 'pinned', 'notice', )
-    # list_filter = ('notice',)
-    list_per_page = 25
-
+class NoticeAdmin(ImportExportModelAdmin):
+    list_display = (
+        'faculty', 'title', 'course_branch_year',
+        'created', 'modified', 'visible_for_student',
+        'visible_for_faculty', 'visible_for_hod',
+        'visible_for_others', 'visible_for_management'
+    )
+    list_display_links = ('title', 'faculty')
+    list_filter = ('faculty', 'category')
+    list_per_page = 100
+    inlines = [BookmarkedNoticeAdmin]
     fieldsets = (
         (None, {
-            'classes': ('extrapretty'),
-            'fields': (('user', 'notice'), 'pinned'),
+            'classes': ('wide', 'extrapretty'),
+            'fields': (
+                'faculty', 'category', 'title', 'description',
+                'file_attached', 'course_branch_year',
+                'visible_for_student', 'visible_for_faculty',
+                'visible_for_hod',
+                'visible_for_others', 'visible_for_management', ),
         }),
     )
 
@@ -38,5 +43,4 @@ class TrendingInCollegeAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(Notice, NoticeAdmin)
-admin.site.register(BookmarkedNotice, BookmarkedNoticeAdmin)
 admin.site.register(TrendingInCollege, TrendingInCollegeAdmin)
