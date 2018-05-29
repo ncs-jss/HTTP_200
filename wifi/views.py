@@ -26,7 +26,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
             mac_address = WifiDetail.objects.get(user=user)
             if mac_address:
                 return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details, "mac_address": mac_address})
-        except:
+        except BaseException:
             return render(request, 'wifi/studentwifiform.html', {"user": user, "details": details})
 
     def post(self, request):
@@ -35,7 +35,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
         try:
             detail = WifiDetail.objects.get(user=user)
             wifi_form = WifiForm(request.POST, instance=detail)
-        except:
+        except BaseException:
             wifi_form = WifiForm(request.POST)
 
         if wifi_form.is_valid():
@@ -113,7 +113,7 @@ class excel_writer(LoginRequiredMixin, View):
                 worksheet.write(row, 7, users.new_laptop_mac_address)
                 worksheet.write(row, 8, date_registered)
                 row += 1
-            except:
+            except BaseException:
                 user = User.objects.get(username=users.user)
                 faculty = FacultyDetail.objects.get(user=user)
                 worksheet.write(row, 0, user.username)
