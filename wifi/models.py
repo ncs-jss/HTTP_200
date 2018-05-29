@@ -35,7 +35,7 @@ class WifiDetail(models.Model):
             user = User.objects.get(username=self.user)
             profile = StudentDetail.objects.get(user=user)
             return "%s" % (profile.branch)
-        except:
+        except BaseException:
             user = User.objects.get(username=self.user)
             profile = FacultyDetail.objects.get(user=user)
             return "%s" % (profile.department)
