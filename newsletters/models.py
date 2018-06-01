@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils import timezone
 
 
 class department(models.Model):
@@ -14,16 +15,27 @@ class department(models.Model):
         return "%s" % (self.department)
 
 
-class papers(models.Model):
+class newsletters(models.Model):
     '''
     Stores the pdfs of newsletters
     '''
-    name = models.CharField(null=False,
-                            max_length=25)
+    title = models.CharField(null=False,
+                             max_length=25)
     uploaded_by = models.ForeignKey(User)
     year = models.DateField()
-    paper = models.FileField(upload_to="newsletters", blank=False, null=False)
+    paper = models.FileField(upload_to="newsletters",
+                             blank=False,
+                             null=False)
     department = models.ForeignKey(department)
+    created_at = models.DateTimeField()
+    modified_at = models.DateTimeField()
+
+    def create_newsletter(self):
+        self.created_at = timezone.now()
+        self.modified_at = timezone.now()
+
+    def modify_newsletter(self):
+        self.modified_at = timezone.now()
 
     def __unicode__(self):
-        return "%s" % (self.name)
+        return "%s" % (self.title)
