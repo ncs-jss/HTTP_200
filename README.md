@@ -3,7 +3,7 @@ HTTP_200
 
 
 [![Build Status](https://travis-ci.org/ncs-jss/HTTP_200.svg?branch=master)](https://travis-ci.org/ncs-jss/HTTP_200)
-[![Coverage Status](https://coveralls.io/repos/ncs-jss/HTTP_200/badge.svg?branch=master&service=github)](https://coveralls.io/github/ncs-jss/HTTP_200?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ncs-jss/HTTP_200/badge.svg?branch=master)](https://coveralls.io/github/ncs-jss/HTTP_200?branch=master)
 
 
 A new Information Center for JSS Academy of Technical Education, Noida. 
