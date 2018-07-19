@@ -77,7 +77,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
         # get objects from paginator according to page number
         try:
             notices = paginator.page(page_num)
-        except:
+        except BaseException:
             notices = paginator.page(paginator.num_pages)
 
         context_dict = {
@@ -143,7 +143,7 @@ class CreateNotice(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     def dispatch(self, request, *args, **kwargs):
         try:
             FacultyDetail.objects.get(user__id=self.request.user.id)
-        except:
+        except BaseException:
             raise PermissionDenied
         return super(CreateNotice, self).dispatch(request, *args, **kwargs)
 
@@ -248,7 +248,7 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
         # get objects from paginator according to page number
         try:
             bookmarks = paginator.page(page_num)
-        except:
+        except BaseException:
             bookmarks = paginator.page(paginator.num_pages)
 
         context_dict = {
@@ -271,7 +271,7 @@ class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
             BookmarkedNotice.objects.filter(user=self.request.user, notice=notice)[0].delete()
             messages.success(self.request, 'Bookmark removed.')
             return HttpResponse("Deleted the notice Successfully")
-        except:
+        except BaseException:
             messages.success(self.request, 'Some error occured.')
             return HttpResponse("Some error occured. Please try after sometime.")
 
@@ -287,7 +287,7 @@ class PinCreateView(LoginRequiredMixin, generic.View):
                 previous = BookmarkedNotice.objects.get(user=request.user, pinned=True)
                 previous.pinned = False
                 previous.save()
-            except:
+            except BaseException:
                 pass
 
             bookmark = BookmarkedNotice.objects.get(pk=pk)
@@ -295,7 +295,7 @@ class PinCreateView(LoginRequiredMixin, generic.View):
             bookmark.save()
             return HttpResponse("Pinned To Top")
 
-        except:
+        except BaseException:
             return HttpResponse("Some error occured.Please try after sometime")
 
 
@@ -317,22 +317,22 @@ class ReleventNoticeListView(LoginRequiredMixin, generic.View):
             notices = notices.filter(Q(course_branch_year__icontains='-AllBranches-'))
             try:
                 notices = notices.filter(course_branch_year__icontains=faculty.department)
-            except:
+            except BaseException:
                 pass
 
-        except:
+        except BaseException:
             student = get_object_or_404(StudentDetail, user__id=self.request.user.id)
             try:
                 notices = notices.filter(Q(course_branch_year__icontains=student.course+"-") | Q(course_branch_year__icontains='AllCourses-'))
-            except:
+            except BaseException:
                 pass
             try:
                 notices = notices.filter(Q(course_branch_year__icontains="-"+student.branch+"-") | Q(course_branch_year__icontains='-AllBranches-'))
-            except:
+            except BaseException:
                 pass
             try:
                 notices = notices.filter(Q(course_branch_year__icontains="-"+str(student.year)+"-") | Q(course_branch_year__icontains='-AllYears-'))
-            except:
+            except BaseException:
                 pass
 
         else:
@@ -490,7 +490,7 @@ class MyUploadedNotices(LoginRequiredMixin, generic.View):
         return render(request, template, {"notices": notices})
 
 
-class ShareNoticeView(generic.View):
+class ShareNoticeView(LoginRequiredMixin, generic.View):
 
     def get(self, request, pk=None):
         template_name = "notices/api/share_notice.html"

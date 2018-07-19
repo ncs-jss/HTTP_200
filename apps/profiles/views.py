@@ -307,7 +307,7 @@ class SingleUser(LoginRequiredMixin, View):
                 if (str(group) == "student"):
                     StudentDetail.objects.create(user=new_user, branch=branch, course=course, year=year)
                 else:
-                    FacultyDetail.objects.create(user=new_user)
+                    FacultyDetail.objects.create(user=new_user, department=course)
             return render(request, "singleuser.html")
         else:
             return render(request, "404.html")

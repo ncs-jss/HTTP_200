@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import sys
 import HTTP_200.config_keys as config_keys
+import config as config
 from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -272,8 +273,9 @@ SPAGHETTI_SAUCE = {
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
-# EMAIL_HOST = config_keys.HOST
-# EMAIL_HOST_USER = config_keys.USERNAME
-# EMAIL_HOST_PASSWORD = config_keys.PASSWORD
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+
+EMAIL_HOST = config.HOST
+EMAIL_HOST_USER = config.USERNAME
+EMAIL_HOST_PASSWORD = config.PASSWORD
+EMAIL_PORT = config.PORT
+EMAIL_USE_TLS = config.TLS

@@ -55,8 +55,7 @@
             </div>
             {% if notice.file_attached %}
         <div class="head-info download" id="notice_download_attachment">
-            <a href="#" id="download_attachment" download><h3>Download Attachment</h3>&nbsp;
-                <input id="notice_file_attached_{{ notice.id }}" type="hidden" value="/media/{{notice.file_attached}}">
+            <a href="/media/{{notice.file_attached}}" id="download_attachment" download><h3>Download Attachment</h3>&nbsp;
             <i class="fa fa-download"></i></a>
         </div>
         {% endif %}

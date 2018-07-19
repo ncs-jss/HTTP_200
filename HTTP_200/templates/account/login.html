@@ -55,6 +55,9 @@
 		<div class="login-form">
 			<form  method="POST" action="{% url 'account_login' %}">
 			{% csrf_token %}
+				 {% if redirect_field_value %}
+  				<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  				 {% endif %}
 				<input class="input-style" type="text" placeholder="Username eg 12cse015" name="login" required>
 				<input class="input-style" type="password" placeholder="Password" name="password" required>
 
@@ -75,7 +78,7 @@
 				</div>
 				
 			</form>
-			<h4><a href="/"><i class="fa fa-chevron-left"></i> &nbsp;Back to home</a> <a href="/contact" class="right">Trouble in Login?</a></h4>
+			<h4><a href="/"><i class="fa fa-chevron-left"></i> &nbsp;Back to home</a> <a href="{% url 'account_reset_password'%}" class="right">Forgot Password</a></h4>
 		</div>
  <div class="modal-content">
 
