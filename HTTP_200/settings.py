@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'private_notices',
     'import_export',
     'wifi',
+    'newsletters',
 )
 
 MIDDLEWARE_CLASSES = (

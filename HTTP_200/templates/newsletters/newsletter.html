@@ -46,37 +46,6 @@
   </div>
 
 
-
-
-  <div class="relevant-info">
-        <div class="info-header">
-
-            <h2>
-                Relevant
-            </h2>
-
-        </div>
-        <div class="head-info">
-            <h3>Title</h3>
-            <div id="notice_title"></div>
-        </div>
-        <div class="content-info">
-            <h3>Details</h3>
-            <div id="notice_description"></div>
-        </div>
-        <div class="head-info download" id="notice_download_attachment">
-            <a href="#" id="download_attachment" download><h3>Download Attachment</h3>&nbsp;
-            <i class="fa fa-download"></i></a>
-        </div>
-        <div class="date-author-info" id="notice_posted_by"></div>
-        <div class="cross white-cross">
-            <i class="fa fa-times"></i>
-        </div>
-
-    </div>
-
-
-
   <div class="overlay-dark">
     <div class="cross-mobile"><i class="fa fa-times"></i></div>
   </div>
@@ -115,7 +84,6 @@
             <a href="{% url "list_departments" %}" target="_blank">
             <i class="fa fa-newspaper-o"></i> &nbsp;Newsletters</a>
           </li>
-
           {% if request.user.is_authenticated %}
           <li class="index-list">
             <a href="{% url "user-profile" user_id=request.user.username %}">
@@ -128,9 +96,9 @@
           </li>
          {% endif %}
            <li class="index-list move-in">
-                        <a href="{% url "password_change" %}">
-                        <i class="fa fa-key"></i> &nbsp;Change Password</a>
-                    </li>
+              <a href="{% url "password_change" %}">
+              <i class="fa fa-key"></i> &nbsp;Change Password</a>
+          </li>
           <li class="index-list">
             <a href="{% url "account_logout" %}">
             <i class="fa fa-inbox"></i> &nbsp;Logout</a>
@@ -180,149 +148,126 @@
     {% else %}
     <h3 class="index-welcome"><span class="index-bars"><i class="fa fa-bars"></i></span><a href="#">Welcome User</a></h3>
     {% endif %}
-
     </div>
-    
+
+    {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management'  %}
+    <div class="button-create  col-4 push-right">
+      <a href="{% url "upload_newsletter" %}">Add New</a>
+    </div>
+    {% endif %}
+    <br>
+    <br>
     <div class="new-notices-container">
-      <h2><i class="fa fa-thumb-tack"></i> &nbsp;New Notices</h2>
+      {% if departments %}
+      <h2><i class="fa fa-thumb-tack"></i> &nbsp;List of Departments</h2>
 
       <div class="new-notices-list">
         <ul>
-        
-
-        {% for notice in notices %}
-
-          <li class="pad-list modal-index" id="{{ notice.id }}" >
-            <a>
-            <div class="col col-7" id="notice_title_{{ notice.id }}">
-              {{ notice.title }}
-            </div>
-            <div class="date-index col col-5">
-              <div class="row">
-                <div class="auth-index col sm-col-6" id="notice_faculty_{{ notice.id }}">
-                  <i class="fa fa-user"></i> &nbsp;{{ notice.faculty.get_full_name }}
-                </div>
-                <div class="date-index col sm-col-6" id="notice_modified_{{ notice.id }}">
-                  <i class="fa fa-calendar"></i> &nbsp;{{ notice.modified }}
-                </div>
-
-                {% if request.user.is_authenticated %}
-                <input type="hidden" id="login_status" value="1">
-                <div id="notice_description_{{ notice.id }}" style="display:None;">{{ notice.description }}
-                </div>
-                {% if notice.file_attached %}
-                <input id="notice_file_attached_{{ notice.id }}" type="hidden" value="/media/{{ notice.file_attached }}">
-                {% endif %}
-                {% else %}
-                <input type="hidden" id="login_status" value="0">
-                {% endif %}
-                
-              </div>
+        {% for department in departments %}
+          <li class="pad-list modal-index">
+            <a href="{% url "list_papers" dept=department.values.0 %}">
+            <div class="col col-7">
+              {{ department.keys.0 }}
             </div>
           </a>
           </li>
         {% endfor %}
         </ul>
       </div>
-    </div>
+      {%endif %}
 
-    <div class="new-notices-container new-college-container">
-      <h2><i class="fa fa-university"> &nbsp;</i>New in College</h2>
+      {% if papers %}
+      <h2><i class="fa fa-thumb-tack"></i> &nbsp;List of Newsletters</h2>
 
       <div class="new-notices-list">
         <ul>
-        {% for trend in trending %}
-          <li class="pad-list">
-            <a href="/media/{{ trend.attachment }}" target="_blank">
-            <div class="bold-light  col col-9">
-            {{ trend.title }} - <span class="index-author">{{ trend.small_description}}</span>
-            </div>
-            <div class="date-index col col-3">
-                <div class="row">
-                
-                <div class="date-index col sm-col-12">
-              <i class="fa fa-calendar"></i> &nbsp;{{ trend.modified }}
-            </div>
-            </div>
+        {% for paper in papers %}
+          <li class="pad-list modal-index">
+            <a href="{% url "show_letters" paper.id %}">
+            <div class="col col-7">
+              {{paper.name}}
             </div>
           </a>
           </li>
-          {% endfor %}
+        {% endfor %}
         </ul>
-        
       </div>
-
+      {% else %}
+      <h2>No Newsletter found...</h2>
+      {%endif %}
     </div>
 
-<footer>
+
+
+    <footer>
       <h4>Quick Links</h4>
       <div class="footer-line"></div>
       <div class="row">
         <div class="footer-links">
           <div class="col col-3">
-            <h4><a href="http://www.jssonline.org/" target="_blank">JSS Mahavidyapeetha</a></h4>
+            <h4><a href="#">View Result</a></h4>
+          </div>
+          <div class="col col-3">
+            <h4>My Inbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Register</h4>
+          </div>
+          <div class="col col-3">
+            <h4>Forum</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
+          <div class="col col-3">
+            <h4>JSS Library</h4>
           </div>
           <div class="col col-3">
             <h4><a href="http://jssaten.ac.in/" target="_blank">JSS Website</a></h4>
           </div>
           <div class="col col-3">
-            <h4><a href="http://jssstepnoida.org/" target="_blank">JSS STEP</a></h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/library/" target="_blank">JSS Library</a></h4>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="footer-links">
-          <div class="col col-3">
-            <h4><a href="https://ndl.iitkgp.ac.in/" target="_blank">National Digital Library of India</a></h4>
+            <h4>JSS STEP</h4>
           </div>
           <div class="col col-3">
             <h4><a href="http://aktu.ac.in/" target="_blank">UPTU Website</a></h4>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-links">
           <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/MBA/" target="_blank">MBA</a></h4>
+            <h4>Old Question Paper</h4>
           </div>
           <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/MCA/mca.php" target="_blank">MCA</a></h4>
+            <h4>JSS Mailbox</h4>
+          </div>
+          <div class="col col-3">
+            <h4><a href="http://hackncs.com/" target="_blank">Nibble Website</a></h4>
+          </div>
+          <div class="col col-3">
+            <h4>Other Societies</h4>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="footer-links">
           <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/CSE/" target="_blank">Computer Science & Engineering</a></h4>
+            <h4>Computer Science & Engineering</h4>
           </div>
           <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/IT/" target="_blank">Information Technology</a></h4>
+            <h4>Electrical Engineering</h4>
           </div>
           <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/ME/" target="_blank">Mechanical Engineering</a></h4>
+            <h4>Electronics & Communication Engineering</h4>
           </div>
           <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/CE/" target="_blank">Civil Engineering</a></h4>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="footer-links">
-          <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/ECE/" target="_blank">Electronics & Communication Engineering</a></h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/EE/" target="_blank">Electrical Engineering</a></h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/eee/" target="_blank">Electrical and Electronics Engineering</a></h4>
-          </div>
-          <div class="col col-3">
-            <h4><a href="http://jssaten.ac.in/Academics/ice/Index.php" target="_blank">Instrumentation and Control</a></h4>
+            <h4>Mechanical Engineering</h4>
           </div>
         </div>
       </div>
       <div class="sub-footer ">
-        <h4><a href="http://www.hackncs.com" target="_blank"> Nibble Computer Society</a></h4>
+        <h4><a href="http://www.hackncs.com" target="_blank" > Nibble Computer Society</a></h4>
       </div>
     </footer>
   </div>
