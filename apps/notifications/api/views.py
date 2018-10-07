@@ -53,6 +53,6 @@ def notification_preference(request):
             serializer = NotificationPreferenceSerializer(notification)
             response_data = serializer.data
             return Response(response_data, status=status.HTTP_200_OK)
-        except:
+        except BaseException:
             response_data = {'error': 'you have not registered firebase token !'}
             return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)

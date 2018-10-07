@@ -18,7 +18,7 @@ def get_notice_by_pk(request, notice_pk):
         serializer = NoticeListSerializer(notice)
         response_data = serializer.data
         return Response(response_data, status=status.HTTP_200_OK)
-    except:
+    except BaseException:
         response_data = {'error': 'Notice does not exist !'}
         return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
 
@@ -47,7 +47,7 @@ def get_notice_by_list(request):
         else:
             response_data = {'error': 'username field cannot be blank !'}
             return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
-    except:
+    except BaseException:
         response_data = {'error': 'The User group does not exist !'}
         return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
 
@@ -100,7 +100,7 @@ def get_starred_notice_list(request):
             serializer = BookmarkedNoticeSerializer(bookmark_list, remove_fields='user', many=True)
             response_data = serializer.data
             return Response(response_data, status=status.HTTP_200_OK)
-    except:
+    except BaseException:
         response_data = {'message': 'You have not Bookmarked any notices !'}
         return Response(response_data, status=status.HTTP_200_OK)
 
@@ -115,10 +115,10 @@ def delete_starred_notice(request, notice_pk):
             bookmark_notice.delete()
             response_data = {'message': 'notice successfully unstarred !'}
             return Response(response_data, status=status.HTTP_200_OK)
-        except:
+        except BaseException:
             response_data = {'message': 'You have not bookmarked this notice !'}
             return Response(response_data, status=status.HTTP_200_OK)
-    except:
+    except BaseException:
         response_data = {'error': 'some error occured . please try again !'}
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -145,6 +145,6 @@ def get_complete_starred_notice_list(request):
             serializer = NoticeListSerializer(result_page, many=True)
             response_data = serializer.data
             return Response(response_data, status=status.HTTP_200_OK)
-    except:
+    except BaseException:
         response_data = {'message': 'You have not bookmarked any notice !'}
         return Response(response_data, status=status.HTTP_200_OK)

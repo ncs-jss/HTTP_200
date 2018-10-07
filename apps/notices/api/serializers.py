@@ -33,7 +33,7 @@ class NoticeListSerializer(serializers.ModelSerializer):
     def get_file_attached(self, obj):
         try:
             file_attached = obj.file_attached.url
-        except:
+        except BaseException:
             file_attached = None
 
         return file_attached
