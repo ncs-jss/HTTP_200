@@ -42,14 +42,7 @@ class NoticeList(LoginRequiredMixin, generic.View):
             page_type = category
 
         if search is not None:
-            notices = Notice.objects.filter(Q(faculty__user__username__icontains=search) |
-                                            Q(faculty__user__first_name__icontains=search) |
-                                            Q(faculty__user__last_name__icontains=search) |
-                                            Q(category__icontains=search) |
-                                            Q(title__icontains=search) |
-                                            Q(description__icontains=search) |
-                                            Q(category__icontains=search) |
-                                            Q(course_branch_year__icontains=search))
+            notices = Notice.objects.filter(Q(faculty__user__username__icontains=search) | Q(faculty__user__first_name__icontains=search) | Q(faculty__user__last_name__icontains=search) | Q(category__icontains=search) | Q(title__icontains=search) | Q(description__icontains=search) | Q(category__icontains=search) | Q(course_branch_year__icontains=search))
             notices = notices.order_by('-modified')
 
         bookmark_id_list = BookmarkedNotice.objects.filter(user=request.user).values_list('notice__pk', flat=True)
@@ -413,10 +406,7 @@ class SearchNotices(LoginRequiredMixin, generic.View):
             notices = notices.filter(description__icontains=description)
 
         if faculty != "":
-            notices = notices.filter(
-                Q(faculty__user__username__icontains=faculty) |
-                Q(faculty__user__first_name__icontains=faculty) |
-                Q(faculty__user__last_name__icontains=faculty))
+            notices = notices.filter(Q(faculty__user__username__icontains=faculty) | Q(faculty__user__first_name__icontains=faculty) | Q(faculty__user__last_name__icontains=faculty))
 
         if course != "":
             notices = notices.filter(course_branch_year__icontains=course+"-")
