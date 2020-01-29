@@ -4,7 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 
 
 def paginated_queryset(queryset, request):
-	"""
+	""" # noqa: E117
 	Return a paginated queryset.
 	"""
 	paginator = PageNumberPagination()
