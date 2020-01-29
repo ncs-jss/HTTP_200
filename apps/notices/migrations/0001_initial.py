@@ -9,8 +9,8 @@ import ckeditor.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('profiles', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -30,9 +30,13 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=500)),
                 ('description', ckeditor.fields.RichTextField()),
                 ('file_attached', models.FileField(null=True, upload_to=b'attachments', blank=True)),
-                ('subject', models.CharField(max_length=200)),
-                ('category', models.CharField(default=b'MISC', max_length=4, choices=[(b'ACD', b'Academics'), (b'ADMN', b'Administration'), (b'TNP', b'Training and Placement'), (b'EVNT', b'Events'), (b'MISC', b'Miscelleneous')])),
-                ('course_branch_year', models.CharField(max_length=200, null=True)),
+                ('category', models.CharField(default=b'misc', max_length=15, choices=[(b'academics', b'Academics'), (b'administration', b'Administration'), (b'tnp', b'Training and Placement'), (b'events', b'Events'), (b'misc', b'Miscelleneous')])),
+                ('visible_for_student', models.BooleanField(default=True)),
+                ('visible_for_hod', models.BooleanField(default=True)),
+                ('visible_for_faculty', models.BooleanField(default=True)),
+                ('visible_for_management', models.BooleanField(default=True)),
+                ('visible_for_others', models.BooleanField(default=True)),
+                ('course_branch_year', models.CharField(default=b'AllCourses-AllBranches-AllYears-AllSections', max_length=200, null=True, blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
                 ('faculty', models.ForeignKey(to='profiles.FacultyDetail')),
@@ -44,7 +48,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=200)),
                 ('small_description', models.CharField(max_length=200, null=True, blank=True)),
-                ('url', models.URLField()),
+                ('attachment', models.FileField(null=True, upload_to=b'trending', blank=True)),
                 ('visibility', models.BooleanField(default=False)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
