@@ -1,4 +1,4 @@
-django==1.8.2
+django==1.11.28
 jsonfield==1.0.3
 requests==2.2.1
 django-cors-headers==1.1.0
