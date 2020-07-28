@@ -30,7 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-INTERNAL_IPS = '127.0.0.1'
+INTERNAL_IPS = ['127.0.0.1', ]
 
 APPEND_SLASH = True
 # Application definition
@@ -58,7 +58,7 @@ INSTALLED_APPS = (
     'private_notices',
     # 'import_export',
     'wifi',
-    # 'rest_framework_docs',
+    'rest_framework_docs',
     'rest_framework.authtoken',
     'notifications',
 )
@@ -71,11 +71,9 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
-
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'HTTP_200.middlewares.SetLastVisitMiddleware',
-    # 'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'HTTP_200.urls'

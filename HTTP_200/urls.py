@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 # allauth imports
 from allauth.account.views import login, logout
 
+import debug_toolbar
+
 # local file imports
 from profiles.views import (Home,
                             FaqDisplayView,
@@ -48,16 +50,13 @@ urlpatterns = [
 ]
 
 # For development environment
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns += url(
-#         '', include(
-#             [
-#                 url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-#                     'document_root': settings.MEDIA_ROOT}),
-#                 url(r'^dbschema/', include('django_spaghetti.urls')),
-#                 url(r'^__debug__/', include(debug_toolbar.urls)),
-#                 url(r'^api/docs/', include('rest_framework_docs.urls')),
-#             ]
-#         )
-#     )
+debug_urlpatterns = [
+    # url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+    #     'document_root': settings.MEDIA_ROOT}),
+    # url(r'^dbschema/', include('django_spaghetti.urls')),
+    url(r'^__debug__/', include(debug_toolbar.urls)),
+    url(r'^api/docs/', include('rest_framework_docs.urls')),
+]
+
+if settings.DEBUG:
+    urlpatterns += debug_urlpatterns
