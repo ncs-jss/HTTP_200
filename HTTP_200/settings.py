@@ -263,6 +263,7 @@ SAMPLEDATAHELPER_MODELS = [
     }
 ]
 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(TEMPLATE_DIR, 'media')
 
 SPAGHETTI_SAUCE = {
