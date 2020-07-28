@@ -5,8 +5,8 @@ from django.db import models
 
 
 class PrivateNotice(models.Model):
-    sender = models.ForeignKey(User, related_name='Sender')
-    reciever = models.ForeignKey(User, related_name='Reciever')
+    sender = models.ForeignKey(User, related_name='Sender', on_delete=models.CASCADE)
+    reciever = models.ForeignKey(User, related_name='Reciever', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='PrivateNotice Date')
     # can send PrivateNotices only not emails
     pnotice = models.CharField(max_length=500, help_text="Please restrict the PrivateNotice length to 500.")
@@ -23,7 +23,7 @@ class Notification(models.Model):
     Notification is populated at same time the PrivateNotice is created.
     Only seen and seen_at is left as it is
     '''
-    mid = models.ForeignKey(PrivateNotice, verbose_name='PrivateNotice Id', related_name='notification')
+    mid = models.ForeignKey(PrivateNotice, verbose_name='PrivateNotice Id', related_name='notification', on_delete=models.CASCADE)
     sent = models.BooleanField(default=False)
     seen = models.BooleanField(default=False)  # True when reciever clicks on the Notification
     seen_at = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)

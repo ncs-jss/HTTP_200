@@ -10,9 +10,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
-import HTTP_200.config_keys as config_keys
-import config as config
-from django.core.urlresolvers import reverse_lazy
+# import HTTP_200.config_keys as config_keys
+# import config as config
+from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
@@ -26,7 +26,7 @@ SECRET_KEY = 'aq#*#1^qn$!_y04hrsg4!@ra5_!cn9v+39fzj=2rq^319s0^n6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = DEBUG
+# TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
@@ -45,35 +45,35 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'haystack',
+    # 'haystack',
     # 'feeds',
     'allauth',
     'allauth.account',
     'profiles',
     'notices',
-    'autofixture',
+    # 'autofixture',
     'ckeditor',
-    'django_spaghetti',
+    # 'django_spaghetti',
     'debug_toolbar',
     'private_notices',
-    'import_export',
+    # 'import_export',
     'wifi',
-    'rest_framework_docs',
+    # 'rest_framework_docs',
     'rest_framework.authtoken',
     'notifications',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'HTTP_200.middlewares.SetLastVisitMiddleware',
     # 'django.middleware.security.SecurityMiddleware',
 )
@@ -97,13 +97,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.static',
-                'django.core.context_processors.request',
+
+                # 'django.core.context_processors.static',
+                # 'django.core.context_processors.request',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader'
-            ]
+            ],
+            'debug': DEBUG
         },
     },
 ]
@@ -113,23 +115,23 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#      }
-#  }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config_keys.DATABASE_NAME,
-        'USER': config_keys.MYSQL_USERNAME,
-        'PASSWORD': config_keys.MYSQL_PASSWORD,
-        'HOST': config_keys.HOST,   # Or an IP Address that your DB is hosted on
-        'PORT': config_keys.PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config_keys.DATABASE_NAME,
+#         'USER': config_keys.MYSQL_USERNAME,
+#         'PASSWORD': config_keys.MYSQL_PASSWORD,
+#         'HOST': config_keys.HOST,   # Or an IP Address that your DB is hosted on
+#         'PORT': config_keys.PORT,
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -274,8 +276,8 @@ SPAGHETTI_SAUCE = {
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
 
-EMAIL_HOST = config.HOST
-EMAIL_HOST_USER = config.USERNAME
-EMAIL_HOST_PASSWORD = config.PASSWORD
-EMAIL_PORT = config.PORT
-EMAIL_USE_TLS = config.TLS
+# EMAIL_HOST = config.HOST
+# EMAIL_HOST_USER = config.USERNAME
+# EMAIL_HOST_PASSWORD = config.PASSWORD
+# EMAIL_PORT = config.PORT
+# EMAIL_USE_TLS = config.TLS

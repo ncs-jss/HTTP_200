@@ -4,7 +4,7 @@ from django.views import generic
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.db.models import Q
 from django.contrib import messages
 
@@ -225,7 +225,7 @@ class BookmarkListView(LoginRequiredMixin, generic.ListView):
     def get(self, request):
         template_name = "bookmark.html"
         bookmark_list = BookmarkedNotice.objects.filter(user=request.user).order_by('-pinned')
-        print "**********", bookmark_list
+        # print "**********", bookmark_list
 
         paginator = Paginator(bookmark_list, constants.NOTICES_TO_DISPLAY_ON_SINGLE_PAGE)
 

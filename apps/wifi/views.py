@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from braces.views import LoginRequiredMixin
 from django.views.generic import View
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
@@ -45,7 +45,7 @@ class StudentWifiForm(LoginRequiredMixin, View):
             messages.success(request, "Successfully Registered for Wi-Fi")
             return HttpResponseRedirect(reverse("relevent-notice-list"))
         else:
-            print wifi_form.errors
+            # print wifi_form.errors
             messages.error(request, "Enter Mac Address in Given Format.")
             return HttpResponseRedirect(reverse("student-wifi"))
 
@@ -98,7 +98,7 @@ class excel_writer(LoginRequiredMixin, View):
 
         row += 1
         for users in wifi:
-            print users
+            # print users
             date_registered = str(users.created).split(' ')[0]
             try:
                 user = User.objects.get(username=users.user)
