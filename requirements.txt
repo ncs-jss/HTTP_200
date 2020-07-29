@@ -8,3 +8,4 @@ django-haystack==2.8.1
 django-import-export==1.2.0
 django-spaghetti-and-meatballs==0.2.2
 drfdocs==0.0.11
+tablib==0.14.0

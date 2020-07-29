@@ -52,7 +52,7 @@ urlpatterns = [
 # For development environment
 debug_urlpatterns = [
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-    # url(r'^dbschema/', include('django_spaghetti.urls')),
+    url(r'^dbschema/', include('django_spaghetti.urls')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'^api/docs/', include('rest_framework_docs.urls')),
 ]
