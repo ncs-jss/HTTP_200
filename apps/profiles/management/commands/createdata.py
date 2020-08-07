@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import Group
 import autofixture
 import logging
 import hashlib
@@ -21,6 +22,12 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *attrs, **options):
+
+        _, created = Group.objects.get_or_create(name='Student')
+        _, created = Group.objects.get_or_create(name='Faculty')
+        _, created = Group.objects.get_or_create(name='Management')
+        _, created = Group.objects.get_or_create(name='HoD')
+        _, created = Group.objects.get_or_create(name='Others')
 
         # for assigning Groups -
         #   0:No group
