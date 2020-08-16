@@ -37,43 +37,40 @@ class Command(BaseCommand):
             #   2:faculty
             logger.debug("Creating a Faculty Superuser with username: admin and password %s" % admin_md5)
             admin = autofixture.create_one('auth.User',
-                                        field_values={'username': 'admin',
-                                                        'password': admin_md5,
-                                                        'groups': ['2'],
-                                                        'is_superuser': True,
-                                                        })
+                                           field_values={'username': 'admin',
+                                                         'password': admin_md5,
+                                                         'groups': ['2'],
+                                                         'is_superuser': True}
+                                           )
 
             adminDetail = autofixture.create_one('profiles.FacultyDetail',
-                                                field_values={
-                                                    'user': admin
-                                                })
+                                                 field_values={
+                                                     'user': admin}
+                                                 )
 
             logger.debug("Creating 10 Notices")
             autofixture.create('notices.Notice',
-                            count=10,
-                            follow_fk=True,
-                            field_values={
-                                'faculty': adminDetail
-                            })
+                               count=10,
+                               follow_fk=True,
+                               field_values={'faculty': adminDetail}
+                               )
 
             logger.debug("Creating Student type User with username 'student' and password %s" % student_md5)
             student = autofixture.create_one('auth.User',
-                                            field_values={
-                                                'username': 'student',
-                                                'password': student_md5,
-                                                'groups': ['1'],
-                                                'is_superuser': True,
-                                            })
+                                             field_values={'username': 'student',
+                                                           'password': student_md5,
+                                                           'groups': ['1'],
+                                                           'is_superuser': True}
+                                             )
 
             autofixture.create_one('profiles.StudentDetail', field_values={'user': student})
 
             logger.debug("Creating 10 random Faculty Accounts")
             for _ in xrange(0, 10):
                 test_faculty = autofixture.create_one('auth.User',
-                                                    field_values={
-                                                        'password': default_md5,
-                                                        'groups': ['2']
-                                                    })
+                                                      field_values={'password': default_md5,
+                                                                    'groups': ['2']}
+                                                      )
                 autofixture.create_one('profiles.FacultyDetail', field_values={'user': test_faculty})
 
             logger.debug("Creating 10 random Notices")
@@ -82,8 +79,7 @@ class Command(BaseCommand):
             logger.debug("Creating 10 random Student Accounts")
             for _ in range(0, 10):
                 test_student = autofixture.create_one('auth.User',
-                                                    field_values={
-                                                        'password': default_md5,
-                                                        'groups': ['1']
-                                                    })
+                                                      field_values={'password': default_md5,
+                                                                    'groups': ['1']}
+                                                      )
                 autofixture.create_one('profiles.StudentDetail', field_values={'user': test_student})
