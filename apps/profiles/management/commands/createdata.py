@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import Group
 import autofixture
 import logging
 import hashlib
@@ -15,66 +16,70 @@ default_md5 = hashlib.md5('default').hexdigest()
 
 
 class Command(BaseCommand):
-    help = 'Create random model instances for testing purposes.'
+    help = 'Create random model instances and groups for testing purposes.'
 
     def add_arguments(self, parser):
-        pass
+        parser.add_argument('--dummydata', action='store_true', help='Create dummy data')
 
     def handle(self, *attrs, **options):
 
-        # for assigning Groups -
-        #   0:No group
-        #   1:student
-        #   2:faculty
-        logger.debug("Creating a Faculty Superuser with username: admin and password %s" % admin_md5)
-        admin = autofixture.create_one('auth.User',
-                                       field_values={'username': 'admin',
-                                                     'password': admin_md5,
-                                                     'groups': ['2'],
-                                                     'is_superuser': True,
-                                                     })
+        _, created = Group.objects.get_or_create(name='student')
+        _, created = Group.objects.get_or_create(name='faculty')
+        _, created = Group.objects.get_or_create(name='management')
+        _, created = Group.objects.get_or_create(name='hod')
+        _, created = Group.objects.get_or_create(name='others')
 
-        adminDetail = autofixture.create_one('profiles.FacultyDetail',
-                                             field_values={
-                                                 'user': admin
-                                             })
+        if options['dummydata']:
 
-        logger.debug("Creating 10 Notices")
-        autofixture.create('notices.Notice',
-                           count=10,
-                           follow_fk=True,
-                           field_values={
-                               'faculty': adminDetail
-                           })
+            # for assigning Groups -
+            #   0:No group
+            #   1:student
+            #   2:faculty
+            logger.debug("Creating a Faculty Superuser with username: admin and password %s" % admin_md5)
+            admin = autofixture.create_one('auth.User',
+                                           field_values={'username': 'admin',
+                                                         'password': admin_md5,
+                                                         'groups': ['2'],
+                                                         'is_superuser': True}
+                                           )
 
-        logger.debug("Creating Student type User with username 'student' and password %s" % student_md5)
-        student = autofixture.create_one('auth.User',
-                                         field_values={
-                                             'username': 'student',
-                                             'password': student_md5,
-                                             'groups': ['1'],
-                                             'is_superuser': True,
-                                         })
+            adminDetail = autofixture.create_one('profiles.FacultyDetail',
+                                                 field_values={
+                                                     'user': admin}
+                                                 )
 
-        autofixture.create_one('profiles.StudentDetail', field_values={'user': student})
+            logger.debug("Creating 10 Notices")
+            autofixture.create('notices.Notice',
+                               count=10,
+                               follow_fk=True,
+                               field_values={'faculty': adminDetail}
+                               )
 
-        logger.debug("Creating 10 random Faculty Accounts")
-        for _ in xrange(0, 10):
-            test_faculty = autofixture.create_one('auth.User',
-                                                  field_values={
-                                                      'password': default_md5,
-                                                      'groups': ['2']
-                                                  })
-            autofixture.create_one('profiles.FacultyDetail', field_values={'user': test_faculty})
+            logger.debug("Creating Student type User with username 'student' and password %s" % student_md5)
+            student = autofixture.create_one('auth.User',
+                                             field_values={'username': 'student',
+                                                           'password': student_md5,
+                                                           'groups': ['1'],
+                                                           'is_superuser': True}
+                                             )
 
-        logger.debug("Creating 10 random Notices")
-        autofixture.create('notices.Notice', count=10, follow_fk=True)
+            autofixture.create_one('profiles.StudentDetail', field_values={'user': student})
 
-        logger.debug("Creating 10 random Student Accounts")
-        for _ in range(0, 10):
-            test_student = autofixture.create_one('auth.User',
-                                                  field_values={
-                                                      'password': default_md5,
-                                                      'groups': ['1']
-                                                  })
-            autofixture.create_one('profiles.StudentDetail', field_values={'user': test_student})
+            logger.debug("Creating 10 random Faculty Accounts")
+            for _ in xrange(0, 10):
+                test_faculty = autofixture.create_one('auth.User',
+                                                      field_values={'password': default_md5,
+                                                                    'groups': ['2']}
+                                                      )
+                autofixture.create_one('profiles.FacultyDetail', field_values={'user': test_faculty})
+
+            logger.debug("Creating 10 random Notices")
+            autofixture.create('notices.Notice', count=10, follow_fk=True)
+
+            logger.debug("Creating 10 random Student Accounts")
+            for _ in range(0, 10):
+                test_student = autofixture.create_one('auth.User',
+                                                      field_values={'password': default_md5,
+                                                                    'groups': ['1']}
+                                                      )
+                autofixture.create_one('profiles.StudentDetail', field_values={'user': test_student})

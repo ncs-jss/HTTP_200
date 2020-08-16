@@ -56,15 +56,20 @@ Note: Ubuntu 14.04 LTS is recommended to use for the development environment.
 
 5. After activating the virtual environment, install the dependencies
 
-        pip install -r requirements.txt
+        pip install -r requirements/common.txt
+        pip install -r requirements/dev.txt (For development)
 
 6. Now, create the database migrations so as to use the Database
 
         python manage.py syncdb
 
-7. For creating random faculties, students and notices, run the following command 
+7. For creating groups, run the following command 
 
-		python manage.py createdata
+	    python manage.py createdata
+        
+8. (Optional) For creating random faculties, students and notices
+
+        python manage.py createdata --dummydata
 
 	this will create:
 	1. faculty_admin: username = admin, password = admin
