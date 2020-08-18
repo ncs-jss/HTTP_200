@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('profiles.urls')),
     url(r'^faq/$', FaqDisplayView.as_view(), name="faq"),
-    # url(r'^pnotices/', include('private_notices.urls')),
     url(r'^about/$', about, name='about'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
     # url(r'^api/', include('feeds.urls')),
