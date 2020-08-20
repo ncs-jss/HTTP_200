@@ -12,7 +12,7 @@ import os
 import sys
 import HTTP_200.config_keys as config_keys
 import config as config
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
@@ -26,11 +26,9 @@ SECRET_KEY = 'aq#*#1^qn$!_y04hrsg4!@ra5_!cn9v+39fzj=2rq^319s0^n6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = DEBUG
-
 ALLOWED_HOSTS = ["*"]
 
-INTERNAL_IPS = '127.0.0.1'
+INTERNAL_IPS = ['127.0.0.1', ]
 
 APPEND_SLASH = True
 # Application definition
@@ -51,30 +49,26 @@ INSTALLED_APPS = (
     'allauth.account',
     'profiles',
     'notices',
-    'autofixture',
     'ckeditor',
     'django_spaghetti',
     'debug_toolbar',
     'import_export',
     'wifi',
-    'rest_framework_docs',
     'rest_framework.authtoken',
     'notifications',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'HTTP_200.middlewares.SetLastVisitMiddleware',
-    # 'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'HTTP_200.urls'
@@ -96,13 +90,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.static',
-                'django.core.context_processors.request',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader'
-            ]
+            ],
+            'debug': DEBUG
         },
     },
 ]
@@ -113,11 +106,11 @@ WSGI_APPLICATION = 'HTTP_200.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 # DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#      }
-#  }
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -262,6 +255,7 @@ SAMPLEDATAHELPER_MODELS = [
     }
 ]
 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(TEMPLATE_DIR, 'media')
 
 SPAGHETTI_SAUCE = {

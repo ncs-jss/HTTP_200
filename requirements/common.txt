@@ -9,7 +9,7 @@ django-allauth==0.42.0
 django-filter==2.3.0
 PyJWT==1.7.1
 django-braces==1.14.0
-django-ckeditor==5.9.2
+django-ckeditor==5.9.0
 django-spaghetti-and-meatballs==0.2.2
 django-debug-toolbar==2.2
 coverage==5.2.1
