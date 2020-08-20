@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import jsonfield.fields
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -40,7 +41,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField()),
                 ('category', models.CharField(max_length=100)),
                 ('scheduled_time', models.DateTimeField()),
-                ('faculty_id', models.ForeignKey(to='feeds.Faculty')),
+                ('faculty_id', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='feeds.Faculty')),
             ],
         ),
         migrations.CreateModel(
