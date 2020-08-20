@@ -1,12 +1,12 @@
 language: python
 sudo: false
 python:
-  - "2.7"
+  - "3.8"
 # command to install dependencies
 install:
-- pip install --upgrade pip
-- pip install -r requirements/dev.txt
-- pip install coveralls
+  - pip install --upgrade pip
+  - pip install -r requirements/common.txt
+  - pip install coveralls
 
 # script: coverage
 script:
@@ -16,5 +16,5 @@ after_success: coveralls
 
 notifications:
   email:
-    on_success: change  # [always|never|change]
-    on_failure: always  # [always|never|change]
+    on_success: change # [always|never|change]
+    on_failure: always # [always|never|change]

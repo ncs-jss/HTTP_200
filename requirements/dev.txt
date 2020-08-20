@@ -1,3 +1,0 @@
--r common.txt
-
-drfdocs==0.0.11
