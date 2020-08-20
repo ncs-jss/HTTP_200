@@ -66,7 +66,7 @@ class Command(BaseCommand):
             autofixture.create_one('profiles.StudentDetail', field_values={'user': student})
 
             logger.debug("Creating 10 random Faculty Accounts")
-            for _ in xrange(0, 10):
+            for _ in range(0, 10):
                 test_faculty = autofixture.create_one('auth.User',
                                                       field_values={'password': default_md5,
                                                                     'groups': ['2']}

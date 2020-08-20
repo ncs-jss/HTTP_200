@@ -8,7 +8,7 @@ class Student(models.Model):
     '''
     It stores information about the Students of college.
     '''
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     BTech = 'BT'
     MCA = 'MCA'
     MBA = 'MBA'
@@ -69,7 +69,7 @@ class Faculty(models.Model):
     '''
     It stores the information about the faculties of college
     '''
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     designation = models.CharField(max_length=100, null=True)
     department = models.CharField(max_length=100, null=True)
     ph_no = models.PositiveIntegerField(null=True)
@@ -129,7 +129,7 @@ class Notice(models.Model):
         (EVENTS, 'Events'),
         (MISC, 'Miscelleneous'),
     )
-    owner = models.ForeignKey(Faculty, related_name='notices', default=None)
+    owner = models.ForeignKey(Faculty, related_name='notices', default=None, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=500)
     description = models.TextField()
     file_attached = models.FileField(upload_to="attachments", blank=True, null=True)
@@ -170,5 +170,5 @@ class BookmarkedNotice(models.Model):
     """
     Defines the databse table for storing the bookmarks as done by the user.
     """
-    user = models.ForeignKey(User)
-    notice = models.ForeignKey(Notice)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    notice = models.ForeignKey(Notice, on_delete=models.SET_NULL, null=True)

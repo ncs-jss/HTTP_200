@@ -13,7 +13,7 @@ from .serializers import FirebaseTokenSerializer, NotificationPreferenceSerializ
 @permission_classes((permissions.IsAuthenticated,))
 def set_firebase_token(request):
     serializer = FirebaseTokenSerializer(data=request.data)
-    if long(request.data['user_id']) == long(request.user.pk):
+    if request.data['user_id'] == request.user.pk:
         if serializer.is_valid():
             serializer.save()
             user_id = User.objects.get(pk=request.user.pk)
@@ -38,7 +38,7 @@ def notification_preference(request):
             return Response(response_data, status=status.HTTP_406_NOT_ACCEPTABLE)
 
         serializer = NotificationPreferenceSerializer(user_preference, data=request.data)
-        if long(request.data['user_id']) == long(request.user.pk):
+        if request.data['user_id'] == request.user.pk:
             if serializer.is_valid():
                 serializer.save()
                 response_data = {'success': 'The notification preference has been successfully saved.'}
