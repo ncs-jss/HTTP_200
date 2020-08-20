@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -154,7 +155,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='notice',
             name='owner',
-            field=models.ForeignKey(related_name='notices', default=None, to='feeds.Faculty'),
+            field=models.ForeignKey(related_name='notices', default=None, to='feeds.Faculty', on_delete=django.db.models.deletion.SET_NULL),
         ),
         migrations.AlterField(
             model_name='student',
@@ -179,11 +180,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookmarkednotice',
             name='notice',
-            field=models.ForeignKey(to='feeds.Notice'),
+            field=models.ForeignKey(to='feeds.Notice', on_delete=django.db.models.deletion.SET_NULL),
         ),
         migrations.AddField(
             model_name='bookmarkednotice',
             name='user',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=django.db.models.deletion.SET_NULL),
         ),
     ]

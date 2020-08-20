@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 from django.conf import settings
 import ckeditor.fields
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -39,7 +40,7 @@ class Migration(migrations.Migration):
                 ('course_branch_year', models.CharField(default=b'AllCourses-AllBranches-AllYears-AllSections', max_length=200, null=True, blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
-                ('faculty', models.ForeignKey(to='profiles.FacultyDetail')),
+                ('faculty', models.ForeignKey(to='profiles.FacultyDetail', on_delete=django.db.models.deletion.SET_NULL)),
             ],
         ),
         migrations.CreateModel(
@@ -57,11 +58,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookmarkednotice',
             name='notice',
-            field=models.ForeignKey(to='notices.Notice'),
+            field=models.ForeignKey(to='notices.Notice', on_delete=django.db.models.deletion.SET_NULL),
         ),
         migrations.AddField(
             model_name='bookmarkednotice',
             name='user',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=django.db.models.deletion.SET_NULL),
         ),
     ]

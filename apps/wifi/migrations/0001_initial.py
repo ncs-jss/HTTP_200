@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 from django.conf import settings
 import django.core.validators
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -21,7 +22,7 @@ class Migration(migrations.Migration):
                 ('mac_registered', models.BooleanField(default=False)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created', null=True)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified', null=True)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

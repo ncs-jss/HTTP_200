@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 from django.conf import settings
 import datetime
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -57,7 +58,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='student',
             name='user',
-            field=models.OneToOneField(default=None, to=settings.AUTH_USER_MODEL),
+            field=models.OneToOneField(default=None, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='notice',
