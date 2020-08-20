@@ -8,7 +8,7 @@ class WifiDetail(models.Model):
     '''
     It stores information about the wifi form of all users.
     '''
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     old_laptop_mac_address = models.CharField(max_length=200,
                                               blank=False,
                                               null=False,

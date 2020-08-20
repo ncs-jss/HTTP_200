@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.views.generic import View
@@ -22,7 +22,7 @@ from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 
 
-import permissions
+from . import permissions
 
 
 def bad_request_404(request):
@@ -48,7 +48,7 @@ class Home(View):
         template_name = 'index.html'
         trending = TrendingInCollege.objects.filter(visibility=True).order_by('-modified')
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             user_group = request.user.groups.all()[0].name.lower()
 
             notices = Notice.objects.filter(**{'visible_for_'+user_group: True})

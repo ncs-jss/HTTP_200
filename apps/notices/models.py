@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from profiles.models import FacultyDetail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from ckeditor.fields import RichTextField
 import os
 
@@ -24,7 +24,7 @@ class Notice(models.Model):
         (EVENTS, 'Events'),
         (MISC, 'Miscelleneous'),
     )
-    faculty = models.ForeignKey(FacultyDetail)
+    faculty = models.ForeignKey(FacultyDetail, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=500)
     description = RichTextField()
     file_attached = models.FileField(upload_to="attachments", blank=True, null=True)
@@ -55,8 +55,8 @@ class BookmarkedNotice(models.Model):
     """
             Defines the databse table for storing the bookmarks as done by the user.
     """
-    user = models.ForeignKey(User)
-    notice = models.ForeignKey(Notice)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    notice = models.ForeignKey(Notice, on_delete=models.SET_NULL, null=True)
     pinned = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", auto_now_add=True, null=True)
