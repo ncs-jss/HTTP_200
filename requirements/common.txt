@@ -2,7 +2,7 @@ django==1.8.2
 jsonfield==1.0.3
 requests==2.20.0
 django-cors-headers==1.1.0
-djangorestframework==3.6.4
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 django-haystack==2.4.0
 django-allauth==0.21.0
