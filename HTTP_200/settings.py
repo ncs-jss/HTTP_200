@@ -263,6 +263,7 @@ SAMPLEDATAHELPER_MODELS = [
 ]
 
 MEDIA_ROOT = os.path.join(TEMPLATE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 SPAGHETTI_SAUCE = {
     'apps': ['auth', 'notices', 'profiles', 'notifications'],

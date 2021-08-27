@@ -18,15 +18,15 @@ def student_profile_complete(function):
         except BaseException:
             return function(request, *args, **kwargs)
 
-        if re.split(r'(\d+)', str(user))[2] == "mca" or re.split(r'(\d+)', str(user))[2] == "mba" or re.split(r'(\d+)', str(user))[2] == "MCA" or re.split(r'(\d+)', str(user))[2] == "MBA":
-
-            if user.first_name == "" or user.email == "" or profile.course is None or profile.year is None or profile.contact_no == "None" or profile.address == "None" or profile.father_name == "None" or profile.father_name == "" or profile.address == "" or profile.contact_no == "":
+        try:
+            if user.first_name == "" or user.email == "" or profile.course is None or profile.branch is None or profile.year is None or profile.contact_no == "None" or profile.address == "None" or profile.father_name == "None" or profile.father_name == "" or profile.address == "" or profile.contact_no == "":
+                print("not MBA")
                 messages.warning(request, "Fill in details to continue")
                 return HttpResponseRedirect(reverse("user-profile", kwargs={"user_id": str(request.user.username)}))
             else:
                 return function(request, *args, **kwargs)
-        else:
-            if user.first_name == "" or user.email == "" or profile.course is None or profile.branch is None or profile.year is None or profile.contact_no == "None" or profile.address == "None" or profile.father_name == "None" or profile.father_name == "" or profile.address == "" or profile.contact_no == "":
+        except:
+            if user.first_name == "" or user.email == "" or profile.course is None or profile.year is None or profile.contact_no == "None" or profile.address == "None" or profile.father_name == "None" or profile.father_name == "" or profile.address == "" or profile.contact_no == "":
                 messages.warning(request, "Fill in details to continue")
                 return HttpResponseRedirect(reverse("user-profile", kwargs={"user_id": str(request.user.username)}))
             else:

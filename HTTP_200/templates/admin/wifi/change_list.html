@@ -57,7 +57,11 @@
         <ul class="object-tools">
           {% block object-tools-items %}
            <li>
-              <a href="{% url 'excel_writer' %}">Download Excel File
+              <a href="{% url 'excel_writer' %}">Download Wifi Excel File
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'email_excel_writer' %}">Download Email Excel File
               </a>
             </li>
             <li>
