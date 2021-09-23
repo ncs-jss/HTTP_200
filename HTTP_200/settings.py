@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'import_export',
     'wifi',
+    'emailform',
     'rest_framework_docs',
     'rest_framework.authtoken',
     'notifications',
