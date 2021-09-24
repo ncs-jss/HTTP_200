@@ -3,9 +3,9 @@ from .models import EmailDetail
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'email', 'name', 'hod_approved_email', 'created', 'modified')
+    list_display = ('__unicode__', 'email', 'name', 'hod_approval', 'created', 'modified')
     search_fields = ('email', 'name', 'email_purpose')
-    list_filter = ('hod_approved_email',)
+    list_filter = ('hod_approval',)
 
 
 admin.site.register(EmailDetail, EmailAdmin)
