@@ -252,9 +252,20 @@
                                 <input type="text" class="input-style edit-input" name="email_purpose" value="{{ email_data.email_purpose }}" style="margin-top: 5px" placeholder="Why do you want an email?" disabled>
                             </div>
                             <div class="top-range col col-4">
-                                <h2><i class="fa fa-file"></i> &nbsp;Attachment <i class="show-icon fa fa-pencil"></i></h2>
-                                <input type="file" class="input-style edit-input" name="attachment" value="{{ mac_address.attachment }}">
+                                <h2><i class="fa fa-file"></i> &nbsp;Application Attachment <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="file" class="input-style edit-input" name="attachment">
                             </div>
+                            {% if email_data.hod_approval %}
+                                <div class="top-range col col-4">
+                                    <h2><i class="fa fa-tick"></i> &nbsp;HOD Approved <i class="show-icon fa fa-pencil"></i></h2>
+                                    <input type="checkbox" class="input-style edit-input" name="hod_approval" style="margin-top: 5px" checked>
+                                </div>
+                            {% else %}
+                                <div class="top-range col col-4">
+                                    <h2><i class="fa fa-tick"></i> &nbsp;HOD Approved <i class="show-icon fa fa-pencil"></i></h2>
+                                    <input type="checkbox" class="input-style edit-input" name="hod_approval" style="margin-top: 5px">
+                                </div>
+                            {% endif %}
                             </form>
                         {% else %}
                             <form id="studentemail-form" action="{% url 'student-email' %}" method="POST">
@@ -264,8 +275,12 @@
                                 <input type="text" class="input-style edit-input" name="email_purpose" style="margin-top: 5px" placeholder="Why do you want an email?" required>
                             </div>
                             <div class="top-range col col-4">
-                                <h2><i class="fa fa-file"></i> &nbsp;Attachment <i class="show-icon fa fa-pencil"></i></h2>
-                                <input type="file" class="input-style edit-input" name="attachment">
+                                <h2><i class="fa fa-file"></i> &nbsp;Application Attachment <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="file" class="input-style edit-input" name="attachment" required>
+                            </div>
+                            <div class="top-range col col-4">
+                                <h2><i class="fa fa-tick"></i> &nbsp;HOD Approved <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="checkbox" class="input-style edit-input" name="hod_approval" style="margin-top: 5px" required>
                             </div>
                         {% endif %}
     					</div>
