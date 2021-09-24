@@ -14,7 +14,7 @@ class EmailDetail(models.Model):
     attachment = models.FileField(upload_to='forms/email/',
                                   blank=True,
                                   null=True)
-    hod_approved_email = models.BooleanField(default=False)
+    hod_approval = models.BooleanField(default=False)
 
     created = models.DateTimeField("Created", null=True, auto_now_add=True)
     modified = models.DateTimeField("Last Modified", null=True, auto_now=True)
