@@ -1,5 +1,5 @@
 from .models import EmailDetail
-from profiles.models import StudentDetail, FacultyDetail
+from profiles.models import StudentDetail
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from braces.views import LoginRequiredMixin
@@ -8,11 +8,8 @@ from django.core.urlresolvers import reverse
 from notices.decorators import student_profile_complete, default_password_change
 from django.utils.decorators import method_decorator
 from django.contrib import messages
-from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import EmailForm
-
-import xlsxwriter
 
 
 class StudentEmailForm(LoginRequiredMixin, View):
