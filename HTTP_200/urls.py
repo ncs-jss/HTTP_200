@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^students/create/single/$', SingleUser.as_view(), name='single_user_create'),
     url(r'^students/create/$', BulkUser.as_view(), name='bulk_students_create'),
     url(r'wifi/', include('wifi.urls')),
+    url(r'emailforms/', include('emailform.urls')),
 
     # api urls
     url(r'^api/profiles/', include("profiles.api.urls", namespace='profiles_api')),

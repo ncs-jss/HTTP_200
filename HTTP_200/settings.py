@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'import_export',
     'wifi',
+    'emailform',
     'rest_framework_docs',
     'rest_framework.authtoken',
     'notifications',
@@ -263,6 +264,7 @@ SAMPLEDATAHELPER_MODELS = [
 ]
 
 MEDIA_ROOT = os.path.join(TEMPLATE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 SPAGHETTI_SAUCE = {
     'apps': ['auth', 'notices', 'profiles', 'notifications'],

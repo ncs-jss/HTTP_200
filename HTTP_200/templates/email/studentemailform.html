@@ -3,7 +3,7 @@
 <html>
     <head>
     	<title>
-    		Wi-Fi
+    		E-mail
     	</title>
     	<meta name="viewport" content="width=device-width, initial-scale=1">
     	<meta name="theme-color" content="#2d2251">
@@ -125,16 +125,16 @@
                         <div class="line">
                         </div>
                     {% if request.user.groups.all.0.name == 'faculty' or request.user.groups.all.0.name == 'hod' or request.user.groups.all.0.name == 'management' %}
-                    <li class=" active move-in">
+                    <li class="move-in">
                         <a href="{% url "faculty-wifi" %}">
                         <i class="fa fa-wifi"></i> &nbsp;Wifi-Form</a>
                     </li>
                     {% else %}
-                    <li class=" active move-in">
+                    <li class="move-in">
                         <a href="{% url "student-wifi" %}">
                         <i class="fa fa-wifi"></i> &nbsp;Wifi-Form</a>
                     </li>
-                    <li class=" move-in">
+                    <li class=" active move-in">
                         <a href="{% url "student-email" %}">
                         <i class="fa fa-envelope"></i> &nbsp;Email-Form</a>
                     </li>
@@ -168,7 +168,7 @@
     		<header class="profile-header">
     			<div class="row">
     				<div class="heading-small col sm-col-4">
-    					<h3 class="profile-head"><span class="mobile-menu"><i class="fa fa-bars"></i></span>Wi-Fi Details</h3>
+    					<h3 class="profile-head"><span class="mobile-menu"><i class="fa fa-bars"></i></span>E-mail Form</h3>
     				</div>
     				<div class="head-links-resize col sm-col-8">
     					<div class="head-links">
@@ -209,7 +209,7 @@
     		</header>
     			<div class="profile-form" >
     				
-    				<form id="studentwifi-form" action="{% url 'student-wifi' %}" method="POST">
+    				<form id="studentemail-form" enctype="multipart/form-data" action="{% url 'student-email' %}" method="POST">
 
     				{% csrf_token %}
     				
@@ -246,31 +246,47 @@
     					
     					</div>
     					<div class="row">
-                        {% if mac_address %}
-    						<div class="top-range col col-4">
-    							<h2><i class="fa fa-puzzle-piece" ></i>	&nbsp;Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
-    							<input type="text" class="input-style edit-input" value="{{mac_address.old_laptop_mac_address}}" name="old_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" disabled>
-                                <input type="hidden" value="{{mac_address.old_laptop_mac_address}}" name="old_laptop_mac_address">
-                                <a class="fa fa-external-link" href="https://www.wireless.bris.ac.uk/help/faq/faq-findmacaddress/" target="_blank"> How to find Mac Address </a>
-    						</div>
+                        {% if email_data %}
                             <div class="top-range col col-4">
-                                <h2><i class="fa fa-puzzle-piece" ></i> &nbsp;New Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
-                                <input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" value="{{mac_address.new_laptop_mac_address}}" name="new_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})">
+                                <h2><i class="fa fa-question"></i> &nbsp;Purpose <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="text" class="input-style edit-input" name="email_purpose" value="{{ email_data.email_purpose }}" style="margin-top: 5px" placeholder="Why do you want an email?" disabled>
                             </div>
-                            </form>
+                            <div class="top-range col col-4">
+                                <h2><i class="fa fa-file"></i> &nbsp;Application Attachment <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="file" class="input-style edit-input" name="attachment">
+                            </div>
+                            {% if email_data.hod_approval %}
+                                <div class="top-range col col-4">
+                                    <h2><i class="fa fa-check"></i> &nbsp;HOD's Approved <i class="show-icon fa fa-pencil"></i></h2>
+                                    <input type="checkbox" class="input-style edit-input" name="hod_approval" style="margin-top: 5px" checked disabled>
+                                </div>
                             {% else %}
-                            <form id="studentwifi-form" action="{% url 'student-wifi' %}" method="POST">
+                                <div class="top-range col col-4">
+                                    <h2><i class="fa fa-check"></i> &nbsp;HOD's Approved <i class="show-icon fa fa-pencil"></i></h2>
+                                    <input type="checkbox" class="input-style edit-input" name="hod_approval" style="margin-top: 5px" disabled>
+                                </div>
+                            {% endif %}
+                            </form>
+                        {% else %}
+                            <form id="studentemail-form" action="{% url 'student-email' %}" method="POST">
                                 {% csrf_token %}
                             <div class="top-range col col-4">
-                                <h2><i class="fa fa-puzzle-piece" ></i> &nbsp;Laptop Mac Address <i class="show-icon fa fa-pencil"></i></h2>
-                                <input type="text" class="input-style edit-input" placeholder="Laptop Mac Address eg:01:AB:02:03:04:CD" name="old_laptop_mac_address" pattern="([0-9A-F]{2}[:]){5}([0-9A-F]{2})" required>
-                                <a class="fa fa-external-link" href="https://www.wireless.bris.ac.uk/help/faq/faq-findmacaddress/" target="_blank"> How to find Mac Address </a>
+                                <h2><i class="fa fa-question"></i> &nbsp;Purpose <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="text" class="input-style edit-input" name="email_purpose" style="margin-top: 5px" placeholder="Why do you want an email?" required>
                             </div>
-                            {% endif %}
+                            <div class="top-range col col-4">
+                                <h2><i class="fa fa-file"></i> &nbsp;Application Attachment <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="file" class="input-style edit-input" name="attachment" required>
+                            </div>
+                            <div class="top-range col col-4">
+                                <h2><i class="fa fa-check"></i> &nbsp;HOD's Approved <i class="show-icon fa fa-pencil"></i></h2>
+                                <input type="checkbox" class="input-style edit-input" name="hod_approval" style="margin-top: 5px" required>
+                            </div>
+                        {% endif %}
     					</div>
                         <div class="row">
                             <div class="top-range col col-1">
-                                <button class="submit-contact" onclick="" type="button" id="myBtn"> Next </button> 
+                                <button class="submit-contact" type="submit" style="float: left;"> Submit </button> 
                             </div>
                         </div>
                     </div>
@@ -352,58 +368,6 @@
     </div>
 
     </div>
-
-    <div id="myModal" class="modal">
-      <div class="modal2-content">
-        <span class="close">x</span>
-        
-
-            <h2 class="rules-header">NORMS FOR OPERATION<h2>
-    <p class="rules">
-    All the students of JSSATEN are hereby informed that college has provided Wi-Fi
-
-    facility to internet users (faculty / staff / students / visitors)<br>
-
-    1. Access to Wi-Fi connectivity is permitted to only for legalized activities. Anyone
-
-    found using the facility for anti-social and anti-national activities has to face legal
-
-    action as per law.<br>
-
-    2. Users are forbidden to send unsolicited mail, Spam mail and virus on network.<br>
-
-    3. Access to anti-national and pornographic sites, social networking sites and chat
-
-    servers related to these is strictly forbidden. Users violating these norms will lose
-
-    their right to access internet from the college and disciplinary action will be
-
-    initiated against them.<br>
-
-    4. Only a valid account holder is permitted to use the facility.<br>
-
-    5. Any user found misusing the facility, like bringing their friends / outsiders, passing
-
-    on their account to others, etc., will lose their right to access the Internet/Wi-Fi
-
-    facility.<br>
-
-    6. Institute will not be liable for any damages arising from the use of this facility and
-
-    does not endorse or accept any responsibility for the content. User has to make
-
-    their own arrangements for the Security of their systems.</p>
-
-            <input type="checkbox" id="checker"><span class="terms">I agreee to the terms & conditions</span></input>
-         <div class="row">
-            <div class="top-range col col-1">
-                <button class="submit-contact" type="submit" id="sendBtn" style="display: none;"> Submit </button> 
-            </div>
-        </div>
-
-      </div>
-
-        
 
     </div>
 
